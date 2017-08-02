@@ -40,8 +40,8 @@ zzidc agent site
    请查看数据库是否导入成功，数据库表是38张表，请查看是否导入完全。
    如果导入失败，请查看MYSQL版本是否满足5.5.X以上版本。
 2. 购买、试用产品失败问题？
-   请查看代理平台后台的网站设置->网站详情中Access Id、Acces Key是否填写正确，可以从景安主站 zzidc.com 的会员中心->API接口查看。
-   如果填写正确，请查看您当前的服务器是否能正常访问api.zzidc.com
+   请查看代理平台后台的网站设置->网站详情中Access Id、Acces Key是否填写正确，可以从景安主站 [https://www.zzidc.com](https://www.zzidc.com) 的会员中心->API接口查看。
+   如果填写正确，请查看您当前的服务器是否能正常访问 [http://api.zzidc.com](http://api.zzidc.com)
 3. 只能打开首页，其他页面显示404找不到网页问题？
    请查看您当前的web服务是否开启伪静态组件功能。
    apache请加载代理平台根目录下的.htaccess文件。
