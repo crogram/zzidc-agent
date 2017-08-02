@@ -1,0 +1,32 @@
+<?php foreach($search_all as $key=>$val){?>
+	<?php if($val['is_reg'] == 1){?>
+	<li class="search">
+		<form action="<?php echo U('frontend/domain/domainRegister','',false);?>" method="get" id="zhuce<?php echo $val['id'];?>">
+			<div class="serchfirst clearfix">
+				<input type="text" style="display: none" name="product_id" value="<?php echo $val['id'];?>">
+				<input type="text" style="display: none" name="domain" value="<?php echo $domain;?>">
+				<a href="javascript:;" onclick="$('#zhuce<?php echo $val['id'];?>').submit();" class="getdomain">立即注册该域名</a>
+				<p><?php echo $val['product_name'];?>(<a href="javascript:;" onclick="$('#zhuce<?php echo $val['id'];?>').submit();" class="g6c0">未注册</a>)</p>
+				<span><i class="gff8">
+				<?php foreach($val['price_list'] as $price_key=>$price_val){?>
+							<?php if($price_val['api_type'] == '5'){echo $price_val['product_price']."元/".$price_val['month']."个月/个";}?>
+				<?php } ?></i></span>
+			</div>
+		</form>
+	</li>
+	 <?php }else if($val['is_reg'] == 2){?>
+			<li class="search">
+			<div class="serchfirst clearfix">
+				<p><?php echo $val['product_name'];?>(<a href="http://www.<?php echo $val['product_name'];?>"  title="浏览此网站" class="gf00"  target="_blank">已注册</a>)</p>
+				<a href="http://www.<?php echo $val['product_name'];?>"  class="g009 checkrecord"  target="_blank">浏览该网站</a>
+			</div>
+		</li>
+		<?php }else if($val['is_reg'] == 0){?>
+		<li class="search">
+			<div class="serchfirst clearfix">
+				<p><?php echo $val['product_name'];?>(<a href="javascript:void(0);"  title="查询失败" class="gf00"  >查询失败</a>)</p>
+				<a href="javascript:void(0);"  class="g009 checkrecord"  target="_blank">查询失败</a>
+			</div>
+		</li>
+	<?php }?>
+<?php }?>

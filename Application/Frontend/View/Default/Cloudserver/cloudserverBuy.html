@@ -1,0 +1,817 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="content">
+	<!--快云服务器标题 start-->
+	<div class="ky-nav-box">
+		<div class="ky-container">
+			<i class="i-line"></i><span class="g333">快云服务器</span>
+		</div>
+	</div>
+	<div class="nav-nav-box">
+		<div class="ky-container">
+			<div class="orientation-nav-box">
+				<ul class="banner-nav clearfix cloud-step-check" style="left:0">
+					<li selectid="1"><a href="javascript:;" class="active">1.选择配置</a></li>
+					<li selectid="2"><a href="javascript:;">2.选择时长与镜像</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="ky-container clearfix">
+		<div class="contentbox mtop30 content-left">
+			<div class="cloud-step-div">
+				<div class="listitem leftpeizhi">
+					<div class="item-left">
+						<span>推荐配置：</span>
+					</div>
+					<div class="item-right jifang-item" style="padding-top:10px">
+						<ul class="ul-item mbottom10">
+							<li class=""><a href="javascript:;" class="liselect">快云服务器Ⅰ型</a></li>
+							<li class="libg"><a href="javascript:;">快云服务器Ⅱ型</a></li>
+							<li class="libg"><a href="javascript:;">快云服务器Ⅲ型</a></li>
+							<li class="libg"><a href="javascript:;">快云服务器Ⅳ型</a></li>
+							<li class="libg"><a href="javascript:;">快云服务器Ⅴ型</a></li>
+							<li class="libg"><a href="javascript:;" class="">自选配置</a></li>
+						</ul>
+						<!--快云服务器Ⅰ型-->
+						<div class="itemtips" style="display: block;">
+							<p>适合用户：静态展示类网站，企业站 个人博客首选</p>
+						</div>
+						<!--快云服务器Ⅱ型-->
+						<div class="itemtips" style="display: none;">
+							<p>适合用户：行业分类信息 行业性网站 论坛 门户网站 个人站长，初创型中小企业网站</p>
+						</div>
+						<!--快云服务器Ⅲ型-->
+						<div class="itemtips" style="display:none">
+							<p>适合用户：企业品牌类网站，政府官网，社区网站</p>
+						</div>
+						<!--快云服务器Ⅳ型-->
+						<div class="itemtips" style="display:none">
+							<p>适合用户：网商、团购类网站，视频网站 大型购物网站</p>
+						</div>
+						<!--快云服务器Ⅴ型-->
+						<div class="itemtips" style="display:none">
+							<p>适合用户：游戏、开发、测试环境，软件类门户网站；商城，大型社区/论坛等</p>
+						</div>
+						<!--自选配置-->
+						<div class="itemtips" style="display: none;">
+							<p>适合用户：根据自身需求选择配置</p>
+						</div>
+					</div>
+				</div>
+				<div class="contentbox">
+					<div class="listitem">
+						<div class="item-left">
+							<span>选择机房：</span>
+						</div>
+						<div class="item-right jifang-item jifang-item-div" style="padding-top:10px">
+							<ul class="ul-item">
+								<li selectid="4001" class=""><a href="javascript:;" class="liselect">郑州机房</a></li>
+								<li selectid="4002" class="libg"><a href="javascript:;">香港机房</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="listitem">
+						<div class="item-left">
+							<span>系统盘：</span>
+						</div>
+						<div class="item-right jifang-item disk-item-div" style="padding-top:10px">
+							<ul class="ul-item">
+								<li><a href="javascript:;" class="liselect">SSD云磁盘</a></li>
+								Linux系统送20GB，Windows系统送40GB
+							</ul>
+						</div>
+					</div>
+					<div class="listitem">
+						<div class="item-left">
+							<span>数据盘：</span>
+						</div>
+						<div class="item-right jifang-item ptop10">
+							<div class="item-right jifang-item disk-item-div">
+								<ul class="ul-item" style="width:286px">
+									<li selectid="2"><a href="javascript:;" class="liselect current">SSD性能型云磁盘</a></li>
+
+									<li style="width:160px" class="disk-input-li">
+										<div class="shuju-box">
+											<input type="text" value="80" class="bk-disk-input">
+										</div>
+										<div class="shuju-danwei">
+											GB
+										</div>
+										<div class="shuju-box30">
+											<span class="bk-number-arrow"></span>
+											<span class="bk-number-arrow2"></span>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<p style="margin-top:8px">磁盘大小最小40G，每次递增10G，最大1T</p>
+						</div>
+					</div>
+					<!--cpu start-->
+					<div class="rowbox clearfix" style="display:block">
+						<div class="item-left">
+							<span>CPU：</span>
+						</div>
+						<div class="row-right ptop10"><button class="right-btn-select" value="1">1核</button><button class="right-btn" value="2">2核</button><button class="right-btn" value="4">4核</button><button class="right-btn" value="8">8核</button><button class="right-btn no-margin-right" value="16">16核</button></div>
+					</div>
+					<!--cpu end-->
+					<!--内存 start-->
+					<div class="rowbox clearfix" style="display:">
+						<div class="item-left">
+							<span>内存：</span>
+						</div>
+						<div class="row-right ptop10"><button class="right-btn-select" value="1">1G</button><button class="right-btn" value="2">2G</button><button class="right-btn" value="4">4G</button><button class="right-btn" value="8">8G</button><button class="right-btn no-margin-right" value="12">12G</button></div>
+					</div>
+					<!--内存 end-->
+					<!--公网带宽 start-->
+					<div class="listitem" style="display:">
+						<div class="item-left">
+							<span>公网带宽：</span>
+						</div>
+						<div class="item-right jifang-item ptop10 slider-bandwidth-div">
+							<div class="slider-date" id="slider-date-1">
+								<!--底层-->
+								<ul class="slider-bg clearfix"><li style="width:150px">10M</li><li style="width:170px">50M</li><li style="width:210px">100M</li></ul>
+								<!--互动层-->
+								<div class="slider-bar" style="width: 54px; overflow: hidden;">
+									<ul class="slider-bg clearfix"><li style="width:150px">10M<span>10M</span></li><li style="width:170px">50M<span>50M</span></li><li style="width:210px">100M<span>100M</span></li></ul>
+									<!--滑块按钮-->
+									<a href="javascript:;" class="slider-bar-btn"><i></i><i></i></a>
+								</div>
+							</div>
+							<div class="shuju-box">
+								<input type="text" class="bk-disk-input">
+							</div>
+							<div class="shuju-danwei">Mbps</div>
+							<div class="shuju-box30">
+								<span class="bk-number-arrow"></span>
+								<span class="bk-number-arrow2"></span>
+							</div>
+						</div>
+					</div>
+					<!--公网带宽 end-->
+					<!--下一步选择时长与镜像 start-->
+					<div class="listitem mbottom20">
+						<div class="item-left">
+							<span>&nbsp;</span>
+						</div>
+						<div class="item-right jifang-item cloud-step-abtn">
+							<a href="javascript:;" class="xze-link">下一步选择时长与镜像</a>
+						</div>
+					</div>
+					<!--下一步选择时长与镜像 end-->
+				</div>
+			</div>
+			<div style="display:none;" class="cloud-step-div">
+				<div class="listitem">
+					<div class="item-left">
+						<span>选择时长：</span>
+					</div>
+					<div class="item-right jifang-item ptop10 slider-date-div">
+						<div class="slider-date" id="slider-date-2">
+							<!--底层-->
+							<ul class="slider-bg clearfix">
+								<li style="width:38px;">1</li>
+								<li style="width:38px;">2</li>
+								<li style="width:38px;">3</li>
+								<li style="width:38px;">4</li>
+								<li style="width:38px;">5</li>
+								<li style="width:38px;">6</li>
+								<li style="width:38px;">7</li>
+								<li style="width:38px;">8</li>
+								<li style="width:38px;">9</li>
+								<li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>1年</li>
+								<li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>2年</li>
+								<li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>3年</li>
+							</ul>
+							<!--互动层-->
+							<div class="slider-bar" style="width: 60px;">
+								<ul class="slider-bg clearfix">
+									<li width_="45" skip="1" min="0" style="width:38px;">1<span>1个月</span></li>
+									<li width_="45" skip="1" min="1" style="width:38px;">2<span>2个月</span></li>
+									<li width_="45" skip="1" min="2" style="width:38px;">3<span>3个月</span></li>
+									<li width_="45" skip="1" min="3" style="width:38px;">4<span>4个月</span></li>
+									<li width_="45" skip="1" min="4" style="width:38px;">5<span>5个月</span></li>
+									<li width_="45" skip="1" min="5" style="width:38px;">6<span>6个月</span></li>
+									<li width_="45" skip="1" min="6" style="width:38px;">7<span>7个月</span></li>
+									<li width_="45" skip="1" min="7" style="width:38px;">8<span>8个月</span></li>
+									<li width_="45" skip="1" min="8" style="width:38px;">9<span>9个月</span></li>
+									<li width_="46" skip="3" min="9" style="width:38px;text-align:right;margin-right:8px;"><i class="hui2"></i>1年</li>
+									<li width_="52" skip="12" min="12" style="width:38px;text-align:right;margin-right:8px;"><i class="hui2"></i>2年</li>
+									<li width_="52" skip="12" min="24" style="width:38px;text-align:right;margin-right:8px;"><i class="hui2"></i>3年</li>
+								</ul>
+								<!--滑块按钮-->
+								<a href="javascript:;" class="slider-bar-btn"><i></i><i></i></a>
+							</div>
+						</div>
+						<div class="year-tip-box" style="display: none;">
+							<div class="year-tip">
+								<span>仅需10个月费用即可享受12个月服务</span>
+								<div class="year-tip-img"></div>
+							</div>
+						</div>
+						<div class="shuju-box">
+							<input type="text" class="bk-disk-input" value="1">
+						</div>
+						<div class="shuju-danwei">
+							月
+						</div>
+						<div class="shuju-box30">
+							<span class="bk-number-arrow"></span>
+							<span class="bk-number-arrow2"></span>
+						</div>
+					</div>
+				</div>
+				<div class="listitem">
+					<div class="item-left"><span>操作系统：</span></div>
+					<div class="item-right jifang-item ptop10 ostype-item-div">
+						<ul class="ul-item">
+							<li class="libg" selectid="3"><a href="javascript:;" ><i class="win-icon" style="background:url('__FRONTEND_IMAGES__kyconfigimg/20141217img2.png');"></i>Windows</a></li>
+							<li class="libg" selectid="4"><a href="javascript:;"><i class="win-icon" style="background:url('__FRONTEND_IMAGES__kyconfigimg/20141217img3.png');"></i>CentOS</a></li>
+							<li class="libg" selectid="5"><a href="javascript:;"><i class="win-icon" style="background:url('__FRONTEND_IMAGES__kyconfigimg/20141217img4.png');"></i>Debian</a></li>
+							<li class="libg" selectid="6"><a href="javascript:;"><i class="win-icon" style="background:url('__FRONTEND_IMAGES__kyconfigimg/unbutu.png');"></i>Ubuntu</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="listitem" style="margin-top:-10px">
+					<div class="item-left"></div>
+					<div class="xxin">
+						<div class="divselect-box1 divselect2 divselect-osver" style="margin-left:2px"><cite inputid="upsolution2">请选择系统版本</cite><ul style="text-indent: 10px; display: none;"><li selectid="0"><a href="javascript:void(0);">请选择系统版本</a></li><li selectid="117"><a href="javascript:void(0);">win2k12-R2-数据版-x64-未激活</a></li><li selectid="113"><a href="javascript:void(0);">win2k12-R2-标准版-x64-未激活</a></li><li selectid="69"><a href="javascript:void(0);">win2k8-R2-数据版-x64-未激活</a></li><li selectid="61"><a href="javascript:void(0);">win2k8-R2-企业版-x64-未激活</a></li><li selectid="65"><a href="javascript:void(0);">win2k8-R2-标准版-x64-未激活</a></li><li selectid="76"><a href="javascript:void(0);">win2k3-R2-企业版-x64-sp2</a></li><li selectid="109"><a href="javascript:void(0);">win2k3-R2-企业版-x86-sp2</a></li></ul></div>
+					</div>
+				</div>
+				<div class="listitem cloud-step-abtn">
+					<a href="javascript:;" class="xze-link mleft80">上一步</a>
+					<a href="javascript:;" class="xze-link3 dobuybtn" data-is-click="0">立即购买</a>
+				</div>
+			</div>
+		</div>
+		<div class="content-right mtop30" style="position:relative">
+			<h5 class="content-right-h5">
+				当前配置
+			</h5>
+			<ul class="content-right-ul ptop10 clearfix">
+				<li>
+					<div class="content-right-title">机房：</div>
+					<div class="content-right-title2">郑州机房</div>
+				</li>
+				<li>
+					<div class="content-right-title">CPU：</div>
+					<div class="content-right-title2">1核</div>
+				</li>
+				<li>
+					<div class="content-right-title">内存：</div>
+					<div class="content-right-title2">1G</div>
+				</li>
+				<li>
+					<div class="content-right-title">硬盘：</div>
+					<div class="content-right-title2">80G</div>
+				</li>
+				<li>
+					<div class="content-right-title">带宽：</div>
+					<div class="content-right-title2">2Mbps</div>
+				</li>
+				<li>
+					<div class="content-right-title">系统：</div>
+					<div class="content-right-title2">Windows</div>
+				</li>
+				<li>
+					<div class="content-right-title">&nbsp;</div>
+					<div class="content-right-title2">待定</div>
+				</li>
+				<li>
+					<div class="content-right-title">时长：</div>
+					<div class="content-right-title2">1个月</div>
+				</li>
+				<li>
+					<div class="content-right-title">总价：</div>
+					<div class="content-right-title2"><span class="fwqxh-price" style="opacity: 1;">133</span>元</div>
+				</li>
+			</ul>
+			<div class="buy-bottom">
+				<a href="javascript:;" class="xze-link3 dobuybtn" data-is-click="0">立即购买</a>
+			</div>
+		</div>
+	</div>
+	<div style="display:none;">
+		<input type="hidden" id="hyjb" value="1">
+		<input type="hidden" id="hybh" value="-1">
+		<input type="hidden" id="pzbh" <if condition="$Think.get.pzbh eq null">value="1"<else/>value="{$Think.get.pzbh}"</if>>
+		<input type="hidden" id="dqbhH" value="4001">
+		<div id="cloudDB" title="快云数据库试用推荐" style="display: none">
+			<div class="peizhi-type" style="padding-left: 20px;">
+				<p style="font-size: 14px;color:#3B94E8">尊敬的用户：</p>
+				<p style="line-height: 25px;font-size: 13px">&nbsp;&nbsp;&nbsp;&nbsp;您好，为了您的网站访问更快速，我们根据您选择的产品为您推荐一款“快云数据库“产品，</p>
+				<p>独享实例，全SSD硬盘，高IO性能，站库分离，助力网站飞起来；点击免费试用即刻体验。</p>
+			</div>
+			<div class="peizhi-type" style="padding-left: 20px;">
+				类型版本：
+				<a href="javascript:void(0);" class="a-choose type-n2 a-selected">MySQL5.5<i></i>
+				</a>
+				<a href="javascript:void(0);" class="a-choose type-n1 ">MySQL5.6<i></i>
+				</a>
+				<div>
+					<p style="">试用配置：</p>
+					<div style="font-size: 13px;color: #3B94E8;border: 1px solid #D2DFE8; padding: 10px 5px 10px 40px;margin-top: 10px;margin-bottom: 5px;line-height: 25px;">
+						<p>1.&nbsp;&nbsp;机房所在地：郑州机房</p>
+						<p>2.&nbsp;&nbsp;存储空间：5G</p>
+						<p>3.&nbsp;&nbsp;内存：240M</p>
+						<p>4.&nbsp;&nbsp;连接数：60</p>
+						<p>5.&nbsp;&nbsp;IOPS&nbsp;:&nbsp;320</p>
+					</div>
+				</div>
+			</div>
+			<div class="peizhi-type" style="font-size: 14px;color :red;margin-left:19px">
+				<p>看这里：点击免费试用到购物车结算后，移动鼠标到"管理平台-订单管理"开通</p>
+			</div>
+			<div class="peizhi-type" style="font-size: 14px;color :#3B94E8; margin-bottom: 10px;margin-left: 480px;margin-top: 10px;">
+				<input id="shiyong-checkbox" type="checkbox">不再提醒
+			</div>
+		</div>
+	</div>
+	<!--快云服务器购买配置 end-->
+	<div id="resultinfo" title="温馨提醒" style="display: none"></div>
+	<div id="showtinfo" title="温馨提醒" style="display: none"></div>
+	<div id="confirmdialog" title="操作提醒" style="display: none"></div>
+</block>
+<block name="script">
+	<script src="__FRONTEND_JS__gainet.core.js"></script>
+	<script src="__FRONTEND_JS__buy-smartfloat.js"></script>
+	<script src="__FRONTEND_JS__gainet.cloudhost.js"></script>
+	<script src="__FRONTEND_JS__gainet.ui.button.ky.js"></script>
+	<script src="__FRONTEND_JS__gainet.ui.combo.ky.js"></script>
+	<script src="__FRONTEND_JS__gainet.ui.newslider.ky.js"></script>
+	<script src="__FRONTEND_JS__gainet.ui.select.js"></script>
+	<script src="__FRONTEND_JS__jquery.scroll.ky.js"></script>
+	<script src="__FRONTEND_JS__tuodong.js"></script>
+	<script src="__FRONTEND_JS__divselect.js"></script>
+	<script src="__FRONTEND_JS__divselect-js.js"></script>
+	<script type="text/javascript" language="javascript">
+		function showAlert(jsonMsg){
+			if(!((typeof jsonMsg)=="object" && Object.prototype.toString.call(jsonMsg).toLowerCase() == "[object object]" && !jsonMsg.length)){
+				$.error("请输入json格式数据");
+				return;
+			}
+			$("#resultinfo").dialog({}).dialog("close");
+			$("#resultinfo").empty().append(jsonMsg.msg);
+			$("#resultinfo").dialog({
+				width: 360,
+				autoOpen: false,
+				resizable : false,
+				modal : true,
+				zIndex:999999,
+				buttons : {
+					"确定" : function() {
+						$(this).dialog("close");
+					}
+				},
+				close:function(){
+					if(jsonMsg.func){
+						jsonMsg.func.call(this,jsonMsg.param);
+					}
+				}
+			}).dialog("open");
+		}
+		function showAlertNotMust(msg,func,param){
+			$("#resultinfo").dialog({}).dialog("close");
+			$("#resultinfo").empty().append(msg);
+			$("#resultinfo").dialog({
+				width: 360,
+				autoOpen: false,
+				resizable : false,
+				modal : true,
+				zIndex:999999,
+				buttons : {
+					"确定" : function() {
+						$(this).dialog("close");
+						if(func){
+							if(param){
+								func.call(this,param);
+							}else{
+								func.call(this);
+							}
+						}
+					},
+					"取消" : function() {
+						$(this).dialog("close");
+					}
+				},
+				close:function(){
+				}
+			}).dialog("open");
+		}
+		function closeMsg(){
+			$("#showtinfo").empty();
+			$("#showtinfo").dialog("close");
+		}
+		function showMsg(msg){
+			$("#showtinfo").empty().append(msg);
+			$("#showtinfo").dialog({
+				autoOpen: false,
+				width: 360,
+				title:'操作提示',
+				zIndex:10000,
+				resizable :false,
+				modal: true
+			}).dialog("open");
+		}
+		function showConfirm(msg,func,param){
+			$("#confirmdialog").empty().append(msg+"");
+			$("#confirmdialog").dialog({
+				autoOpen: false,
+				width: 360,
+				title:'操作提示',
+				zIndex:10000,
+				resizable :false,
+				modal: true,
+				buttons:{
+					"确定":function(){
+						if(func){
+							if(param){
+								func.call(this,param);
+							}else{
+								func.call(this);
+							}
+						}
+						$(this).dialog("close");
+					},
+					"取消":function(){
+						$(this).dialog("close");
+					}
+				},
+				close:function(){
+				}
+			}).dialog("open");
+		}
+	</script>
+	<script type="text/javascript" language="javascript">
+		var hyjb = $("#hyjb").val();
+		var hybh = $("#hybh").val();
+		var pzbh = $("#pzbh").val();
+		var dqbhH = $("#dqbhH").val();
+		// 两步切换
+		function getJsonLength(jsonData){
+			var jsonLength = 0;
+			for(var item in jsonData){
+				jsonLength++;
+			}
+			return jsonLength;
+		}
+		//操作系统类型
+		var osary = new Array();
+		var czxtos = new Array();
+		var osary_hk = new Array();
+		var czxtos_hk = new Array();
+		var osary_zz = new Array();
+		var czxtos_zz = new Array();
+		$.ajax({
+			url: "<?php echo U('frontend/cloudserver/OsType','',false);?>",
+			type: 'post',
+			async: false,
+			dataType:'json',
+			error:function() {alert("操作系统获取失败，请联系管理员！");},
+			success: function(msg) {
+				if(msg) {
+                    if(typeof(msg.hk) != 'undefine' || typeof(msg.zz) != 'undefine'){
+                        if(msg.hk && msg.zz){
+                            if(msg.hk.code == 0 && msg.zz.code == 0){
+                                var a = 0;
+                                var lbbh = 3;
+                                for(var czxt in msg.hk.info) {
+                                    var czxt_info = msg.hk.info[czxt];
+                                    var czxt_length = getJsonLength(msg.hk.info[czxt]);
+                                    for(var n=0; n<czxt_length;n++) {
+                                        osary_hk[a] = {"id":czxt_info[n].bh,"lbbh":lbbh,"lbname":czxt,"info":"","name":czxt_info[n].description };
+                                        czxtos_hk[czxt_info[n].description] = czxt_info[n].bh;
+                                        a++;
+                                    }
+                                    lbbh++;
+                                }
+                                var a1 = 0;
+                                var lbbh1 = 3;
+                                for(var czxt1 in msg.zz.info) {
+                                    var czxt_info1 = msg.zz.info[czxt1];
+                                    var czxt_length1 = getJsonLength(msg.zz.info[czxt1]);
+                                    for(var n1=0; n1<czxt_length1;n1++) {
+                                        osary_zz[a1] = {"id":czxt_info1[n1].bh,"lbbh":lbbh1,"lbname":czxt1,"info":"","name":czxt_info1[n1].description };
+                                        czxtos_zz[czxt_info1[n1].description] = czxt_info1[n1].bh;
+                                        a1++;
+                                    }
+                                    lbbh1++;
+                                }
+                            }else{alert("操作系统获取失败，请联系管理员！")}
+                        }else{alert("操作系统获取失败，请联系管理员！")}
+                    }else{alert("操作系统获取失败，请联系管理员！")}
+				}else{alert("操作系统获取失败，请联系管理员！")}
+			}
+		});
+		osary = osary_zz;
+		czxtos = czxtos_zz;
+		$(".cloud-step-check li").click(function(){
+			var nu = $(this);
+			var index = nu.index();
+			if(!nu.find("a").hasClass("active")){
+				nu.find("a").toggleClass("active",true).end().siblings().find("a").toggleClass("active",false);
+				$(".cloud-step-div").eq(index).show().siblings().hide();
+			}
+		});
+		$(".cloud-step-abtn a").not(".xze-link3").click(function(){
+			var nu = $(this);
+			var index = $(".cloud-step-abtn").index(nu.parent());
+			$(".cloud-step-check li").eq(1-index).click();
+		});
+		$(function(){
+			var btntool = {"rool":"1","arool":1,"hdlimit":1};
+			btntool.arool = btntool.rool;
+			var buy = {"cpu" : {},"memory" : {},"disk" : {},"bandwidth" : {},"ip" : {},"stack" : {},"time" : {},"disktype" : 2,"os":{},"serverbh":40013,"jf":dqbhH};
+			var priceObj = gainet(".fwqxh-price");
+			function getBuyPrice(){
+				getPrice(priceObj,
+						{"cpu":buy.cpu.unit,
+							"mem":buy.memory.unit,
+							"disk":buy.disk.unit,
+							"bandwidth":buy.bandwidth.unit,
+							"dqbh":gainet.trim(getRegion().attr("selectid")),
+							"gmqx":buy.time.unit,
+							"disktype":buy.disktype,
+							"serverbh":buy.serverbh,
+							"url":"<?php echo U('frontend/cloudserver/buyPrice','',false);?>"
+						},
+						function(){
+							var flag = false;
+							gainet.each(recommend,function(i,n){
+								if((n.cpu==buy.cpu.unit&&n.bandwidth==buy.bandwidth.unit&&n.disk==buy.disk.unit
+										&&n.memory==buy.memory.unit)){
+									recommendTag(i);
+									flag = true;
+									return;
+								}
+							});
+							if(!flag){
+								recommendTag(5);
+							}
+						},
+						function(price){
+							price = parseInt(price);
+							gainet(".price-img,.ksbuy-font2").css("color","#ff812a");
+							if(isNaN(price)||price<0){
+								gainet(".price-img,.fwqxh-price").html("价格异常");
+							}else{
+								gainet(".price-img, .fwqxh-price").css("opacity",0.3).animate({opacity:1.0},200).html(price);
+							}
+						});
+			}
+			/*推荐项选中样式设置*/
+			function recommendTag(index){
+				$(".leftpeizhi .ul-item li").eq(index).removeClass("libg").find("a").addClass("liselect").end()
+						.siblings().addClass("libg").find("a").removeClass("liselect");
+				$(".leftpeizhi").find(".itemtips").hide().eq(index).show();
+			}
+			/*推荐配置*/
+			var recommend = [{"descrption":"适合用户：静态展示类网站，企业站 个人博客首选","disk":80,"name":"快云服务器Ⅰ型","cpu":1,"bh":1,"memory":1,"bandwidth":2},{"descrption":"适合用户：行业分类信息 , 行业性网站 , 论坛 , 门户网站 , 个人站长，初创型中小企业网站","disk":120,"name":"快云服务器Ⅱ型","cpu":2,"bh":2,"memory":2,"bandwidth":3},{"descrption":"适合用户：企业品牌类网站，政府官网，社区网站","disk":200,"name":"快云服务器Ⅲ型","cpu":4,"bh":3,"memory":4,"bandwidth":5},{"descrption":"适合用户：网商、团购类网站，视频网站  大型购物网站","disk":300,"name":"快云服务器Ⅳ型","cpu":8,"bh":4,"memory":8,"bandwidth":7},{"descrption":"适合用户：游戏、开发、测试环境，软件类门户网站；商城，大型社区/论坛等","disk":500,"name":"快云服务器Ⅴ型","cpu":16,"bh":5,"memory":16,"bandwidth":10}];
+			var rightcontent = gainet(".content-right-ul");
+			/*CPU*/
+			var cpuSlider = gainet(".row-right").combo(
+					{"block":[{"cpu":1,"memory":{"num":[1,2,4,8,12],"label":"G"}},
+						{"cpu":2,"memory":{"num":[2,4,8,12,16],"label":"G"}},
+						{"cpu":4,"memory":{"num":[4,8,12,16,24],"label":"G"}},
+						{"cpu":8,"memory":{"num":[8,12,16,24,32],"label":"G"}},
+						{"cpu":16,"memory":{"num":[12,16,24,32,64],"label":"G"}}],
+						"defaultval":1,"label":"核","callback":selectCPU});
+			function selectCPU(cpusize,mem){
+				buy.cpu.unit = cpusize;
+				buy.memory.unit = mem;
+				pushRightcontent(1,cpusize+"核");
+				pushRightcontent(2,mem+"G");
+				getBuyPrice();
+			}
+			/*机房*/
+			gainet(".jifang-item-div").radiobuttons({"index":dqbhH==4002?1:0,"callback":selectJifang});
+			var disktypes = [{"id":2,"name":"SSD性能型云磁盘","max":1000,"label":"GB"}];
+			gainet(".disk-item-div:eq(1)").radiobuttonsDisk({"index":0,ary:disktypes,"callback":selectdiskType});
+			var diskSlider = gainet(".disk-item-div:eq(1)").find(".disk-input-li").changSize({"callback":selectDisk});
+			//带宽
+			var bandwidthSlider = bandwidthSliderFnc(dqbhH);
+			function bandwidthSliderFnc(dq){
+				if(dq==4001){
+					return gainet(".slider-bandwidth-div:eq(0)").slider(
+							{"block":[
+								{"width":150,skip:1,"min":0,"text":"10M"},
+								{"width":170,skip:1,"min":10,"text":"50M"},
+								{"width":210,skip:10,"min":50,"text":"100M"}],
+								"end":{"startwidth":24,"max":100,"text":"100M"},"default_":2,"label":"Mbps","callback":selectBandwidth});
+				}else if(dq == 4002){
+					return gainet(".slider-bandwidth-div:eq(0)").slider(
+							{"block":[{"width":150,skip:1,"min":0,"text":"5M"},
+								{"width":170,skip:1,"min":5,"text":"10M"},
+								{"width":210,skip:1,"min":10,"text":"20M"}],
+								"end":{"startwidth":24,"max":20,"text":"20M"},"default_":2,"label":"Mbps","callback":selectBandwidth});
+				}
+			}
+			function pushRightcontent(index,txt){
+				rightcontent.find("li").eq(index).find(".content-right-title2").html(txt+"");
+			}
+			function selectJifang(index){
+				if(index == 0){
+					osary = osary_zz;
+					czxtos = czxtos_zz;
+				}else if(index == 1){
+					osary = osary_hk;
+					czxtos = czxtos_hk;
+				}
+				var jifang =gainet(".jifang-item-div").find("li").eq(index);
+				pushRightcontent(0,jifang.text());
+				var dqbh = parseInt(jifang.attr("selectid"));
+				bandwidthSlider = bandwidthSliderFnc(dqbh);
+				buy.jf=dqbh;
+                var ostypes = gainet(".ostype-item-div").radiobuttons({"index":0,"callback":selectOsType});
+                selectOsType(1);
+                selectOsType(0);
+				getBuyPrice();
+			}
+			function selectBandwidth(val){
+				buy.bandwidth.unit = val;
+				pushRightcontent(4,val + "Mbps");
+				getBuyPrice();
+			}
+			/*性能云磁盘*/
+			var diskname='';
+			function selectdiskType(val){
+				if(val.id ==1){
+					buy.disktype = 0;
+				}else{
+					buy.disktype = 2;
+				}
+				getBuyPrice();
+			}
+			function selectDisk(val){
+				buy.disk.unit = val;
+				pushRightcontent(3,val + "G");
+				getBuyPrice();
+			}
+			/**机房*/
+			function getRegion(){
+				return gainet(".jifang-item-div").find(".liselect").closest("li");
+			}
+			var timeSlider = gainet(".slider-date-div:eq(0)").slider(
+					{"end":{"startwidth":22,"max":36,"text":"3年"},"default_":1,"label":"月","isnumber":false,"isdiy":true,"callback":selectTime});
+			function selectTime(val){
+				var buybtn = $(".dobuybtn");
+				if(val==0){val=1;timeSlider.setBarValue(1)}
+				buy.time.unit = val;
+				if(val==1&&btntool.rool!=1 && btntool.hdlimit){
+					buybtn.text("5折购买");
+					btntool.arool=5;
+				}else{
+					buybtn.text("立即购买");
+
+					btntool.arool = 1;
+				}
+				pushRightcontent(7,val + "个月");
+				if(val==12){
+					$(".year-tip-box").show().find(".year-tip").css("left","505px").find("span").text("仅需10个月费用即可享受12个月服务");
+				}else if(val==24){
+					$(".year-tip-box").show().find(".year-tip").css("left","550px").find("span").text("仅需20个月费用即可享受24个月服务");
+				}else if(val==36){
+					$(".year-tip-box").show().find(".year-tip").css("left","600px").find("span").text("仅需30个月费用即可享受36个月服务");
+				}else{
+					$(".year-tip-box").hide();
+				}
+				getBuyPrice();
+			}
+			for(var i=0;i<osary.length;i++){
+				if(osary[i].name.length>30){
+					osary[i].name = osary[i].name.substring(0,29);
+				}
+			}
+			function makeHtmlOs(ary){
+				var html = "<cite inputid='upsolution2'>请选择系统版本</cite>";
+				html += "<ul style=\"text-indent: 10px; display: none;\">";
+				gainet.each(ary,function(i,v){
+					html += "<li selectid=\""+v.id+"\"><a href=\"javascript:void(0);\">"+v.name+"</a></li>";
+				});
+				html += "</ul>";
+				return html;
+			}
+			var ostypes = gainet(".ostype-item-div").radiobuttons({"callback":selectOsType});
+			var osname = '';
+			function selectOsType(index){
+				if(index<0){
+					return false;
+				}
+				var ostypeli = ostypes.find("li").eq(index);
+				var selectid = ostypeli.attr("selectid");
+				pushRightcontent(5,ostypeli.text());
+				var lxos = [];
+				for(var i=0;i<osary.length;i++){
+					if(osary[i].lbbh == selectid){
+						lxos.push(osary[i]);
+					}
+				}
+				lxos.push({"id":0,"name":"请选择系统版本","info":""});
+				lxos.reverse();
+				if(lxos.length >0&&selectid!=buy.os.lbbh){
+					buy.os.lbbh = selectid;
+					buy.os.id = 0;
+					pushRightcontent(6,"待定");
+					gainet(".divselect-osver").divselectLi({"index":index,ary:lxos,"makeHtml":makeHtmlOs,"callback":selectOS});
+				}
+			}
+			function selectOS(val){
+				//{id: 3, lbbh: 4, lbname: "CentOS", info: "", name: "Centos-6.6-x86_64"}
+				if(val.id<=0){
+					buy.os.id=0;
+					pushRightcontent(6,"待定");
+					return ;
+				}
+				var info = val.info;
+				if(info != ""){
+					showAlert({"msg":info});
+				}
+				buy.os.id = val.id;
+				buy.os.lbbh = val.lbbh;
+				osname = val.name;
+				if(osname.length>21){
+					osname = osname.substring(0,21)+"..";
+				}
+				pushRightcontent(6,osname);
+			}
+			function selectRecommend(index){
+				if(index<5){
+					gainet(".leftpeizhi").find(".itemtips").eq(index).find("p").html(recommend[index].descrption);
+					//console.log($(".leftpeizhi .ul-item li").eq(index).find("a").html());
+					// CPU+Memory
+					cpuSlider.setBarValue(recommend[index].cpu,recommend[index].memory);
+					// Disk
+					diskSlider.setBarValue(recommend[index].disk);
+					// BandWidth
+					bandwidthSlider.setBarValue(recommend[index].bandwidth);
+					// 默认加载操作系统类型
+					selectOsType(0);
+				}
+			}
+			//推荐配置
+			gainet(".leftpeizhi").radiobuttons2({"callback":selectRecommend,"index":pzbh-1,"configArr":recommend});
+			$(".check-xieyi").click(function(){
+				if($("#check-xieyi").closest("div").hasClass("cart-checkbox-checked")){
+					$("#check-xieyi").prop("checked",false);
+					$("#check-xieyi").closest("div").addClass("cart-checkbox-default").removeClass("cart-checkbox-checked");
+				}else{
+					$("#check-xieyi").prop("checked",true);
+					$("#check-xieyi").closest("div").addClass("cart-checkbox-checked").removeClass("cart-checkbox-default");
+				}
+			});
+			$(".dobuybtn").click(function(){
+				dobuy(this);
+			});
+			// 立即购买
+			function dobuy(obja){
+				if(!buy.os.id||buy.os.id<1){
+					showAlert({"msg":"请选择您需要预装的操作系统。"});
+					$(".cloud-step-check li").eq(1).click();
+					return;
+				}
+				if(buy.time.unit < 1){
+					showAlert({"msg":"购买时长错误。"});
+					$(".cloud-step-check li").eq(0).click();
+					return;
+				}
+				/* if(!$("#check-xieyi").is(":checked")){
+				 showAlert({"msg":"您还未同意快云服务器租赁服务协议~"});
+				 return;
+				 } */
+				var is_click = $(obja).attr('data-is-click');
+				if(is_click == 0)
+				{
+					dosubmit();
+					$(obja).attr('data-is-click',1);
+				}
+			}
+			var url = "<?php echo U('frontend/order/cloud_order_buy','',false);?>";
+			function dosubmit(){
+				var dqbh = gainet.trim(getRegion().attr("selectid"));
+				var par = {"region":dqbh,
+					"os":buy.os.id,
+					"cpu":buy.cpu.unit,
+					"memory":buy.memory.unit,
+					"disk":buy.disk.unit,
+					"bandwidth":buy.bandwidth.unit,
+					"count":1,
+					"time":buy.time.unit,
+					"disktype":buy.disktype,
+					"serverbh":buy.serverbh,
+					"price":priceObj.html(),
+					"api_ptype":"cloudserver"};
+				gainet.js.post(url, par);
+			}
+			gainet(".peizhi-type .a-choose").click(function(){
+				if(!$(this).hasClass("a-selected")){
+					$(this).addClass("a-selected").siblings().removeClass("a-selected");
+				}
+			});
+		});
+	</script>
+</block>

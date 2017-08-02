@@ -1,0 +1,161 @@
+<extend name="Layouts/layout" />
+<block name="links"></block>
+<block name="content">
+    <div class="page-header">
+        <h1>
+            <i class="fa fa-home"></i> 首页
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                产品价格管理
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="<?php echo U('Backend/ProductPrice/index', [ 'product_id' => $product_id, ], false);?>">价格列表</a>
+                &amp; 修改产品价格
+            </small>
+            <a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/ProductPrice/index', [ 'product_id' => $product_id, ], false);?>">价格列表</a>
+        </h1>
+    </div><!-- end/.page-header -->
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal" action="<?php echo U('Backend/ProductPrice/store', [ 'id' => $entity['id'] ], false);?>" role="form" method="post" name="update" id="update">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="product_name"> 产品名称 </label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly="readonly"  id="product_name"   value="<?php echo $product_name;?>" class="col-xs-10 col-sm-5">
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="giant_price"> 景安价格 </label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly="readonly"  id="giant_price"   value="<?php echo $entity['giant_price'];?>" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7">
+                            <span class="middle">元（小数点两位）</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="product_price">
+                        <span style="color:red;" class="fa fa-asterisk"></span>产品价格
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="product_price"  id="product_price"   value="<?php echo $entity['product_price'];?>" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7">
+                            <span class="middle">元（小数点两位）</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="min_price">限制价格</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly="readonly" name="min_price" id="min_price" value="<?php echo $entity['min_price'];?>" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7">
+                            <span class="middle">元（小数点两位）</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="month">
+                        <span style="color:red;" class="fa fa-asterisk"></span>
+                        购买时间
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly="readonly" name="month"  id="month"   value="<?php echo $entity['month'];?>" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7">
+                            <span class="middle">月</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"  for="type">
+                        <span style="color:red;" class="fa fa-asterisk"></span>
+                        价格类型
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="col-xs-10 col-sm-5" name="type" id="type">
+                        	<option value="0" <if condition="$entity['type'] eq 0 ">selected="selected"</if>>购买</option>
+							<option value="1"  <if condition="$entity['type'] eq 1 ">selected="selected"</if>>续费</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"  for="note_appended">价格说明</label>
+                    <div class="col-sm-9">
+                        <textarea class="limited col-xs-10 col-sm-5" id="note_appended" name="note_appended" maxlength="100"><?php echo $entity['note_appended'];?></textarea>
+                        <span class="help-inline col-xs-12 col-sm-7">
+                            <span class="middle">最多100个字</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit" >
+                            <i class="ace-icon fa fa-check bigger-110"></i>修改
+                        </button>
+                        <a class="btn btn-info" href="<?php echo U('Backend/ProductPrice/index', [ 'product_id' => $product_id, ], false);?>">
+                            <span class="glyphicon glyphicon-repeat"></span>
+                            返回
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</block>
+<block name="scripts">
+    <!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+    <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+    <script src="__COM_JS__messages_zh.js"></script>
+    <script type="text/javascript">
+        var min_price = parseInt($("#min_price").val());
+        function updater(form){
+            form.submit();
+        }
+        $("#update").validate({
+            submitHandler:function(form){
+                updater(form);
+            },
+            onclick:false,
+            onfocusout:false,
+            onkeyup:false,
+            errorPlacement: function (error, element){
+                var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+                $("#update").before($alert);
+            },
+            rules:{
+                product_price:{
+                    required:true,
+                    number:true,
+                    min:min_price
+                },
+                month:{
+                    required:true,
+                    digits:true
+                },
+                type:{
+                    required:true,
+                    number:true
+                }
+            },
+            messages:{
+                product_price:{
+                    required:"产品价格必须填",
+                    number:"请输入数字作为价格",
+                    min:"产品价格不能小于限制价格"
+                },
+                month:{
+                    required:"购买时间不能为空",
+                    digits:"购买时间必须是整数"
+                },
+                type:{
+                    required:"您忘记选择价格类型了",
+                    number:"价格类型参数非法"
+                }
+            }
+        });
+    </script>
+</block>

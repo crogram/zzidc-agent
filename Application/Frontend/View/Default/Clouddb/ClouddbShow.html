@@ -1,0 +1,455 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="content">
+    <!--快云服务器banner start-->
+    <div class="kydata-bg">
+        <div class="ky-container">
+            <div class="product-f40">
+                <p class="f40-kydata">快云数据库</p>
+                <div class="product-detail">
+                    一款免运维、高可用、高性能、高吞吐的集群版数据库产品。可用性高达99.99%，自定义多种备份策略，经优化源码后，在安全和高速之间能达到较好的平衡，为在线交易、网上商城、移动APP、数据分析挖掘和大型游戏提供极佳的支持。
+                </div>
+                <div class="product-link m-top20">
+                    <a href="<?php echo U('frontend/clouddb/clouddbdx','',false);?>" class="product-buy">立即购买</a>
+                    <a href="javascript:;" class="product-buy2">查看价格</a>
+                </div>
+                <p class="m-top20 free-link">高效安全、简单易用的快云数据库低至<span class="gff9">&#165;40月</span></p>
+            </div>
+        </div>
+    </div>
+    <!--快云服务器banner end-->
+    <!--快云服务器产品导航 start-->
+    <div class="ky-product-777">
+        <div class="module-wrap">
+            <div class="float-box y-row">
+                <div>
+                    <ul class="menu-box y-clear">
+                        <li class="y-left" href="javascript:;">产品特性</li>
+                        <li class="y-left" href="javascript:;">应用场景</li>
+                        <li class="y-left" href="javascript:;">价格预览</li>
+                        <li class="y-left" href="javascript:;">常见问题</li>
+                    </ul>
+                    <a href="#" target="_blank" id="product-btn" class="product-buy-link">立即购买</a>
+                    <div class="product-menu" id="floatMenu">
+                        <div class="menu-title"><i class="icon-menu"></i>全部产品</div>
+                        <div class="menu-main y-clear">
+                            <ul class="y-left" length="2">
+                            </ul>
+                            <div class="menu-child y-left">
+                                <div class="y-clear">
+                                    <ul class="y-left">
+                                        <li class="action"><a href="#" target="_blank"><h2>云服务器 ECS</h2><p></p></a></li>
+                                        <li><a href="#" target="_blank"><h2>自选配置</h2><p></p></a></li>
+                                        <li><a href="#" target="_blank"><h2>弹性云服务</h2><p></p></a></li>
+                                        <li><a href="#" target="_blank"><h2>SSD高性能云磁盘</h2><p>对多台云服务器进行流量分发的负载均衡服务</p></a></li>
+                                        <li><a href="#" target="_blank"><h2>弹性伸缩</h2><p>自动调整弹性计算资源的管理服务</p></a></li>
+                                    </ul>
+                                    <ul class="y-left">
+                                        <li><a href="#" target="_blank"><h2>E-MapReduce</h2><p>基于 Hadoop/Spark 的大数据处理分析服务</p></a></li>
+                                        <li><a href="#" target="_blank"><h2>资源编排</h2><p>批量创建、管理、配置云计算资源</p></a></li>
+                                        <li><a href="#" target="_blank"><h2>容器服务</h2><p>应用全生命周期管理的 Docker 服务</p></a></li>
+                                        <li><a href="#" target="_blank"><h2>高性能计算 HPC</h2><p>加速深度学习、渲染和科学计算的 GPU 物理机</p></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:10px"></div>
+        </div>
+    </div>
+    <!--快云服务器产品导航 end-->
+    <!--产品特性标题 start-->
+    <div class="ky-product-2000">
+        <div class="module-wrap">
+            <div class="y-row gainet-product-title">
+                <h4 class="product-title-line">产品特性</h4>
+            </div>
+        </div>
+    </div>
+    <!--产品特性标题 end-->
+    <!--产品特性内容 start-->
+    <div class="y-row main-wrap">
+        <div class="tx-table ptop20">
+            <table>
+                <tbody>
+                <tr>
+                    <th width="15%" class="fweight">特性</th>
+                    <th width="50%" class="fweight">快云数据库</th>
+                    <th width="35">同类数据库</th>
+                </tr>
+                <tr>
+                    <td width="15%" class="f14 text-center no-padding-left no-padding-right">
+                        <i class="wending-icon mright10"></i>
+                        <span class="fsize16 fweight">高效稳定</span>
+                    </td>
+                    <td width="50%">
+                        <p class="fsize14">采用主从架构模式，当主库不可用时，系统会自动切换到从库，避免单点故障，可用性达到99.99%。</p>
+                        <p class="fsize14">采用SSD硬盘，实现读写分离，优化源码后的MySQL数据库，运行更稳定、更快速。</p>
+                    </td>
+                    <td width="35" class="g999">
+                        <p class="fsize14">数据安全可靠性不佳，需额外购买安全配置。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%" class="f14 text-center no-padding-left no-padding-right">
+                        <i class="safe-icon mright10"></i>
+                        <span class="fsize16 fweight">安全可靠</span>
+                    </td>
+                    <td width="50%">
+                        <p class="fsize14">安全的数据库支撑平台确保数据安全。</p>
+                        <p class="fsize14">支持自动备份，快捷数据备份恢复，数据保存在至少二个节点。</p>
+                        <p class="fsize14">多种备份策略，可恢复7天内任意时间点数据。</p>
+                        <p class="fsize14">支持对实例内存、连接数、tps等多方面的监控、预警。</p>
+                    </td>
+                    <td width="35" class="g999">
+                        <p class="fsize14">数据恢复受时间限制，影响业务正常进行。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%" class="f14 text-center no-padding-left no-padding-right">
+                        <i class="kuozhan-icon mright10"></i>
+                        <span class="fsize16 fweight">按需扩展</span>
+                    </td>
+                    <td width="50%">
+                        <p class="fsize14">随着业务量增长，可实现配置弹性扩展、无缝升级，满足业务需求。</p>
+                    </td>
+                    <td width="35" class="g999">
+                        <p class="fsize14">调整配置操作复杂，不能做到随时、迅速。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%" class="f14 text-center no-padding-left no-padding-right">
+                        <i class="zizhu-icon mright10"></i>
+                        <span class="fsize16 fweight">自助管理</span>
+                    </td>
+                    <td width="50%">
+                        <p class="fsize14">完善的自助管理系统，支持数据库创建、密码修改等基本操作。</p>
+                        <p class="fsize14">支持重启实例，备份和下载，快云数据库的一键迁移等功能。</p>
+                    </td>
+                    <td width="35" class="g999">
+                        <p class="fsize14">数据库成本与运维成本都较高，浪费资源。</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 产品特性内容 end-->
+    <!-- 应用场景标题 start-->
+    <div class="ky-product-2000">
+        <div class="module-wrap">
+            <div class="y-row gainet-product-title">
+                <h4 class="product-title-line">应用场景</h4>
+            </div>
+        </div>
+    </div>
+    <!-- 应用场景标题 end-->
+    <!-- 应用场景内容 start-->
+    <div class="y-row main-wrap">
+        <div class="scene-container">
+            <div class="changjing-box clearfix">
+                <div class="changjin-col-data">
+                    <div class="changjin-col-top text-center">
+                        <a href="<?php echo U('frontend/clouddb/clouddbdx','',false);?>" class="col-top-icon">
+                            <img src="__FRONTEND_IMAGES__duxiefenli.png" alt="初期、展示类网站"/>
+                        </a>
+                        <p class="fsize16">读写分离架构</p>
+                    </div>
+                    <div class="changjin-bottom">
+                        <p class="g888">为上层应用提供统一的数据库访问接口，实现自动化的读写分离和负载均衡，保证高可用性的同时增强系统整体的扩展性。对于以读操作为主的应用，使用读写分离是最好的场景。</p>
+                    </div>
+                </div>
+                <div class="changjin-col-data">
+                    <div class="changjin-col-top text-center">
+                        <a href="<?php echo U('frontend/clouddb/clouddbdx','',false);?>" class="col-top-icon">
+                            <img src="__FRONTEND_IMAGES__shujufenxi.png" alt="初期、展示类网站"/>
+                        </a>
+                        <p class="fsize16">数据分析</p>
+                    </div>
+                    <div class="changjin-bottom">
+                        <p class="g888">大数据时代，快云数据库强大的数据应用能力，为用户把握时代数据脉搏、提供高效的数据分析。</p>
+                    </div>
+                </div>
+                <div class="changjin-col-data changjin-col-last">
+                    <div class="changjin-col-top text-center">
+                        <a href="<?php echo U('frontend/clouddb/clouddbdx','',false);?>" class="col-top-icon">
+                            <img src="__FRONTEND_IMAGES__shujuqianyi.png" alt="初期、展示类网站"/>
+                        </a>
+                        <p class="fsize16">数据迁移</p>
+                    </div>
+                    <div class="changjin-bottom">
+                        <p class="g888">对于业务增长较快，需要迁移数据到新系统的情况，快云数据库提供快速、安全、高效的迁移方式，并保证数据迁移后的系统正常运行。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 应用场景内容 start-->
+    <!-- 价格预览标题 start-->
+    <div class="ky-product-2000">
+        <div class="module-wrap">
+            <div class="y-row gainet-product-title">
+                <h4 class="product-title-line">价格预览</h4>
+            </div>
+        </div>
+    </div>
+    <!-- 价格预览标题 end-->
+    <!-- 价格预览内容 start-->
+    <div class="y-row main-wrap">
+        <div class="tx-table ptop20">
+            <table>
+                <tbody>
+                <tr>
+                    <th width="16%" class="text-center">产品名称</th>
+                    <th width="14%" class="text-center">机房</th>
+                    <th width="14%" class="text-center">存储空间（G）</th>
+                    <th width="14%" class="text-center">内存（M）</th>
+                    <th width="14%" class="text-center">最大连接数/IPOS</th>
+                    <th width="14%" class="text-center">价格（元/月）</th>
+                    <th width="14%" class="text-center">价格（元/年）</th>
+                </tr>
+                <tr>
+                    <td width="16%" class="fsize14 text-center"><a href="#">微型</a></td>
+                    <td width="14%" class="fsize14 text-center">郑州机房</td>
+                    <td width="14%" class="fsize14 text-center">5</td>
+                    <td width="14%" class="fsize14 text-center">240</td>
+                    <td width="14%" class="fsize14 text-center">60/320</td>
+                    <td width="14%" class="fsize14 text-center g009">40</td>
+                    <td width="14%" class="fsize14 text-center g009">400</td>
+                </tr>
+                <tr>
+                    <td width="16%" class="fsize14 text-center"><a href="#">小型</a></td>
+                    <td width="14%" class="fsize14 text-center">郑州机房</td>
+                    <td width="14%" class="fsize14 text-center">25</td>
+                    <td width="14%" class="fsize14 text-center">600</td>
+                    <td width="14%" class="fsize14 text-center">150/640</td>
+                    <td width="14%" class="fsize14 text-center g009">110</td>
+                    <td width="14%" class="fsize14 text-center g009">1110</td>
+                </tr>
+                <tr>
+                    <td width="16%" class="fsize14 text-center"><a href="#">中型</a></td>
+                    <td width="14%" class="fsize14 text-center">郑州机房</td>
+                    <td width="14%" class="fsize14 text-center">100</td>
+                    <td width="14%" class="fsize14 text-center">1200</td>
+                    <td width="14%" class="fsize14 text-center">300/1300</td>
+                    <td width="14%" class="fsize14 text-center g009">260</td>
+                    <td width="14%" class="fsize14 text-center g009">2600</td>
+                </tr>
+                <tr>
+                    <td width="16%" class="fsize14 text-center"><a href="#">大型</a></td>
+                    <td width="14%" class="fsize14 text-center">郑州机房</td>
+                    <td width="14%" class="fsize14 text-center">250</td>
+                    <td width="14%" class="fsize14 text-center">2400</td>
+                    <td width="14%" class="fsize14 text-center">600/3500</td>
+                    <td width="14%" class="fsize14 text-center g009">560</td>
+                    <td width="14%" class="fsize14 text-center g009">5600</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 价格预览内容 end-->
+    <!-- 常见问题标题 start-->
+    <div class="ky-product-2000">
+        <div class="module-wrap">
+            <div class="y-row gainet-product-title">
+                <h4 class="product-title-line">常见问题</h4>
+            </div>
+        </div>
+    </div>
+    <!-- 常见问题标题 end-->
+    <!-- 常见问题内容 start-->
+    <div class="y-row main-wrap">
+        <div class="new-box clearfix" style="padding-top:20px">
+            <div class="new-row new-mright">
+                <ul class="new-ul m-top10">
+                    <li class="mbottom10">
+                        <p class="qa-title">
+                            产品帮助
+                            <a href="{:U('Help/help_retrieval',['keywords'=>'产品帮助'],false)}" target="_blank" class="qa-more">更多&gt;&gt;</a>
+                        </p>
+                    </li>
+                    <volist name="cpbz" id="cp">
+                        <li>
+                            <a href="{:U('Help/help_details',['id'=>$cp['id']],false)}">
+                                <span></span>
+                                {$cp.problem_title}
+                            </a>
+                            <i class="date">{$cp.create_time}</i>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="new-row new-mright">
+                <ul class="new-ul m-top10">
+                    <li class="mbottom10">
+                        <p class="qa-title">
+                            操作手册
+                            <a href="{:U('Help/help_retrieval',['keywords'=>'操作手册'],false)}" target="_blank" class="qa-more">更多&gt;&gt;</a>
+                        </p>
+                    </li>
+                    <volist name="czsc" id="cz">
+                        <li>
+                            <a href="{:U('Help/help_details',['id'=>$cz['id']],false)}">
+                                <span></span>
+                                {$cz.problem_title}
+                            </a>
+                            <i class="date">{$cz.create_time}</i>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="new-row">
+                <ul class="new-ul m-top10">
+                    <li class="mbottom10">
+                        <p class="qa-title">
+                            备案指南
+                            <a href="{:U('Help/help_retrieval',['keywords'=>'备案指南'],false)}" target="_blank" class="qa-more">更多&gt;&gt;</a>
+                        </p>
+                    </li>
+                    <volist name="bazn" id="ba">
+                        <li>
+                            <a href="{:U('Help/help_details',['id'=>$ba['id']],false)}">
+                                <span></span>
+                                {$ba.problem_title}
+                            </a>
+                            <i class="date">{$ba.create_time}</i>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 常见问题内容 end-->
+    <div class="module-wrap">
+        <script>
+            window.product = {};
+            window.product.menubar = [{
+                "text": "虚拟主机",
+                "li1": [{
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'host'],false);?>",
+                    "spm": "network01",
+                    "key": "slb",
+                    "h2": "国内主机"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'hkhost'],false);?>",
+                    "spm": "network02",
+                    "key": "vpc",
+                    "h2": "香港主机"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudspace'],false);?>",
+                    "spm": "network03",
+                    "key": "expressconnect",
+                    "h2": "云空间"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'dedehost'],false);?>",
+                    "spm": "network04",
+                    "key": "cdn",
+                    "h2": "织梦主机"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'usahost'],false);?>",
+                    "spm": "network04",
+                    "key": "cdn",
+                    "h2": "美国主机"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudVirtual'],false);?>",
+                    "spm": "network04",
+                    "key": "cdn",
+                    "h2": "云虚拟主机"
+                }],
+                "key": "network"
+            }, {
+                "text": "VPS",
+                "li1": [{
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/vps' ,['type'=>'fastvps'],false);?>",
+                    "spm": "network01",
+                    "key": "slb",
+                    "h2": "快云VPS"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/product/vps' ,['type'=>'hkvps'],false);?>",
+                    "spm": "network02",
+                    "key": "vpc",
+                    "h2": "香港VPS"
+                }],
+                "key": "network"
+            }, {
+                "text": "快云产品",
+                "li1": [{
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/cloudserver/cloudserverShow' ,'',false);?>",
+                    "spm": "bigdata01",
+                    "key": "odps",
+                    "h2": "快云服务器"
+                },{
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo  U('frontend/cloudb/clouddbShow' ,'',false);?>",
+                    "spm": "bigdata02",
+                    "key": "batchcompute",
+                    "h2": "快云数据库"
+                }],
+                "key": "bigdata"
+            },{
+                "text": "SSL证书",
+                "li1": [{
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo U('frontend/product/ssl','',false);?>",
+                    "spm": "manage001",
+                    "key": "jiankong",
+                    "h2": "EV证书"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo U('frontend/product/ssl','',false);?>",
+                    "spm": "manage002",
+                    "key": "ram",
+                    "h2": "OV证书"
+                }, {
+                    "or": "false",
+                    "p": "",
+                    "link": "<?php echo U('frontend/product/ssl','',false);?>",
+                    "spm": "manage004",
+                    "key": "actiontrail",
+                    "h2": "DV证书"
+                }],
+                "key": "webset"
+            }];
+        </script>
+    </div>
+    <!--快云服务品产品导航 end-->
+    <!--服务 start-->
+    <include file="Index/index_service" />
+    <!--服务 start-->
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__newMain.js"></script>
+    <script>
+        $(".product-buy2").click(function(){
+            $(".menu-box li").eq(2).click();
+        });
+    </script>
+</block>

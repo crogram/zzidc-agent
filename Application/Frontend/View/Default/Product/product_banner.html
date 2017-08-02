@@ -1,0 +1,22 @@
+<!--banner start-->
+<div class="slide-main" id="touchMain">
+    <div class="slide-box" id="slideContent">
+        <volist name="banner" id="ba">
+            <div class="slide" <if condition='$key == 0'>style="opacity: 1; z-index: 8; display: block;background:#fff url({$ba.img_url}) center center no-repeat"<else/>style="display: none; opacity: 0.5; z-index: 0;background:#fff url({$ba.img_url}) center center no-repeat"</if>>
+                <div class="obj-e">
+                    <div class="product-f40">
+                        <p style="font-size: 40px;">{$ba.title}</p>
+                        <div class="product-detail" style="width:590px;margin-top:20px">
+                            {$ba.description}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </volist>
+    </div>
+    <div class="banner-itxx">
+        <a class="cur" stat="item1001" href="javascript:;"></a>
+        <a href="javascript:;" stat="item1002" class=""></a>
+    </div>
+</div>
+<!--banner end-->

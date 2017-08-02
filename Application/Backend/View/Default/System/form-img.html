@@ -1,0 +1,75 @@
+<form class="form-horizontal" id="form-img" action="<?php echo U('Backend/System/configure', [], false);?>/form/img" method="post" name="form-img"  role="form"  enctype="multipart/form-data">
+
+    <!--  logo图片/开始 -->
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"  for="site_trial_times">
+            现在使用的logo图片：
+        </label>
+        <div class="col-sm-9">
+            <div class="col-xs-10 col-sm-5">
+                <a href="<?php echo $basic_info['logo_url'];?>" target="_blank">
+                    <img class="col-xs-10 col-sm-5"  src="<?php echo $basic_info['logo_url'];?>" alt="" />
+                </a>
+            </div>
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"  for="logo_url">
+            上传新的logo图片：
+        </label>
+        <div class="col-sm-9">
+            <div class="col-xs-10 col-sm-5">
+                <input type="file" name="logo_url" id="logo_url" class=" img" />
+            </div>
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">大小尺寸保持在 180 × 60左右即可</span>
+                </span>
+        </div>
+    </div>
+    <!--  logo图片/结束 -->
+    <hr>
+    <!--  二维码/开始 -->
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"  for="qr_url">
+            现有二维码：
+        </label>
+        <div class="col-sm-9">
+            <div class="col-xs-10 col-sm-5">
+                <a href="<?php echo $basic_info['qr_url'];?>" target="_blank">
+                    <img class="col-xs-10 col-sm-5"  src="<?php echo $basic_info['qr_url'];?>" alt="" />
+                </a>
+            </div>
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"  for="qr_url">
+            新的二维码：
+        </label>
+        <div class="col-sm-9">
+                <input type="text" name="qr_url" id="qr_url" placeholder="http://" class="col-xs-10 col-sm-5" value=""/>
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">请输入一段信息用以保存到二维码中，比如说填写您的网址(为空表示不修改原有二维码)；</span>
+                </span>
+        </div>
+    </div>
+    <!--  二维码/结束 -->
+    <div class="space-4"></div>
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <a class="btn btn-info" onclick="configure('img')" >
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                修改
+            </a>
+        </div>
+    </div>
+
+</form>

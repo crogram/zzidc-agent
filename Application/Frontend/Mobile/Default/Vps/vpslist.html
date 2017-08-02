@@ -1,0 +1,47 @@
+<extend name="Hyzx/member" />
+<block name="links">
+    <style type="text/css">
+        .tanchu.height929{height:3.99rem}
+    </style>
+</block>
+<block name="right">
+    <div class="height136">
+        <div class="hd text-center">
+            <div class="back pull-left"></div>
+            <div class="ordertype gfff">郑州机房<span class="onarrow"></span></div>
+        </div>
+        <?php $area_code = $_GET['area_code'];?>
+        <ul class="tanchu g333">
+            <li><a href="<?php echo U('frontend/vps/vpslist',[],false);?>" class="jinzhitiaozhuan <?php if(!in_array($area_code,[4001,4002])){?>active<?php }?>">全部业务<span class="ok"></span></a></li>
+            <li><a href="<?php echo U('frontend/vps/vpslist',['area_code'=>4001],false);?>" class="jinzhitiaozhuan <?php if($area_code == 4001){?>active<?php }?>">郑州机房<span class="ok"></span></a></li>
+            <li><a href="<?php echo U('frontend/vps/vpslist',['area_code'=>4002],false);?>" class="jinzhitiaozhuan <?php if($area_code == 4002){?>active<?php }?>">香港机房<span class="ok"></span></a></li>
+        </ul>
+        <div class="over displaynone"></div>
+    </div>
+    <volist name="info" id="data">
+    <ul class="kytype-list">
+        <li class="config-hotit">{$data.product_name}</li>
+        <li class="lheight108">
+            <span class="motioning">
+                <if condition="$data.state == 1">正常
+                <elseif condition="$data.state == 3"/>已过期
+                <elseif condition="$data.state == 2"/>已删除
+                <elseif condition="$data.state == 4"/>失败
+                </if>
+            </span>
+            <span class="cut-lineho"></span>
+            <span>类型 {$data.api_ptype} VMWare</span>
+            <a href="javascript:;" class="omita"></a>
+            <!--<a href="<?php echo U('frontend/Vps/vpsinfo',['yid'=>$data['yid']],false);?>" class="omita"></a>-->
+        </li>
+        <li class="lh66 mtop16">开通时间：{$data.open_time}</li>
+        <li class="lh66">到期时间：{$data.overdue_time}</li>
+    </ul>
+    </volist>
+    <empty name="info">
+        <p>您好像没有相关产品哦，<a href="<?php echo  U('frontend/product/vps' ,['type'=>'hkvps'],false);?>">点此了解一下吧！</a></p>
+    </empty>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__FRONTEND_MOBILE_JS__myorder.js"></script>
+</block>

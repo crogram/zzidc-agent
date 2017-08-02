@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+/*快云注册*/
+.steps{padding-top:60px;height:46px;border-bottom:3px solid #e6e6e6;position:relative;margin-bottom:40px}
+.steps ul li{display:inline;float:left;width:33%;text-align:center;height:46px;line-height:46px;font-size:16px;color:#ccc}
+.steps ul li.active{color:#009de0;border-bottom:3px solid #009de0}
+.kyregister-box{padding:50px 70px 50px 100px}
+.box-row-left{width:630px;float:left}
+.box-row-left ul li{margin-bottom:20px}
+.kyregister-border{border:1px solid #ccc;margin-bottom:60px}
+.kyregister-border ul{}
+.kyregister-left{float:left;width:110px;text-align:right;line-height:32px;font-size:14px}
+.kyregister-right{float:left;margin-left:10px}
+.kyregister-msg{float:left;margin-left:10px;line-height:32px;font-size:12px}
+.kyregister-input{width:260px;height:32px;line-height:32px;border:1px solid #ccc;outline:none;padding:0 6px;
+-webkit-transition: all .3s;
+-moz-transition: all .3s;
+-ms-transition: all .3s;}
+.kyregister-input:focus{border:1px solid #009de0;background:#effaff}
+.kyregister-input2{width:126px;height:32px;line-height:32px;border:1px solid #ccc;outline:none;padding:0 6px;
+-webkit-transition: all .3s;
+-moz-transition: all .3s;
+-ms-transition: all .3s;}
+.kyregister-input2:focus{border:1px solid #009de0;background:#effaff}
+.kyregister-link{width:124px;height:32px;line-height:32px;background:#009de0;color:#fff;text-align:center;display:inline-block;margin-left:6px}
+.kyregister-link:hover{background:#0297d6;color:#fff}
+.gf00{color:#f00}
+.box-row-lef{float:right}
+.kyregister-msg-icon{background:url(../images/common/20160809img1.png) no-repeat;display:inline-block}
+.icon-a{background-position:0 -2px;width:16px;height:17px;vertical-align:middle}
+.icon-b{background-position:0 -25px;width:16px;height:17px;vertical-align:middle}
+.icon-c{background-position:0 -49px;width:16px;height:17px;vertical-align:middle}
+.icon-d{background-position:0 -71px;width:19px;height:19px;vertical-align:middle}
+.icon-e{background-position:0 -96px;width:4px;height:4px;vertical-align:middle}
+.icon-f{background-position:0 -109px;width:37px;height:37px;vertical-align:middle}
+.box-row-right{float:right;width:190px;font-size:13px;border-left:1px solid #ccc;padding-left:74px;line-height:24px}
+.box-row-user{border-bottom:1px solid #ccc;padding-bottom:24px}
+.box-row-user2{border-top:1px solid #ccc;padding-top:34px}
+.row-user-link{width:72px;height:24px;line-height:24px;color:#fff;background:#ff8800;border:1px solid #ff8800;display:inline-table;text-align:center;border-radius:2px;
+-webkit-transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+-moz-transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+-o-transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+transition: color 0.3s ease-in-out, background 0.3s ease-in-out;}
+.row-user-link:hover{border:1px solid #ff8800; background:#fff;color:#ff8800}
+.free-box{text-align:center;margin-bottom:50px;border-bottom:1px solid #ccc;padding-bottom:17px}
+/*error*/
+.error-box{width:252px;height:56px;border:1px solid #c2c8c8;position:absolute;margin-left:24px;margin-top:-56px;float:left;background:#fff;padding:2px 6px 20px 14px;font-size:12px}
+.regtable td span.qiang-txt{color:#333;display:inline-block;margin-right:10px}
+.error-color{color:#13c1b3}
+.error-color2{color:#ff450e;vertical-align:middle}
+.error-box-img{background:url(../images/common/20160421img24.png) no-repeat;width:6px;height:12px;position:absolute;left:-6px;top:34px}
+.qiang-bog{line-height:24px;color:#999}
+.qiang-bg1{width:75px;height:14px;background:#f00;display:inline-block;vertical-align:middle}
+.qiang-bg2{width:75px;height:14px;background:#ccc;display:inline-block;vertical-align:middle}
+.qiang-bg3{width:75px;height:14px;background:#ff8800;display:inline-block;vertical-align:middle}
+.kyregister-right a.kyregister-link3{color:#009de0}.kyregister-right a.kyregister-link3:hover{text-decoration:underline}
+/*下一步*/
+.kyregister-link2{width:274px;height:32px;line-height:32px;background:#009de0;color:#fff;text-align:center;display:inline-block;border-radius:2px}
+.kyregister-link2:hover{background:#0297d6;color:#fff;text-decoration:none}
+.box-row-right-ul{padding-top:20px}
+.box-row-right-ul a{color:#009de0;font-size:12px;line-height:26px}
+.box-row-right-ul a:hover{text-decoration:underline}
+.kyregister-right select{font-family:"microsoft yahei";width:274px;height:32px;line-height:32px;padding-left:10px;outline-color:#009de0;border:1px solid #ccc;
+-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+ -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s}
+.kyregister-right select:focus{border:1px solid #009de0;outline:-webkit-focus-ring-color auto 0}
+.kyregister-right select option{ line-height:80px}
+/*step3*/
+.step3-link{color:#ff8800;font-size:16px;padding-top:16px;border-top:1px solid #ccc;display:inline-block;margin-top:40px}
+.step3-link:hover{color:#ff8800; text-decoration:underline}
+.step3-buy{background:#ff8800;width:104px;height:30px;line-height:30px;color:#fff;display:inline-block;border-radius:2px}
+.step3-buy:hover{color:#fff;background:#fd9a29}
+.step3-buy2{background:#009de0;width:132px;height:30px;line-height:30px;color:#fff;display:inline-block;margin-left:16px;border-radius:2px}
+.step3-buy2:hover{color:#fff;background:#0297d6}
+/*登录*/
+.login-logo{width:382px;margin-left:auto;margin-right:auto;padding-top:100px;padding-bottom:40px;text-align:center}
+.login-h5{background:#f6f6f6;font-size:18px;line-height:48px;text-align:center;color:#666;border-bottom:1px solid #eee;margin-bottom:30px}
+.login-box-bg{background:url(../images/login-bg.png) no-repeat;width:691px;margin-left:auto;margin-right:auto}
+.login-box{border:1px solid #eee;width:382px;margin-left:auto;margin-right:auto;margin-bottom:30px;background:#fff}
+.form-group{padding:0 50px; margin-bottom:20px;overflow:hidden}
+.login-input{width:100%;height:32px;line-height:32px;border:1px solid #ddd;outline:none;padding:0 6px;margin-top:6px;border-radius:3px;
+-webkit-transition: all .3s;
+-moz-transition: all .3s;
+-ms-transition: all .3s;}
+.login-input:focus{border:1px solid #009de0;background:#effaff}
+.form-group label{font-size:14px}
+.login-txt{text-align:right}
+.kylogin-link{width:294px;height:32px;line-height:32px;background:#009de0;color:#fff;border:none medium;text-align:center;display:inline-block;border-radius:3px}
+.kylogin-link:hover{background:#0297d6;color:#fff;text-decoration:none}
+.login-txt a{color:#666}
+.login-txt .stick{display:inline-block;vertical-align:middle;margin-left:8px;margin-right:5px;font-size:0;height:10px;border-left:1px solid #ccc;opacity:100;filter:alpha(opacity=100)}
+.login-icon{background:url(../images/20160811img1.png) no-repeat;width:26px;height:26px;display:inline-block;cursor:pointer; vertical-align:middle}
+.icon-a1{background-position:0 0;margin-right:10px}
+.icon-b1{background-position:-36px 0}
+.line26{line-height:26px}
+.login-icon:hover{opacity:.8}
+/*找回密码*/
+.steps2{padding-top:60px;height:46px;border-bottom:3px solid #e6e6e6;position:relative;margin-bottom:40px}
+.steps2 ul li{display:inline;float:left;width:25%;text-align:center;height:46px;line-height:46px;font-size:16px;color:#ccc}
+.steps2 ul li.active{color:#009de0;border-bottom:3px solid #009de0}
+.password-box{padding:150px 0 200px 250px}
+.password-box ul li{margin-bottom:20px}
+.password-left{float:left;width:150px;text-align:right;line-height:32px;font-size:14px}
+.password-link{width:80px;height:32px;border:1px solid #ccc;display:inline-block;margin-left:9px;vertical-align:bottom}
+/*找回密码 step2*/
+.password-box2{padding:150px 0 120px 150px}
+.backway{overflow:hidden}
+.backway-item{float:left;width:150px;margin:0 80px;text-align:center}
+.backway-txt{font-size:16px;line-height:65px;display:block;font-weight:bold}
+.backway-item:hover .backway-txt{color:#009fd9}
+.backwayicon{background:url(../images/20160820img8.png) no-repeat;width:142px;height:142px;display:inline-block}
+.subicon1{background-position:0 0}
+.subicon1:hover{background-position:0 -142px}
+.subicon2{background-position:-152px 0}
+.subicon2:hover{background-position:-152px -142px}
+.subicon3{background-position:-304px 0}
+.subicon3:hover{background-position:-304px -142px}
+.icon-trans{-webkit-transition:all 600ms ease-in-out;-moz-transition:all 600ms ease-in-out;-o-transition:all 600ms ease-in-out;-ms-transition:all 600ms ease-in-out;transition:all 600ms ease-in-out}
+/*找回密码 step3*/
+.userphone{font-size:13px;color:#000;line-height:32px;margin-left:10px}
+.gainbtn{width:95px;height:32px;border:1px solid #ccc;border-left:none;color:#ff8800;font-size:13px;line-height:32px;text-align:center;display:block;float:left}
+.kyregister-input3{width:145px;height:32px;line-height:32px;border:1px solid #ccc;border-right:none;outline:none;padding:0 10px;float:left}
+.kyregister-input3:focus{border:1px solid #ccc;border-right:none}
+.password-link2{width:130px;height:32px;font-szie:14px;line-height:32px;background:#009de0;border-radius:3px;color:#fff;text-align:center;display:inline-block}
+.password-link2:hover{background:#0297d6;color:#fff}
+.newbackway{font-size:13px;color:#666;margin-left:10px}
+
+
+.checkbox2 input[type="radio"]{display:none}
+.xt-radio{cursor:pointer;float:left;line-height:32px;font-size:14px}
+.xt-radio-icon{background:url(../images/20160821img2.png) no-repeat 0 -13px;display:inline-block;width:13px;height:13px;overflow:hidden;vertical-align:middle;margin-right:3px}
+.checked .xt-radio-icon{background-position:0 0}
+.notcheck{background-position:0 -26px}
+.xt-radio input{display:none}

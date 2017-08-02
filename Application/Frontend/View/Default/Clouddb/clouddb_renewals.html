@@ -1,0 +1,241 @@
+<extend name="Hyzx/member" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="right">
+    <!--ky-main start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/clouddb/clouddblist','',false);?>">快云数据库管理</a></li>
+                <li><a>快云数据库续费确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">快云数据库续费确认订单</div>
+                </div>
+                <div class="ky-panel-body">
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th>类型版本</th>
+                            <th>内存</th>
+                            <th>iops</th>
+                            <th>存储空间</th>
+                            <th>最大连接数</th>
+                            <th>机房</th>
+                            <th>IP地址</th>
+                            <th>日期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{$version}</td>
+                            <td>{$memory} MB</td>
+                            <td>{$iops}</td>
+                            <td>{$disk} G</td>
+                            <td>{$conn}</td>
+                            <td><?php if($area_code == 4001){echo "郑州机房";}?></td>
+                            <td class="ky-td-multi-lines">
+                                <div>外网ip：{$wwdz}</div>
+                                <div>内网ip：{$nwdz}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div>开通时间：{$create_time}</div>
+                                <div class="gff6">到期时间：{$overdue_time}</div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="contentbox">
+                        <!--续费时长 start-->
+                        <div class="listitem m-top10">
+                            <div class="item-left">
+                                <span>选择时长：</span>
+                            </div>
+                            <div class="item-right jifang-item ptop10 ">
+                                <div class="slider-date" id="slider-date-1">
+                                    <!--底层-->
+                                    <ul class="slider-bg clearfix">
+                                        <li style="width:38px;">1</li>
+                                        <li style="width:38px;">2</li>
+                                        <li style="width:38px;">3</li>
+                                        <li style="width:38px;">4</li>
+                                        <li style="width:38px;">5</li>
+                                        <li style="width:38px;">6</li>
+                                        <li style="width:38px;">7</li>
+                                        <li style="width:38px;">8</li>
+                                        <li style="width:38px;">9</li>
+                                        <li style="width:42px;text-align:right;margin-right:8px;"><i class="hui"></i>1年</li>
+                                        <li style="width:42px;text-align:right;margin-right:8px;"><i class="hui"></i>2年</li>
+                                        <li style="width:42px;text-align:right;margin-right:8px;"><i class="hui"></i>3年</li>
+                                    </ul>
+                                    <!--互动层-->
+                                    <div class="slider-bar">
+                                        <ul class="slider-bg clearfix">
+                                            <li width_=45 skip=1 min=0 style="width:38px;">1<span>1个月</span></li>
+                                            <li width_=45 skip=1 min=1 style="width:38px;">2<span>2个月</span></li>
+                                            <li width_=45 skip=1 min=2 style="width:38px;">3<span>3个月</span></li>
+                                            <li width_=45 skip=1 min=3 style="width:38px;">4<span>4个月</span></li>
+                                            <li width_=45 skip=1 min=4 style="width:38px;">5<span>5个月</span></li>
+                                            <li width_=45 skip=1 min=5 style="width:38px;">6<span>6个月</span></li>
+                                            <li width_=45 skip=1 min=6 style="width:38px;">7<span>7个月</span></li>
+                                            <li width_=45 skip=1 min=7 style="width:38px;">8<span>8个月</span></li>
+                                            <li width_=45 skip=1 min=8 style="width:38px;">9<span>9个月</span></li>
+                                            <li width_=46 skip=3 min=9 style="text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>1年</li>
+                                            <li width_=52 skip=12 min=12 style="text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>2年</li>
+                                            <li width_=52 skip=12 min=24 style="text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>3年</li>
+                                        </ul>
+                                        <!--滑块按钮-->
+                                        <a href="javascript:;" class="slider-bar-btn"><i></i><i></i></a>
+                                    </div>
+                                </div>
+                                <div class="shuju-box">
+                                    <input type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="bk-disk-input" id="timeinput" value="1">
+                                </div>
+                                <div class="shuju-danwei">
+                                    月
+                                </div>
+                                <div class="shuju-box30">
+                                    <span class="bk-number-arrow"></span>
+                                    <span class="bk-number-arrow2"></span>
+                                </div>
+                                <div class="year-tip-box">
+                                    <div class="year-tip" style="display:none;left:420px;width: 220px">
+                                        仅需10个月费用即可享受12个月服务
+                                        <div class="year-tip-img"></div>
+                                    </div>
+                                    <div class="year-tip" style="display:none;left:480px;width: 220px">
+                                        仅需20个月费用即可享受24个月服务
+                                        <div class="year-tip-img"></div>
+                                    </div>
+                                    <div class="year-tip" style="display:none;left:520px;width: 220px">
+                                        仅需30个月费用即可享受36个月服务
+                                        <div class="year-tip-img"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--续费时长 end-->
+                    </div>
+                    <div class="box-fixed">
+                        <div class="account-fix">
+                            <div class="diyongjin">
+                                <span class="gff8 fsize14">温馨提示：请先选择续费时长。</span>
+                            </div>
+                            <div class="h-54" id="payspan">
+                                <div class="paybox">
+                                    <a href="javascript:;" class="paybtn">支付</a>
+                                </div>
+                                <div class="total">
+                                    <p class="mt-4" style="margin-top: 20px"><span class="total-span">应付总额：</span><span class="tot-price">¥ <span id="money">0</span>.00</span></p>
+                                </div>
+                            </div>
+                            <div id="loadingspan" class="h-54" align="center" style="padding: 25px;display: none;">
+                                <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                <span class="" style="font-size: 15px;"><font color="red">正在续费，请稍候。请勿刷新此页面。</font></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--ky-main end-->
+    <form action="<?php echo U('frontend/clouddb/clouddb_renewals','',false);?>" method="post" id="addcart">
+        <input type="hidden" id="clouddb_id" name="clouddb_id" value="<?php echo $yid;?>">
+        <input type="hidden" id="api_ptype" name="api_ptype" value="clouddb">
+        <input type="hidden" id="price" name="price" value="0">
+        <input type="hidden" id="config" name="config" value="dx">
+        <input type="hidden" id="spacesize" name="spacesize" value="<?php echo $disk;?>">
+        <input type="hidden" id="memsize" name="memsize" value="<?php echo $memory;?>">
+        <input type="hidden" id="version" name="version" value="<?php echo $version;?>">
+        <input type="hidden" id="dqbh" name="dqbh" value="<?php echo $area_code;?>">
+        <input type="hidden" id="istry" name="istry" value="0">
+        <input type="hidden" id="xfqx" name="gmqx" value="1">
+        <input type="hidden" id="type" name="type" value="1">
+    </form>
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__gainet.core.js"></script>
+    <script src="__FRONTEND_JS__gainet.ui.newslider.ky.js"></script>
+    <script>
+        var disk = <?php echo $disk;?>;
+        var memsize = <?php echo $memory;?>;
+        var dqbh = <?php echo $area_code;?>;
+        var tooken = true;
+        var tdt=gainet(".ptop10").slider({"end":{"startwidth":8,"max":36,"text":"3年"},"default":1,"label":"月","isnumber":false,"isdiy":true,"callback":selectshichang});
+        function selectshichang(val){
+            if(val==0){
+                val=1;
+                tdt.setBarValue(val);
+            }
+            $(".content-right-title2").eq(3).html(val+"个月");
+            $("#xfqx").val(val);
+            if(val==12){
+                $(".year-tip").eq(0).show().siblings().hide();
+            }else if(val==24){
+                $(".year-tip").eq(1).show().siblings().hide();
+            }else if(val==36){
+                $(".year-tip").eq(2).show().siblings().hide();
+            }else{
+                $(".year-tip").hide();
+            }
+            getBuyPrice(val);
+        }
+        function getBuyPrice(gmqx){
+            var data = $("#addcart").serialize();
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/buyPrice','',false);?>",
+                data:data,
+                type:"post",
+                success:function(data){
+                    if(!data.flag){
+                        alert("获取价格异常");
+                        console.log(data.price);
+                        $("#money").html(0);
+                        $("#price").val(0);
+                        tooken = false;
+                    }else{
+                        $("#money").html(data.price);
+                        $("#price").val(data.price);
+                    }
+                }
+            })
+        }
+        function addcart()
+        {
+            var data = $("#addcart").serialize();
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/clouddb_renewals','',false);?>",
+                data:data,
+                type:"post",
+                success:function(data){
+                    if(data.status == 1){
+                        alert(data.info);
+                        setTimeout(function(){window.location.href=data.url;},2500);
+                    }else{
+                        alert(data.info);
+                        setTimeout(function(){window.location.reload();},2500);
+                    }
+                }
+            })
+        }
+        /*确认购买*/
+        $(".paybtn").click(function(){
+            if($("#price").val() == "0")
+            {
+                alert("价格信息错误！");
+                return false;
+            }else if(tooken){
+                $("#payspan").hide();
+                $("#loadingspan").show();
+                /*$("#addcart").submit();*/
+                addcart();
+            }else{}
+        });
+    </script>
+</block>

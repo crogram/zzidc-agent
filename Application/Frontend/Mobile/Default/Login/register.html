@@ -1,0 +1,95 @@
+<include file="Login/header" />
+    <ul class="register-ul">
+      <li class="reg-line1 overflow-hidden">
+         <input type="text"  id="username" name="username"  value=""  class="tel-num pull-left" placeholder="用户名">
+      </li>
+      <li class="reg-line1 overflow-hidden">
+         <input type="password"  id="password" name="password" value=""  class="tel-num  pull-left" placeholder="密码8到20位数字和大小写字母">
+      </li>
+       <li class="reg-line1 overflow-hidden">
+         <input type="text"  id="user_mail" name="user_mail" value=""  class="tel-num  pull-left" placeholder="请输入邮箱">
+      </li>
+      <li class="reg-line1 overflow-hidden bb-none position-relative">
+         <input type="text" id="captcha" name="captcha" value="" class="tel-num pull-left" placeholder="请输入验证码">
+         <a href="javascript:void(0)" class="pull-left agent-yzmreg"><img id="captcha-img" onclick="this.src='<?php echo U('Frontend/Login/captcha', [], false);?>/type/frontend_register/time/'+Math.random();" src="<?php echo U('Frontend/Login/captcha', [], false);?>/type/frontend_register" class="pict-yamimg" alt="点击图片刷新验证码"></a>
+      </li>
+    </ul>
+    <section class="text-center">
+       <a href="javascript: ;" id="submit" class="login-a able-login mtop46">注册</a>
+    </section>
+  </body>
+</html>
+<include file="Login/script" />
+<script>
+	function alertNofunc(msg){
+		alertMsg("提示",msg,null,null);
+	}
+	$("#submit").click(function(){
+		var username=getVal("username");
+		var password=getVal("password");
+		var user_mail=getVal("user_mail");
+		var captcha=getVal("captcha");
+		if(!username){
+			alertMsg("提示","请输入您的用户名！",null,null);
+			return;
+		}
+		if(!password){
+			alertMsg("提示","请输入8到20位数字和大小写字母！",null,null);
+			return;
+		}
+		if(!user_mail){
+			alertMsg("提示","请输入邮箱！",null,null);
+			return;
+		}
+		if(!captcha){
+			alertMsg("提示","请输入验证码！",null,null);
+			return;
+		}
+		if(!checkUsername()){
+			refresh();
+			return ;
+		}
+		if(!checkPwd()){
+			refresh();
+			return ;
+		}
+	var result=check_param({"username":username,"password":password,"user_mail":user_mail,"confirm_password":password,"captcha":captcha},"clerk",true);//注册
+	if(result){
+		alertNoButton("恭喜您，注册成功！",turnpage,"<?php echo U('frontend/member/index','',false);?>");
+	}
+	});
+	function checkUsername(){
+		var username=getVal("username");
+  		if(!username){
+  			return false;
+  		}
+  		result=check_param({"username":username,"check_type":'1'},"checkLogin",true);
+  		if(!result){
+			alertMsg("提示","该用户已经存在啦，换一个试试吧 :)",null,null);
+			return result;
+		}
+		return result;
+	}
+	function checkPwd(){
+		var pwd=getVal("password");
+		var reg=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,20}$/;
+		var result=reg.test(pwd);
+		if(!result){
+			alertMsg("提示","请输入8到20位数字和大小写字母（不含空格）",null,null);
+			return result;
+		}
+		return result;
+	}
+	function checkCaptcha(){
+		var captcha=getVal("captcha");
+  		if(!username){
+  			return false;
+  		}
+  		result=check_param({"captcha":captcha,"type":'frontend_register',"check_type":'2'},"checkLogin",true);
+  		if(!result){
+			alertMsg("提示","验证码不对哦！",null,null);
+			return result;
+		}
+		return result;
+	}
+</script>

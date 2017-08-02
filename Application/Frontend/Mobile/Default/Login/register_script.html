@@ -1,0 +1,56 @@
+<script src="__FRONTEND_MOBILE_JS__zepto.min.js"></script>
+<script  type="text/javascript"  src="__FRONTEND_MOBILE_JS__layer_mobile/layer.js" charset="utf-8"></script>
+<script type="text/javascript">
+	function alertMsg(title,content,fun,param){
+		layer.open({
+			  title: [
+			    title,
+			    'background-color:#009de0; color:#fff;'
+			  ]
+			  ,anim: 'up'
+			  ,content: content
+			  ,btn: ['确认', '取消']
+			  ,yes:function(index){
+				  if(fun){
+					  fun(index,param); 
+				  }else{
+					  layer.close(index);
+				  }
+			  },
+			  no:function(){
+				  layer.close();
+			  }
+			});
+	}
+  function alerttip(content){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+		  ,time: 3
+		});
+  }
+  function alerttips(content,fun,param){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;'
+		  ,time: 3
+		  ,end:function(index){
+			 fun(param); 
+		  }
+		});
+  }
+  
+  function alertNoButton(msg,func,param){
+  	layer.open({
+			  content: msg
+			  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+			  ,time: 3,
+			  end:function(index){
+			  	if(func){
+					func(index,param);
+			  	}
+			  }
+		});
+  }
+  
+	</script>

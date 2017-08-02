@@ -1,0 +1,76 @@
+<?php foreach($search as $k => $v):?>
+
+	<?php if( $v['html_type'] == 'select' ):?>
+	
+		<div class="inline">
+				<div class="input-group ">
+			<select class="form-control col-xs-2"  id="<?php echo $k;?>" name="<?php echo $k;?>" >
+				  <option value=''>请选择<?php echo $v['display_name'];?> </option>
+				  
+				  <?php foreach($v['data'] as $kk => $vv ):?>
+				  	<option value="<?php echo $kk;?>"  
+				  		<?php $request[$k] = is_numeric($request[$k]) ? (int)$request[$k]: $request[$k];
+				  		echo $request[$k] === $kk ? 'selected="selected"': '';?>
+				  	>
+				  		<?php echo $vv;?>
+				  	</option>
+				  <?php endforeach;?>
+				  
+			</select>
+			</div>
+		</div>
+		
+	<?php elseif( $v['html_type'] == 'date' ):?>
+	<div class="inline">
+		<div class="input-group ">
+			<input class="form-control date-picker input-small" 
+			id="" name="<?php echo $k.$v['start_name'];?>"  
+			value="<?php echo $request[ $k.$v['start_name'] ];?>"
+			placeholder="<?php echo $v['display_name'].'开始'?>"
+			 type="text" data-date-format="yyyy-mm-dd">
+		</div>
+		<div class="input-group ">
+			<input class="form-control date-picker input-small" 
+			id="" name="<?php echo $k.$v['end_name'];?>"  
+			value="<?php echo $request[ $k.$v['end_name'] ];?>"
+			placeholder="<?php echo $v['display_name'].'结束'?>"
+			type="text" data-date-format="yyyy-mm-dd">
+		</div>
+	</div>
+	
+	<?php elseif( $k == 'key' ):?>
+	
+		<div class="inline">
+			<div class="input-group ">
+			<select class="form-control col-xs-2"  id="key" name="key" >
+			  <option value="">请选择搜索项目 </option>
+			  <?php foreach( $v as $kk => $vv ):?>
+			  <option value="<?php echo $kk?>"  
+			  		<?php echo $request[$k] == $kk ? 'selected="selected"': '';?>
+			  >
+			  		<?php echo $vv;?>
+			  </option>
+			  <?php endforeach;?>
+			</select>
+			</div>
+		</div>
+		
+		<div class="inline">
+			<div class="input-group ">
+				<input type="text"  name="value"  
+					class="form-control  input-small"  
+					placeholder="请选输入搜索内容" 
+					value="<?php echo empty($request['value']) ? '': $request['value'];?>"
+					/>
+				<span class="input-group-btn">
+					<a href="javascript:void(0);" class="btn  btn-info btn-sm" onclick="formSearch();">
+						<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+						
+					</a>
+				</span>
+			</div>
+		</div>
+	<?php endif;?>
+	
+<?php endforeach;?>
+

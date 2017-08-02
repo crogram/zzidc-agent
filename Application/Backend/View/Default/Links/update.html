@@ -1,0 +1,194 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					网站设置
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a  href="<?php echo U('Backend/Links/index', [  ], false);?>">友情链接列表</a>
+					&amp; 修改友情链接
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Links/index', [  ], false);?>">友情链接列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Links/store', [ 'id' => $entity['id'] ], false);?>" role="form" method="post" name="update" id="update" enctype="multipart/form-data">
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">
+				友情链接编号
+			</label>
+
+			<div class="col-sm-9">
+
+				<input type="text" readonly="readonly" disable="disable"  id="id"  value="<?php echo $entity['id'];?>" class="col-xs-10 col-sm-5">
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="link_name">
+				友情链接名称：
+			</label>
+
+			<div class="col-sm-9">
+			<input type="text" id="link_name" name="link_name"  value="<?php echo $entity['link_name'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="state">
+				是否展示：
+			 </label>
+
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" name="state" id="state">
+						<?php foreach($state as $k => $v):?>
+							<option value="<?php echo $k;?>" <?php if($k == $entity['state']):?>selected="selected"<?php endif;?> >
+								<?php echo $v;?>
+							</option>
+						<?php endforeach;?>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="link_url">
+				友情链接地址：
+			 </label>
+
+			<div class="col-sm-9">
+				<input type="text"  name="link_url"  id="link_url"   value="<?php echo $entity['link_url'];?>" class="col-xs-10 col-sm-5" >
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="link_explain">
+				 友情链接说明：
+			 </label>
+
+			<div class="col-sm-9">
+				<textarea  id="link_explain" name="link_explain" class="limited col-xs-10 col-sm-5" maxlength="100"><?php echo $entity['link_explain'];?></textarea>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit" >
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						修改
+					</button>
+					<a class="btn btn-info" href="<?php echo U('Backend/Links/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script type="text/javascript">
+
+$('textarea.limited').inputlimiter({
+	remText: '还可以在输入%n个字',
+	limitText: '最多只允许输入 %n个字.'
+});
+
+	function updater(form){
+		form.submit();
+	}
+	$("#update").validate({
+		submitHandler:function(form){
+			updater(form);
+        },
+		onclick:false,
+		onfocusout:false,
+		onkeyup:false,
+		errorPlacement: function (error, element){
+			var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+
+			$("#update").before($alert);
+
+		},
+		rules:{
+			product_price:{
+				required:true,
+				number:true,
+			  },
+		  	month:{
+				required:true,
+				digits:true,
+			},
+			type:{
+				required:true,
+				number:true,
+			}
+		},
+	  	messages:{
+	  		product_price:{
+				required:"产品价格必须填",
+				number:"请输入数字作为价格",
+		  	},
+		  	month:{
+			   required:"购买时间不能为空",
+			   digits:"购买时间必须是整数"
+			 },
+			type:{
+				required:"您忘记选择价格类型了",
+				number:"价格类型参数非法"
+			}
+		}
+	});
+
+</script>
+
+</block>

@@ -1,0 +1,229 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>快云VPS管理</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">快云VPS</div>
+                <a href="<?php echo U('frontend/Help/help_retrieval',[keywords=>'快云VPS'],false);?>" target="_blank" class="server-help pull-right">快云VPS帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab "><a  href="<?php echo U('frontend/fastvps/fastvpslist', '', false);?>">快云VPS<em class="chenggong">0</em></a></li>
+                        <li class="ky-tab ky-tab--current"><a  href="<?php echo U('frontend/fastvps/fastvpsrenew', '', false);?>">待续费业务<em class="chuli">0</em></a></li>
+                    </ul>
+                </div>
+                <div class="server-operates clearfix margin-bottom-20">
+                    <form action="<?php echo U('frontend/fastvps/fastvpsrenew', '', false);?>"  class="pull-left" method="post">
+                        <input type="text"  name="select"  class="pull-left ky-input-reset search-group-input" placeholder="输入标识、产品名称、备注">
+                        <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                    </form>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="8%">业务编号</th>
+                        <th width="17%">IP地址/备注</th>
+                        <th width="10%">线路/状态</th>
+                        <th>系统</th>
+                        <th width="14%">产品名称/类型</th>
+                        <if condition="$Think.get.order eq ASC">
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/fastvps/fastvpsrenew', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a></th>
+                            <else/>
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/fastvps/fastvpsrenew', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a></th>
+                        </if>
+                        <th width="13%">操作</th>
+                    </tr>
+                    </thead>
+                    <volist name="info"  id="data">
+                        <tbody>
+                        <tr>
+                            <td><p>{$data.business_id}</p></td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">业务标识：{$data.ip_address} </div>
+                                <div class="text-stress">内网IP：10.122.86.130 </div>
+                                <div>
+                                    备注：<span id="bz_{$data.yid}"><if condition="$data.beizhu eq null">未备注,添加备注信息<else/>{$data.beizhu}</if></span>
+                                    <input  type="hidden"  value="{$data.beizhu}"  id="remark_{$data.yid}"/>
+                                    <a href="javascript:void(0);" class="change-name edit-name margin-left-10" title="修改备注"  onclick="changeMarkdb('{$data.yid}')"></a>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <p><if condition="$data.area_code eq 4001 ">郑州机房<elseif condition="$data.area_code eq 4002" />香港机房<elseif condition="$data.area_code eq 4003" />北京机房</if></p>
+                                <if condition="$data.state == 1">
+                                    <span class="text-success ny-state-icon server-state-run">正常</span>
+                                    <elseif condition="$data.state == 3"/>
+                                    <span class="text-success ny-state-icon server-state-stop">过期</span>
+                                    <elseif condition="$data.state == 2"/>
+                                    <span class="text-success ny-state-icon server-state-stop">删除</span>
+                                    <elseif condition="$data.state == 4"/>
+                                    <span class="text-success ny-state-icon server-state-stop">失败</span>
+                                </if>
+                            </td>
+                            <td>{$data.system_type}</td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-muted">
+                                    <span>产品名称：{$data.product_name}</span>
+                                </div>
+                                <div class="text-muted">
+                                    <span>类型：VMWare</span>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">开通时间：{$data.open_time}</div>
+                                <div class="text-stress">到期时间：{$data.overdue_time}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == 2 || $data['state'] == 4){?>
+                                — —
+                                <?php }else{?>
+                                <?php if($data['free_trial'] == 1){?>
+                                <div>
+                                    <?php if($data['state'] == 1){?>
+                                    <a href="<?php echo U('frontend/Jump/user_call_self', [ 'business_id' => $data['business_id'] ,'api_name' => $data['api_name'],'business_mark'=> $data['ip_address'],'input_name' =>$data['api_ptype'] ], false);?>" target= _blank>管理</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <?php }?>
+                                    <a href="<?php echo U('frontend/fastvps/fastvps_onformal',['fastvps_id'=>$data['yid']],false);?>">转正</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/fastvps/memberSync', ['business_id' => $data['business_id'],'ptype' =>$data['api_ptype']], false);?>">同步</a>
+                                </div>
+                                <?php }elseif($data['free_trial'] == 0){?>
+                                <div>
+                                    <?php if($data['state'] == 1){?>
+                                    <a href="<?php echo U('frontend/Jump/user_call_self', [ 'business_id' => $data['business_id'] ,'api_name' => $data['api_name'],'business_mark'=> $data['ip_address'],'input_name' =>$data['api_ptype'] ], false);?>" target= _blank>管理</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <?php } ?>
+                                    <a href="<?php echo U('frontend/fastvps/fastvps_renewals',['fastvps_id'=>$data['yid']],false);?>" class="renew-server">续费</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/fastvps/memberSync', ['business_id' => $data['business_id'],'ptype' =>$data['api_ptype']], false);?>">同步</a>
+                                </div>
+                                <?php if($data['state'] == 1){?>
+                                <div>
+                                    <a href="<?php echo U('frontend/fastvps/fastvps_appreciation',['fastvps_id'=>$data['yid']],false);?>">增值</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <a href="<?php echo U('frontend/fastvps/fastvps_uplevel',['fastvps_id'=>$data['yid']],false);?>">升级</a>
+                                </div>
+                                <?php }}} ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="7">
+                                <p>暂无30天内到期业务！</p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40"  id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var tooken = true;
+        function tbajax(tb)
+        {
+            if(tooken)
+            {
+                tooken = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    alert(data.info);
+                    setTimeout(function(){window.location.reload();},1500);
+                },'json');
+            }
+        }
+        function changeMarkdb(id){
+            var remark = $("#bz_"+id).text();
+            if(remark=="" ||  remark==null){
+                $("#remark").val("请输入备注信息");
+            }else{
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                resizable:false,
+                width: 400,
+                buttons: [
+                    {
+                        text: "确认",
+                        click: function() {
+                            var bz = $("#remark").val();
+                            $.post('<?php echo U("frontend/fastvps/remark",array(),false)?>', {
+                                "remark": bz,
+                                "id": id
+                            }, function (date) {
+                                if (date == "ok") {
+                                    $("#bz_"+id).text(bz);
+                                    alert('成功');
+                                } else {
+                                    alert('失败');
+                                }
+                            }, 'json');
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "重置",
+                        click: function() {
+                            document.getElementById("remark").value="";
+                        }
+                    },
+                    {
+                        text: "取消",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+       <script>
+    $(function(){
+    	state_count("1");
+    	state_count("2");
+    });
+    function state_count(state){
+    	$.post('<?php echo U("frontend/fastvps/state_count",array(),false)?>',{"state":state},function(date){
+    		if(date.status == "ok"){
+    			if(state == 1){
+    				$(".chenggong").text(date.sum);
+    			}else if(state == 2){
+    				$(".chuli").text(date.sum);
+    			}
+    		}
+    	},'json');
+    }
+    </script>
+</block>

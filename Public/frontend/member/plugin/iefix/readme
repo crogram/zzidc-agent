@@ -1,0 +1,26 @@
+1.DD_belatedPNG
+简介：DD_belatedPNG修复IE6下PNG图片不透明解决方案
+教程：http://www.dillerdesign.com/experiment/DD_belatedPNG/
+使用方法：
+<!--[if lte IE 6]> 
+<script src="DD_belatedPNG_0.0.8a.js"></script> 
+<script type="text/javascript"> 
+  /* 将 .png_bg 改成你应用了透明PNG的CSS选择器*/ 
+  DD_belatedPNG.fix('div, ul, img, li, input , a, .png_bg'); 
+</script> 
+<![endif]-->
+
+
+2.DD_roundies
+简介：DD_roundies是一个圆角边框创建脚本，不需要借助任何图片
+教程：http://www.dillerdesign.com/experiment/DD_roundies/
+使用方法：
+<script src="DD_roundies.js"></script>
+<script>
+  /* 仅支持IE */
+  DD_roundies.addRule('.roundify', '10px');
+  /* 仅支持IE varying radii, */
+  DD_roundies.addRule('.something_else', '10px 4px');
+  /* 所有浏览器都支持 varying radii */
+  DD_roundies.addRule('.yet_another', '5px', true);
+</script>

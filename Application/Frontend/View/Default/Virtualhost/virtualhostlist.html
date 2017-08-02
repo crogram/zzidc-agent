@@ -1,0 +1,271 @@
+z`<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a><if condition="$Think.get.virtual_type == 0">
+                虚拟主机管理<elseif condition="$Think.get.virtual_type == 1"/>
+                香港主机管理<elseif condition="$Think.get.virtual_type == 2"/>
+                美国主机管理<elseif condition="$Think.get.virtual_type == 3"/>
+                云虚拟主机管理</if></a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">
+                    <if condition="$Think.get.virtual_type == 0">
+                        虚拟主机<elseif condition="$Think.get.virtual_type == 1"/>
+                        香港主机<elseif condition="$Think.get.virtual_type == 2"/>
+                        美国主机<elseif condition="$Think.get.virtual_type == 3"/>
+                        云虚拟主机</if>
+                </div>
+                <a href="<?php echo U('frontend/Help/help_retrieval',[keywords=>'虚拟主机'],false);?>" target="_blank" class="server-help pull-right">虚拟主机帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab ky-tab--current" style="cursor:pointer">
+                            <a>
+                                <if condition="$Think.get.virtual_type == 0">
+                                    虚拟主机<elseif condition="$Think.get.virtual_type == 1"/>
+                                    香港主机<elseif condition="$Think.get.virtual_type == 2"/>
+                                    美国主机<elseif condition="$Think.get.virtual_type == 3"/>
+                                    云虚拟主机</if><em class="chenggong">0</em></a></li>
+                           <li class="ky-tab" style="cursor:pointer">
+                            <a href="<?php echo U('frontend/virtualhost/virtualhostrenew', ['virtual_type'=>$_GET['virtual_type']], false);?>">待续费业务<em class="chuli">0</em></a></li>
+                    </ul>
+                </div>
+                <div class="server-operates clearfix margin-bottom-20">
+                    <form action="<?php echo U('frontend/virtualhost/virtualhostlist', ['virtual_type'=>$_GET['virtual_type']], false);?>"  class="pull-left" method="post">
+                        <input type="text"  name="select"  class="pull-left ky-input-reset search-group-input" placeholder="输入标识、产品名称、备注、业务编号">
+                        <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                    </form>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="10%">业务编号</th>
+                        <th width="15%">业务标识/备注</th>
+                        <th width="15%">绑定域名/状态</th>
+                        <th width="10%">系统/脚本语言</th>
+                        <th width="15%">产品类型</th>
+                        <if condition="$Think.get.order eq ASC">
+                            <th width="20%">开通日期/到期日期
+                                <if condition="$Think.get.virtual_type != null">
+                                    <a  href="<?php echo U('frontend/virtualhost/virtualhostlist', [ 'virtual_type'=>$_GET['virtual_type'],'order'=>'DESC'], false);?>"  class="filter-icon"></a>
+                                    <else />
+                                    <a  href="<?php echo U('frontend/virtualhost/virtualhostlist', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a>
+                                </if>
+                            </th>
+                            <else/>
+                            <th width="20%">开通日期/到期日期
+                                <if condition="$Think.get.virtual_type != null">
+                                    <a  href="<?php echo U('frontend/virtualhost/virtualhostlist', [ 'virtual_type'=>$_GET['virtual_type'],'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+                                    <else />
+                                    <a  href="<?php echo U('frontend/virtualhost/virtualhostlist', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+                                </if>
+                            </th>
+                        </if>
+                        <th width="15%">操作</th>
+                    </tr>
+                    </thead>
+                    <volist name="info"  id="data">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <p>{$data.business_id}</p>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">业务标识：{$data.domain_name} </div>
+                                <div>
+                                    备注：<span id="bz_{$data.yid}"><if condition="$data.beizhu eq null">未备注,添加备注信息<else/>{$data.beizhu}</if></span>
+                                    <input  type="hidden"  value="{$data.beizhu}"  id="remark_{$data.yid}"/>
+                                    <a href="javascript:void(0);" class="change-name edit-name margin-left-10" title="修改备注"  onclick="changeMarkdb('{$data.yid}')"></a>
+                                </div>
+                            </td>
+                            <td  class="ky-td-multi-lines">
+                                <p>{$data.binddomain}</p>
+                                <if condition="$data.state == 1">
+                                    <span class="text-success ny-state-icon server-state-run">正常</span>
+                                    <elseif condition="$data.state == 3"/>
+                                    <span class="text-success ny-state-icon server-state-stop">过期</span>
+                                    <elseif condition="$data.state == 2"/>
+                                    <span class="text-success ny-state-icon server-state-stop">删除</span>
+                                    <elseif condition="$data.state == 4"/>
+                                    <span class="text-success ny-state-icon server-state-stop">失败</span>
+                                </if>
+                            </td>
+                            <td>
+                                <p>操作系统：<if condition="$data.system_type == 1">Windows<elseif condition="$data.system_type == 0"/>Linux</if></p>
+                                <span>脚本语言：<if condition="$data.system_type == 1">ASP.NET<elseif condition="$data.system_type == 0"/>PHP</if></span>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-muted">
+                                    <span>产品名称：{$data.product_name}</span>
+                                </div>
+                                <div class="text-muted">
+									<span>
+										类型：<if condition="$data.virtual_type eq 0 ">
+                                       <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'host'],false);?>">国内主机</a><elseif condition="$data.virtual_type eq 1" />
+                                       <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'hkhost'],false);?>">香港主机</a><elseif condition="$data.virtual_type eq 2" />
+                                        <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'usahost'],false);?>">美国主机</a><elseif condition="$data.virtual_type eq 3" />
+                                        <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudVirtual'],false);?>">云虚拟主机</a><elseif condition="$data.virtual_type eq 4" />
+                                        <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'dedehost'],false);?>">织梦主机</a></if>
+									</span>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">开通时间：{$data.open_time}</div>
+                                <div class="text-stress">到期时间：{$data.overdue_time}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <if condition="($data.state == 2)or($data.state == 4)">
+                                    — —
+                                    <else/>
+                                    <if condition="$data.free_trial == 1">
+                                        <div>
+                                            <if condition="$data.state == 1">
+                                                <a href="<?php echo U('frontend/Jump/user_call_self',['business_id'=>$data['business_id'],'api_name'=>$data['api_name'],'business_mark'=> $data['ip_address'],'input_name' =>$data['api_ptype'] ], false);?>" target= _blank>管理</a>
+                                                <span class="text-muted operate-spacing">|</span>
+                                            </if>
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhost_onformal',['virtualhost_id'=>$data['yid'],'virtual_type'=>$_GET['virtual_type']],false);?>">转正</a>
+                                            <span class="text-muted operate-spacing">|</span>
+                                            <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/virtualhost/memberSync',['business_id'=>$data['business_id'],'ptype'=>$data['api_ptype'],'virtual_type'=>$_GET['virtual_type']], false);?>">同步</a>
+                                        </div>
+                                        <elseif condition="$data.free_trial == 0"/>
+                                        <div>
+                                            <if condition="$data.state == 1">
+                                                <a href="<?php echo U('frontend/Jump/user_call_self', [ 'business_id' => $data['business_id'] ,'api_name' => $data['api_name'],'business_mark'=> $data['ip_address'],'input_name' =>$data['api_ptype'] ], false);?>"  target= _blank>管理</a>
+                                                <span class="text-muted operate-spacing">|</span>
+                                            </if>
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhost_renew', [ 'virtualhost_id'=>$data['yid'],'virtual_type'=>$_GET['virtual_type']], false);?>" class="renew-server">续费</a>
+                                            <span class="text-muted operate-spacing">|</span>
+                                            <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/virtualhost/memberSync',['business_id'=>$data['business_id'],'ptype'=>$data['api_ptype'],'virtual_type'=>$_GET['virtual_type']], false);?>">同步</a>
+                                        </div>
+                                        <if condition="$data.state == 1">
+                                            <div>
+                                                <a href="<?php echo U('frontend/virtualhost/virtualhost_appreciation', [ 'virtualhost_id'=>$data['yid'],'virtual_type'=>$_GET['virtual_type']], false);?>">增值</a>
+                                                <span class="text-muted operate-spacing">|</span>
+                                                <a href="<?php echo U('frontend/virtualhost/virtualhost_uplevel', [ 'virtualhost_id'=>$data['yid'],'virtual_type'=>$_GET['virtual_type']], false);?>">升级</a>
+                                            </div>
+                                        </if>
+                                    </if>
+                                </if>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="7">
+                                <p>您好像没有相关产品哦，<a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'host'],false);?>" class="g009">点此了解一下吧！</a></p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40" id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var tooken = true;
+        function tbajax(tb)
+        {
+            if(tooken)
+            {
+                tooken = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    alert(data.info);
+                    setTimeout(function(){window.location.reload();},1500);
+                },'json');
+            }
+        }
+        function changeMarkdb(id){
+            var remark = $("#bz_"+id).text();
+            if(remark=="" ||  remark==null){
+                $("#remark").val("请输入备注信息");
+            }else{
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                resizable:false,
+                width: 400,
+                buttons: [
+                    {
+                        text: "确认",
+                        click: function() {
+                                var bz = $("#remark").val();
+                                $.post('<?php echo U("frontend/virtualhost/remark",array(),false)?>', {
+                                    "remark": bz,
+                                    "id": id
+                                }, function (date) {
+                                    if (date == "ok") {
+                                    	$("#bz_"+id).text(bz);
+                                        alert('成功');
+                                    } else {
+                                        alert('失败');
+                                    }
+                                }, 'json');
+                                $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "重置",
+                        click: function() {
+                            document.getElementById("remark").value="";
+                        }
+                    },
+                    {
+                        text: "取消",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+    <script>
+    $(function(){
+    	state_count("1");
+    	state_count("2");
+    });
+    function state_count(state){
+    	$.post('<?php echo U("frontend/virtualhost/state_count",array(),false)?>',{"state":state,"virtual_type":"<?php echo $_GET['virtual_type'];?>"},function(date){
+    		if(date.status == "ok"){
+    			if(state == 1){
+    				$(".chenggong").text(date.sum);
+    			}else if(state == 2){
+    				$(".chuli").text(date.sum);
+    			}
+    		}
+    	},'json');
+    }
+    </script>
+</block>

@@ -1,0 +1,118 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					网站设置 &amp; 常用页面设置
+				</small>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+<!-- 页面主题/start -->
+
+
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#edit-about" aria-expanded="false">
+					<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+					关于我们
+				</a>
+			</li>
+
+			<li class="">
+				<a data-toggle="tab" href="#edit-payment" aria-expanded="true">
+					<i class="purple ace-icon fa fa-credit-card bigger-125"></i>
+					支付方式
+				</a>
+			</li>
+
+		</ul>
+
+		<div class="tab-content profile-edit-tab-content">
+			<!--  基本信息/开始 -->
+			<div id="edit-about" class="tab-pane active">
+				<h4 class="header blue bolder smaller">关于我们</h4>
+
+						<include file="System/pages-about" />
+
+			</div>
+			<!--  基本信息/结束 -->
+
+			<!--  联系方式/开始 -->
+			<div id="edit-payment" class="tab-pane ">
+
+				<h4 class="header blue bolder smaller">支付方式</h4>
+
+						<include file="System/pages-payment" />
+
+			</div>
+			<!--  联系方式/结束 -->
+
+		</div>
+	</div>
+
+</form>
+
+<!-- 页面主题/end -->
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+
+<js href="__COM_STATICS__ueditor/ueditor.config.js" />
+<js href="__COM_STATICS__ueditor/ueditor.all.min.js" />
+<script type="text/javascript">
+
+$(function(){
+	var ue_on_the_content = UE.getEditor('on_the_content',{
+		serverUrl :'{:U('Api/Ueditor/ueditor','',false)}',
+		//autoClearinitialContent : false,
+		//initialContent : '',
+	});
+	var ue_payment_content = UE.getEditor('payment_content',{
+		serverUrl :'{:U('Api/Ueditor/ueditor','',false)}',
+		//autoClearinitialContent : false,
+		//initialContent : '',
+	});
+})
+
+function configure(form_name) {
+	var url = "<?php echo U('Backend/System/pagesSetup', [], false);?>/form/"+form_name;
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		data: $('#form-'+form_name).serialize(),
+		url : url,
+		success : function(data){
+			if (data.status == 1) {
+				location.reload(true)
+			}else {
+				alertBox(data.info);
+			}
+		}
+	});
+}
+
+</script>
+
+</block>

@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+/* luanyongjian */
+/* 混合云 */
+.hhy-bg{background:url(../images/solution/hunheyun-bg.png) top center no-repeat;height:413px}
+.product-f40{padding-top:80px}
+.f40-hhy{font-size:40px;line-height:64px;height:64px}
+.product-detail{margin-top:10px;width:660px;font-size:14px;line-height:30px}
+.consultbtn{background:none;width:138px;height:36px;line-height:36px;font-size:14px;color:#fff;display:inline-block;margin-top:60px;text-align:center;border:1px solid #fff}
+.consultbtn:hover{color:#009de0;background:#fff}
+.cfff{color:#fff}
+.gainet-product-title h1{font-size:26px;font-weight:bold;text-align:center;line-height:30px;padding-top:10px}
+.gainet-product-title p{color:#999;text-align:center;line-height:22px}
+.hhycontainer-bg{background:#f6f7f8;padding-top:20px;padding-bottom:70px;overflow:hidden}
+.fangan{width:720px;margin:0 auto;text-align:center;font-size:14px;padding-top:20px}
+.ky-agent-body img{display:block;margin:30px auto}
+.ky-agent-4ul{padding:50px 0}
+.ky-agent-4ul ul li{float:left;position:relative;width:280px;margin:0 10px;height:120px;border:1px solid #e3e3e3}
+.ky-agent-4ul ul li a{display:block;width:280px;height:120px}
+.ky-agent-4ul ul li:hover{border:1px solid #0f9deb}
+.ky-agent-4ul ul li .webimg1{position:relative;top:45px;left:41px;}
+.ky-agent-4ul ul li .webimg2{position:relative;top:14px;left:90px;}
+.ky-agent-4ul ul li .webimg3{position:relative;top:19px;left:94px;}
+.ky-agent-4ul ul li .webimg4{position:relative;top:43px;left:64px;}
+.ky-agent-4ul ul li.nolt{margin-left:0}
+.ky-agent-4ul ul li.nort{margin-right:0}
+.ky-agent-4ul ul.overimg li{position:relative;display:block;box-shadow:0 0 10px #FFF;width:280px;height:120px;overflow:hidden}
+.light{cursor:pointer;position:absolute;left: -500px;top: 0;width:280px;height:120px;background-image: -moz-linear-gradient(0deg,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));background-image: -webkit-linear-gradient(0deg,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));transform: skewx(-25deg);-o-transform: skewx(-25deg);-moz-transform: skewx(-25deg);-webkit-transform: skewx(-25deg)}
+.ky-agent-4ul ul.overimg li:hover .light{ left:500px;-moz-transition:1.5s;-o-transition:1.5s;-webkit-transition:1.5s;transition:1.5s}
+/* 在线教育 */
+.jiaoyu-bg{background:url(../images/solution/jiaoyu-bg.png) top center no-repeat;height:413px}
+/* 互联网金融 */
+.jinrong-bg{background:url(../images/solution/jinrong-bg.png) top center no-repeat;height:413px}
+/* 通用网站 */
+.wangzhan-bg{background:url(../images/solution/wangzhan-bg.png) top center no-repeat;height:413px}

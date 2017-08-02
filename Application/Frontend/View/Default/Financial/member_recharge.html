@@ -1,0 +1,178 @@
+<extend name="Hyzx/member" />
+<block  name="links"></block>
+<block name="right">
+<style type="text/css">
+.dis{display:block;}
+.undis{display:none;}
+</style>
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>财务管理</a></li>
+            <li><a>在线充值</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">在线充值</div>
+            </div>
+            <div class="info-user-wanshan gff8 m-top20 clearfix">
+                <div class="pull-left">
+                    <i class="wanshan-icon mright10"></i>
+                    温馨提示：请输入充值的金额，可保留两位小数，例如：100.01
+                </div>
+            </div>
+            <div class="ky-form" style="padding-top: 20px;">
+                <div class="ky-tabs-container clearfix div-pay-tool">
+                    <ul class="text-center pull-left clearfix">
+                        <li id="tab5_1" class="ky-tab ky-tab--current"><a href="javascript:;" onClick="setView5(1)">在线充值</a></li>
+                    </ul>
+                </div>
+               <div id="tab5_01" class="dis">
+                    <form id="modify"  name="modify"  action="<?php echo U('frontend/financial/member_recharge_online','',false);?>" class="form-horizontal ky-form margin-bottom-60 tab-group-2"  method="get"  target= _blank>
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">充值金额：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <div class="input-contain">
+                                    <input type="text" class="ky-input-reset ky-label-long" name="money" id="money">
+                                    <span id="error_money" class="error-reminder gf00"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">充值方式：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <div class="input-contain">
+                                		<?php if($site_config['pay_zfb'] == 0 && $site_config['pay_sft'] == 0 && $site_config['pay_sft'] == 0 ){?>
+                                		<label class="radio-inline">
+                                            <span style="color: red;font-size: medium;">该网站还未添加任何支付方式，请联系管理员添加</span>
+                                        </label>
+                                		<?php } if($site_config['pay_zfb'] == '1'){?>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="paymode" value="alipay" checked="checked">
+                                            <img src="__FRONTEND_MEMBER__/images/alipay.jpg">
+                                        </label>
+                                        <?php }  if($site_config['pay_cft'] == '1'){?>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="paymode" value="tenpay">
+                                            <img src="__FRONTEND_MEMBER__/images/cft.jpg" height="45px" width="129">
+                                        </label>
+                                        <?php } if($site_config['pay_sft'] == '1'){?>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="paymode" value="shengpay">
+                                            <img src="__FRONTEND_MEMBER__/images/sft.png" >
+                                        </label>
+                                        <?php }?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label">&nbsp;</div>
+                            <div class="col-xs-10 ky-form-control">
+                            <?php if($site_config['pay_zfb'] == 1 ||  $site_config['pay_sft'] == 1 || $site_config['pay_sft'] == 1 ){?>
+                                <button class="btn btn-default chongzhi-btn"  type="submit">确认</button>
+                            <?php }?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+    <script src="__COM_JS__messages_zh.js"></script>
+    <script src="__FRONTEND_JS__jquery.overlay.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+        	   $('#money').on('keyup',function(){
+        	        var tmptxt=$(this).val();
+        	        $(this).val(tmptxt.replace(/[^0-9.]/g,''));
+        	        var temtxt = $(this).val();
+        	        if (temtxt.match(/\./g)) {
+        	            // if(point == 1){
+        	                 $(this).val(temtxt.substr(0,temtxt.indexOf('.')+3));
+        	            // }else{
+        	               // $(this).val(temtxt.substr(0,temtxt.indexOf('.')));
+        	            // }
+        	        }
+        	        if (!temtxt == true) {
+        	            $(this).val('');
+        	        }
+        	    }).on('paste',function(){
+        	        var tmptxt=$(this).val();
+        	        $(this).val(tmptxt.replace(/[^0-9.]/g,''));
+        	        var temtxt = $(this).val();
+        	        if (temtxt.match(/\./g)) {
+        	            // if(point == 1){
+        	                $(this).val(temtxt.substr(0,temtxt.indexOf('.')+3));
+        	            // }else{
+        	              //  $(this).val(temtxt.substr(0,temtxt.indexOf('.')));
+        	            // }
+        	        }
+        	        if (!temtxt == true) {
+        	            $(this).val('');
+        	        }
+        	    }).css("ime-mode", "disabled");
+        });
+        </script>
+    <script type="text/javascript">
+        var path = '<?php echo U("frontend/financial/member_transactions_list","",false)?>';
+        var modal = $('<div><div style="margin-top:40px;width:220px;margin-left:auto;margin-right:auto;"><input class="btn btn-default chongzhi-btn" type="button" onclick="window.location.href=\''+path+'\'"; value="支付完成"/></div><div style="color:blue;margin-top:30px;width:400px;margin-left:auto;margin-right:auto;">提示：如果支付宝支付成功，本网站的支付订单为失败，请联系网站管理员。</div></div>').attr('id', 'modal').css({background: '#fff',zIndex:'3000',padding: '10px',width: '640px',height: '240px',margin: '0 auto',opacity: 1,position: 'absolute',top: '30%',left: '30%'});
+        function updater(form){
+            form.submit();
+        }
+        $("#modify").validate({
+            submitHandler:function(form){
+            	$(this).overlay({
+                    effect: 'fade',
+                    opacity: 0.8,
+                    onShow: function() {
+                        $('body').append(modal);
+                    },
+                    onHide: function() {
+                        modal.remove();
+                    }
+                })
+                updater(form);
+            },
+            errorPlacement: function(error, element) {
+                element.next().show();
+                error.appendTo(element.next());
+            },
+            rules:{
+                money:{
+                    required:true,
+                    number:true
+                }
+            },
+            messages:{
+                money:{
+                    required:"请输入要充值的金额",
+                    number: "请输入有效的金额数字"
+                }
+            }
+        });
+        function setView5(n){
+            for(var i=1;i<=5;i++){
+                if(i == n){
+                    $('#tab5_0'+i).removeClass("undis");
+                    $('#tab5_0'+i).addClass("dis");
+                    $('#tab5_'+i).removeClass("");
+                    $('#tab5_'+i).addClass("ky-tab--current");
+                }else{
+                    $('#tab5_'+i).removeClass("ky-tab--current");
+                    $('#tab5_'+i).addClass("");
+                    $('#tab5_0'+i).removeClass("dis");
+                    $('#tab5_0'+i).addClass("undis");
+                }
+            }
+        }
+    </script>
+</block>

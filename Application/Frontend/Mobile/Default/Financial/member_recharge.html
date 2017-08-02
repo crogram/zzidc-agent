@@ -1,0 +1,41 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+<nav class="ky-title p-fixed">
+    <a href="javascript:;" onclick="window.history.back();" class="return-icona"></a>在线充值
+    <!--<a href="<?php echo U('frontend/financial/member_transactions_list','',false);?>" class="my-detail">明细</a>-->
+</nav>
+<form id="modify" name="modify" action="<?php echo U('frontend/financial/member_recharge_online','',false);?>" method="get" target= _blank>
+<section class="mtppd overflow-hidden">
+    <p class="cur-bal">当前余额：{$member_info.balance.0}.{$member_info.balance.1}</p>
+    <p class="recharge-p1">充值金额(元)</p>
+    <input type="text" name="money" value="" id="money" class="bal-inp" placeholder="请输入充值金额">
+    <ul class="warm-tip">
+       <li class="mtop14">温馨提示:</li>
+       <li>请输入充值的金额，可保留两位小数，例如：100.01</li>
+    </ul>
+    <?php if($site_config['pay_zfb'] != 1 && $site_config['pay_sft'] != 1 && $site_config['pay_sft'] != 1){?>
+    <section class="zfb-img">
+        <span style="color: red;">该网站暂未添加任何支付方式，请联系管理员添加</span>
+    </section>
+    <?php }else{ ?>
+    <label for="paymode">支付方式：</label>
+    <select name="paymode" id="paymode">
+        <?php if($site_config['pay_zfb'] == '1'){?>
+        <option value="alipay">支付宝</option>
+        <?php }  if($site_config['pay_cft'] == '1'){?>
+        <option value="tenpay">财付通</option>
+        <?php } if($site_config['pay_sft'] == '1'){?>
+        <option value="shengpay">财付通</option>
+        <?php }?>
+    </select>
+    <?php } ?>
+    <section class="recharge">
+        <?php if($site_config['pay_zfb'] == 1 ||  $site_config['pay_sft'] == 1 || $site_config['pay_sft'] == 1 ){?>
+        <a href="javascript:;" onclick="$('#modify').submit();" class="rechargea1">充值</a>
+        <?php }?>
+    </section>
+</section>
+</form>
+</block>
+<block name="script"></block>

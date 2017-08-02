@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+<base href="<?php echo U('frontend/index/index','',false);?>" />
+<meta charset="utf-8">
+<!-- uc强制竖屏 -->
+<meta name="screen-orientation" content="portrait">
+<!-- QQ强制竖屏 -->
+<meta name="x5-orientation" content="portrait">
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+	name="viewport">
+<title><?php if($_GET['type'] == 'fastvps'){echo "快云VPS";}elseif($_GET['type'] == 'hkvps'){echo "香港VPS";}elseif($_GET['type'] == 'domesticvps'){echo "特卖VPS";}else{echo "参数错误";}?>-快云触屏版
+</title>
+<link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__base.css">
+<link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__ky-type.css">
+</head>
+<body class="product-cvm-select" style="height: 100%">
+	<div class="layout">
+		<!--navigation start-->
+		<div class="nav">
+			<h1>
+				<a href="javascript:history.go(-1);" class="return-icona"></a>
+				<?php if($_GET['type'] == 'fastvps'){echo "快云VPS";}elseif($_GET['type'] == 'hkvps'){echo "香港VPS";}elseif($_GET['type'] == 'domesticvps'){echo "特卖VPS";}else{echo "参数错误";}?>
+			</h1>
+		</div>
+		<!--navigation end-->
+		<div class="middle_helper"></div>
+		<div class="type">
+			<div class="type-inner">
+				<?php $product_list2=$product_list;$k=0; foreach($product_list as $key=>$val){ ?>
+				 <?php if($val['area_code'] == '4001'){?>
+				<div class="type-title type-title-select" index="<?php echo $k;?>">
+					<?php echo mb_substr($val['product_name'],- 3,3,'utf-8');?>
+				</div>
+				<?php }?>
+				<?php }?>
+			</div>
+		</div>
+		<div class="content" style="display: block;">
+			<div class="pd-box">
+				<div class="pd-set">
+					<?php $k=0; foreach($product_list as $key=>$val){ ?><!--  1 -->
+					<div class="pd-card card-1" index="<?php echo $k;?>" key="primer">
+						<div class="pd-card-inner">
+							<div class="pd-card-setting">
+								<table class="card-table">
+									<tbody>
+									 <?php if($val['area_code'] == '4001'){?>
+									<?php foreach($val['config'] as $config_key=>$config_val){?>
+										  <?php if($val['product_name'] == $config_val['product_name']){?>
+											<tr>
+												<?php if($config_val['en_name'] == 'cpu_info'){?>
+												<th class="th-text">CPU</th>
+												<td colspan="2">
+													<p class="text"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+												</td>
+												<?php }?>
+												<?php if($config_val['en_name'] == 'memory_config'){?>
+												<th class="th-text">内存</th>
+												<td colspan="2">
+													<p class="text"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+												</td>
+												<?php }?>
+												<?php if($config_val['en_name'] == 'network_bandwidth'){?>
+												<th class="th-text">带宽</th>
+												<td colspan="2">
+													<p class="text"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+												</td>
+												<?php }?>
+												<?php if($config_val['en_name'] == 'disk_config'){?>
+												<th class="th-text">硬盘</th>
+												<td colspan="2">
+													<p class="text"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+												</td>
+												<?php }?>
+											</tr>
+											<?php }?>
+									 <?php }?>
+									<?php foreach($val['price_list'] as $price_key=>$price_value){ ?>
+									 	<?php if($price_value['month'] == 1){?>
+										<tr class="lh30">
+											<th><span>郑州机房</span></th>
+											<td colspan="2"><span class="price"> <strong
+													class="price_holder"><?php echo $price_value['product_price'];?></strong>元/月起
+											</span></td>
+										</tr>
+										<?php }?>
+									<?php }?>
+									<?php foreach($product_list2 as $key2=>$val2){
+													 if($val2['api_name'] == $val['api_name'] && $val2['area_code'] == '4003'){?>
+									<?php foreach($val2['price_list'] as $price_key2=>$price_value2){ ?>
+									 	<?php if($price_value2['month'] == 1){?>
+										<tr class="lh30">
+											<th><span>北京机房</span></th>
+											<td colspan="2"><span class="price"> <strong
+													class="price_holder"><?php echo $price_value2['product_price'];?></strong>元/月起
+											</span></td>
+										</tr>
+										<?php }?>
+									<?php }?>
+									<?php }?>
+									<?php }?>
+									<?php }?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="ct-op">
+							<a id="<?php echo $val['id'];?>"   onclick="submitBuy(<?php echo $val['id'];?>,0)" class="op-btn submit_btn" key="primer"
+								_hot_tag="m.CVM.type1">我要这台</a>
+						</div>
+						<div class="pd-card-bg"></div>
+					</div>
+					<?php }?><!--  1 -->
+				</div>
+			</div>
+		</div>
+		<input id="countssize" type="hidden" value="6" />
+	</div>
+</body>
+<script>
+			var countssize = document.getElementById("countssize").value;
+			var ITEM_COUNT = isNaN(parseInt(countssize)) ? 0
+					: parseInt(countssize);
+		</script>
+<script src="__FRONTEND_MOBILE_JS__zepto.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="__FRONTEND_MOBILE_JS__shop.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="__FRONTEND_MOBILE_JS__slide-ky.js" type="text/javascript"
+	charset="utf-8"></script>
+<script>
+  	Shop.prototype.init();
+</script>
+<script>
+function submitBuy(id,type){
+	var domain = "<?php echo U('frontend/vps/vps_buy','',false);?>";
+	var pathinfo = "/product/"+id+"/type/"+type;
+	var url = domain+pathinfo;
+	window.location.href = url;
+}
+</script>
+</html>

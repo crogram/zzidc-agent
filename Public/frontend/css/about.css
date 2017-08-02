@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+/*luanyongjian*/
+/*公司简介*/
+.sugg-bg{background:#d5c9b8 url(../images/20160819img1.png) no-repeat top center;height:159px;overflow:hidden;width:100%}
+.sugg-tit{font-size:30px;line-height:38px;margin-top:60px}
+.sugg-tit i{width:3px;height:38px;display:inline-block;background:#009fd9;margin-right:15px;vertical-align:middle}
+.left-nav{width:180px;float:left}
+.left-nav a{display:inline-block;width:180px;height:74px;background:#eaf0f2;font-size:16px;color:#666;line-height:74px;text-align:center;border-bottom:1px solid #fff}
+.left-nav a.current{background:#009de0;color:#fff}
+.left-nav a:hover{background:#009de0;color:#fff}
+.rightcontainer{float:left;margin-left:50px;padding-top:45px}
+.content-tit{font-size:18px;color:#009de0}
+.content-txt{width:700px;color:#666;line-height:24px}
+.content-img{width:693px;height:323px;background:#d6d6d6;margin:10px 0}
+/*联系我们*/
+.contact-img{width:319px;height:246px;background:#d6d6d6;float:left;margin-right:80px;position:relative}
+.kf-waybox{width:212px;position:absolute;left:55px;bottom:-25px}
+.kf-way{background:#fff;filter:alpha(opacity=70);-moz-opacity:0.7;-khtml-opacity:0.7;opacity:0.7;text-align:center;padding:20px 0}
+.kf-way p{line-height:30px}
+.kf-tit{background:#009de0;font-size:18px;color:#fff;line-height:52px;height:52px;text-align:center}
+.areacontainer{width:695px;margin-top:88px;border:1px solid #eee;padding:30px 10px}
+.zzimgbox{overflow:hidden}
+.zz-img{width:332px;height:195px;background:#d6d6d6;float:left;margin-right:30px}
+.address{margin:20px 0}
+.address p{color:#666;line-height:24px}
+.zz-img2{width:694px;height:425px;background:#d6d6d6}
+/*友情链接*/
+.link-wrap{overflow:hidden}
+.sub-link{background:url(../images/20160819img4.png) no-repeat;display:inline-block}
+.link-item1{background-position:0 0;width:105px;height:98px;margin-right:50px}
+.link-item2{background-position:-115px 0;width:175px;height:98px;margin-right:60px}
+.link-item3{background-position:-300px 0;width:133px;height:98px;margin-right:70px}
+.link-item4{background-position:-443px 0;width:160px;height:98px}
+.link-item5{background-position:0 -108px;width:105px;height:108px;margin-right:50px}
+.link-item6{background-position:-115px -108px;width:255px;height:108px;margin-right:75px}
+.link-item7{background-position:-380px -108px;width:190px;height:108px;margin-right:80px}
+.link-item8{background-position:-580px -108px;width:142px;height:108px}
+.link-item9{background-position:0 -226px;width:105px;height:124px;margin-right:50px}
+.link-item10{background-position:-115px -226px;width:112px;height:124px;margin-right:70px}
+.link-item11{background-position:-237px -226px;width:100px;height:124px;margin-right:65px}
+.link-item12{background-position:-347px -226px;width:147px;height:124px;margin-right:70px}
+.link-item13{background-position:-504px -226px;width:170px;height:124px}
+.link-txt{width:18%;float:left;font-size:16px;margin:20px 50px 0 0;height:100px;box-sizing:border-box;text-align:left}
+.link-txt a{display:inline-block;line-height:100px;color:#666}
+.link-txt a:hover{color:#009de0}
+/*网站地图*/
+.info-mapbox{padding-top:50px;padding-left:20px;padding-bottom:50px}
+.l-row{padding-bottom:10px;line-height:32px;overflow:hidden}
+.row-title{width:110px;float:left;font-size:16px;color:#333}
+.row-txt{float:left}
+.row-title span{margin-left:10px}
+.row-title span a{font-size:16px}
+.l-row i.row-i1{display:inline-block;vertical-align:middle;margin:-2px 3px 0 3px;*margin:0 3px 0 3px;width:2px;height:18px;background:#009de0;border-right:1px solid #389deb;line-height:0;overflow:hidden;font-size:0}
+.l-row i.row-i2{display:inline-block;vertical-align:middle;margin:0 10px;width:1px;height:13px;background:#fff;border-right:1px solid #808080;line-height:0;overflow:hidden;font-size:0}
+.row-txt a{font-size:14px;color:#999}
+.l-row a:hover{text-decoration:underline;color:#009de0}

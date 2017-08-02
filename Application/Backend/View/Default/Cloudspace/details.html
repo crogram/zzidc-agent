@@ -1,0 +1,347 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					业务管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a href="<?php echo U('Backend/Cloudspace/index', [  ], false);?>">云空间列表</a>
+					&amp; 云空间详情
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Cloudspace/index', [  ], false);?>">云空间列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+<!-- 页面主题/start -->
+<form class="form-horizontal" action="" role="form">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#edit-basic" aria-expanded="false">
+					<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+					基本信息
+				</a>
+			</li>
+			<li class="">
+				<a data-toggle="tab" href="#edit-settings" aria-expanded="true">
+					<i class="purple ace-icon fa fa-cogs bigger-125"></i>
+					站点信息
+				</a>
+			</li>
+		</ul>
+
+
+		<div class="tab-content profile-edit-tab-content">
+			<div id="edit-basic" class="tab-pane active">
+				<h4 class="header blue bolder smaller">业务信息</h4>
+<!-- 基础信息开始 -->
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<div class="row">
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="user_name">
+					编号：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['id'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="user_code">
+					用户账号：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['login_name'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="user_name">
+					IP地址：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['ip_address'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_mail">
+					产品名称：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['product_name'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_telphone">
+					开通时间：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['open_time'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					到期时间：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['overdue_time'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					服务期限：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['service_time'];?><?php if($entity['free_trial'] == 1):?>天<?php else:?>个月 <?php endif;?> </p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					试用/购买：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $free_trial[$entity['free_trial']];?> </p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					业务状态：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $state[$entity['state']];?> </p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					已使用流量：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['use_flow'];?> MB</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+					备注信息：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['日志记录'];?> </p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="vspace-12-sm"></div>
+
+	<div class="col-xs-12 col-sm-6">
+		<div class="row">
+			<?php foreach($config as $k => $v):?>
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="user_mobile">
+					<?php echo $v['config_key'];?>：</label>
+				<div class="col-sm-9">
+					<?php if(in_array($v['config_key'], [ 'HTML', '伪静态', 'CGI', 'WEB服务' ])){
+						$v['config_value'] = ( $v['config_value'] == 0 ? '不支持': '支持');
+					};?>
+					<p class="lead" ><?php echo $v['config_value'].' '.$v['unit'];?></p>
+				</div>
+			</div>
+			<?php endforeach;?>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					空间大小：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $area_code[$entity['space_capacity']];?> MB</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					总流量大小：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['flow_capacity'];?> MB</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					数据库总个数：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['database_quantity'];?> </p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					站点个数：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['site_quantity'];?> MB</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					已使用空间：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['use_space_capacity'];?> MB</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					已创建数据库：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['use_db'];?> 个</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					已使用数据库空间：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['use_db_capacity'];?> 个</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="user_state">
+					已创建站点个数：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['use_site'];?> 个</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+</div>
+<!--  基础信息结束 -->
+<!-- 站点信息开始 -->
+<div id="edit-settings" class="tab-pane ">
+
+	<h4 class="header blue bolder smaller">站点信息</h4>
+	<table id="simple-table" class="table table-hover  table-bordered">
+		<thead>
+{/* 表格头部/开始 */}
+		<tr>
+			<th>#编号</th>
+			<th>站点名称</th>
+			<th>FTP用户名</th>
+			<!-- <th>FTP密码</th> -->
+			<th>到期时间</th>
+			<th>站点状态</th>
+			<th>状态</th>
+		</tr>
+{/* 表格头部/结束 */}
+		</thead>
+		<tbody>
+{/* 表格内容/开始 */}
+
+<?php foreach( $site_info as $k => $v ):?>
+<tr>
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $v['id']?></span>
+</label>
+</td>
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $v['site_name']?></span>
+</label>
+</td>
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $v['ftp_user']?></span>
+</label>
+</td>
+<!-- <td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $v['ftp_password']?></span>
+</label>
+</td> -->
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $v['overdue_time']?></span>
+</label>
+</td>
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $use_state[$v['use_state']]?></span>
+</label>
+</td>
+<td class="center">
+<label class="pos-rel">
+<span class="lbl"><?php echo $state[$v['state']]?></span>
+</label>
+</td>
+</tr>
+<?php endforeach;?>
+
+{/* 表格内容/结束 */}
+		</tbody>
+	</table>
+</div>
+<!-- 站点信息结束 -->
+
+
+</div>
+</div>
+<div class="clearfix form-actions">
+	<div class="col-md-offset-3 col-md-9">
+		<a class="btn btn-info" href="<?php echo U('Backend/Cloudspace/index', [  ], false);?>">
+			<span class="glyphicon glyphicon-repeat"></span>
+			返回
+		</a>
+	</div>
+</div>
+</form>
+<!-- 页面主题/end -->
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+		<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+	function changePwd(uid){
+		confirmBox('<p class="text-danger">此操作会将用户的密码重置为<span class="orange">12345678</span>，您确定要执行此操作吗?</p>', function(){
+			var url = "<?php echo U('Backend/Member/changePwd', [ ], false);?>"+'/id/'+uid;
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				success : function(data){
+					alertBox(data.info);
+				}
+			});
+		});
+	}
+
+
+</script>
+
+</block>

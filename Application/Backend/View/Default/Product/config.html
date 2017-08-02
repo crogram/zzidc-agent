@@ -1,0 +1,160 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/jquery-ui.custom.min.css">
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					产品管理 &amp; 修改产品配置信息
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Product/index', [], false);?>">产品列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Product/store', [ 'id' => $entity['id'] ], false);?>" role="form" method="post" name="update" id="update">
+
+    <?php foreach($entities as $k => $entity):?>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="<?php echo $entity['en_name']?>">
+                <?php echo $entity['config_key'];?>
+             </label>
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable" name="<?php echo $entity['en_name']?>"  id="<?php echo $entity['en_name']?>"   value="<?php echo $entity['config_value'];?>" class="col-xs-10 col-sm-5">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle ">
+                        <span class="text-primary"><?php echo $entity['unit'];?></span>
+                        &nbsp;
+                        <?php if($entity['display']):?>
+                            展示
+                        <?php else:?>
+                            不展示
+                        <?php endif?>
+                    </span>
+                </span>
+			</div>
+		</div>
+		<div class="space-4"></div>
+
+<?php endforeach;?>
+
+
+			<!-- <div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit" >
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						修改
+					</button>
+				</div>
+			</div> -->
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+
+</block>
+
+<block name="scripts">
+	<!-- <div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div> -->
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<!-- <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.ui.touch-punch.min.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script> -->
+<script type="text/javascript">
+
+
+// $('textarea.limited').inputlimiter({
+// 	remText: '还可以在输入%n个字',
+// 	limitText: '最多只允许输入 %n个字.'
+// });
+//
+// $( "#slider" ).css({width:'90%', 'float':'left', margin:'15px'}).slider({
+// 	value: $('#up_level').val(),
+// 	min: 1,
+// 	max: 100,
+// 	range: "min",
+// 	animate: true,
+// 	slide: function( event, ui ) {
+// 		var val = ui.value;
+// 		if( !ui.handle.firstChild ) {
+// 			$("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+// 			.prependTo(ui.handle);
+// 		}
+// 		$(ui.handle.firstChild).show().children().eq(1).text(val);
+// 	},
+// 	change: function( event, ui ) {
+// 		$('#up_level').val(ui.value);
+// 	}
+// }).find('span.ui-slider-handle').on('blur', function(){
+// 	$(this.firstChild).hide();
+// });
+//
+//
+//
+// 	function updater(form){
+// 		form.submit();
+// 	}
+// 	$("#update").validate({
+// 		submitHandler:function(form){
+// 			updater(form);
+//         },
+// 		onclick:false,
+// 		onfocusout:false,
+// 		onkeyup:false,
+// 		errorPlacement: function (error, element){
+// 			var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+//
+// 			$("#update").before($alert);
+//
+// 		},
+// 		rules:{
+// 			product_price:{
+// 				required:true,
+// 				number:true,
+// 			  },
+// 		  	month:{
+// 				required:true,
+// 				digits:true,
+// 			},
+// 			type:{
+// 				required:true,
+// 				number:true,
+// 			}
+// 		},
+// 	  	messages:{
+// 	  		product_price:{
+// 				required:"产品价格必须填",
+// 				number:"请输入数字作为价格",
+// 		  	},
+// 		  	month:{
+// 			   required:"购买时间不能为空",
+// 			   digits:"购买时间必须是整数"
+// 			 },
+// 			type:{
+// 				required:"您忘记选择价格类型了",
+// 				number:"价格类型参数非法"
+// 			}
+// 		}
+// 	});
+
+</script>
+
+</block>

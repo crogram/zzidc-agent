@@ -1,0 +1,19 @@
+<!--首页焦点图start-->
+<div class="slide-main" id="touchMain">
+	<a class="prev" href="javascript:;" stat="prev1001"><img src="__FRONTEND_IMAGES__l-btn.png" /></a>
+	<div class="slide-box" id="slideContent">
+		<volist name="banners" id="banner">
+			<a href="{$banner.link_url}" target="_blank">
+				<div class="slide" id='ky-banner{$i}' style="background:#051042 url({$banner.img_url}) top center no-repeat">
+					<div class="obj-e">
+						<h4 class="banner-h4">{$banner.title}</h4>
+						<br/>
+						<h5 class="banner-h50 banner-p g05f">{$banner.description}</h5> 
+					</div>
+				</div>
+			</a>
+		</volist>
+	</div>
+	<a class="next" href="javascript:;" stat="next1002"><img src="__FRONTEND_IMAGES__r-btn.png" alt="" /></a>
+</div>
+<!--首页焦点图end-->

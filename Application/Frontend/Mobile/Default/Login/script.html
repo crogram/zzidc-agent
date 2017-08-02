@@ -1,0 +1,110 @@
+<script src="__FRONTEND_MOBILE_JS__zepto.min.js"></script>
+<script src="__FRONTEND_MOBILE_JS__md5.js"></script>
+<script  type="text/javascript"  src="__FRONTEND_MOBILE_JS__layer_mobile/layer.js" charset="utf-8"></script>
+<script type="text/javascript">
+	function alertMsg(title,content,fun,param){
+		layer.open({
+			  title: [
+			    title,
+			    'background-color:#009de0; color:#fff;'
+			  ]
+			  ,anim: 'up'
+			  ,content: content
+			  ,btn: ['确认', '取消']
+			  ,yes:function(index){
+				  if(fun){
+					  fun(index,param); 
+				  }else{
+					  layer.close(index);
+				  }
+			  },
+			  no:function(){
+				  layer.close();
+			  }
+			});
+	}
+  function alerttip(content){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+		  ,time: 3
+		});
+  }
+  function alerttips(content,fun,param){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;'
+		  ,time: 3
+		  ,end:function(index){
+			 fun(param); 
+		  }
+		});
+  }
+  
+  function alertNoButton(msg,func,param){
+  	layer.open({
+			  content: msg
+			  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+			  ,time: 3,
+			  end:function(index){
+			  	if(func){
+					func(index,param);
+			  	}
+			  }
+		});
+  }
+	function getVal(id){
+		return document.getElementById(id).value.replace(/\s/ig, '');
+	}
+	function bindInput(obj,func){
+	  	 var bind_name="input"
+		 if(navigator.userAgent.indexOf("MSIE")!=-1) bind_name="propertychange";
+		 $("#"+obj).bind(bind_name,func);
+	  }
+	function check_param(param,url,showAlert){
+		if(!url||!param){
+			return false;
+		}
+		var result=true;
+		$.ajax({
+			url:url,
+			data:param,
+			type:"post",
+			async:false,
+			dataType:"json",
+			success:function(data){
+				if(data){
+					if(data.status ==0 ){
+						if(showAlert){
+  						alertMsg("提示",data.info,"","");
+						}
+						result=false;
+					}else{
+						if(data.info){
+							if(showAlert){
+  							alertMsg("提示",data.info,"","");
+							}
+						}
+						result=true;
+					}
+				}else{
+					result=false;
+				}
+			},
+			error:function(){
+				alertMsg("提示","网络繁忙，请稍后再试！","","");
+				result=false;
+			}
+		});
+		return result;
+	}
+	function refresh(){
+		document.getElementById("captcha-img").click();
+	}
+	function turnpage(index,url){
+		if(!url){
+		url=window.location.href;  			
+		}
+		window.location.replace(url);
+	}
+</script>

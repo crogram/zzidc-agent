@@ -1,0 +1,18 @@
+<?php $site_config = WebSiteConfig();?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>{$site_config.site_title}-触屏版</title>
+    <link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__base.css">
+    <link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__ky-type.css">
+  </head>
+  <?php if(ACTION_NAME == 'login'){?>
+  <body style="background:#fff">
+  <?php }else{ ?>
+  <body>
+  <?php } ?>
+    <nav class="ky-title">
+       <a href="javascript:window.history.back();" class="return-icona"></a><?php if(ACTION_NAME == 'login'){echo "登录";}elseif(ACTION_NAME == 'register'){echo "注册";}?>
+    </nav>

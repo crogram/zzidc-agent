@@ -1,0 +1,254 @@
+<extend name="Hyzx/member" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="right">
+    <!--ky-main start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/clouddb/clouddblist', '', false);?>">快云数据库管理</a></li>
+                <li><a>快云数据库升级确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">快云数据库升级确认订单</div>
+                </div>
+                <div class="ky-panel-body">
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th>类型版本</th>
+                            <th>内存</th>
+                            <th>iops</th>
+                            <th>存储空间</th>
+                            <th>最大连接数</th>
+                            <th>机房</th>
+                            <th>IP地址</th>
+                            <th>服务期限</th>
+                            <th>日期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{$version}</td>
+                            <td>{$memory} MB</td>
+                            <td>{$iops}</td>
+                            <td>{$disk} G</td>
+                            <td>{$conn}</td>
+                            <td><?php if($area_code == 4001){echo "郑州机房";}?></td>
+                            <td class="ky-td-multi-lines">
+                                <div>外网ip：{$wwdz}</div>
+                                <div>内网ip：{$nwdz}</div>
+                            </td>
+                            <td>{$month}个月</td>
+                            <td class="ky-td-multi-lines">
+                                <div>开通时间：{$create_time}</div>
+                                <div class="gff6">到期时间：{$overdue_time}</div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="contentbox">
+                        <div class="listitem">
+                            <div class="item-left vps-list-left">
+                                <span>内存空间：</span>
+                            </div>
+                            <div class="item-right jifang-item ptop10">
+                                <div class="col-xs-8 ky-form-control validate-control">
+                                    <div class="input-contain width426">
+                                        <?php if($memory < 12000){?>
+                                        <select class="ky-input-reset width426" id="memory_size">
+                                            <?php if($memory <= 240){?><option value="240">240 MB</option><?php }?>
+                                            <?php if($memory <= 600){?><option value="600">600 MB</option><?php }?>
+                                            <?php if($memory <= 1200){?><option value="1200">1200 MB</option><?php }?>
+                                            <?php if($memory <= 2400){?><option value="2400">2400 MB</option><?php }?>
+                                            <?php if($memory <= 6000){?><option value="6000">6000 MB</option><?php }?>
+                                            <option value="12000">12000 MB</option>
+                                        </select>
+                                        <?php }else{?>
+                                        <div>
+                                            <font color="red" style="font-size: 18px">已经是最高配置！</font>
+                                        </div>
+                                        <?php }?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if($memory < 12000){?>
+                            <p style="margin-top:16px" class="pull-left margin-left-10" id="memory_span">最大连接数 : <?php echo $conn;?> &nbsp; IOPS : <?php echo $iops;?></p>
+                            <?php }?>
+                        </div>
+                        <div class="listitem">
+                            <div class="item-left">
+                                <span>存储空间：</span>
+                            </div>
+                            <div class="item-right jifang-item ptop10">
+                                <div class="slider-date" id="slider-date-1">
+                                    <!--底层-->
+                                    <ul class="slider-bg clearfix" >
+                                        <li style="width:20px">5G</li>
+                                        <li style="width:90px">50G</li>
+                                        <li style="width:90px">100G</li>
+                                        <li style="width:105px">500G</li>
+                                        <li style="width:105px">700G</li>
+                                        <li style="width:105px;">1000G</li>
+                                    </ul>
+                                    <!--互动层-->
+                                    <div class="slider-bar">
+                                        <ul class="slider-bg clearfix">
+                                            <li width_=25 skip=5 min=0 style="width:20px">5G</li>
+                                            <li width_=100 skip=5 min=5 style="width:90px">50G</li>
+                                            <li width_=100 skip=5 min=50 style="width:90px">100G</li>
+                                            <li width_=110 skip=5 min=100 style="width:105px">500G</li>
+                                            <li width_=110 skip=5 min=500 style="width:105px">700G</li>
+                                            <li width_=105 skip=5 min=700 style="width:105px;">1000G</li>
+                                        </ul>
+                                        <!--滑块按钮-->
+                                        <a href="javascript:;"  class="slider-bar-btn"><i></i><i></i></a>
+                                    </div>
+                                </div>
+                                <div class="shuju-box">
+                                    <input type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" class="bk-disk-input" onafterpaste="this.value=this.value.replace(/\D/g,'')" id="diskinput">
+                                </div>
+                                <div class="shuju-danwei">
+                                    G
+                                </div>
+                                <div class="shuju-box30">
+                                    <span class="bk-number-arrow"></span>
+                                    <span class="bk-number-arrow2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-fixed">
+                        <div class="account-fix">
+                            <div class="diyongjin">
+                                <span class="gff8 fsize14">温馨提示：请先选择内存大小和存储空间大小。</span>
+                            </div>
+                            <div class="h-54" id="payspan">
+                                <div class="paybox">
+                                    <a href="javascript:;" class="paybtn">支付</a>
+                                </div>
+                                <div class="total">
+                                    <p class="mt-4" style="margin-top: 20px"><span class="total-span">应付总额：</span><span class="tot-price">¥ <span id="money">0</span>.00</span></p>
+                                </div>
+                            </div>
+                            <div id="loadingspan" class="h-54" align="center" style="padding: 25px;display: none;">
+                                <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                <span class="" style="font-size: 15px;"><font color="red">正在升级，请稍候。请勿刷新此页面。</font></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--ky-main end-->
+    <form action="<?php echo U('frontend/clouddb/clouddb_renewals','',false);?>" method="post" id="addcart">
+        <input type="hidden" id="clouddb_id" name="clouddb_id" value="<?php echo $yid;?>">
+        <input type="hidden" id="api_ptype" name="api_ptype" value="clouddb">
+        <input type="hidden" id="price" name="price" value="0">
+        <input type="hidden" id="config" name="config" value="dx">
+        <input type="hidden" id="old_spacesize" name="old_spacesize" value="<?php echo $disk;?>">
+        <input type="hidden" id="old_memsize" name="old_memsize" value="<?php echo $memory;?>">
+        <input type="hidden" id="spacesize" name="spacesize" value="<?php echo $disk;?>">
+        <input type="hidden" id="memsize" name="memsize" value="<?php echo $memory;?>">
+        <input type="hidden" id="version" name="version" value="<?php echo $version;?>">
+        <input type="hidden" id="dqbh" name="dqbh" value="<?php echo $area_code;?>">
+        <input type="hidden" id="istry" name="istry" value="0">
+        <input type="hidden" id="gmqx" name="gmqx" value="<?php echo $month;?>">
+        <input type="hidden" id="type" name="type" value="1">
+    </form>
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__gainet.core.js"></script>
+    <script src="__FRONTEND_JS__gainet.ui.newslider.ky.js"></script>
+    <script>
+        var memory_arr = [];
+        memory_arr["240"] = "最大连接数 : 60 &nbsp; IOPS : 320";
+        memory_arr["600"] = "最大连接数 : 150 &nbsp; IOPS : 640";
+        memory_arr["1200"] = "最大连接数 : 300 &nbsp; IOPS : 1300";
+        memory_arr["2400"] = "最大连接数 : 600 &nbsp; IOPS : 3500";
+        memory_arr["6000"] = "最大连接数 : 1500 &nbsp; IOPS : 7000";
+        memory_arr["12000"] = "最大连接数 : 2000 &nbsp; IOPS : 12000";
+        $("#memory_size").change(function(){
+            $("#memsize").val($(this).val());
+            $("#memory_span").html(memory_arr[$(this).val()]);
+            getBuyPrice();
+        });
+        var disk = <?php echo $disk;?>;
+        var tdtspace = gainet(".ptop10").slider({"end":{"startwidth":14,"max":1000,"text":"1000G"},"default_":disk,"label":"G","isnumber":false,"isdiy":true,"callback":selectspace});
+        function selectspace(val){
+            if(val==0){
+                val=5;
+                tdtspace.setBarValue(val);
+            }
+            if(val < disk){
+                tdtspace.setBarValue(disk);
+                return;
+            }
+            $("#spacesize").val(val);
+            $(".content-right-title2").eq(2).html(val+"G");
+            /*fuhetrain();*/
+            getBuyPrice();
+        }
+        var tooken = true;
+        function getBuyPrice(){
+            var data = $("#addcart").serialize();
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/buyPrice','',false);?>",
+                data:data,
+                type:"post",
+                success:function(data){
+                    if(!data.flag){
+                        alert("获取价格异常");
+                        console.log(data);
+                        $("#money").html(0);
+                        $("#price").val(0);
+                        tooken = false;
+                    }else{
+                        $("#money").html(data.price);
+                        $("#price").val(data.price);
+                    }
+                }
+            })
+        }
+        function addcart()
+        {
+            var data = $("#addcart").serialize();
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/clouddb_uplevel','',false);?>",
+                data:data,
+                type:"post",
+                success:function(data){
+                    if(data.status == 1){
+                        alert(data.info);
+                        setTimeout(function(){window.location.href=data.url;},2500);
+                    }else{
+                        alert(data.info);
+                        setTimeout(function(){window.location.reload();},2500);
+                    }
+                }
+            })
+        }
+        /*确认购买*/
+        $(".paybtn").click(function(){
+            if($("#price").val() == "0")
+            {
+                alert("价格信息错误！");
+                return false;
+            }else if(tooken){
+                $("#payspan").hide();
+                $("#loadingspan").show();
+                /*$("#addcart").submit();*/
+                addcart();
+            }else{
+                alert("价格信息错误！");
+            }
+        });
+    </script>
+</block>

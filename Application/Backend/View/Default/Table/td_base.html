@@ -1,0 +1,31 @@
+<?php foreach( $data as $k => $v ):?>
+<tr>
+	<?php foreach( $th_raw as $kk => $vv ):?>
+		<?php if($vv == 'id'):?>
+			<td class="center">
+				<label class="pos-rel">
+					<!-- <input type="checkbox" class="ace"> -->
+					<span class="lbl"><?php echo $v[$vv]?></span>
+				</label>
+			</td>
+		<?php else:?>
+			<td class="center">
+				<label class="pos-rel">
+					<?php if( !empty($search[$vv]['data']) ):?>
+						<span class="lbl"><?php echo $search[$vv]['data'][$v[$vv]]?></span>
+					<?php else:?>
+						<span class="lbl"><?php echo $v[$vv]?></span>
+					<?php endif;?>
+				</label>
+			</td>
+		<?php endif;?>
+	<?php endforeach;?>
+
+<td>
+		<?php foreach():?>
+			
+		<?php endforeach;?>
+</td>
+</tr>
+
+<?php endforeach;?>

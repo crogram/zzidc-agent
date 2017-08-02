@@ -1,0 +1,89 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	
+</block>
+
+<block name="content">
+<div class="panel panel-default">
+  <div class="panel-heading">
+	<h3 class="panel-title bjy-admin-nav">
+	<i class="fa fa-home"></i> 首页
+	&gt;
+	用户组列表
+	&gt;
+	分配权限
+	    <a class=" btn btn-success pull-right btn-xs" href="{:U('Backend/Rule/group')}">
+	    	用户组列表
+	    </a>
+	</h3>
+  </div>
+    <div class="panel-body">
+<h1 class="text-center">为<span style="color:red">{$group_data['title']}</span>分配权限</h1>
+<form action="" method="post">
+	<input type="hidden" name="id" value="{$group_data['id']}">
+	<table class="table table-striped table-bordered table-hover table-condensed
+	">
+		<foreach name="rule_data" item="v">
+			<empty name="v['_data']">
+				<tr class="b-group">
+					<th width="10%">
+						<label>
+							{$v['title']}
+							<input type="checkbox" name="rule_ids[]" value="{$v['id']}" <if condition="in_array($v['id'],$group_data['rules'])">	checked="checked"</if> onclick="checkAll(this)" >
+						</label>
+					</th>
+					<td></td>
+				</tr>
+			<else />
+				<tr class="b-group">
+					<th width="10%">
+						<label>
+							{$v['title']} <input type="checkbox" name="rule_ids[]" value="{$v['id']}" <if condition="in_array($v['id'],$group_data['rules'])">	checked="checked"</if> onclick="checkAll(this)">
+						</label>
+					</th>
+					<td class="b-child">
+						<foreach name="v['_data']" item="n">
+							<table class="table table-striped table-bordered table-hover table-condensed">
+								<tr class="b-group">
+									<th width="10%">
+										<label>
+											{$n['title']} <input type="checkbox" name="rule_ids[]" value="{$n['id']}" <if condition="in_array($n['id'],$group_data['rules'])">	checked="checked"</if> onclick="checkAll(this)">
+										</label>
+									</th>
+									<td>
+										<notempty name="n['_data']">
+											<volist name="n['_data']" id="c">
+												<label>
+													&emsp;{$c['title']} <input type="checkbox" name="rule_ids[]" value="{$c['id']}" <if condition="in_array($c['id'],$group_data['rules'])">	checked="checked"</if> >
+												</label>
+											</volist>							
+										</notempty>
+									</td>
+								</tr>
+							</table>
+						</foreach>
+					</td>
+				</tr>
+			</empty>
+		</foreach>
+		<tr>
+			<th></th>
+			<td>
+				<input class="btn btn-success" type="submit" value="提交">
+			</td>
+		</tr>
+	</table>
+</form>
+  </div>
+  <!-- 面板主体结束 -->
+</div>
+</block>
+
+<block name="scripts">
+<script>
+function checkAll(obj){
+    $(obj).parents('.b-group').eq(0).find("input[type='checkbox']").prop('checked', $(obj).prop('checked'));
+}
+</script>
+</block>

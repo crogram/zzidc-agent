@@ -1,0 +1,40 @@
+<extend name="Layouts/layout" />
+<block name="links"></block>
+<block name="content">
+{/* banner图开始 */}
+<include file="Index/index_banner" />
+ {/* banner图结束 */}
+ 
+{/* 首页域名开始 */}
+<include file="Index/index_domain" />
+{/* 首页域名结束 */}
+ 
+ {/* 首页产品开始 */}
+<include file="Index/index_product" />
+{/* 首页产品结束 */}
+
+{/* 首页新闻开始 */}
+<include file="Index/index_news" />
+{/* 首页新闻结束 */}
+
+{/* 首页服务开始 */}
+<include file="Index/index_service" />
+{/* 首页服务结束 */}
+</block>
+<block name="script">
+<script type="text/javascript" language="javascript">
+$(".divselect-box1 ul li").click(function(){
+	var txt = $(this).text();
+	$(".divselect-box1 cite").html(txt);
+	$("#suffix").val(txt);
+});
+function domain_query(){
+	var domain = $(".getdomainname").val();
+	var href = "{:U('frontend/domain/domain_query', [], false)}";
+	var parms = "/Searchdomain/"+domain;
+	var url = href+parms;
+    $("#domain").attr("action", url);
+    $("#domain").submit();
+};
+</script>
+</block>

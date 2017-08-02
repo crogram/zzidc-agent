@@ -1,0 +1,32 @@
+<?php$site_config = WebSiteConfig();?>
+<!doctype html>
+<html>
+<head>
+<!-- 引用头部 -->
+<include file="Layouts/html_head" />
+<!-- 自定义CCS或者JS链接 -->
+<block name="links"></block>
+	<title>{$site_config.site_title}-触屏版</title>
+	<meta name="keywords" content="{$site_config.site_title}-触屏版" />
+	<meta name="description" content="{$site_config.site_title}-触屏版" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body class="position-relative">
+    {/* 头部导航开始 */}
+	<include file="Layouts/html_nav" />
+	 {/* 头部导航结束 */}
+	  {/* 首页主体开始 */}
+	 <block name="content"></block>
+	  {/* 首页主体结束 */}
+	{/* 底部导航开始 */}
+	<include file="Layouts/html_footer" />
+	 {/* 底部导航结束 */}
+	{/* 右侧锚点开始 */}
+	<include file="Layouts/html_anchor" />
+	 {/* 右侧锚点结束 */}
+</body>
+{/* 底部JS开始 */}
+<include file="Layouts/html_scripts" />
+<block name="script"></block>
+{/* 底部JS结束 */}
+</html>

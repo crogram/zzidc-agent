@@ -1,0 +1,169 @@
+<extend name="Hyzx/member"/>
+<block name="links"></block>
+<block name="right">
+    <!--fastvps_appreciation start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/fastvps/fastvpslist','', false);?>">快云VPS管理</a></li>
+                <li><a>快云VPS增值确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">快云VPS增值确认订单</div>
+                </div>
+                <div class="ky-panel-body">
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr align="center">
+                            <td width="15%">产品编号</td>
+                            <td width="20%">产品名称</td>
+                            <td width="20%">IP地址</td>
+                            <td width="20%">剩余服务期限</td>
+                            <td width="25%">日期</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr align="center">
+                            <td>{$business_id}</td>
+                            <td>{$product_name}</td>
+                            <td>{$ip_address}</td>
+                            <td>
+                                <if condition="$fastvps_info.overdue_month lt 0">
+                                    <font color="red">已过期</font><else/>
+                                    <font color="red">{$surplus_time}个月</font>
+                                </if>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <p>开通时间：{$open_time}</p>
+                                <p class="gff6">到期时间：{$overdue_time}</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th colspan="4">已增值信息列表</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr align="center">
+                            <td class="ky-td-multi-lines">增值产品</td>
+                            <td>增值时间</td>
+                            <td>已增值配置</td>
+                            <td>增值信息</td>
+                        </tr>
+                        <volist name="apperction_info" id="ai">
+                            <tr align="center">
+                                <td>{$ai.app_type}</td>
+                                <td>{$ai.app_time}</td>
+                                <td>{$ai.size}</td>
+                                <td>{$ai.ip_address}</td>
+                            </tr>
+                        </volist>
+                        <empty name="apperction_info">
+                            <tr>
+                                <td colspan="4" class="gff8" align="center">暂无增值记录</td>
+                            </tr>
+                        </empty>
+                        </tbody>
+                    </table>
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th colspan="6">新购增值</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="ky-td-multi-lines" width="15%">增值产品</td>
+                            <td width="13%">服务期限</td>
+                            <td width="20%">增值大小</td>
+                            <td width="15%">价格</td>
+                            <td width="12%">费用</td>
+                            <td align="center" width="25%">增值</td>
+                        </tr>
+                        <!-- 显示增值信息 begin -->
+                        <volist name="apperction_product" id="ap">
+                            <tr>
+                                <if condition="((strpos($product_info['api_name'],'dede.hk') nheq false)or(strpos($product_info['api_name'],'host.qiye') nheq false))and(($ap['api_name'] eq 'zengzhi.youxiang')or($ap['api_name'] eq 'zengzhi.youxiangkongjian'))">
+                                    <else/>
+                                    <form action="<?php echo U('frontend/fastvps/fastvps_appreciation','',false);?>" method="post" onsubmit="return on_sumit({$key})">
+                                        <input type="hidden" name="fastvps_id" value="{$id}"/>
+                                        <input type="hidden" name="api_name" value="{$ap.api_name}"/>
+                                        <input type="hidden" id="num{$ap.id}" name="app_size" value="1"/>
+                                        <td>{$ap.product_name}</td>
+                                        <td>{$surplus_time}月</td>
+                                        <td>
+                                            <if condition="$ap.size eq 0">1
+                                                <else/>
+                                                <input type="button" value="&nbsp;-&nbsp;" onclick="red({$ap.id},{$ap.size},{$surplus_time},{$ap.product_price.month},{$ap.product_price.product_price})"/>
+                                                <input style="width: 100px;" type="text" id="size{$ap.id}" value="{$ap.size}" readonly="readonly"/>
+                                                <input type="button" value="&nbsp;+&nbsp;" onclick="add({$ap.id},{$ap.size},{$surplus_time},{$ap.product_price.month},{$ap.product_price.product_price},'{$ap.api_name}')"/>
+                                            </if>
+                                            {$ap.unit}
+                                        </td>
+                                        <td>{$ap.product_price.product_price}元/
+                                            <if condition="$ap.size neq 0">{$ap.size}<else/>1</if>{$ap.unit}/{$ap.product_price.month}月
+                                        </td>
+                                        <td><font id="price{$ap.id}" class="price">{$ap.app_price}</font>&nbsp;元</td>
+                                        <td style="text-align:center">
+                                            <input class="btn btn-default chongzhi-btn" type="submit" id="submit{$key}" value="立即增值"/>
+                                            <div id="loading{$key}" align="center" style="height: 50px;line-height: 50px;display: none">
+                                                <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                                <font color="red">正在增值，请稍候。请勿刷新此页面。</font>
+                                            </div>
+                                        </td>
+                                    </form>
+                                </if>
+                            </tr>
+                        </volist>
+                        <!-- 显示增值信息 end -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fastvps_appreciation end-->
+</block>
+<block name="script">
+    <script type="text/javascript">
+        function on_sumit(index) {
+            if (!confirm('确认信息无误后,请点击确定!')) {
+                location.reload();
+                return false;
+            }
+            $("#submit" + index).hide();
+            $("#loading" + index).show();
+            return true;
+        }
+        function add(id, size, overdue_month, app_month, price, app_type) {
+            if (app_type == 'temai.zengzhi.ip') {
+                return alert("IP只能增值一个！");
+            }
+            var app_size = parseFloat($("#size" + id).val()) + size;
+            $("#size" + id).val(app_size);
+            var num = parseFloat($("#num" + id).val()) + 1;
+            $("#num" + id).val(num);
+            var totalprice = overdue_month / app_month * num * price;
+            $("#price" + id).text(totalprice);
+        }
+        function red(id, size, overdue_month, app_month, price) {
+            var app_size = parseFloat($("#size" + id).val()) - size;
+            if (app_size < size) {
+                return;
+            }
+            $("#size" + id).val(app_size);
+            var num = parseFloat($("#num" + id).val()) - 1;
+            $("#num" + id).val(num);
+
+            var totalprice = overdue_month / app_month * num * price;
+            $("#price" + id).text(totalprice);
+        }
+    </script>
+</block>

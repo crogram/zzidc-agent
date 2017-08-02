@@ -1,0 +1,263 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	<link rel="stylesheet" href="__COM_STATICS__bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/jquery-ui.custom.min.css" />
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/chosen.css" />
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					广告图片管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a href="<?php echo U('Backend/Ad/index', [  ], false);?>">广告图片列表</a>
+					&amp; 新增广告图片
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Ad/index', [  ], false);?>">广告图片列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Ad/recording', [  ], false);?>" role="form" method="post" name="update" id="update" enctype="multipart/form-data">
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="location">
+				广告图片位置
+			</label>
+
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" name="location" id="location">
+						<?php foreach($location as $k => $v):?>
+							<option value="<?php echo $k;?>" >
+								<?php echo $v;?>
+							</option>
+						<?php endforeach;?>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="is_show">
+				是否展示
+			 </label>
+
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" name="is_show" id="is_show">
+						<?php foreach($is_show as $k => $v):?>
+							<option value="<?php echo $k;?>" >
+								<?php echo $v;?>
+							</option>
+						<?php endforeach;?>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="order_number">
+				排序：
+			 </label>
+
+			<div class="col-sm-9">
+				<input type="number"  name="order_number"  id="order_number"   value="" class="col-xs-10 col-sm-5" >
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">轮播图排序，自然数(1,2,3,100,120,)，越小越靠前</span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="title">
+				 广告图片标题
+			 </label>
+
+			<div class="col-sm-9">
+			<input type="text" id="title" name="title"  value="" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="link_url">
+				 跳转链接：
+			 </label>
+
+			<div class="col-sm-9">
+			<input type="text" id="link_url" name="link_url" placeholder="http://"  value="" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="description">
+				广告图片描述：
+			 </label>
+
+			<div class="col-sm-9">
+			<textarea  class="limited col-xs-10 col-sm-5" id="description" name="description" maxlength="300"></textarea>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="img_url">
+				上传广告图片：
+			</label>
+
+			<div class="col-sm-9">
+				<div class="col-xs-10 col-sm-5">
+					<input type="file" name="img_url" id="img_url" class=" " />
+				</div>
+					<span class="help-inline col-xs-12 col-sm-7">
+						<span class="middle"></span>
+					</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit" >
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						提交
+					</button>
+					<a class="btn btn-info" href="<?php echo U('Backend/Ad/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+	<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+	<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+
+<script type="text/javascript">
+$(function($){
+	$('#img_url').ace_file_input({
+		no_file:'未选择上传图片',
+		btn_choose:'请选择图片',
+		btn_change:'更换图片',
+		droppable:false,
+		onchange:null,
+		thumbnail:false, //| true | large
+		allowExt: ['gif','png','jpg','jpeg'],
+		allowMime: ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"],
+		//onchange:''
+		//
+	});
+});
+	function updater(form){
+		form.submit();
+	}
+	$("#update").validate({
+		submitHandler:function(form){
+			updater(form);
+        },
+		onclick:false,
+		onfocusout:false,
+		onkeyup:false,
+		errorPlacement: function (error, element){
+			var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+
+			$("#update").before($alert);
+
+		},
+		rules:{
+			state:{
+				required:true,
+				number:true
+			  },
+			overdue_time:{
+				required:true,
+				date:true
+			},
+			service_time:{
+				required:true,
+				digits:true
+			},
+			free_trial:{
+				required:true,
+				digits:true
+			},
+			ip_address:{
+				required:true
+			},
+			user_id:{
+				required:true
+			}
+		},
+	  	messages:{
+	  		state:{
+				required:"业务状态必须选择",
+				number:"业务状态参数格式不对",
+		  	},
+			overdue_time:{
+				required:"到期时间不能为空",
+				date:"到期时间格式非法"
+			},
+			service_time:{
+				required:"购买时间不能为空",
+				digits:"购买时间必须输入整数"
+			},
+			free_trial:{
+				required:"免费试用天数不能为空",
+				digits:"免费试用天数必须输入整数"
+			},
+			ip_address:{
+				required:"IP地址必须填写"
+			},
+			user_id:{
+				required:"会员必须选择"
+			}
+		}
+	});
+
+</script>
+
+</block>

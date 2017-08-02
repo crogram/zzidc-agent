@@ -1,0 +1,109 @@
+<!-- #section:basics/sidebar -->
+<div id="sidebar" class="sidebar                  responsive">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+
+				<!-- #section:basics/sidebar -->
+				<!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success">
+							<i class="ace-icon fa fa-signal"></i>
+						</button>
+						<button class="btn btn-info">
+							<i class="ace-icon fa fa-pencil"></i>
+						</button> -->
+						<!-- #section:basics/sidebar.layout.shortcuts -->
+						<!-- <button class="btn btn-warning">
+							<i class="ace-icon fa fa-users"></i>
+						</button>
+						<button class="btn btn-danger">
+							<i class="ace-icon fa fa-cogs"></i>
+						</button>-->
+						<!-- /section:basics/sidebar.layout.shortcuts -->
+					<!-- </div>
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+						<span class="btn btn-info"></span>
+						<span class="btn btn-warning"></span>
+						<span class="btn btn-danger"></span>
+					</div>
+				</div>--><!-- /.sidebar-shortcuts -->
+
+
+<!-- 左侧菜单开始 -->
+
+				<ul class="nav nav-list">
+					<li class="" data-c="index" data-a="index">
+						<a href="<?php echo U('backend/index/index', '', false);?>" >
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text"> 首页 </span>
+						</a>
+						<b class="arrow"></b>
+					</li>
+					{/* 一级菜单/开始(只有一级菜单) */}
+					<?php foreach($nav_data as $k => $v):?>
+						<?php $array_v_mca = explode('/',$v['mca'])?>
+              			<li class="" data-c="<?php echo $array_v_mca[1];?>" data-a="<?php echo $array_v_mca[2];?>">
+							<a href="<?php if(!empty($v['_data'])):?> ###"  class="dropdown-toggle<?php else:?>
+												<?php echo U($v['mca'],'', false);?>
+											<?php endif;?>"
+							>
+								<i class="menu-icon fa fa-<?php echo $v['ico'];?>"></i>
+								<span class="menu-text"><?php echo $v['name'];?></span>
+                				<?php if(!empty($v['_data'])):?>
+									<b class="arrow fa fa-angle-down"></b>
+                				<?php endif;?>
+							</a>
+							<b class="arrow"></b>
+                				<?php if(!empty($v['_data'])):?>
+									<ul class="submenu">
+										<?php foreach( $v['_data'] as $kk => $vv ):?>
+											<?php $array_vv_mca = explode('/',$vv['mca'])?>
+											<li class="" data-c="<?php echo $array_vv_mca[1];?>" data-a="<?php echo $array_vv_mca[2];?>">
+												<a href="<?php if(!empty($vv['_data'])):?> ###"  class="dropdown-toggle<?php else:?>
+												<?php echo U($vv['mca'],'', false);?>
+															<?php endif;?>
+												">
+													<i class="menu-icon fa fa-caret-right"></i>
+													<span class="menu-text"><?php echo $vv['name'];?></span>
+													    <?php if(!empty($vv['_data'])):?>
+															<b class="arrow fa fa-angle-down"></b>
+						                				<?php endif;?>
+												</a>
+												<b class="arrow"></b>
+													<?php if(!empty($vv['_data'])):?>
+														<ul class="submenu">
+															<?php foreach($vv['_data'] as $kkk => $vvv):?>
+																<?php $array_vvv_mca = explode('/',$vvv['mca'])?>
+																<li class="" data-c="<?php echo $array_vvv_mca[1];?>" data-a="<?php echo $array_vvv_mca[2];?>">
+																	<a href="<?php echo U($vvv['mca'],'', false);?>">
+																		<i class="menu-icon fa fa-caret-right"></i>
+																		<span class="menu-text"><?php echo $vvv['name'];?></span>
+																	</a>
+																	<b class="arrow"></b>
+																</li>
+																<?php endforeach;?>
+														</ul>
+					                				<?php endif;?>
+											</li>
+										<?php endforeach;?>
+									</ul>
+                				<?php endif;?>
+						</li>
+						<?php endforeach;?>
+                </ul><!-- /.nav-list -->
+
+<!-- 左侧菜单结束 -->
+
+	<!-- #section:basics/sidebar.layout.minimize -->
+	<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+		<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+	</div>
+
+	<!-- /section:basics/sidebar.layout.minimize -->
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+
+	</script>
+</div>

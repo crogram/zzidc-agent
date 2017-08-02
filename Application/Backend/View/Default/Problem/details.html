@@ -1,0 +1,146 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					常见问题管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					&amp;
+					<a href="<?php echo U('Backend/Problem/index', [  ], false);?>">常见问题列表</a>
+					常见问题详情
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Problem/index', [  ], false);?>">常见问题列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="" role="form">
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">
+				问题编号
+			</label>
+
+			<div class="col-sm-9">
+
+				<input type="text" readonly="readonly" disable="disable"  id="id"  value="<?php echo $entity['id'];?>" class="col-xs-10 col-sm-5">
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="user_id">
+				问题分类
+			</label>
+
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  id="user_id" name="user_id"  value="<?php echo $product_type[$entity['product_type']];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="">
+				是否展示
+			 </label>
+
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  value="<?php echo $state[$entity['state']];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="state">
+				 问题标题
+			 </label>
+
+			<div class="col-sm-9">
+			<input type="text" readonly="readonly" disable="disable"  id="state" name="state"  value="<?php echo $entity['problem_title'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="charge">
+
+				发布时间
+			 </label>
+
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  name="charge"  id="charge"   value="<?php echo $entity['create_time'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="business_id">
+				问题内容
+			</label>
+
+			<div class="col-sm-9">
+				<!-- <input type="text" readonly="readonly" disable="disable"  name="business_id"  id="business_id"   value="" class="col-xs-10 col-sm-5"> -->
+				<p><?php echo $entity['problem_content'];?></p>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<a class="btn btn-info" href="<?php echo U('Backend/Problem/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<script type="text/javascript">
+
+</script>
+
+</block>

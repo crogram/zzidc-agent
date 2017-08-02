@@ -1,0 +1,15 @@
+Fancybox灯箱插件，依赖于jquery
+
+Fancybox使用方法：
+
+1、Fancybox插件库
+
+<script src="<s:text name="global.resource.uri"/>plugin/fancybox/1.3.4/jquery.fancybox.pack.js"></script>
+可选 - 如果需要用到fancy transition（一些动画效果）你还需要引入以下脚本
+
+<script src="<s:text name="global.resource.uri"/>plugin/fancybox/1.3.4/jquery.easing.pack.js"></script>
+可选 - 如果需要支持鼠标滚轮滚动效果你还需要引入以下脚本
+<script src="<s:text name="global.resource.uri"/>plugin/fancybox/1.3.4/jquery.mousewheel-3.0.4.pack.js"></script>
+
+2、添加样式表文件
+<link rel="stylesheet" href="<s:text name="global.resource.uri"/>plugin/fancybox/1.3.4/css/jquery.fancybox.css">

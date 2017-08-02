@@ -1,0 +1,18 @@
+<?php $site_config = WebSiteConfig();?>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>{$site_config.site_title}-触屏版</title>
+    <meta name="keywords" content="{$site_config.site_title}-触屏版" />
+    <meta name="description" content="{$site_config.site_title}-触屏版" />
+    <include file="Hyzx/member_head" />
+    <block name="links"></block>
+</head>
+<body>
+<block name="right"></block>
+</body>
+<include file="Hyzx/member_scripts" />
+<block name="script"></block>
+</html>

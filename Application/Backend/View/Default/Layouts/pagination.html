@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-2 hidden-xs">
+        <p style="margin:2.4rem 0;">共<?php echo $total;?>条/<?php echo $sum_pages;?>页</p>
+
+    </div>
+    <div class="col-xs-12 col-sm-8" style="text-align:center;">
+        <nav class="page">
+			<?php echo $pages;?>
+        </nav>
+<div class="btn-group">
+	<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" aria-expanded="false">
+		每页<span><?php echo $per_page;?></span>条
+		<i class="ace-icon fa fa-angle-down icon-on-right"></i>
+	</button>
+	<ul class="dropdown-menu">
+		<li><a href="javascript:void(0);" onclick="setPerPage(15)">15</a></li>
+		<li><a href="javascript:void(0);" onclick="setPerPage(20)">20</a></li>
+		<li><a href="javascript:void(0);" onclick="setPerPage(30)">30</a></li>
+	</ul>
+</div>
+
+        <div class="visible-xs">共<?php echo $total;?>条/<?php echo $sum_pages;?>页---当前第<?php echo ($current_page-1)*$per_page+1;?>-<?php echo $current_page*$per_page;?>条</div>
+    </div>
+    <div class="col-sm-2 hidden-xs">
+        <p style="margin:2.4rem 0;">当前第<?php echo ($current_page-1)*$per_page+1;?>-<?php echo $current_page*$per_page;?>条</p>
+
+    </div>
+</div>

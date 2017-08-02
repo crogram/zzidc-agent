@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kyhelp.css">
+</block>
+<block name="search">
+        <div class="searchbox">
+            <div class="searchleft">
+                <i></i>帮助中心
+            </div>
+            <div class="searchright">
+                <form method="get" id="search" action="{:U('Help/help_retrieval','',false)}">
+                    <div class="search">
+                        <input type="text" id="keywords" name="keywords" value="{$keywords}" placeholder="请输入您想了解的问题、关键词或产品名称">
+                        <a href="javascript:void(0);" class="ssbtn" onclick="$('#search').submit();"><i></i></a>
+                    </div>
+                    <div class="hotsearch clearfix">
+                        <span>热搜关键词：</span>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('云服务器');$('#search').submit();">云服务器</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('云数据库');$('#search').submit();">云数据库</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('CDN');$('#search').submit();">CDN</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('注册');$('#search').submit();">注册</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('购买');$('#search').submit();">购买</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('找回密码');$('#search').submit();">找回密码</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+</block>
+<block name="content">
+    <!--帮助中心内容开始-->
+    <div class="width1200">
+        <div class="quest-tit">
+            常见热点问题
+        </div>
+        <div class="questionbox">
+            <ul class="wentilist">
+                <volist name="problem" id="pb" empty="未查询到问题">
+                    <li style="float:left;width:45%;margin-right: 30px;margin-left: 10px;">
+                        <i></i><a href="{:U('Help/help_details',array('id'=>$pb['id']),false)}">{$pb.problem_title}</a>
+                    </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    <div class="bgf4">
+        <div class="width1200">
+            <div class="quest-tit">
+                新手自助服务
+            </div>
+            <div class="server-item">
+                <a href="javascript:void(0);" onclick="$('#keywords').val('找回登录密码');$('#search').submit();" class="iconlist">
+                    <span class="servericon icon1 icon-trans"></span>
+                    <span class="icon-txt">找回登录密码</span>
+                </a>
+                <a href="javascript:void(0);" onclick="$('#keywords').val('修改绑定手机');$('#search').submit();" class="iconlist">
+                    <span class="servericon icon2 icon-trans"></span>
+                    <span class="icon-txt">修改绑定手机</span>
+                </a>
+                <a href="javascript:void(0);" onclick="$('#keywords').val('修改安全邮箱');$('#search').submit();" class="iconlist">
+                    <span class="servericon icon3 icon-trans"></span>
+                    <span class="icon-txt">修改安全邮箱</span>
+                </a>
+                <a href="javascript:void(0);" onclick="$('#keywords').val('修改登录密码');$('#search').submit();" class="iconlist">
+                    <span class="servericon icon4 icon-trans"></span>
+                    <span class="icon-txt">修改登录密码</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="width1200">
+        <div class="quest-tit" style="margin-top:75px">
+            产品问题分类
+        </div>
+        <div class="pro-wrap">
+            <volist name="product" id="pr" key="k">
+                <div class="pro-unit" style="height: 200px;<if condition='($k eq 3)or($k eq 6)'>width:350px</if>">
+                    <div style="float:left;"><img src="__FRONTEND_IMAGES__20160820img{$k}.png"  style="width:85px"></div>
+                    <div class="procontent">
+                        <p class="pro-tit"><a href="{:U('Help/help_retrieval',array('type_id'=>$pr['id'],'keywords'=>$pr['type_name']),false)}">{$pr.type_name}</a></p>
+                        <volist name="pr['type_des']" id="pr_id" empty="未查询到问题">
+                            <a href="{:U('Help/help_details',array('id'=>$pr_id['id']),false)}">{$pr_id.problem_title}</a>
+                        </volist>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <!--<div class="quest-tit" style="margin-top:0">-->
+            <!--在线帮助-->
+        <!--</div>-->
+        <!--<div class="help-item">-->
+            <!--<div class="onlinebox">-->
+                <!--<div class="helpcontent">-->
+                    <!--<span class="help-left-icon1"></span>-->
+                    <!--<div class="help-right-txt">-->
+                        <!--<p class="helptit">24h客服</p>-->
+                        <!--<p>及时响应，24小时，全年无休！</p>-->
+                        <!--<p>客服热线：0371-9618961</p>-->
+                        <!--<p style="margin-left:60px">4006-598-598</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<a href="#" class="zixunbtn"><i></i>QQ咨询</a>-->
+            <!--</div>-->
+            <!--<div class="onlinebox">-->
+                <!--<div class="helpcontent">-->
+                    <!--<span class="help-left-icon2"></span>-->
+                    <!--<div class="help-right-txt">-->
+                        <!--<p class="helptit">提交工单</p>-->
+                        <!--<p>为您提供7*24小时技术服务</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<a href="#" class="zixunbtn">提交工单</a>-->
+            <!--</div>-->
+            <!--<div class="onlinebox" style="margin-right:0">-->
+                <!--<div class="helpcontent">-->
+                    <!--<span class="help-left-icon3"></span>-->
+                    <!--<div class="help-right-txt">-->
+                        <!--<p class="helptit">投诉建议</p>-->
+                        <!--<p>您的意见将使我们更加完善</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<a href="#" class="zixunbtn">立即反馈</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <!--帮助中心内容结束-->
+</block>
+<block name="script"></block>

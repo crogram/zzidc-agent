@@ -1,0 +1,42 @@
+<script src="__FRONTEND_MEMBER__plugin/jquery/1.11.3/jquery.min.js"></script>
+<script src="__FRONTEND_MEMBER__plugin/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="__FRONTEND_MEMBER__js/kycommon.js"></script>
+<script src="__COM_JS__dialog/dialogUtil.js"></script>
+<script  src="__COM_JS__dialog/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="__FRONTEND_JS__jquery.placeholder.js"></script>
+<script type="text/javascript" language="javascript">
+$(function(){
+	if ($("a").hasClass("sub-menu-active")) {
+		$("a").removeClass("sub-menu-active");
+	}
+	if ($("a").hasClass("menu-active")) {
+		$("a").removeClass("menu-active");
+	}
+    if ($("a").hasClass("in")) {
+        $("a").removeClass("in");
+    }
+    var controller_name = '<?php echo CONTROLLER_NAME; ?>';
+    var action_name = '<?php echo ACTION_NAME;?>';
+    var data_named = controller_name+"/"+action_name;
+    var a = $('a[data-named = "'+data_named+'"]');
+    if(a.length == 0)
+    {
+        a = $('a[data-named = "'+controller_name+'"]');
+    }
+    var order_id = '<?php echo $_GET["order_id"]; ?>';
+    if(order_id != "") {
+        a = $("a[data-named = 'Order/orderlist']");
+    }
+    var virtual_type = '<?php echo $_GET["virtual_type"]; ?>';
+    a = a.eq(virtual_type);
+    if(data_named == "Member/index")
+    {
+        a.addClass("menu-active");
+    }else{
+        a.addClass("sub-menu-active");
+        a.parent().parent().parent().addClass("in");
+        a.parent().parent().parent().prev("div").find("a").addClass("menu-active");
+    }
+	$('input').placeholder();
+});
+</script>

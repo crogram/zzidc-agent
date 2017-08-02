@@ -1,0 +1,28 @@
+    <tr>
+    	<?php foreach($th as $k => $v ):?>
+	        <th>
+	        	<?php if( $k == C('SORT_PREFIX').'id' ):?>
+	        		<label class="pos-rel">
+						<!-- <input type="checkbox" class="ace"> -->
+						<span class="lbl"></span>
+					</label>
+	        	<?php endif;?>
+	        	<?php echo $v['display_name'];?>
+	        	
+	        	<?php if($v['sortable'] == true):?>
+	        		<?php if( empty( $request[$k]) ):?>
+		        		<span class="glyphicon glyphicon-sort" onclick="sort('<?php echo $k;?>', -1)"></span>
+	        		<?php elseif( $request[$k] == 1):?>
+		        		<span class="glyphicon glyphicon-sort-by-attributes" onclick="sort('<?php echo $k;?>', -1)"></span>
+	        		<?php elseif( $request[$k] == -1 ):?>
+	    	    		<span class="glyphicon glyphicon-sort-by-attributes-alt" onclick="sort('<?php echo $k;?>', 1)"></span>
+	        		<?php endif;?>
+	        	<?php endif;?>
+	        </th>
+        <?php endforeach;?>
+	        <th>操作
+		        	<a href="__ACTION__">
+				    	<span class="glyphicon glyphicon-refresh"></span>
+				    </a>
+		    </th>
+    </tr>

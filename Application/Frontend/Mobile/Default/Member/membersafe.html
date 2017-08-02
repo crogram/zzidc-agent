@@ -1,0 +1,107 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+	<nav class="ky-title bbefeff4 p-fixed">
+		<a href="javascript:;" onclick="window.history.back();" class="return-icona"></a>修改密码
+	</nav>
+    <form id="modify" name="modify" action="<?php echo U('frontend/member/memeber_modify','',false);?>" method="post">
+        <ul class="fg-content mtop230">
+            <li class="fg-line1">原密码</li>
+            <li>
+                <input type="password" name="old_pass" onblur="check_oldpass()" id="old_pass" value="" class="new-pass">
+                <p class="tips-newp" id="old_pass_p" style="color: red"></p>
+            </li>
+            <li class="fg-line1">新密码</li>
+            <li>
+                <input type="password" name="user_pass" onblur="check_newpass()" id="user_pass" value="" class="new-pass">
+                <p class="tips-newp" id="user_pass_p" style="color: red"></p>
+            </li>
+            <li class="fg-line1">确认密码</li>
+            <li>
+                <input type="password" name="user_pass2" onblur="check_newpass2()" id="user_pass2" value="" class="new-pass">
+                <p class="tips-newp" id="user_pass2_p" style="color: red"></p>
+            </li>
+        </ul>
+        <a href="javascript:;" onclick="updater();" class="completed-ps mbottom200">完成</a>
+    </form>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        function check_oldpass(){
+            var old_pass = getVal("old_pass");
+            if(!old_pass){
+                getEleById("old_pass_p").innerHTML="请输入原密码！";
+                return false;
+            }else{
+                getEleById("old_pass_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_newpass(){
+            var user_pass = getVal("user_pass");
+            var reg=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{8,20}$/;
+            var result=reg.test(user_pass);
+            if(!user_pass){
+                getEleById("user_pass_p").innerHTML="请输入新密码！";
+                return false;
+            }else if(!result){
+                getEleById("user_pass_p").innerHTML="密码长度须为8-20个字符，且同时包含三项(大、小写字母和数字)";
+                return false;
+            }else{
+                getEleById("user_pass_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_newpass2(){
+            var user_pass = getVal("user_pass");
+            var user_pass2 = getVal("user_pass2");
+            if(!user_pass2){
+                getEleById("user_pass2_p").innerHTML="请再次输入新密码！";
+                return false;
+            }else if(user_pass !== user_pass2){
+                getEleById("user_pass2_p").innerHTML="两次输入密码不一致！";
+                return false;
+            }else{
+                getEleById("user_pass2_p").innerHTML="";
+            }
+            return true;
+        }
+        function volidata(){
+            var oldpass = check_oldpass();
+            var newpass = check_newpass();
+            var newpass2 = check_newpass2();
+            if(oldpass && newpass && newpass2){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        var updata = true;
+        function updater(){
+            updata = volidata();
+            if(updata) {
+                $.ajax({
+                    type: 'post',
+                    url: '<?php echo U("frontend/member/memeber_modify","",false);?>',
+                    dataType: 'json',
+                    async: false,
+                    data: $('#modify').serialize(),
+                    success: function (data) {
+                        if (data.code == 1) {
+                            alertMsg("提示", data.msg, turnpage, data.url);
+                        } else {
+                            alertMsg("提示", data.msg, turnpage, null);
+                        }
+                        updata = true;
+                    }
+                });
+            }
+        }
+        var turnpage = function turnpage(index,url){
+            if(!url){
+                url=document.URL;
+            }
+            window.location.replace(url);
+        }
+    </script>
+</block>

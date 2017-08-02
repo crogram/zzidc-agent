@@ -1,0 +1,478 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__virtualhost.css">
+</block>
+{/* 首页主体开始 */}
+<block name="content">
+<style type="text/css">
+#tooltip {
+position: absolute;
+border: #333 1PX solid;
+background: #f7f5d1;
+padding: 1px;
+color: red;
+display: none;
+padding: 1px;
+}
+#hovertree,#yestop,#hoverclock{width:789px;margin:20px auto}
+</style>
+	{/* banner图开始 */}
+	<include file="Product/product_banner" />
+	{/* banner图结束 */}
+    <!-- 中部导航start -->
+    <div class="tab-nav-middle">
+      <div class="tab_on clearfix" style="width:100%">
+       <ul class="fix-nav fix-nav2">
+       	<?php foreach($ptype_list as $key=>$val) { ?>
+         <li id="tab5_<?php echo $key+1; ?>"  class="<?php if($sign == $val['api_ptype']){echo 'nav_on6';}else{echo 'nonav';} ?>" >
+         	<a href="###"  id="<?php echo $val['api_ptype'];?>"  onClick="setView5(<?php echo $key+1; ?>)" class="<?php if($sign == $val['api_ptype']){echo 'blue-under';}?> blue" style="cursor:pointer;"><?php echo $val['type_name']; ?></a>
+         </li>
+         <?php  } ?>
+       </ul>
+     </div>
+    </div>
+    <!-- 中部导航ending -->
+<?php foreach($product_list as $key=>$val){ ?>
+<div id="tab5_0<?php echo $key;?>"
+	class="<?php if($sign == $val[0]['api_ptype']){echo 'dis';}else{echo 'undis';} ?>">
+	<div class="grey-back1">
+		<div class="vpscontainerbg">
+			<div class="ky-container">
+				<?php $count_length = count($val);foreach($val as $k=>$v) {?>
+				<?php if( ($k%3) == 0 ):?>
+				<div
+					class="vps-contianer  <?php if( $k!=0 && (($k%3) == 0)):?>padding-100<?php endif;?>">
+					<div class="vps-col clearfix">
+						<?php endif;?>
+							<input type="hidden"  id="<?php echo $v['id'];?>_product_id"
+								value="<?php echo $v['id']?>" /> <input type="hidden"
+								id="<?php echo $v['id'];?>_product_name" value="<?php echo $v['product_name'];?>" />
+							<div
+								class="xinghao  <?php if( (($k+1)%3) == 0 ):?>mr-no<?php endif;?>  <?php if(in_array($v['id'],[247,248])){echo 'qyzj';}?> <?php if($v['id'] == 246){echo 'grzj';}?>" >
+								<div class="modelbox">
+									<!-- 判断主机图标 1:云虚拟，2:企业，3:个人，4:香港，5:美国-->
+									<span class="modelicon <?php if($v['api_ptype']=='hkhost'){echo 'icon-item4';}elseif(strstr($v['api_name'],'qy')){echo 'icon-item2';}elseif($v['api_ptype'] == 'cloudVirtual'){echo 'icon-item1';}elseif($v['api_ptype'] == 'usahost'){echo 'icon-item5';}else{echo 'icon-item3';}?>"></span> 
+									<span class="model-tit"> <?php echo $v['product_name'];?></span>
+								</div>
+								<ul class="config-numb">
+									<!-- 循环配置 -->
+									<?php foreach($v['config'] as $config_key=>$config_value){?>
+									<?php if ($v['api_ptype'] !="cloudspace"){?>
+									<?php if($config_value['en_name']=="month_flow_rate"){?>
+									<li>
+										<p class="numb-he">
+											<?php if($config_value['config_value'] == 0){ echo '不限制';}else{ echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+										<p class="g999">流量</p>
+									</li>
+									<?php }?>
+									<?php }else{?>
+									<?php if($config_value['en_name']=="flow_capacity"){?>
+									<li>
+										<p class="numb-he">
+											<?php if($config_value['config_value'] == 0){ echo '不限制';}else{ echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+										<p class="g999">流量</p>
+									</li>
+									<?php } ?>
+									<?php  if($config_value['en_name'] =="cpu_config"){?>
+									<li style="border: none">
+										<p class="numb-he">
+											<?php echo $config_value['config_value'].$config_value['unit'];?>
+										</p>
+										<p class="g999">CPU</p>
+									</li>
+									<?php }?>
+									<?php }?>
+									<?php if($config_value['en_name'] =="network_bandwidth") {?>
+									<?php if($v['api_name'] =='usa.host.II' || $v['api_name'] =='usa.host.III' || $v['api_name'] =='usa.host.V' || $v['api_name'] =='usa.host.Ｇ'){?>
+									<li style="border: none">
+									<?php }else{?>
+									<li >
+									<?php }?>
+										<p class="numb-he">
+											<?php if($config_value['config_value'] == '0'){?>
+											<span style="color:red">不限制</span>
+											<?php }else{?>
+											<?php echo $config_value['config_value'].$config_value['unit'];?>
+											<?php }?>
+										</p>
+										<p class="g999">带宽</p>
+									</li>
+									<?php }?>
+									<?php if($v['api_ptype'] == 'dedehost'){ ?>
+									<?php if($config_value['en_name'] =="data_capacity") {?>
+									<li id="$v['id']_base" style="border: none">
+										<p class="numb-he">
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+										<p class="g999">数据库容量</p>
+									</li>
+									<?php }?>
+									<?php } ?>
+									<?php  if($config_value['en_name'] =="space_capacity"){?>
+									<?php if($v['api_ptype'] == 'cloudspace' || $v['api_ptype'] == 'dedehost' || $v['api_name'] =='usa.host.II' || $v['api_name'] =='usa.host.III' || $v['api_name'] =='usa.host.V' || $v['api_name'] =='usa.host.Ｇ'){?>
+									<li>
+									<?php }else{?>
+									<li style="border: none">
+									<?php }?>
+										<p class="numb-he">
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+										<p class="g999">空间容量</p>
+									</li>
+									<?php }?>
+									<?php } ?>
+								</ul>
+								<ul class="config-row">
+									<li><span class="foot-lang">脚本语言：</span> 
+							<input id="<?php echo $v['id'];?>_buyType" type="hidden" name="buyType" value="0" /> 
+							<?php if($v['api_ptype'] == 'dedehost'){?><a id="<?php echo $v['id'];?>_linux" href="javascript:void(0);" class="vhostcheck active">php <i class="binggo"></i></a> 
+							<?php }else{?>
+							 <a id="<?php echo $v['id'];?>_linux" href="javascript:void(0);" class="vhostcheck active" onclick="checkBuyType(<?php echo $v['id'];?>, 'linux');">php<i class="binggo"></i></a> 
+							 <a id="<?php echo $v['id'];?>_windows" href="javascript:void(0);" class="vhostcheck" onclick="checkBuyType(<?php echo $v['id'];?>, 'windows');">asp.net</a>
+							<?php } ?>
+							</li>
+									<!-- 循环配置 -->
+									<?php foreach($v['config'] as $config_key=>$config_value){?>
+									<?php if($v['api_ptype'] == 'host' || $v['api_ptype'] == 'cloudVirtual'){?>
+									<!-- 判断数据库容量 -->
+									<?php if($config_value['en_name'] =="data_capacity") {?>
+									<li id="<?php echo $v['id'];?>_base">
+										<p class="share-big">
+											快云数据库共享版容量：
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+									</li>
+									<?php }?>
+									<!-- 域名绑定个数 -->
+									<?php if($config_value['en_name'] =="domain_number") {?>
+									<li><span class="child-count">
+											<?php echo $config_value['config_key']; ?>：
+									</span> <span class="zero">
+											<?php echo $config_value['config_value'];?>
+									</span></li>
+									<?php }?>
+									<?php } ?>
+									<?php if($v['api_ptype'] == 'hkhost' || $v['api_ptype'] == 'usahost'){?>
+									<?php if($config_value['en_name'] =="data_capacity") {?>
+									<li id="<?php echo $v['id'];?>_base">
+										<p class="share-big">
+											<?php echo $config_value['config_key']; ?>
+											：
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+									</li>
+									<?php }?>
+									<?php if($config_value['en_name'] =="domain_number") {?>
+									<li><span class="child-count"> <?php echo $config_value['config_key']; ?>：
+									</span> <span class="zero">
+											<?php echo $config_value['config_value'];?>
+									</span></li>
+									<?php }?>
+									<?php } ?>
+									<?php if($v['api_ptype'] == 'dedehost'){?>
+									<?php if($config_value['en_name'] =="data_capacity") {?>
+									<li id="<?php echo $v['id'];?>_base">
+										<p class="share-big">
+											快云数据库共享版容量：
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+										</p>
+									</li>
+									<?php }?>
+									<?php if($config_value['en_name'] =="web_services") {?>
+									<li><span class="child-count">
+											<?php echo $config_value['config_key']; ?>：
+									</span> <span class="zero">
+											<?php echo $config_value['config_value'];?>
+									</span>
+									</li>
+									<?php }?>
+									<?php }?>
+									<?php if($v['api_ptype'] == 'cloudspace'){?>
+									<?php if($config_value['en_name'] =="memory_config") {?>
+									<li><span class="child-count">
+											<?php echo $config_value['config_key']; ?>：
+									</span> <span class="zero">
+											<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?>
+									</span></li>
+									<?php }?>
+									<?php  if($config_value['en_name'] =="database_capacity"){?>
+									<li id="<?php echo $v['id'];?>_base">
+											<p class="share-big">快云数据库共享版容量：
+												<?php if($config_value['config_value'] >= 1024){echo ($config_value['config_value']/1024).'G';}else{echo $config_value['config_value'].$config_value['unit'];}?></p>
+									</li>
+									<?php }?>
+									<?php }?>
+									<li id="<?php echo $v['id'];?>_windows_base"
+										style="display: none;">
+										<p class="share-big" id="<?php echo $v['id'];?>_database" >数据库容量：0G</p>
+									</li>
+									<?php }?>
+									<li>
+										<div class="vpsinfoleft">价格：</div>
+										<div class="vpsinforight" name="priceSelect">
+											<select class="pricelist" id="select_<?php echo $v['id'];?>"
+												name="price_id">
+												<?php foreach($v['price_list'] as $price_key=>$price_value){ ?>
+												<?php if($price_value['month'] % 12 == 0){?>
+												<option value="<?php echo $price_value['id'];?>" id="<?php echo $price_value['id'];?>"><?php echo $price_value['product_price'];?>元/<?php echo $price_value['month'] / 12;?>年</option>
+												<?php }else{?>
+												<option value="<?php echo $price_value['id'];?>"  id="<?php echo $price_value['id'];?>"><?php echo $price_value['product_price'];?>元/<?php echo $price_value['month'];?>个月</option>
+												<?php }?>
+												<?php }?>
+											</select>
+										</div>
+									</li>
+								</ul>
+								<div class="dashline"></div>
+								<div class="buybtnbox">
+									<input type="hidden" id="<?php echo $v['id'];?>_free_trial" value='' /> 
+									<?php if($v['id'] == 244 || $v['api_name'] == host.mf.I){?>
+									<a href="javascript:void(0);" class="buy"  id="buy" onclick="submitbuy(<?php echo $v['id'];?>,'0');"><i></i>购买</a>
+									<?php }else{ ?>
+									<a href="javascript:void(0);" class="tryout" onclick="submitbuy(<?php echo $v['id'];?>,'1');"><i></i>试用</a>
+									<a href="javascript:void(0);" class="buy"  id="buy" onclick="submitbuy(<?php echo $v['id'];?>,'0');"><i></i>购买</a>
+									<?php }?>
+									<a href="javasrcipt:void(0);"   onclick="vhostDetail(<?php echo $v['id'];?>);return false;" class="detail" >详情</a>
+								</div>
+							</div>
+						<?php if(  ((($k+1)%3) == 0) || ( ($k+1) == $count_length )):?>
+					</div>
+				</div>
+				<?php endif;?>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>
+	<div id="dialog"  title="确认产品信息"  style="display: none">
+	<form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+		<div class="dialog-main clearfix">
+				<input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+				<input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+				<input type="hidden"  name="system_type" id="buy_system_type"  value=""/>
+				<input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+			<div class="dialog-name">产品名称：</div>
+			<div class="dialog-pro"  id="buy_product_name">虚拟主机</div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">操作系统：</div>
+			<div class="dialog-pro" id="czxt">Linux</div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">产品价格：</div>
+			<div class="dialog-pro"  id="buy_price">试用1元</div>
+		</div>
+		<div class="dialog-main clearfix" >
+			<div class="dialog-name" id="dbname">数据库：</div>
+			<div class="dialog-pro"  id="dbval" >共享型500M</div>
+		</div>
+		<div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+			<a href="javascript:void(0);" class="dialog-check"  id="free_trial"  onclick="order_buy_info(this);">确认购买</a>
+		</div>
+		</form>
+	</div>
+<div class="special-wrap">
+        <div class="special-ins">
+          <div class="w-775">
+            <h2 class="h2-special">特别说明</h2>
+            <p class="three-p">以下三类网站不得使用我公司各款虚拟主机产品，一经发现，我公司有权不经任何通知，第一时间关闭站点！</p>
+            <ul class="all-ins">
+              <li><span class="blue-font">违法违规类网站：</span>仿站、游戏外挂、博彩类、法轮功、黄赌毒、木马、病毒、色情、非法售药、黑客盗号、钓鱼网站、私服、手机窃听、网络诈骗、反动信息、管制刀具、军警用品等包含但不限于以上类型的所有违法违规类网站；此类网站一经发现，直接删除业务、不提供程序与数据库文件下载、余额不予退还，同时我司会将网站开办者信息上报至国家公共信息网络安全监察支队！</li>
+              <li><span class="blue-font">易受攻击类网站：</span>低俗（含擦边球网站）、成人用品、游戏外挂、彩票、仿品站、减肥丰胸、TXT小说等类型网站；此类网站一经发现，直接关闭，不再开启，受DDOS攻击网站永久关闭且不退款；</li>
+              <li><span class="blue-font">占系统资源多的程序网站：</span>聊天室、江湖、挂机类（如挂QQ、QQ秒赞等）、采集类等网站；发现3次占用服务器CPU或内存20%以上的网站，不再开启，用户可下载程序及数据库文件，更换快云VPS或独立服务器产品；</li>
+            </ul>
+            <p class="three-p">为了营造良好的互联网环境，请大家遵守上述规定，否则后果自负，谢谢合作！</p>
+          </div>
+       </div>
+      </div>
+</block>
+<block name="script"> 
+<style type="text/css">
+			#cn_list span{background-color:#0492de;background-position:3px -29px}
+			#cn_list span a{color:#fff}
+			#cn_list div{display:block}
+			.bizts{position:absolute;padding:5px;left:-25px;top:-20px;width:265px;background:#fffae2;border:1px solid #999999;color:red;z-index:20}
+		</style>
+<script type="text/javascript" language="javascript">
+    var dialog_buy = $("#dialog");
+function submitbuy(id,free_trial){
+	/* 产品ID */
+	var product_id = $("#"+id+"_product_id").val();
+	/* 产品名称 */
+	var product_name = $("#"+id+"_product_name").val();
+	/* 操作系统 */
+	var system_type = $("#"+id+"_buyType").val();
+	/* 价格 */
+	var price_id = $("#select_"+id).val();
+	/* 数据库 */
+	if(system_type  == '1'){
+		var database = $("#"+id+"_database").text();
+	}else{
+		var database = $("#"+id+"_base").find('p').text();
+	}
+	/* 价格内容 */
+	var price = $("#"+price_id).text();
+	if(system_type == 1){
+		type = 'windows';
+	}else{
+		type = 'linux';
+	}
+	if(free_trial == 1){
+		$("#free_trial").html("试用");
+	}else{
+		$("#free_trial").html("确认购买");
+	}
+	var dbinfo = database.split('：');
+	$("#dbval").html(dbinfo[1]);
+	$("#buy_product_id").val(product_id);
+	$("#buy_free_trial").val(free_trial);
+	$("#buy_product_name").html(product_name);
+	$("#buy_price_id").val(price_id);
+	$("#buy_system_type").val(system_type);
+	$("#buy_price").html(price);
+	$("#czxt").text(type);
+	$("#buy_database").html($("#"+id+"_base:nth-child(2)").text());
+    dialog_buy.dialog({
+		autoOpen: true,
+		modal : true,
+		width: 570,
+		height:270,
+		resizable:false
+	});
+    dialog_buy.dialog('open');
+}
+    var tooken = true;
+    function order_buy_info(obi){
+        if(tooken)
+        {
+            tooken = false;
+            if($(obi).html() == "试用")
+            {
+                $(obi).html("试用中...");
+            }else
+            {
+                $(obi).html("购买中...");
+            }
+            $.ajax({
+                type: 'post',
+                url: "<?php echo U('frontend/order/order_buy','',false);?>",
+                dataType: 'json',
+                data: $("#buy_from").serialize(),
+                success: function(data){
+                    dialog_buy.dialog('close');
+                    if (data.status == 1){
+                        alert(data.info);
+                        setTimeout("window.location.href='"+data.url+"'",2000);
+                    }else{
+                        alert(data.info);
+                        if(data.info == '账户余额不足，即将跳转充值页面'){
+                        	 setTimeout("window.location.href='"+data.url+"'",2000);
+                        }else{
+                       		 setTimeout("window.location.reload()",2000);
+                        }
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script type="text/javascript" language="javascript">
+function vhostDetail(id){
+	var price_id = $("#select_"+id).val();
+	var system_type = $("#"+id+"_buyType").val();
+	var domain = "{:U('frontend/product/vhostDetail', [], false)}";
+	var pathinfo = "/product/"+id+"/system_type/"+system_type+"/price/"+price_id;
+	var url = domain+pathinfo;
+	window.open(url);
+}
+</script>
+<script type="text/javascript" language="javascript">
+/* 选择操作系统 */
+function checkBuyType(id,system_type){
+	$("#"+id+"_linux").removeClass('active');
+	$("#"+id+"_windows").removeClass('active');
+	$("#"+id+"_windows").find('i').remove();//删除
+	$("#"+id+"_linux").find('i').replaceWith(' ');//替换
+	if(system_type == 'windows'){
+		$("#"+id+"_base").hide();
+		$("#"+id+"_windows_base").show();
+		$("#"+id+"_windows").addClass('active');
+		$("#"+id+"_windows").html($("#"+id+"_windows").html()+'<i class="binggo"></i>');
+	}else if(system_type == 'linux'){
+		$("#"+id+"_windows_base").hide();
+		$("#"+id+"_base").show();
+		$("#"+id+"_base").show();
+		$("#"+id+"_linux").addClass('active');
+		$("#"+id+"_linux").html($("#"+id+"_linux").html()+'<i class="binggo"></i>');
+	}
+	if(system_type == 'windows'){
+		type = 1;
+	}else if(system_type == 'linux'){
+		type = 0;
+	}
+	$("#"+id+"_buyType").val(type);
+}
+</script>
+<script type="text/javascript" language="javascript">
+	function setView5(n) {
+		for (var i = 1; i <= 6; i++) {
+			if (i == n) {
+				$('#tab5_0' + i).removeClass("undis");
+				$('#tab5_0' + i).addClass("dis");
+				$('#tab5_' + i).removeClass("nonav");
+				$('#tab5_' + i).addClass("nav_on6");
+			} else {
+				$('#tab5_' + i).removeClass("nav_on6");
+				$('#tab5_' + i).addClass("nonav");
+				$('#tab5_0' + i).removeClass("dis");
+				$('#tab5_0' + i).addClass("undis");
+			}
+		}
+	}
+	 $('.blue').on('click',function(){
+	        $('.blue').removeClass('blue-under');
+	        $(this).addClass('blue-under');
+	     })
+</script>
+<script>
+	$(function() {
+		var x = 15;
+		var y = 10;
+		$(".qyzj").each(function() {
+			$(this).mouseover(function(e) { //当鼠标指针从元素上移入时 
+				this.myTitle = '注意：此型号主机只允许绑定在景安企业备案的域名！';
+				this.title = "";
+				var tooltip = "<div id='tooltip'>" + this.myTitle + "</div>";
+				$("body").append(tooltip);
+				$("#tooltip").css({"top" : (e.pageY + y) + "px","left" : (e.pageX + x) + "px","z-index":"9999"}).show("fast");
+			}).mouseout(function() { //当鼠标指针从元素上移开时 
+				this.title = this.myTitle;
+				$("#tooltip").remove();
+			}).mousemove(function(e) { //当鼠标指针从元素上移动时 
+				$("#tooltip").css({
+					"top" : (e.pageY + y) + "px",
+					"left" : (e.pageX + x) + "px"
+				});
+			});
+		});
+		$(".grzj").mouseover(function(e) { //当鼠标指针从元素上移入时 
+			this.myTitle = '注意：此型号主机只允许绑在景安备案的域名！';
+			this.title = "";
+			var tooltip = "<div id='tooltip'>" + this.myTitle + "</div>";
+			$("body").append(tooltip);
+			$("#tooltip").css({"top" : (e.pageY + y) + "px","left" : (e.pageX + x) + "px","z-index":"9999"}).show("fast");
+		}).mouseout(function() { //当鼠标指针从元素上移开时 
+			this.title = this.myTitle;
+			$("#tooltip").remove();
+		}).mousemove(function(e) { //当鼠标指针从元素上移动时 
+			$("#tooltip").css({
+				"top" : (e.pageY + y) + "px",
+				"left" : (e.pageX + x) + "px"
+			});
+		});
+});
+</script>
+</block>

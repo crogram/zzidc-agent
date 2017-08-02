@@ -1,0 +1,106 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <nav class="ky-title bbefeff4 p-fixed">
+        <a href="<?php echo U('frontend/index/index','',false);?>" class="return-icona"></a>会员中心
+    </nav>
+    <section class="mtop136">
+        <section class="my-ban">
+            <span class="my-img"></span>
+            <p class="ft46fp mtop22">{$member_info.login_name}</p>
+            <p class="ft46fp mtop8">{$member_info.user_name}/<a class="ft46fp mtop8" href="javascript:;" onclick="window.location.href='<?php echo U('frontend/login/logout','',false);?>'">退出</a></p>
+            <div class="letter-set">
+                <!--<a href="#" class="letter-web"><span class="num-letter">20</span></a>-->
+                <!--<a class="setting-viewa"></a>-->
+            </div>
+        </section>
+        <section class="order-mttit">
+            <a href="<?php echo U('frontend/order/orderlist',[],false);?>" class="jinzhitiaozhuan">
+                <span class="pull-left ft5033">我的订单</span>
+                <span class="view-arrowr pull-right mtop53"></span>
+                <span class="pull-right ft4299">查看全部订单</span>
+            </a>
+        </section>
+        <section class="steps-view overflow-hidden">
+            <ul>
+                <li><a href="<?php echo U('frontend/order/orderlist',['state'=>2],false);?>" class="jinzhitiaozhuan"><span class="list-imgv"></span><p class="view-botft">待处理</p></a></li>
+                <li><a href="<?php echo U('frontend/order/orderlist',['state'=>6],false);?>" class="jinzhitiaozhuan"><span class="list-imgv1"></span><p class="view-botft">待开通</p></a></li>
+                <li><a href="<?php echo U('frontend/order/orderlist',['state'=>1],false);?>" class="jinzhitiaozhuan"><span class="list-imgv2"></span><p class="view-botft">开通成功</p></a></li>
+            </ul>
+        </section>
+        <section class="order-mttit mtop32">
+            <a href="<?php echo U('frontend/financial/member_account_info','',false);?>" class="jinzhitiaozhuan">
+                <span class="pull-left ft5033">我的钱包</span>
+                <span class="view-arrowr pull-right mtop53"></span>
+            </a>
+        </section>
+        <section class="steps-view overflow-hidden">
+            <ul>
+                <li><span class="ft5533lh">{$member_info.balance.0}.{$member_info.balance.1}</span><p class="view-botft lh82pb42">可用余额</p></li>
+                <li><span class="ft5533">{$member_info.balance.0}.{$member_info.balance.1}</span><p class="view-botft">账户余额</p></li>
+                <li><span class="ft5533">{$member_info.purchases.0}.{$member_info.purchases.1}</span><p class="view-botft">消费总额</p></li>
+            </ul>
+        </section>
+        <section class="my-listtw">
+            <div class="lists-viewmy">
+                <div class="icon1-viewmy pull-left"></div>
+                <div class="right-conview pull-right">
+                    <a class="jinzhitiaozhuan" href="<?php echo U('frontend/member/memberinfo','',false);?>">
+                        <span class="pull-left ft5433">修改资料</span>
+                        <span class="view-arrowr pull-right mtop73"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="lists-viewmy">
+                <div class="icon2-viewmy pull-left"></div>
+                <div class="right-conview pull-right bb-none">
+                    <a class="jinzhitiaozhuan" href="<?php echo U('frontend/member/membersafe','',false);?>">
+                        <span class="pull-left ft5433">修改密码</span>
+                        <span class="view-arrowr pull-right mtop73"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="my-listtw mbottom260">
+            <div class="lists-viewmy">
+                <div class="icon3-viewmy pull-left"></div>
+                <div class="right-conview pull-right">
+                    <a class="jinzhitiaozhuan" href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');">
+                        <span class="pull-left ft5433">产品中心</span>
+                        <span class="view-arrowr pull-right mtop73"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="lists-viewmy">
+                <div class="icon4-viewmy pull-left"></div>
+                <div class="right-conview pull-right bb-none">
+                    <a class="jinzhitiaozhuan" href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');">
+                        <span class="pull-left ft5433">意见反馈</span>
+                        <span class="view-arrowr pull-right mtop73"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- 工具栏 -->
+    <div class="tool">
+        <a href="<?php echo U('frontend/index/index','',false);?>" class="jinzhitiaozhuan tool-item">
+            <div class="tool-icon"></div>
+            <p class="tool-text text-center">首页</p>
+        </a>
+        <a href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');" class="jinzhitiaozhuan tool-item">
+            <div class="tool-icon tool-icon-position1"></div>
+            <p class="tool-text text-center">业务</p>
+        </a>
+        <a href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');" class="jinzhitiaozhuan tool-item">
+            <div class="tool-icon tool-icon-position2"></div>
+            <p class="tool-text text-center">服务</p>
+        </a>
+        <a href="{:U('frontend/member/index','',false)}" class="jinzhitiaozhuan tool-item tool-active">
+            <div class="tool-icon tool-icon-position3 tool-icon-bg0"></div>
+            <p class="tool-text text-center">我的</p>
+        </a>
+    </div>
+    <!-- 工具栏结束 -->
+</block>
+<block name="script"></block>

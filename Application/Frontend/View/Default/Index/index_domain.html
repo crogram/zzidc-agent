@@ -1,0 +1,26 @@
+<div class="bg-c1 index-getdomain" style="margin-top:-78px">
+    <!--首页推广图start-->
+    <div class="ky-container">
+        <div class="getdomain-gb">
+            <i class="getdomain-ltimg"></i>
+            <span>域名</span>
+            <form id="domain" method="post">
+                <div class="serchdomain clearfix">
+                    <input class="getdomainname" type="text"  name="domain" value=""  placeholder="请输入要查询的域名，如jingan"  onfocus="this.placeholder=''"/>
+                    <div class="divselect-box1 divselect4 divselect-bg selectsuffix">
+                        <cite><?php echo $default_domain['0']['product_name'];?></cite>
+                        <input type="hidden" name="suffix"  id="suffix"  value="<?php echo $domian_list['0']['product_name'];?>(<?php if($val['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)"/>
+                        <ul style=" display: none;overflow-y: auto;border-top: 1px solid #ff8800;" id="domain_list" >
+                            <?php foreach($default_domain as $key=>$val){?>
+                            <li><a href="javascript:void(0);"><?php echo $val['product_name'];?></a><input type="hidden" name="domain_list[]" value="<?php echo $val['id'];?>" /></li>
+                            <?php }?>
+                        </ul>
+                    </div>
+                    <a href="javascript:void(0)" onclick="domain_query()" style="border-left:none;border-top: 1px solid #ff8800;">查域名</a>
+                </div>
+            </form>
+            <a href="<?php echo U('frontend/domain/domain','',false);?>" class="getdomain-btn"  target= _blank>域名注册</a>
+        </div>
+    </div>
+    <!--首页推广图end-->
+</div>

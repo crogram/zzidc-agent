@@ -1,0 +1,83 @@
+<?php foreach( $data as $k => $v ):?>
+<tr>
+	<?php foreach( $th_raw as $kk => $vv ):?>
+		<?php if($vv == 'id'):?>
+			<td class="center">
+				<label class="pos-rel">
+					<!-- <input type="checkbox" class="ace"> -->
+					<span class="lbl"><?php echo $v[$vv]?></span>
+				</label>
+			</td>
+		<?php else:?>
+			<td class="center">
+				<label class="pos-rel">
+					<?php if( !empty($search[$vv]['data']) ):?>
+						<span class="lbl"><?php echo $search[$vv]['data'][$v[$vv]]?></span>
+					<?php else:?>
+						<span class="lbl"><?php echo $v[$vv]?></span>
+					<?php endif;?>
+				</label>
+			</td>
+		<?php endif;?>
+	<?php endforeach;?>
+
+<td>
+		{/* 操作按钮，大操作按钮 */}
+		<div class="action-buttons">
+			<a href="#" class=" bigger-140 show-details-btn" title="Show Details">
+				<i class="ace-icon fa fa-angle-double-down"></i>
+				<span class="sr-only">Details</span>
+			</a>
+		</div>
+		<div class="hidden-sm hidden-xs btn-group">
+			<a href="#">
+				<i class="ace-icon fa fa-pencil bigger-120"></i>
+			</a>
+			<a href="#">
+				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+			</a>
+		</div>
+	{/* 操作按钮，小操作按钮 */}
+	<div class="hidden-md hidden-lg">
+		<div class="inline pos-rel">
+			<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+				<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+			</button>
+			<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+				<li>
+					<a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
+						<span class="blue">
+							<i class="ace-icon fa fa-angle-double-down bigger-120"></i>
+						</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+						<span class="green">
+							<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+						</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+						<span class="red">
+							<i class="ace-icon fa fa-trash-o bigger-120"></i>
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</td>
+
+</tr>
+<tr class="detail-row">
+	<td colspan="<?php echo $th_count+1;?>">
+		<div class="table-detail">
+			<div class="row">
+				123
+			</div>
+		</div>
+	</td>
+</tr>
+<?php endforeach;?>

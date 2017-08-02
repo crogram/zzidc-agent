@@ -1,0 +1,71 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <title><?php echo $site_config['site_title']." ".$news['title'];?></title>
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kynew.css">
+</block>
+<block name="content">
+    <div class="clearboth"></div>
+    <div class="searchbg">
+        <div class="searchbox">
+            <div class="searchleft">
+                <i></i>{$site_config.site_name}动态
+            </div>
+            <div class="searchright">
+                <form method="get" id="search" action="{:U('Article/articlelist','',false)}">
+                    <div class="search">
+                        <input type="text" id="keywords" name="keywords" value="{$keywords}" placeholder="请输入您要查询的内容">
+                        <a href="javascript:void(0);" class="ssbtn" onclick="$('#search').submit();"><i></i></a>
+                    </div>
+                    <div class="hotsearch clearfix">
+                        <span>热搜关键词：</span>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('云服务器');$('#search').submit();">云服务器</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('云数据库');$('#search').submit();">云数据库</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('CDN');$('#search').submit();">CDN</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('注册');$('#search').submit();">注册</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('购买');$('#search').submit();">购买</a>
+                        <a href="javascript:void(0);" onclick="$('#keywords').val('找回密码');$('#search').submit();">找回密码</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--动态资讯内容开始-->
+    <div class="ky-container">
+        <div class="location">
+            <a href="{:U('Index/index','',false)}">首页</a>&nbsp;&gt;&nbsp;
+            <a href="{:U('Article/articlelist',array('type'=>$news['type']),false)}">
+                <if condition="$news.type eq 1">
+                    新闻动态<elseif condition="$news.type eq 2"/>
+                    活动动态<else />公告动态</if>
+            </a>&nbsp;&gt;&nbsp;{$news.title}
+        </div>
+        <div class="maintext">
+            <h2>{$news.title}</h2>
+            <div class="new-title" style="margin-top:5px;">
+                <span class="mright10">
+                    <if condition="$news.type eq 1">新闻<elseif condition="$news.type eq 2"/>活动<else />公告</if>动态
+                </span>
+                <span class="mright10">发布时间：{$news.create_time}</span>
+            </div>
+            <div class="textbox" align="center">
+                {$news.content}
+            </div>
+        </div>
+        <div class="listlink">
+            <if condition="$prev neq null">
+                <div class="uplink">
+                    <span>上一篇:</span>
+                    <a href="{:U('Article/article_details',array('id'=>$prev['id']),false)}">{$prev['title']}</a>
+                </div>
+            </if>
+            <if condition="$next neq null">
+                <div class="downlink" style="float: right">
+                    <span>下一篇:</span>
+                    <a href="{:U('Article/article_details',array('id'=>$next['id']),false)}">{$next['title']}</a>
+                </div>
+            </if>
+        </div>
+    </div>
+    <!--动态资讯内容开始-->
+</block>
+<block name="script"></block>

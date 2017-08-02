@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <base href="<?php echo U('frontend/index/index','',false);?>" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>快云服务器-快云触屏版</title>
+    <link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__base.css">
+    <link rel="stylesheet" href="__FRONTEND_MOBILE_CSS__ky-type.css">
+  </head>
+  <body>
+ 
+    <div class="nav by-fixtp">
+       <h1>
+         <a href="<?php echo U('frontend/cloudserver/cloudserverShow',[],false);?>" class="return-icona"></a>快云服务器
+       </h1>
+    </div>
+    <ul class="buy-kysul">
+       <li>
+         <div class="left-titser">配置</div>
+         <div class="right-conser"><?php if($_GET['pzbh'] == '1'){echo "快云服务器I型";}elseif($_GET['pzbh'] == '2'){echo "快云服务器II型";}elseif($_GET['pzbh'] == '3'){echo "快云服务器III型";}elseif($_GET['pzbh'] == '4'){echo "快云服务器IV型";}elseif($_GET['pzbh'] == '5'){echo "快云服务器V型";}else{echo "快云服务器自选配置";} ?></div>
+       </li>
+       <li>
+          <div class="left-titser">选择机房</div>
+          <div class="right-conser">
+             <a href="javascript:;" class="zz-machine machine-checked mright30" region=4001>郑州<i class="ky-checkicon"></i></a>
+             <a href="javascript:;" class="zz-machine" region=4002>香港<i class="ky-checkicon"></i></a>
+             <input type="hidden" name="region" id="region" value="4001">
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">系统盘</div>
+          <div class="right-conser">
+             <span class="pan-ssd machine-checked">SSD云磁盘<i class="ky-checkicon"></i></span>
+             <div class="right-system">
+                <p>Linux系统送20GB，</p>
+                <p>Windows系统送40GB</p>
+             </div>
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">选择时长</div>
+          <div class="right-conser">
+          <div>
+              <select class="time-ser-cho" id="time" onchange="calculateprice()">
+                  <option value="1">1个月</option>
+                  <option value="2">2个月</option>
+                  <option value="3">3个月</option>
+                  <option value="4">4个月</option>
+                  <option value="5">5个月</option>
+                  <option value="6">6个月</option>
+                  <option value="7">7个月</option>
+                  <option value="8">8个月</option>
+                  <option value="9">9个月</option>
+                  <option value="10">购买10个月即享12个月</option>
+                  <option value="20">购买20个月即享24个月</option>
+                  <option value="30">购买30个月即享36个月</option>
+                  <option value="40">购买40个月即享48个月</option>
+                  <option value="50">购买50个月即享60个月</option>
+             </select>
+           </div>
+           <input name="gmqx" id="gmqx" type="hidden" value="1">
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">操作系统</div>
+          <div class="right-conser">
+          
+	              <select class="time-ser-cho" id="ostype" name="ostype" onchange="changeos()">
+		   			
+	                  <option value="3">Windows</option>
+	                
+	                  <option value="4">CentOS</option>
+	                
+	                  <option value="5">Debian</option>
+	                
+	                  <option value="6">Ubuntu</option>
+	                
+	             </select>
+	       
+	       
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">&nbsp;&nbsp;</div>
+          <div class="right-conser">
+             
+	              <select class="time-ser-cho ft-xz-width" name="os" id="os">
+	                
+	             </select>
+	       
+	       
+          </div>
+       </li>
+       <div style="display:<?php if(in_array($_GET['pzbh'],[1,2,3,4,5])){echo 'none';}else{echo 'block';}?>">
+       <li>
+          <div class="left-titser">数据盘</div>
+          <div class="right-conser add-reduce">
+             <a href="javascript:;" class="reduce-ada"><i class="reduceai"></i></a>
+             <input type="text" name="disk" id="disk" value="40" class="num-data" onchange="checkdisk()">
+             <a href="javascript:;" class="reduce-ada"><i class="addai"></i></a>
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">带宽</div>
+          <div class="right-conser add-reduce">
+             <a href="javascript:;" class="reduce-ada"><i class="reduceai"></i></a>
+             <input type="text" name="band" id="band" value="1" class="num-data" onchange="checkband()">
+             <a href="javascript:;" class="reduce-ada"><i class="addai"></i></a>
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">CPU</div>
+          <div class="right-conser">
+              <select class="time-ser-cho" id="cpu" name="cpu" onchange="changemem()">
+                  <option value="1">1核</option>
+                  <option value="2">2核</option>
+                  <option value="4">4核</option>
+                  <option value="8">8核</option>
+                  <option value="16">16核</option>
+             </select>
+          </div>
+       </li>
+       <li>
+          <div class="left-titser">内存</div>
+          <div class="right-conser">
+             <select class="time-ser-cho" id="mem" name="mem" onchange="getdiyprice()">
+               <option value="1">1G</option>
+               <option value="2">2G</option>
+               <option value="4">4G</option>
+               <option value="8">8G</option>
+               <option value="12">12G</option>
+             </select>
+          </div>
+       </li>
+       </div>
+      <!-- 自选独有--结束      -->  
+       <li>
+          <div class="left-titser">价格</div>
+          <div class="right-conser cff8800"><span class="ft98 mright10">88888</span>元</div>
+       </li>
+       <li>
+         <div class="mlefta mbottom160" style="text-align: center;">
+            <a href="javascript:;" class="ly-buylj buylj1 mright70">立即购买</a>
+         </div>
+       </li>
+    </ul>
+   
+  </body>
+  
+  <script src="__FRONTEND_MOBILE_JS__layer_mobile/layer.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+	function alertMsg(title,content,fun,param){
+		layer.open({
+			  title: [
+			    title,
+			    'background-color:#009de0; color:#fff;'
+			  ]
+			  ,anim: 'up'
+			  ,content: content
+			  ,btn: ['确认', '取消']
+			  ,yes:function(index){
+				  if(fun){
+					  fun(index,param); 
+				  }else{
+					  layer.close(index);
+				  }
+			  },
+			  no:function(){
+				  layer.close();
+			  }
+			});
+	}
+  function alerttip(content){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+		  ,time: 3
+		});
+  }
+  function alerttips(content,fun,param){
+	  layer.open({
+		  content: content
+		  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+		  ,time: 3
+		  ,end:function(index){
+			 fun(param); 
+		  }
+		});
+  }
+  
+  function alertNoButton(msg,func,param){
+  	layer.open({
+			  content: msg
+			  ,style: 'background-color:#009de0; color:#fff; border:none;' 
+			  ,time: 3,
+			  end:function(index){
+			  	if(func){
+					func(index,param);
+			  	}
+			  }
+		});
+  }
+  function bindInput(obj,func){
+  	 var bind_name="input";
+	 if(navigator.userAgent.indexOf("MSIE")!=-1) bind_name="propertychange";
+	 $("#"+obj).bind(bind_name,func);
+  }
+	</script>
+</html>
+  <script src="__FRONTEND_MOBILE_JS__zepto.min.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+  var bh = "<?php echo $_GET['pzbh'];?>";
+  if(bh==-1){
+		getdiyprice();
+  }else{
+		calculateprice();
+  }
+  $('.check-ty').on("click",function(){
+      $(this).toggleClass('check-ty1');
+    });
+  $('.zz-machine').on("click",function(){
+	  $('.zz-machine').each(function(index, item) {
+			 $(item).toggleClass('machine-checked',false);
+       });
+      $(this).toggleClass('machine-checked');
+      $("#region").val($(this).attr("region"));
+      if($(this).attr("region")==4002){
+          osary = osary_hk;
+          czxtos = czxtos_hk;
+      }else{
+          osary = osary_zz;
+          czxtos = czxtos_zz;
+      }
+      changeos();
+      if(bh==-1){
+    	  getdiyprice();
+      }else{
+    	  calculateprice();
+      }
+  });
+  $(document).ready(function(){ 
+	　　changeos();
+	});
+  function calculateprice(){
+	  var region = $("#region").val();
+	  var price=88888;
+      $("#gmqx").val($("#time option:selected").val());
+	  getdiyprice();
+  }
+  function getJsonLength(jsonData){
+		var jsonLength = 0;
+		for(var item in jsonData){
+			jsonLength++;
+		}
+		return jsonLength;
+	}
+//操作系统类型
+  var osary = new Array();
+  var czxtos = new Array();
+  var osary_hk = new Array();
+  var czxtos_hk = new Array();
+  var osary_zz = new Array();
+  var czxtos_zz = new Array();
+	$.ajax({
+		url: "<?php echo U('frontend/cloudserver/OsType','',false);?>",
+		type: 'post',
+		async: false,
+		dataType:'json',
+		error:function() {alertMsg("提示","操作系统获取失败，请联系管理员！");},
+		success: function(msg) {
+			if(msg) {
+				if(typeof(msg.hk) != 'undefine' || typeof(msg.zz) != 'undefine'){
+					if(msg.hk && msg.zz){
+						if(msg.hk.code == 0 && msg.zz.code == 0){
+							var a = 0;
+							var lbbh = 3;
+							for(var czxt in msg.hk.info) {
+								var czxt_info = msg.hk.info[czxt];
+								var czxt_length = getJsonLength(msg.hk.info[czxt]);
+								for(var n=0; n<czxt_length;n++) {
+									osary_hk[a] = {"id":czxt_info[n].bh,"lbbh":lbbh,"lbname":czxt,"info":"","name":czxt_info[n].description };
+									czxtos_hk[czxt_info[n].description] = czxt_info[n].bh;
+									a++;
+								}
+								lbbh++;
+							}
+							var a1 = 0;
+							var lbbh1 = 3;
+							for(var czxt1 in msg.zz.info) {
+								var czxt_info1 = msg.zz.info[czxt1];
+								var czxt_length1 = getJsonLength(msg.zz.info[czxt1]);
+								for(var n1=0; n1<czxt_length1;n1++) {
+									osary_zz[a1] = {"id":czxt_info1[n1].bh,"lbbh":lbbh1,"lbname":czxt1,"info":"","name":czxt_info1[n1].description };
+									czxtos_zz[czxt_info1[n1].description] = czxt_info1[n1].bh;
+									a1++;
+								}
+								lbbh1++;
+							}
+						}else{alertMsg("提示","操作系统获取失败，请联系管理员！");}
+					}else{alertMsg("提示","操作系统获取失败，请联系管理员！");}
+				}else{alertMsg("提示","操作系统获取失败，请联系管理员！");}
+			}else{alertMsg("提示","操作系统获取失败，请联系管理员！");}
+		}
+	});
+  osary = osary_zz;
+  czxtos = czxtos_zz;
+  //切换操作系统
+  function changeos(){
+	  var lbbh = $("#ostype").val();
+	  $('#os').empty();
+	  if(osary!=null){
+		  for(var i=0;i<osary.length;i++){
+			if(osary[i].lbbh==lbbh){
+					$('#os').append("<option value="+osary[i].id+" lbbh="+osary[i].lbbh+">"+osary[i].name+"</option>");
+			}
+		  }
+	  }
+  }
+  //切换内存
+  function changemem(){
+		var cpu = parseInt($("#cpu").val());
+		isNaN(cpu)?1:cpu;
+		$('#mem').empty();
+		switch(cpu){
+		case 1:{
+			$('#mem').append("<option value='1'>1G</option><option value='2'>2G</option><option value='4'>4G</option><option value='8'>8G</option><option value='12'>12G</option>");
+			break;
+		}
+		case 2:{
+			$('#mem').append("<option value='2'>2G</option><option value='4'>4G</option><option value='8'>8G</option><option value='12'>12G</option><option value='16'>16G</option>");
+			break;
+		}
+		case 4:{
+			$('#mem').append("<option value='4'>4G</option><option value='8'>8G</option><option value='12'>12G</option><option value='16'>16G</option><option value='24'>24G</option>");
+			break;
+		}
+		case 8:{
+			$('#mem').append("<option value='8'>8G</option><option value='12'>12G</option><option value='16'>16G</option><option value='24'>24G</option><option value='32'>32G</option>");
+			break;
+		}
+		case 16:{
+			$('#mem').append("<option value='12'>12G</option><option value='16'>16G</option><option value='24'>24G</option><option value='32'>32G</option><option value='64'>64G</option>");
+			break;
+		}
+		default:
+			$('#mem').append("<option value='1'>1G</option><option value='2'>2G</option><option value='4'>4G</option><option value='8'>8G</option><option value='12'>12G</option>");
+		}
+		getdiyprice();
+	}
+	//数据盘的加减按钮
+	$('.addai').eq(0).click(function(){
+		if(parseInt($("#disk").val())<1020){
+			$("#disk").val(parseInt($("#disk").val())+10);
+			 getdiyprice();
+		}
+	});
+	$('.reduceai').eq(0).click(function(){
+		if(parseInt($("#disk").val())>40){
+			$("#disk").val(parseInt($("#disk").val())-10);
+			 getdiyprice();
+		}
+	});
+	//带宽的加减按钮
+	$('.addai').eq(1).click(function(){
+		if(parseInt($("#band").val())<100){
+			$("#band").val(parseInt($("#band").val())+1);
+			 getdiyprice();
+		}
+	});
+	$('.reduceai').eq(1).click(function(){
+		if(parseInt($("#band").val())>1){
+			$("#band").val(parseInt($("#band").val())-1);
+			 getdiyprice();
+		}
+	});
+	//检查数据盘的数据
+	function checkdisk(){
+		var disk = parseInt($("#disk").val());
+		disk = isNaN(disk)?40:disk;
+		disk = disk<40?40:disk;
+		if(disk%10!=0){
+			disk = parseInt((disk/10)+1)*10;
+		}
+		$("#disk").val(disk);
+		getdiyprice();
+	}
+	//检查带宽的数据
+	function checkband(){
+		var band = parseInt($("#band").val());
+		band = isNaN(band)?1:band;
+		band = band<0?1:band;
+		band = band>100?100:band;
+		$("#band").val(band);
+		getdiyprice();
+	}
+	//获取自选配置的价格
+	function getdiyprice(){
+		var cpu = parseInt($("#cpu").val());
+		var mem = parseInt($("#mem").val());
+		var disk = parseInt($("#disk").val());
+		var band = parseInt($("#band").val());
+		var time = parseInt($("#gmqx").val());
+		var dqbh = parseInt($("#region").val());
+		cpu = isNaN(cpu)?1:cpu;
+		mem = isNaN(mem)?1:mem;
+		disk = isNaN(disk)?40:disk;
+		band = isNaN(band)?1:band;
+		dqbh = isNaN(dqbh)?4001:dqbh;
+		$.ajax({
+			url:"<?php echo U('frontend/cloudserver/buyPrice','',false);?>",
+			type:"post",
+			dataType:"json",
+			async:false,
+			data:{"pzbh":bh,"dqbh":dqbh,"mem":mem,"cpu":cpu,"disk":disk,"bandwidth":band,"gmqx":time},
+			success:function(data){
+				if(isNaN(data.price) || data.price<0){
+					$(".ft98").text("价格异常");
+				}else{
+					$(".ft98").text(data.price);
+				}
+			}
+		});
+	}
+	//购买
+	var flag=0;
+	$('.buylj1').click(function(){
+		if(flag==1){
+			return;
+		}
+		dosubmit();
+	});
+	function dosubmit(){
+		var price = $(".ft98").text();
+		var cpu = parseInt($("#cpu").val());
+		var mem = parseInt($("#mem").val());
+		var disk = parseInt($("#disk").val());
+		var band = parseInt($("#band").val());
+		var gmqx = parseInt($("#gmqx").val());
+		var dqbh = parseInt($("#region").val());
+		var os = parseInt($("#os").val());
+		cpu = isNaN(cpu)?1:cpu;
+		mem = isNaN(mem)?1:mem;
+		disk = isNaN(disk)?40:disk;
+		band = isNaN(band)?1:band;
+		dqbh = isNaN(dqbh)?4001:dqbh;
+		os = isNaN(os) ? 0 : os; 
+		var datatt;
+		if(bh<1){
+			datatt = {"pzbh":bh,"cpu":cpu,"mem":mem,"disk":disk,"bandwidth":band,"gmqx":gmqx,"dqbh":dqbh,"os":os}
+		}else{
+			datatt = {"pzbh":bh,"gmqx":gmqx,"dqbh":dqbh,"os":os}
+		}
+		if(bh>0&&bh<6){
+			$.ajax({
+				url:"<?php echo U('frontend/order/cloud_order_buy','',false);?>",
+				type:"post",
+				dataType:"json",
+				async:false,
+				data:{"pzbh":bh,"region":dqbh,"time":gmqx,"os":os,"price":price,"api_ptype":"cloudserver","type":"mobile"},
+				success:function(data){
+					if(data.status == 1){
+						var url = data.url;
+						window.location.href=url;
+					}else{
+						alertMsg("错误信息",data.info);
+					}
+				}
+			}); 
+		}else{
+			 $.ajax({
+				url:"<?php echo U('frontend/order/cloud_order_buy','',false);?>",
+				type:"post",
+				dataType:"json",
+				async:false,
+				data:{"pzbh":bh,"region":dqbh,"time":gmqx,"os":os,"cpu":cpu,"mem":mem,"disk":disk,"bandwidth":band,"price":price,"api_ptype":"cloudserver","type":"mobile"},
+				success:function(data){
+					if(data.status == 1){
+						var url = data.url;
+						window.location.href=url;
+					}else{
+						alertMsg("错误信息",data.info);
+					}
+				}
+			}); 
+		 }
+	}
+	function dropreload(){
+		window.location.reload();
+	}
+	</script>
+</html>

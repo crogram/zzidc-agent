@@ -1,0 +1,114 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="content">
+<div class="domain-contain-bg" style="padding-top:0">
+	<div class="domain-step">
+        <ul class="clearfix">
+            <li><a href="<?php echo U('frontend/index/index','',false);?>">首页</a><i>&gt;</i></li>
+            <li><a href="<?php echo U('frontend/domain/domain','',false);?>">域名</a><i>&gt;</i></li>
+            <li>域名查询结果</li>
+        </ul>
+	</div>
+    <div class="domain-contain">
+    	<div class="domain-bannerserch domainlist-search clearfix">
+    	<form  id="domain" method="post">
+            <div class="serchdomain clearfix">
+                	    <input class="getdomainname" type="text"  name="domain" value="<?php echo $domain_name;?>"  placeholder="请输入要查询的域名，如jingan"  onfocus="this.placeholder=''"/>
+                        		<div class="divselect-box1 divselect3 divselect-bg">
+									<cite><?php echo $default_domain['0']['product_name'];?>(<?php if($default_domain['0']['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)</cite>
+									<input type="hidden" name="suffix"  id="suffix"  value="<?php echo $domian_list['0']['product_name'];?>(<?php if($val['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)"/>
+                                    <ul style="text-indent: 10px; display: none;overflow-y: auto" id="domain_list" >
+                                    <?php foreach($default_domain as $key=>$val){?>
+                                     <input type="hidden"  name="domain_list[]"  value="<?php echo $val['id'];?>" />
+                                        <li><a href="javascript:void(0);"  ><?php echo $val['product_name'];?>(<?php if($val['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)</a></li>
+                                      <?php }?>
+                                	</ul>
+					</div>
+                        <a href="javascript:void(0)" onclick="domain_query()">查域名</a>
+                	</div>
+                	</form>
+     	</div>	 
+         <div class="serchrecord">
+            <ul>
+            	<?php foreach($proiduct_list as $key=>$val){?>
+		            	<?php if($val['is_reg'] == 1){?>
+		            	<li>
+							<form action="<?php echo U('frontend/domain/domainRegister','',false);?>" method="get" id="zhuce<?php echo $val['id'];?>">
+								<div class="serchfirst clearfix">
+									<input type="text" style="display: none" name="product_id" value="<?php echo $val['id'];?>">
+									<input type="text" style="display: none" name="domain" value="<?php echo $domain_name;?>">
+									<a href="javascript:;" onclick="$('#zhuce<?php echo $val['id'];?>').submit();" class="getdomain">立即注册该域名</a>
+									<p><?php echo $val['product_name'];?>(<a href="javascript:;" onclick="$('#zhuce<?php echo $val['id'];?>').submit();" class="g6c0">未注册</a>)</p>	
+									<span><i class="gff8">
+										<?php foreach($val['price_list'] as $price_key=>$price_val){?>
+										<?php if($price_val['api_type'] == '5'){echo $price_val['product_price']."元/".$price_val['month']."个月/个";}?>
+										<?php } ?></i>
+									</span>
+								</div>
+							</form>
+		                </li>
+					     <?php }else if($val['is_reg'] == 2){?>
+								<li>
+								<div class="serchfirst clearfix">
+									<p><?php echo $val['product_name'];?>(<a href="http://www.<?php echo $val['product_name'];?>"  title="浏览此网站" class="gf00"  target="_blank">已注册</a>)</p>
+									<a href="http://www.<?php echo $val['product_name'];?>"  class="g009 checkrecord"  target="_blank">浏览该网站</a>
+								</div>
+							</li>
+							<?php }else if($val['is_reg'] == 0){?>
+							<li>
+								<div class="serchfirst clearfix">
+									<p><?php echo $val['product_name'];?>(<a href="javascript:void(0);"  title="查询失败" class="gf00"  >查询失败</a>)</p>
+									<a href="javascript:void(0);"  class="g009 checkrecord"  target="_blank">查询失败</a>
+								</div>
+							</li>
+						<?php }?>
+				<?php }?>
+						<li id="etc" style="display:none">
+								<div class="serchfirst clearfix">
+									正在查询...
+								</div>
+						</li>
+                <li>
+                	<a href="javascript:void(0);" class="checkall"  id="search_all" onclick="searchlist_all('show','<?php echo $domain_name;?>');" style="display:block">查看全部后缀</a>
+                	<a href="javascript:void(0);" class="checkall"  id="close_all" onclick="searchlist_all('hide');" style="display:none">收起</a>
+                    <!-- <a href="#" class="getall">全部加入清单</a> -->
+                </li>
+            </ul>
+         </div>   
+    </div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript" language="javascript">
+function searchlist_all(state,domain){
+	if(state == 'show'){
+		$("#etc").show();
+		$("#close_all").show();
+		$("#search_all").hide();
+	}else if(state =='hide'){
+		$("#close_all").hide();
+		$("#search_all").show();
+		$(".search").hide();
+	}
+	$.post('<?php echo U("frontend/domain/domain_query_all","",false)?>',{"state":state,"domain":domain,"domain_type":"<?php echo $api_ptype;?>"},function(date){
+	if (date.status == "ok") {
+		$("#etc").hide();
+		if(date.result != 0){
+			$("#search_all").before(date.result);
+		}
+	} else {
+		alert("接口调用失败，请联系客服");
+	}
+		}, 'json');
+	}
+</script>
+<script type="text/javascript" language="javascript">
+function domain_query(){
+    $("#domain").attr("action","<?php echo U('frontend/domain/domain_query','',false);?>");
+    $("#domain").submit();
+};
+</script>
+</block>

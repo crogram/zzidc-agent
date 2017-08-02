@@ -1,0 +1,91 @@
+<include file="Login/header" />
+    <section class="login-section">
+    <form action="<?php echo U('frontend/login/login','',false);?>" method="post" id="login">
+       <ul>
+         <li>
+           <span class="login-name">账号</span>
+           <input type="text" name="user_name"  id="user_name" value="" class="login-inp" placeholder="请输入账号">
+         </li>
+         <li>
+           <span class="login-name">密码</span>
+           <input type="password" name="user_pass" id="user_pass"  value="" class="login-inp" placeholder="请输入密码">
+         </li>
+         <li>
+         <span class="login-name">验证码</span>
+           <input id="captcha" name="captcha" type="text" class="login-inp login-yam-pct" placeholder="请输入验证码" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')"/>
+			<img id="captcha-img" onclick="this.src='<?php echo U('Frontend/Login/captcha',[],false);?>/type/frontend_sign_in/time/'+Math.random();" src="<?php echo U('Frontend/Login/captcha', [], false);?>/type/frontend_sign_in" alt="点击图片刷新验证码" class="" style="vertical-align:middle;">
+         </li>
+       </ul>
+       </form>
+    </section>
+    <section class="text-center">
+       <a href="javascript:login();" class="login-a no-login">登录</a>
+    </section>
+    <section class="overflow-hidden width1120">
+       <a href="<?php echo U('frontend/login/register','',false);?>" class="pull-left quick-login mleft10 quick-loginl">立即注册</a>
+       <!--<a href="#" class="pull-right quick-login mright10 quick-loginr">忘记密码</a>-->
+    </section>
+  </body>
+</html>
+<include file="Login/script" />
+<script type="text/javascript">
+  	$(function(){
+	    if(getVal("user_name")&&getVal("user_pass")&&getVal("captcha")){
+	    	if($(".login-a").hasClass("no-login")){
+	    			$(".login-a").removeClass("no-login");
+	    	}
+	    }
+	    bindInput("user_name",canlogin);
+	    bindInput("user_pass",canlogin);
+	    bindInput("captcha",canlogin);
+  	});
+  	
+    function canlogin(){
+    	var username=getVal("user_name");
+    	var pwd=getVal("user_pass");
+    	var captcha=getVal("captcha");
+    	if(username&&pwd&&captcha){
+    		$(".login-a").removeClass("no-login");
+    	}else{
+    		if(!$(".login-a").hasClass("no-login")){
+    			$(".login-a").addClass("no-login");
+    		}
+    	}
+    }
+    var loging=false;
+  	function login(){
+  		if($(".login-a").hasClass("no-login")){
+  			return;
+  		}
+  		if(loging){
+  			return ;
+  		}
+  		loging=true;
+  		var username=getVal("user_name");
+    	var pwd=getVal("user_pass");
+    	var captcha=getVal("captcha");
+  		if(!username){
+  			alertMsg("提示","请输入账号！",null,null);
+  			loging=false;
+  			return;
+  		}
+  		if(!pwd){
+  			alertMsg("提示","请输入密码！",null,null);
+  			loging=false;
+  			return;
+  		}
+  		if(!captcha){
+  			alertMsg("提示","请输入验证码！",null,null);
+  			loging=false;
+  			return;
+  		}
+  		var result=check_param({"user_name":username,"user_pass":hex_md5(pwd),"captcha":captcha},"login",true);//注册
+  		if(result){
+  			alertNoButton("登录成功！",turnpage,"<?php echo U('frontend/member/index','',false);?>");
+  		}else{
+  			loging = false;
+  			document.getElementById("captcha-img").click();
+  		}	
+  	}
+  </script>
+</html>

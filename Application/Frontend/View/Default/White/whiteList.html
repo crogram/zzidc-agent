@@ -1,0 +1,201 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__bmd.css">
+</block>
+<block name="content">
+<div class="container">
+<div style="text-align:center;margin-top:20px">
+
+</div>
+	<div class="search-main">
+		<p style="margin-left: 100px;color: #ff8800;font-size: larger;line-height:36px">说明：输入域名进行查询：如未添加白名单则会跳转添加白名单页面；</p>
+   		<div class="ym-sr">
+			<p class="search-title" id="title">白名单查询</p>
+			<div class="searchbox">
+				<input type="text" id="ym" placeholder="请输入一级域名，如：zzidc.com" class="searchinput" />
+				<input type="button" value="查&nbsp;&nbsp;询" class="search-btn" id="submit"  onclick="checkyms();" />
+				<input type="hidden" id="domainStatus" value="0">
+			</div>
+        </div>
+        <div class="error-msg"  id="ymerr" style="display:none"></div>
+        <div class="ipbox" style="display:none"  id="ipDiv">
+        <div class="ym-sr mtop20">
+        	<p class="search-title">IP地址</p>
+			<div class="searchbox">
+				<input type="text" value="" placeholder="请输入您域名解析的景安IP，如1.1.1.1" class="searchinput" style="width:617px" id="ymip"  onchange="checkIp();">
+			</div>
+        </div>
+        <div class="error-msg" id="iperr" style="display:none">您输入的IP地址错误！</div>
+        <div class="ym-sr mtop20">
+        	<p class="search-title">验证码</p>
+			<div class="searchbox">
+				<input type="text" value=""  id="codeNum"  placeholder="请输入验证码" class="searchinput" style="width:180px" name="captcha"  onchange="checkyzm();">
+				<a href="javascript:void(0);" class="yzm"  id="verifyCode">
+					<img id="captcha-img" onclick="this.src='<?php echo U('Frontend/Login/captcha',[],false);?>/type/frontend_white/time/'+Math.random();" src="<?php echo U('Frontend/Login/captcha', [], false);?>/type/frontend_white" alt="点击图片刷新验证码" class="col-sm-5" >
+				</a>
+			</div>
+        </div>
+        <div class="error-msg" style="display:none" id="yzmerr">请输入验证码！</div>
+        </div>
+    </div>
+</div>
+<div class="contentbg">
+	<div class="info-center">
+    	<div class="info-center-right">
+        	<div class="right-icon">什么是白名单？</div>
+            <div class="right-info">接入在我公司郑州机房，在工信部取得备案号且不在黑名单的域名。</div>
+        </div>
+    </div>
+</div>
+<div id="dialogs" style="display:none">
+	<div id="resultinfo" title="操作提示">
+	</div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript">
+function checkyms(){
+	var status = $("#domainStatus").val();
+	if(status == 0){
+		getDomainWhite();
+	}
+	if(status == 1){
+		if(checkym() && checkIp()){
+			var ym = $("#ym").val();
+			var ip = $("#ymip").val();
+			$.ajax({
+		          url: "<?php echo U('frontend/white/addDomainWhite','',false);?>",
+		          type: 'post',
+		          data: {domain:ym,ymip:ip},
+		          dataType: 'json',
+		          success: function(data){
+		          		if(data == "ok"){
+			          		showAlerts("加白成功！30分钟内生效！",320,180);
+		          		}else{
+		          			showAlert(data,320,180);
+		          		}
+					}
+				});
+		}
+	}
+}
+function checkym(){
+	var b = false;
+	var ym = $("#ym").val();
+	if(ym == null || ym == ""){
+		$("#ymerr").show();
+        $("#ymerr").html("请输入要查询的域名！");
+	}else{
+		var reg = /^[A-Za-z0-9\u4E00-\u9FA5]{1}(-?[A-Za-z0-9\u4E00-\u9FA5]){0,98}(\.[A-Za-z0-9\u4E00-\u9FA5]{1,10}){1,5}$/;
+		if(!reg.test(ym)){
+			$("#ymerr").show();
+        	$("#ymerr").html("您输入的域名格式错误！");
+		}else{
+			b = true;
+			$("#ymerr").hide();
+        	$("#ymerr").html("");
+		}
+	}
+	return b;
+}
+
+function getDomainWhite(){
+	var b = false;
+	var ym = $("#ym").val();
+	if(checkym()){
+		$.ajax({
+	          url: "<?php echo U('frontend/white/getDomainWhiteList','',false);?>",
+	          type: 'post',
+	          data: {domain:ym},
+	          dataType: 'json',
+	          saync:false,
+	          success: function(data){
+	        	  if(data.msg == "ok"){
+			          	b = true;
+			          	$("#title").text("白名单添加");
+			          	$("#submit").val("添 加");
+			          	$("#domainStatus").val("1");
+			          	$("#ipDiv").show();
+			        	$("#ymerr").html("您的域名不在白名单中，请输入域名解析的景安IP，将该域名加入白名单中").show();
+			          }else{
+			          	showAlert(data.msg,320,180);
+			          }
+			}
+		});
+	}
+	return b;
+}
+function checkIp(){
+	var ip = $("#ymip").val();
+	var b = false;
+	var reg = /^([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){3}(-([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){3})?(;([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){3}(-([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){3})?)*$/;
+	if(!reg.test(ip)){
+		$("#iperr").show();
+        $("#iperr").html("您输入的IP地址错误！");
+	}else{
+		$("#iperr").hide();
+        $("#iperr").html("");
+        b = true;
+	}
+	return b;
+}
+function checkyzm(){
+	var b = false;
+	var codeNum= $("#codeNum").val();
+	if(codeNum != null && codeNum != ""){
+		$.ajax({
+          url: "<?php echo U('frontend/white/checkCodeNum','',false);?>",
+          type: 'post',
+          data: {codeNum:codeNum},
+          dataType: 'json',
+          async:false,
+          success: function(data){
+          		if(data.status == "y"){
+          			$("#yzmerr").hide();
+          			$("#yzmerr").html("");
+          			b = true;
+          		}else{
+          			$("#yzmerr").show();
+          			$("#yzmerr").html("请输入正确的验证码！");
+          		}
+			}
+		});
+	}else{
+		$("#yzmerr").show();
+		$("#yzmerr").html("请输入验证码！");
+	}
+	return b;
+}
+function showAlerts(res,w,h){
+	$("#resultinfo").html(res);
+	$("#resultinfo").dialog({
+		autoOpen: false,
+		height: h,
+		width: w,
+		modal: true,
+		buttons:{
+			"确认":function(){
+				var url = "<?php echo U('frontend/white/whiteList','',false);?>"
+				window.location.href=url;
+			}
+		}
+	}).dialog("open");
+}
+
+function showAlert(res,w,h){
+	$("#resultinfo").html(res);
+	$("#resultinfo").dialog({
+		autoOpen: false,
+		height: h,
+		width: w,
+		modal: true,
+		buttons:{
+			"确认":function(){
+				$(this).dialog("close");
+			}
+		}
+	}).dialog("open");
+}
+
+</script>
+</block>

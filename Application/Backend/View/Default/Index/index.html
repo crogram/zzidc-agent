@@ -1,0 +1,350 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+<script src="__BACKEND_JS__underscore-min.js"></script>
+<style type="text/css">
+ul.newslist li{float:left;width:340px;padding-right:10px;line-height:24px;padding:5px 0}
+ul.newslist li a{display:block;width:330px;overflow:hidden;word-break:break-all;color:#4c6eaa}
+ul.newslist li a:hover{color:#136dc9;text-decoration:underline}
+</style>
+</block>
+
+<block name="content">
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<!-- <small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					后台首页
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					友情链接列表
+				</small> -->
+				<a class="btn btn-danger btn-sm btn-white pull-right" href="javascript:void(0);" onclick="testCommunication()">
+					<i class="fa fa-exchange bigger-110"></i> 测试通信
+				</a>
+			</h1>
+
+		</div><!-- end/.page-header -->
+		<div class=" row">
+			<div class="col-xs-12">
+
+				<include file="Index/index-flot" />
+
+				<include file="Index/index-recent" />
+				
+				<include file="Index/index-news" />
+
+			</div>
+		</div>
+
+</block>
+
+<block name="scripts">
+	<script src="__COM_JS__pagination.js"></script>
+	<script src="__BACKEND_JS__table.js"></script>
+	<script type="text/javascript">
+	//折线图/开始
+$(function(){
+	initNews();
+	$('<div class="tooltip top" id="line-chart-tooltip"> <div class="tooltip-arrow"></div> <div class="tooltip-inner"></div> </div>').css( {
+	position: 'absolute',
+	display: 'none',
+	border: '1px solid #fdd',
+	padding: '2px',
+	'background-color': '#fee',
+	opacity: 0.80
+	}).appendTo("body");
+
+	$.ajax({
+		url: '<?php echo U("Backend/Index/getDealCount", [  ], false);?>',
+		type: 'GET',
+		dataType: 'json',
+		beforeSend: function(){
+				$("#line-chart").html('<p class="text-center"><i class="fa fa-spin fa-spinner"></i>正在获取交易数据</p>');
+		},
+		success: function (data){
+			$("#line-chart").html('');
+			if (data.status != 1) {
+				$("#line-chart").html('<p class="text-center">'+data.info+'</p>');
+			}else {
+				var lineChartData = _.toArray(data.info.money);
+				// var lineChartData = [[1, 103], [2, 28], [3, 135], [4, 130], [5, 145], [6, 155], [7, 155], [8, 155], [9, 155], [10, 155], [11, 155], [12, 155]];
+
+				$.plot($("#line-chart"), [
+					{ label: "", data: lineChartData}], {
+						series: {
+							lines: { show: true, fill: true},
+							color: "#438eb9",
+							points: { show: true}
+						},
+						xaxis: {
+							// ticks: [[1, "1月"], [2, "2月"], [3, "3月"], [4, "4月"], [5, "5月"], [6, "6月"], [7, "7月"], [8, "8月"], [9, "9月"], [10, "10月"], [11, "11月"], [12, "12月"]],
+							ticks: _.toArray(data.info.month),
+							 min: 1,
+							 max: 12
+						}, //指定固定的显示内容
+						yaxis: { ticks: 10,min: 0 }, //在y轴方向显示5个刻度，此时显示内容由 flot 根据所给的数据自动判断
+						grid: {
+							backgroundColor: { colors: [ "#fff", "#fff" ] },
+							borderWidth: 1,
+							borderColor:'#555',
+							clickable: true
+						}
+					} );
+			}
+			$("#line-chart").bind("plotclick", function (event, pos, item) {
+
+				if (item) {
+						$("#line-chart-tooltip").find('.tooltip-inner').html('');
+						$("#line-chart-tooltip").find('.tooltip-inner').html(item.series.data[item.dataIndex][1]);
+						$("#line-chart-tooltip").css({
+						  top: item.pageY-$("#line-chart-tooltip").height()+1+$("#line-chart-tooltip").find('.tooltip-arrow').height(),
+						  left: item.pageX-$("#line-chart-tooltip").width()/2+$("#line-chart-tooltip").find('.tooltip-arrow').width()/2
+						}).fadeIn(200);
+			    } else {
+			        $("#line-chart-tooltip").hide();
+			    }
+			});
+		}
+	});
+
+
+});
+	//折线图/结束
+
+//景安新闻公告
+function initNews(){
+		$.post("<?php echo U('Backend/Index/getLatestNews',[],false);?>",{},function(msg){
+			$('#latestNews_sub').append(msg);
+		});
+	}
+
+
+function testCommunication(){
+	var url = "<?php echo U('Backend/Index/testCommunication', [], false);?>";
+    var dialog = null;
+	$.ajax({
+		type : "get",
+		dataType : "json",
+		url : url,
+		beforeSend: function(){
+			dialog = bootbox.dialog({
+				message: '<p><i class="fa fa-spin fa-spinner"></i>测试通信中...</p>',
+				closeButton: false
+			});
+		},
+		success : function(data){
+			dialog.modal('hide');
+			alertBox(data.info);
+		}
+	});
+
+}
+
+function sendMails(){
+	var ids = '';
+	$('input.ids:checked').each(function( i, e){
+		ids += $(this).val()+',';
+	});
+	ids = ids.substr(0,ids.length-1);
+	if (ids == '') {
+		alert('您没有选择要发送提醒邮件的业务');
+		return false;
+	}
+	var url = "<?php echo U('Backend/Index/sendMails', [], false);?>/ids/"+ids;
+	$.ajax({
+		type : "get",
+		dataType : "json",
+		url : url,
+		success : function(data){
+			alertBox(data.info);
+			setTimeout(function(){window.location.reload();},2000);
+		}
+	});
+}
+
+
+					jQuery(function($) {
+
+						$('#simple-colorpicker-1').ace_colorpicker({pull_right:true}).on('change', function(){
+							var color_class = $(this).find('option:selected').data('class');
+							var new_class = 'widget-box';
+							if(color_class != 'default')  new_class += ' widget-color-'+color_class;
+							$(this).closest('.widget-box').attr('class', new_class);
+						});
+
+
+						// scrollables
+						$('.scrollable').each(function () {
+							var $this = $(this);
+							$(this).ace_scroll({
+								size: $this.attr('data-size') || 100,
+								//styleClass: 'scroll-left scroll-margin scroll-thin scroll-dark scroll-light no-track scroll-visible'
+							});
+						});
+						$('.scrollable-horizontal').each(function () {
+							var $this = $(this);
+							$(this).ace_scroll(
+							  {
+								horizontal: true,
+								styleClass: 'scroll-top',//show the scrollbars on top(default is bottom)
+								size: $this.attr('data-size') || 500,
+								mouseWheelLock: true
+							  }
+							).css({'padding-top': 12});
+						});
+
+						$(window).on('resize.scroll_reset', function() {
+							$('.scrollable-horizontal').ace_scroll('reset');
+						});
+
+
+						$('#id-checkbox-vertical').prop('checked', false).on('click', function() {
+							$('#widget-toolbox-1').toggleClass('toolbox-vertical')
+							.find('.btn-group').toggleClass('btn-group-vertical')
+							.filter(':first').toggleClass('hidden')
+							.parent().toggleClass('btn-toolbar')
+						});
+
+						/**
+						//or use slimScroll plugin
+						$('.slim-scrollable').each(function () {
+							var $this = $(this);
+							$this.slimScroll({
+								height: $this.data('height') || 100,
+								railVisible:true
+							});
+						});
+						*/
+
+
+						/**$('.widget-box').on('setting.ace.widget' , function(e) {
+							e.preventDefault();
+						});*/
+
+						/**
+						$('.widget-box').on('show.ace.widget', function(e) {
+							//e.preventDefault();
+							//this = the widget-box
+						});
+						$('.widget-box').on('reload.ace.widget', function(e) {
+							//this = the widget-box
+						});
+						*/
+
+						//$('#my-widget-box').widget_box('hide');
+
+
+
+						// widget boxes
+						// widget box drag & drop example
+					    $('.widget-container-col').sortable({
+					        connectWith: '.widget-container-col',
+							items:'> .widget-box',
+							handle: ace.vars['touch'] ? '.widget-title' : false,
+							cancel: '.fullscreen',
+							opacity:0.8,
+							revert:true,
+							forceHelperSize:true,
+							placeholder: 'widget-placeholder',
+							forcePlaceholderSize:true,
+							tolerance:'pointer',
+							start: function(event, ui) {
+								//when an element is moved, it's parent becomes empty with almost zero height.
+								//we set a min-height for it to be large enough so that later we can easily drop elements back onto it
+								ui.item.parent().css({'min-height':ui.item.height()})
+								//ui.sender.css({'min-height':ui.item.height() , 'background-color' : '#F5F5F5'})
+							},
+							update: function(event, ui) {
+								ui.item.parent({'min-height':''})
+								//p.style.removeProperty('background-color');
+
+
+								//save widget positions
+								var widget_order = {}
+								$('.widget-container-col').each(function() {
+									var container_id = $(this).attr('id');
+									widget_order[container_id] = []
+
+
+									$(this).find('> .widget-box').each(function() {
+										var widget_id = $(this).attr('id');
+										widget_order[container_id].push(widget_id);
+										//now we know each container contains which widgets
+									});
+								});
+
+								ace.data.set('demo', 'widget-order', widget_order, null, true);
+							}
+					    });
+
+
+						///////////////////////
+
+						//when a widget is shown/hidden/closed, we save its state for later retrieval
+						$(document).on('shown.ace.widget hidden.ace.widget closed.ace.widget', '.widget-box', function(event) {
+							var widgets = ace.data.get('demo', 'widget-state', true);
+							if(widgets == null) widgets = {}
+
+							var id = $(this).attr('id');
+							widgets[id] = event.type;
+							ace.data.set('demo', 'widget-state', widgets, null, true);
+						});
+
+
+						(function() {
+							//restore widget order
+							var container_list = ace.data.get('demo', 'widget-order', true);
+							if(container_list) {
+								for(var container_id in container_list) if(container_list.hasOwnProperty(container_id)) {
+
+									var widgets_inside_container = container_list[container_id];
+									if(widgets_inside_container.length == 0) continue;
+
+									for(var i = 0; i < widgets_inside_container.length; i++) {
+										var widget = widgets_inside_container[i];
+										$('#'+widget).appendTo('#'+container_id);
+									}
+
+								}
+							}
+
+
+							//restore widget state
+							var widgets = ace.data.get('demo', 'widget-state', true);
+							if(widgets != null) {
+								for(var id in widgets) if(widgets.hasOwnProperty(id)) {
+									var state = widgets[id];
+									var widget = $('#'+id);
+									if
+									(
+										(state == 'shown' && widget.hasClass('collapsed'))
+										||
+										(state == 'hidden' && !widget.hasClass('collapsed'))
+									)
+									{
+										widget.widget_box('toggleFast');
+									}
+									else if(state == 'closed') {
+										widget.widget_box('closeFast');
+									}
+								}
+							}
+
+
+							$('#main-widget-container').removeClass('invisible');
+
+
+							//reset saved positions and states
+							$('#reset-widgets').on('click', function() {
+								ace.data.remove('demo', 'widget-state');
+								ace.data.remove('demo', 'widget-order');
+								document.location.reload();
+							});
+
+						})();
+
+					});
+
+	</script>
+</block>

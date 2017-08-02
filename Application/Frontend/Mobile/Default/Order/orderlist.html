@@ -1,0 +1,210 @@
+<?php $site_config = WebSiteConfig();?>
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<title>{$site_config.site_title}-触屏版</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_MOBILE_CSS__base.css">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_MOBILE_CSS__myorder.css">
+</head>
+<body class="clearfix position-relative order-yfbody">
+<!-- header -->
+<div class="hd text-center">
+	<a href="<?php echo U('frontend/member/index','',false);?>"><div class="back pull-left"></div></a>
+	<div class="ordertype gfff">订单类型<span class="onarrow"></span></div>
+</div>
+<?php $state = $_GET['state'];$product_type = $_GET['product_type'];?>
+<ul class="tanchu g333">
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state],false);?>" class="jinzhitiaozhuan <?php if(!in_array($product_type,['10.9','1.13.14','7.15.8.16.17.12',18,20,22])){?>active<?php }?>">全部订单<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>'10.9'],false);?>" class="jinzhitiaozhuan <?php if($product_type == '10.9'){?>active<?php }?>">域名<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>'1.13.14'],false);?>" class="jinzhitiaozhuan <?php if($product_type == '1.13.14'){?>active<?php }?>">VPS&快云VPS<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>'7.15.8.16.17.12'],false);?>" class="jinzhitiaozhuan <?php if($product_type == '7.15.8.16.17.12'){?>active<?php }?>">虚拟主机<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>18],false);?>" class="jinzhitiaozhuan <?php if($product_type == '18'){?>active<?php }?>">快云服务器<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>22],false);?>" class="jinzhitiaozhuan <?php if($product_type == '22'){?>active<?php }?>">快云数据库<span class="ok"></span></a></li>
+	<li><a href="<?php echo U('frontend/order/orderlist',['state'=>$state,'product_type'=>20],false);?>" class="jinzhitiaozhuan <?php if($product_type == '20'){?>active<?php }?>">SSL证书<span class="ok"></span></a></li>
+</ul>
+<div class="over displaynone"></div>
+<!-- header结束 -->
+<!-- nav -->
+<div class="nav text-center">
+	<div class="nav-item <?php if($state != 1 && $state != 2 && $state != 6){?>active<?php }?>" onclick="toorder('<?php echo U('frontend/order/orderlist',['product_type'=>$product_type],false);?>')">全部订单</div>
+	<div class="nav-item <?php if($state == 2){?>active<?php }?>" onclick="toorder('<?php echo U('frontend/order/orderlist',['state'=>2,'product_type'=>$product_type],false);?>')">待处理</div>
+	<div class="nav-item <?php if($state == 6){?>active<?php }?>" onclick="toorder('<?php echo U('frontend/order/orderlist',['state'=>6,'product_type'=>$product_type],false);?>')">待开通</div>
+	<div class="nav-item <?php if($state == 1){?>active<?php }?>" onclick="toorder('<?php echo U('frontend/order/orderlist',['state'=>1,'product_type'=>$product_type],false);?>')">开通成功</div>
+</div>
+<!-- nav结束 -->
+<div class="orderbox clearfix">
+	<!-- main all -->
+	<ul class="main <?php if($state == 1){?>openorders<?php }elseif($state == 2){?>waitorderopen<?php }elseif($state == 6){?>waitorderpay<?php }else{?>allorder<?php }?>" id="orderList">
+		<volist name="info" id="data">
+			<li>
+				<a href="<?php echo U('frontend/order/orderinfo',['order_id'=>$data['id']],false);?>" class="jinzhitiaozhuan">
+					<p class="title g333">
+                        订单号：{$data.id} {$data.product_name}&lt;
+                        <if condition="$data.order_type eq  0">新增
+                            <elseif condition="$data.order_type eq  1"/>增值
+                            <elseif condition="$data.order_type eq  2"/>续费
+                            <elseif condition="$data.order_type eq  3"/>变更方案
+                            <elseif condition="$data.order_type eq  4"/>转正
+                        </if>
+                        &gt;
+                    </p>
+					<p class="state g666">
+                        <span class="paymoney gff8">¥{$data.charge}</span>
+                        <span class="yline">|</span>
+                        <span>
+                            <if condition="$data.state eq  0">失败
+                                <elseif condition="$data.state eq  1"/>成功
+                                <elseif condition="$data.state eq  2"/>待处理
+                                <elseif condition="$data.state eq  3"/>处理中
+                                <elseif condition="$data.state eq  4"/>审核中
+                                <elseif condition="$data.state eq  5"/>已删除
+                                <elseif condition="$data.state eq  6"/>已付款
+                            </if>
+                        </span>
+                    </p>
+					<p class="orderdata g666">下单时间：{$data.create_time}</p>
+				</a>
+			</li>
+		</volist>
+	</ul>
+	<!-- main body all order 结束 -->
+</div>
+<p class="orderdata g666" id="more" align="center">上拉加载更多</p>
+</body>
+<script type="text/javascript" src="__FRONTEND_MOBILE_JS__zepto.min.js"></script>
+<script type="text/javascript" src="__FRONTEND_MOBILE_JS__myorder.js"></script>
+<script>
+    function toorder(address){
+        window.location.href=address;
+    }
+    var p = <?php echo $_GET["p"]+0;?>;
+    if(p == 0){
+        p = 1;
+    }
+    var page=p+1;
+    var inLoading=false;
+    function initNewList(){
+        if(inLoading){
+            return ;
+        }
+        if(page==-100){
+            return;
+        }
+        inLoading=true;
+        var m2 = "" + Math.random();
+        var url = document.URL+"/p/"+page;
+        var param = {"page":page,"m2":m2};
+        var result = "";
+        $.ajax({
+            url: url,
+            type: 'post',
+            async: false,
+            data:param,
+            dataType:'json',
+            error:function()
+            {
+                alertMsg("提示","订单获取失败，请联系管理员！");
+            },
+            success: function(msg) {
+                if(msg) {
+                    result = msg;
+                }else{
+                    result = "last";
+                }
+            }
+        });
+        if(result=='last'){
+            getEleById('more').innerHTML='无更多订单';
+            page=-100;
+            inLoading=false;
+            return;
+        }
+        var jsonRes = result;
+        var toAddHtml="";
+        for(var i=0;i<jsonRes.length;i++){
+            toAddHtml += "<li>";
+            toAddHtml+='<a class="jinzhitiaozhuan" href="<?php echo U('frontend/order/orderinfo',[],false);?>/order_id/'+jsonRes[i].id+'">';
+            var order_type = jsonRes[i].order_type;
+            var type = '新增';
+            if(order_type == 0){
+                type = "新增";
+            }else if(order_type == 0){
+                type = "增值";
+            }else if(order_type == 0){
+                type = "续费";
+            }else if(order_type == 0){
+                type = "变更方案";
+            }else if(order_type == 0){
+                type = "转正";
+            }
+            var order_state = jsonRes[i].order_type;
+            var state = '成功';
+            if(order_state == 0){
+                state = "失败";
+            }else if(order_state == 0){
+                state = "成功";
+            }else if(order_state == 0){
+                state = "待处理";
+            }else if(order_state == 0){
+                state = "处理中";
+            }else if(order_state == 0){
+                state = "审核中";
+            }else if(order_state == 0){
+                state = "已删除";
+            }else if(order_state == 0){
+                state = "已付款";
+            }
+            toAddHtml+='<p class="title g333">订单号：'+jsonRes[i].id+' '+jsonRes[i].product_name+'&lt;'+type+'&gt;</p>';
+            toAddHtml+='<p class="state g666"><span class="paymoney gff8">¥'+jsonRes[i].charge+'</span>';
+            toAddHtml+='<span class="yline">|</span>';
+            toAddHtml+='<span>'+state+'</span></p>';
+            toAddHtml += '<p class="orderdata g666">下单时间：'+jsonRes[i].create_time+'</p></a></li>';
+        }
+        getEleById('orderList').innerHTML=getEleById('orderList').innerHTML+toAddHtml;
+        page=page+1;
+        inLoading=false;
+    }
+    window.onscroll = function(){
+        /**元素相对高度*/
+        var elTop=getElementViewTop(getEleById("more"));
+        /**窗口可视高度*/
+        var viewTop=getViewport()['height'];
+        var moreh=getEleById("more").offsetHeight;
+        if(elTop<=(viewTop)){
+            initNewList();
+        }
+    };
+    function getonscroll(){
+        /**元素相对高度*/
+        var elTop=getElementViewTop(getEleById("more"));
+        /**窗口可视高度*/
+        var viewTop=getViewport()['height'];
+        var moreh=getEleById("more").offsetHeight;
+        if(elTop<=(viewTop)){
+            initNewList();
+        }
+    }
+    function getEleById(id) {
+        return document.getElementById(id);
+    }
+    function getViewport(){
+        if (document.compatMode == "BackCompat"){
+            return {
+                width: document.body.clientWidth,
+                height: document.body.clientHeight
+            }
+        } else {
+            return {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight
+            }
+        }
+    }
+    function getElementViewTop(element){
+        return element.getBoundingClientRect().top;
+    }
+    getonscroll();
+</script>
+</html>

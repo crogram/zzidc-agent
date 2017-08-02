@@ -1,0 +1,162 @@
+@charset "utf-8";
+/* CSS Document */
+/*mini 组件*/
+.home-page{min-width:1080px}
+.crumb-container{height:52px;background-color:#eaedf1}
+/*二级三级目录*/
+.ky-crumb{margin-bottom:0;padding:0;padding-left:25px;line-height:52px;background-color:#fff;font-size:14px;
+-webkit-box-shadow: 0 2px 4px #e7e7e7;
+-moz-box-shadow: 0 2px 4px #e7e7e7;
+-ms-box-shadow: 0 2px 4px #e7e7e7;
+box-shadow: 0 2px 1px #e7e7e7}
+.ky-crumb > li + li:before{padding:0 5px;color:#999;content: ">"}
+.ky-crumb a{color:#999}
+.ky-crumb a:hover{text-decoration:none}
+.ky-crumb a[href]:hover{color:#009de0}
+.ky-crumb .active,
+.ky-crumb li:last-child a{color:#009FD9}
+/* 兼容ie8 */
+.delete-attachment,
+.uploading-tip{
+	position: absolute;
+	bottom: -20px;
+	left: 0;
+	right: 0;
+	z-index: 110;
+	height: 20px;
+	line-height: 20px;
+	color: #fff;
+	background: #000;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.delete-attachment:hover{text-decoration:none;color:#fff;opacity:0.7;filter:alpha(opacity=70)}
+.attachment-done:hover .delete-attachment{bottom:0}
+.attachment-uploading:hover .delete-attachment{bottom:-20px}
+.attachment-uploading .add-cover,
+.attachment-done .add-cover{z-index:-10 !important;
+	background:#fff}
+.attachment-uploading img{visibility:hidden;}
+.uploading-tip{display:none;bottom:0}
+.attachment-uploading .uploading-tip{display:block}
+.attachment-uploading:after,
+.attachment-done:after{content: "";position:absolute;top:0;bottom:0;left:0;right:0;z-index:100}
+
+/* 上传 */
+.upload-btn{float:left;height:90px;width:120px;position:relative}
+.uplod-txt{opacity:0;filter:alpha(opacity=0);overflow:hidden;font-size:70px;width:120px;height:90px;margin-top:-5px}
+input[type="file"]::-webkit-file-upload-button{cursor:pointer}
+.preview-container{margin-right:10px}
+
+.img-reminder-box .btn-reverse {
+	font-size: 12px;
+}
+.step-bar {
+	position: relative;
+	float: left;
+	width:33.3%;
+	height: 36px;
+	line-height: 36px;
+	font-size: 14px;
+	color: #fff;
+}
+.step-bar-triple .step-bar {
+	width: 33.3%;
+}
+.step-bar-penta .step-bar {
+	width: 20%;
+}
+.step-bar-begin {
+	padding-right: 18px;
+}
+.step-bar-center {
+	padding: 0 18px;
+}
+.step-bar-end{padding-left:18px}
+.step-colored{background-color:#7fddff}
+.step-prefix{display:inline-block;width:19px;height:19px;margin-left:-16px}
+.step--current .step-prefix{background:url(../images/user-info-image6.png) no-repeat center;
+	vertical-align:middle;border:0;}
+
+.step--current.step--failed .step-prefix {
+	background-image: url(img/uc/step_failed.png);
+}
+.step--current.step--dealing .step-prefix {
+	background-image: url(img/uc/step_waiting.png);
+}
+.step--current .step-colored {
+	background-color:#009de0;color:#fff}
+.step--completed .step-colored {
+	background-color: #7fddff;
+	color: #fff;
+}
+.step-arrow-left,
+.step-arrow-right {
+	position: absolute;
+	top: 0;
+	border: 18px solid transparent;
+	border-left-color: #7fddff;
+}
+.step-arrow-left {
+	left: -8px;
+	border: 18px solid #7fddff;
+	border-left-color: transparent;
+}
+.step-arrow-right {
+	right: -18px;
+}
+.step--current .step-arrow-left {
+	border-color: #009FD9;
+	border-left-color: transparent;
+}
+.step--current .step-arrow-right {
+	border-left-color: #009FD9;
+}
+.step--current ~ .step-bar .step-colored {
+	background-color: #f2f2f2;
+	color: #999;
+}
+.step--current ~ .step-bar .step-arrow-left {
+	border-color: #f2f2f2;
+	border-left-color: transparent;
+}
+.step--current ~ .step-bar .step-arrow-right {
+	border-left-color: #f2f2f2;
+}
+.status-result-container {
+	width: 650px;
+	padding-bottom: 40px;
+}
+.status-result-content {
+	position: relative;
+	z-index: 10;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 15px;
+	padding-right: 20px;
+	font-size: 14px;
+}
+.status-result-icon {
+	position: absolute;
+	top: 0px;
+	left: -58px;
+	z-index: 10;
+	width: 40px;
+	height: 40px;
+	background-position: center;
+}
+.status-result-text {
+	line-height: 2;
+}
+.status-result-tips {
+	margin-top: 20px;
+}
+.status-result-tips-list {
+	margin-top: 10px;
+	line-height: 2;
+}
+.status-result-footer {
+	margin-top: 20px;
+}
+.radiobox{overflow:hidden;font-size:14px;line-height:30px}
+.radiobox input[type="radio"]{ vertical-align:middle;margin:0 4px 0 4px}
+

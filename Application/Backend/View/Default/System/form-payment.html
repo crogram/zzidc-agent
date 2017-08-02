@@ -1,0 +1,163 @@
+<form class="form-horizontal" id="form-payment" action="<?php echo U('Backend/System/configure', [], false);?>" method="post" name="form-payment"  role="form">
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label no-padding-right "  for="beizhu">支付方式：</label>
+        <div class="col-sm-8 inline">
+            <input name="pay_zfb" data-name="zfb"
+                class="ace ace-switch ace-switch-4 payment"
+                type="checkbox" value="1"
+                <?php if($basic_info['pay_zfb'] == '1'):?>checked="checked"<?php endif;?>
+                >
+            <span class="lbl">支付宝</span>
+            <input name="pay_sft" data-name="sft"
+                class="ace ace-switch ace-switch-4 payment"
+                type="checkbox" value="1"
+                <?php if($basic_info['pay_sft'] == '1'):?>checked="checked"<?php endif;?>
+                >
+            <span class="lbl">盛付通</span>
+            <input name="pay_cft" data-name="cft"
+                class="ace ace-switch ace-switch-4 payment"
+                type="checkbox" value="1"
+                <?php if($basic_info['pay_cft'] == '1'):?>checked="checked"<?php endif;?>
+                >
+            <span class="lbl middle">财付通(即时到账)</span>
+        </div>
+    </div>
+
+<!--  支付宝/开始 -->
+    <hr class="zfb">
+    <div class="form-group zfb">
+        <label class="col-sm-4 control-label no-padding-right" for="site_pay_methods">
+            支付方式：
+        </label>
+        <div class="col-sm-8">
+            <select class="col-xs-10 col-sm-5" name="site_pay_methods" id="site_pay_methods">
+                        <option value="create_partner_trade_by_buyer"
+                            <?php if($basic_info['site_pay_methods'] == 'create_partner_trade_by_buyer'):?>selected="selected"<?php endif;?>
+                            >
+                            担保交易
+                        </option>
+                        <option value="create_direct_pay_by_user"
+                            <?php if($basic_info['site_pay_methods'] == 'create_direct_pay_by_user'):?>selected="selected"<?php endif;?>
+                            >
+                            即时交易
+                        </option>
+                        <option value="trade_create_by_buyer"
+                            <?php if($basic_info['site_pay_methods'] == 'trade_create_by_buyer'):?>selected="selected"<?php endif;?>
+                            >
+                            双功能交易
+                        </option>
+            </select>
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group zfb">
+        <label class="col-sm-4 control-label no-padding-right" for="alipay_partner">
+            合作者商户号：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="alipay_partner" name="alipay_partner"  value="<?php echo $basic_info['alipay_partner'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">支付宝交易接口商户号。  合作伙伴身份（PID）。</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group zfb">
+        <label class="col-sm-4 control-label no-padding-right" for="alipay_key">
+            合作者密钥：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="alipay_key" name="alipay_key"  value="<?php echo $basic_info['alipay_key'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">支付宝交易接口商户密钥。  安全校验码（MD5密钥）</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group zfb">
+        <label class="col-sm-4 control-label no-padding-right" for="alipay_email">
+            支付宝邮箱：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="alipay_email" name="alipay_email"  value="<?php echo $basic_info['alipay_email'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">支付宝交易接口邮箱账号。</span>
+            </span>
+        </div>
+    </div>
+
+<!--  支付宝/结束-->
+
+<!--  盛付通/开始-->
+    <hr class="sft">
+
+    <div class="form-group sft">
+        <label class="col-sm-4 control-label no-padding-right" for="msgsender">
+            商户号：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="msgsender" name="msgsender"  value="<?php echo $basic_info['msgsender'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">盛付通申请之后的商户号。</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group sft">
+        <label class="col-sm-4 control-label no-padding-right" for="sftkey">
+            商户密钥：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="sftkey" name="sftkey"  value="<?php echo $basic_info['sftkey'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">盛付通申请之后的商户密钥。</span>
+            </span>
+        </div>
+    </div>
+
+<!--  盛付通/結束-->
+
+<!-- 财付通付通/开始-->
+<hr class="cft">
+
+    <div class="form-group cft">
+        <label class="col-sm-4 control-label no-padding-right" for="cft">
+            商户号：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="cft" name="cft"  value="<?php echo $basic_info['cft'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">财付通申请之后的商户号。</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group cft">
+        <label class="col-sm-4 control-label no-padding-right" for="cftkey">
+            商户密钥：
+        </label>
+        <div class="col-sm-8">
+            <input type="text" id="cftkey" name="cftkey"  value="<?php echo $basic_info['cftkey'];?>" class="col-xs-10 col-sm-5">
+            <span class="help-inline col-xs-12 col-sm-7">
+                <span class="middle">财付通申请之后的商户密钥。</span>
+            </span>
+        </div>
+    </div>
+	
+
+    <div class="space-4"></div>
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <a class="btn btn-info" onclick="configure('payment')" >
+                <i class="ace-icon fa fa-check bigger-110"></i>
+                修改
+            </a>
+        </div>
+    </div>
+
+</form>

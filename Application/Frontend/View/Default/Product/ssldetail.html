@@ -1,0 +1,776 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+    <!--<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kyvps.css">-->
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__agentssl.css">
+</block>
+<block name="content">
+    <div class="ky-container">
+        <div class="vps-title puji-icon">
+            <input type="hidden"  id="<?php echo $product_info['id'];?>_product_id"  value="<?php echo $product_info['id']?>" />
+            <input type="hidden"  id="<?php echo $product_info['id'];?>_product_name" value="<?php echo $product_info['product_name'];?>"/>
+            <input type="hidden" id="current-price-<?php echo $product_info['id'];?>" name="current_price" data-current-price="<?php echo $product_price[0]['product_price'];?>" value="<?php echo $product_price[0]['id'];?>" data-current-mutil-domain-step="<?php echo $extra['mutil_domain_step']['product_price'];?>" data-current-mutil-domain-step-id="<?php echo $extra['mutil_domain_step_id'];?>" data-current-years="1">
+            <span class="xh-name"><?php echo $product_info['product_name'];?></span>
+            &nbsp;( <?php echo $product_info['product_name'];?>/<?php echo $product_config['encryption']['config_value'];?>/<?php echo $product_config['security_insurance']['config_key'];?> <?php echo $product_config['security_insurance']['config_value'];?> )
+        </div>
+    </div>
+    <div class="ky-container">
+        <div class="vpsbanner">
+            <ul>
+                <li>
+                    <div class="vps-left">
+                        价格：
+                    </div>
+                    <div class="vps-right">
+                        <span class="vps-price gff8 money"><span id="price-year-<?php echo $product_info['id'];?>" class="gf89 price-year-<?php echo $product_info['id'];?>" ><?php echo $product_price[0]['product_price'];?> 元/年</span></span>
+                    </div>
+                </li>
+                <?php foreach($product_config as $key => $val){?><!-- 循环配置 -->
+                <!-- 产品名称和配置名称匹配 -->
+                <li class="config-<?php echo $product_info['id'];?>">
+                    <div class="vps-left"><?php echo $val['config_key'];?>：</div>
+                    <div class="vps-right">
+                        <?php if($val['config_key'] == '安全保险'):?>
+                        <span class="checkbox2 gf89"><?php echo $val['config_value'];?>万</span>
+                        <?php else:?>
+                        <span class="checkbox2"><?php echo $val['config_value'];?></span>
+                        <?php endif;?>
+                    </div>
+                </li>
+                <!-- 产品名称和配置名称匹配结束 -->
+                <?php }?><!-- 循环配置结束 -->
+                <!-- 特殊的基础型dv/start -->
+                <?php if($product_info['product_name'] != '基础级DV'):?>
+                <li id="multi_domain_text_<?php echo $product_info['id'];?>" style="display: none;color: red"><div class="vpsinforight">通配型和多域名不可同时选选择！</div></li>
+                <li id="multi_domain_<?php echo $product_info['id'];?>">
+                    <div class="vps-left">
+                        是否选择<span><a title="多域名SSL证书是在一个SSL证书中含有多个CN字段(公用名称)，支持多个不同域名。">多域型证书</a>：</span>
+                    </div>
+                    <div class="vps-right clearfix">
+                        <div class="xt-radio  mutil-domain-<?php echo $product_info['id'];?>" for="" data-flag="mutil-domain-<?php echo $product_info['id'];?>" data-extra="for-multi-domain" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="multi-domain-<?php echo $product_info['id'];?>" value="1" ><span>是</span>
+                        </div>
+                        <div class="xt-radio checked mutil-domain-<?php echo $product_info['id'];?>" for="" data-flag="mutil-domain-<?php echo $product_info['id'];?>" data-extra="for-multi-domain" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="multi-domain-<?php echo $product_info['id'];?>" value="0" ><span>否</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="for-multi-domain-<?php echo $product_info['id']?> extra-section">
+                    <div class="vps-left"><span class="g009"><a title="证书默认绑定一个带www的和不带www的主域名。&#10;若需要绑定更多域名，请增加绑定域名个数！">增加域名个数</a>：</span></div>
+                    <div class="vps-right sslsize clearfix">
+                        <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-domain" data-operator="-" onclick="revaluation(this, <?php echo $product_info['id'];?>)">-</a>
+                        <input type="text" class="sslsizeinp" id="current-mutil-domain-<?php echo $product_info['id'];?>" value="0" readonly="readonly"/>
+                        <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-domain" data-operator="+" onclick="revaluation(this, <?php echo $product_info['id'];?>)">+</a>
+                    </div>
+                </li>
+                <?php endif;?>
+
+                <!-- 通配型证书or多服务器部署/start -->
+                <?php if($product_info['multi-servers']):?>
+                <li>
+                    <div class="vps-left">
+                        是否选择<span><a title="即同一张SSL证书同时在多台物理服务器上部署。">多服务器部署</a>：</span>
+                    </div>
+                    <div class="vps-right clearfix">
+                        <div class="xt-radio  mutil-server-<?php echo $product_info['id'];?>" for="" data-flag="mutil-server-<?php echo $product_info['id'];?>" data-extra="for-multi-server" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="mutil-server-<?php echo $product_info['id']?>" value="1"><span>是</span>
+                        </div>
+                        <div class="xt-radio checked mutil-server-<?php echo $product_info['id'];?>" for="" data-flag="mutil-server-<?php echo $product_info['id'];?>" data-extra="for-multi-server" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="mutil-server-<?php echo $product_info['id']?>" value="0"><span>否</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="for-multi-server-<?php echo $product_info['id']?> extra-section">
+                    <div class="vps-left"><span class="g009"><a title="一张EV证书只能在一台服务器上部署，若需要在多台服务器上安装，请增加绑定服务器个数。">增加服务器个数</a>：</span></div>
+                    <div class="vps-right  sslsize clearfix">
+                        <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-server" data-operator="-" onclick="revaluation(this, <?php echo $product_info['id'];?>)">-</a>
+                        <input type="text" class="sslsizeinp" id="current-mutil-server-<?php echo $product_info['id'];?>" value="0" readonly="readonly" />
+                        <a href="javascript:void(0);" class="sslsizebtn"  data-flag="current-mutil-server" data-operator="+" onclick="revaluation(this, <?php echo $product_info['id'];?>)">+</a>
+                    </div>
+                </li>
+                <?php endif;?>
+                <!-- 我是分割线 -->
+                <?php if($product_info['is_global']):?>
+                <li id="is_global_text_<?php echo $product_info['id'];?>" style="display: none;color: red"><div class="vpsinforight">通配型和多域名不可同时选选择！</div></li>
+                <li id="is_global_<?php echo $product_info['id'];?>">
+                    <div class="vps-left">是否选择<span class="g009"><a href="" title="通配型SSL证书支持同一域名下的所有二级域名">通配型证书</a>：</span></div>
+                    <div class="vps-right clearfix">
+                        <div class="xt-radio  global-domain-<?php echo $product_info['id'];?>" for="" data-flag="global-domain-<?php echo $product_info['id'];?>" data-extra="for-global-domain" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="global_domain-<?php echo $product_info['id']?>" value="1"><span>是</span>
+                        </div>
+                        <div class="xt-radio checked global-domain-<?php echo $product_info['id'];?>" for="" data-flag="global-domain-<?php echo $product_info['id'];?>" data-extra="for-global-domain" data-p-id="<?php echo $product_info['id'];?>">
+                            <span class="xt-radio-icon"></span>
+                            <input type="radio" name="global_domain-<?php echo $product_info['id']?>" value="0"><span>否</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="for-global-domain-<?php echo $product_info['id']?> extra-section">
+                    <div class="vps-left"><span class="g009"><a href="" title="绑定一个主域名后，证书支持此域名下的所有二级域名。&#10;（通配型暂时只能绑定一个通配型域名）">绑定域名个数</a>：</span></div>
+                    <div class="vps-right  sslsize clearfix">
+                        <!--<a href="javascript:void(0);" class="sslsizebtn" data-flag="current-global-domain" data-operator="-" onclick="revaluation(this, <?php echo $product_info['id'];?>)">-</a>-->
+                        <input type="text" class="sslsizeinp" id="current-global-domain-<?php echo $product_info['id'];?>" value="0" readonly="readonly"/>
+                        <!--<a href="javascript:void(0);" class="sslsizebtn"  data-flag="current-global-domain" data-operator="+" onclick="revaluation(this, <?php echo $product_info['id'];?>)">+</a>-->
+                    </div>
+                </li>
+                <?php endif;?>
+                <!-- 通配型证书or多服务器部署/end -->
+                <li>
+                    <div class="vps-left">
+                        购买年限:
+                    </div>
+                    <div class="vps-right clearfix">
+                        <div class="clearifx">
+                            <?php foreach($product_price as $price_key=>$price_value){ ?>
+                            <a id="years-<?php echo $price_value['id'];?>" href="javascript:void(0);" data-price="<?php echo $price_value['product_price'];?>" data-p-id="<?php echo $product_info['id'];?>" class="years years-<?php echo $product_info['id'];?> <?php if($price_key ==0 ):?>orange<?php endif;?>" onclick="selectYear(this,<?php echo $price_value['id'];?>)" data-years="<?php echo $price_value['month']/12;?>" ><?php echo $price_value['month']/12;?> 年
+                                <?php if($price_key ==0 ):?><i class="binggo"></i><?php endif;?>
+                            </a>
+                            <?php }?>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"  class="vps-btn"   onclick="submitbuy(<?php echo $product_info['id'];?>,'0');">立即购买</a>
+                    <?php if($product_info['product_name'] == '企业级OV 增强版' || $product_info['product_name'] == '顶级EV 增强版'):?>
+                    <a href="javascript:void(0);" class="vps-btn vps-btn-try" onclick="submitbuy(<?php echo $product_info['id'];?>,'1');">申请试用</a>
+                    <?php endif;?>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--快云服务器产品导航 start-->
+    <div class="ky-product-777">
+        <div class="module-wrap">
+            <div class="float-box y-row">
+                <div>
+                    <ul class="menu-box y-clear">
+                        <li id="tab5_1" class="y-left nav_on6" onClick="setView5(1)" style="cursor:pointer;"><a href="javascript:void(0);" class="blue-under blue">产品介绍</a></li>
+                        <li id="tab5_2" class="y-left" onClick="setView5(2)"><a href="javascript:void(0);" class="blue">产品参数</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="height:10px"></div>
+        </div>
+    </div>
+    <!--快云服务器产品导航 end-->
+    <div id="tab5_01" class="dis">
+        <!--产品特性内容 start-->
+        <?php if(strpos($product_info['api_name'],'ev') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-title"><h1><i class="i-title"></i>产品概述</h1></div>
+                <div class="sslpro clearfix">
+                    <div class="sslprolt">
+                        <img src="__FRONTEND_IMAGES__SSL/20160821img10.png">
+                    </div>
+                    <div class="sslprort">
+                        <p class="ssl-rt-text">顶级EV SSL证书是支持全球统一严格身份验证标准的EV SSL证书产品，能让新一代安全浏览器(如：IE7/IE8、360、谷歌、火狐3、Safari5、Opera11等)的地址栏变成绿色，让您的网站与众不同，让普通消费者能确信正在访问的网站就是通过权威第三方严格身份验证的现实世界的真实实体，从而增强消费者信心，促成更多在线交易。</p>
+                        <span>顶级EV SSL证书能有效地解决电子商务中遇到的五大问题(安全和信任)</span>
+                        <p>部署顶级EV证书，能100% 保证电子商务系统在线交易数据传输的安全。</p>
+                        <p>顶级EV证书显示绿色地址栏，意味着绿色安全通道，能有效地解决在线信任问题和知名网站被假冒的问题。</p>
+                        <p>部署顶级EV证书，能够增加网站在百度搜索中的排名，有利于SEO优化。</p>
+                        <p>部署顶级EV证书，能够有效防止运营商流量劫持。</p>
+                        <p>部署顶级EV证书，是苹果APP发布的“通行证”。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="clearfix"></div>
+                <div class="hvps-title"><h1><i class="i-title"></i>证书样板</h1></div>
+                <ul class="sslreport-list">
+                    <li>
+                        <p>如下图所示为 顶级EV SSL证书，证书浏览器效果图: <img src="__FRONTEND_IMAGES__SSL/20160821img11.png"></p>
+                    </li>
+                    <li>
+                        <p>下图为顶级EV SSL证书 证书主题显示，证书主题中“O”字段(Organization)会显示申请单位的名称(中文或英文单位名称)，同时有公司地址、注册号等。</p>
+                        <img src="__FRONTEND_IMAGES__SSL/20160821img12.png">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <?php }elseif(strpos($product_info['api_name'],'ov') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-title"><h1><i class="i-title"></i>产品概述</h1></div>
+                <div class="sslpro clearfix">
+                    <div class="sslprolt">
+                        <img src="__FRONTEND_IMAGES__SSL/20160821img10.png">
+                    </div>
+                    <div class="sslprort">
+                        <p class="ssl-rt-text">企业级OV SSL证书为 Class 3 级的SSL证书产品，强制128位加密、256位自适应加密强度。同时验证域名所有权和申请单位的真实身份验证，1个工作日内颁发。不仅保证了网站的机密信息从用户浏览器到服务器之间的传输是高强度加密传输的，是不会被非法窃取和非法篡改的；同时还保证了网站所属单位的真实身份已经经过权威的第三方严格验证，让网上用户放心。此SSL证书可用于SSL VPN设备的SSL加密通信。</p>
+                        <span>企业级OV SSL证书能解决电子商务中遇到的五大问题(安全与信任)</span>
+                        <p>部署OV SSL证书，能100%保证网站在线交易数据传输的安全。</p>
+                        <p>浏览器地址栏显示安全锁标志和在网站显著位置显示网站安全认证标识， 能解决在线信任问题。</p>
+                        <p>部署OV SSL证书，能够增加网站在百度搜索中的排名，有利于SEO优化。</p>
+                        <p>部署OV SSL证书，能够有效防止运营商流量劫持。</p>
+                        <p>部署OV SSL证书，是苹果APP发布的“通行证”。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="clearfix"></div>
+                <div class="hvps-title"><h1><i class="i-title"></i>证书样板</h1></div>
+                <ul class="sslreport-list">
+                    <li>
+                        <p>如下图所示为企业级OV SSL证书，证书浏览器效果图： <img src="__FRONTEND_IMAGES__SSL/20160713img3.png"></p>
+                    </li>
+                    <li>
+                        <p>下图为企业级OV SSL证书 证书主题显示，证书主题中“O”字段(Organization)会显示申请单位的名称(中文或英文单位名称)。</p>
+                        <img src="__FRONTEND_IMAGES__SSL/20160713img4.png">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <?php }elseif(strpos($product_info['api_name'],'dv') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-title"><h1><i class="i-title"></i>产品概述</h1></div>
+                <div class="sslpro clearfix">
+                    <div class="sslprolt">
+                        <img src="__FRONTEND_IMAGES__SSL/20160821img10.png">
+                    </div>
+                    <div class="sslprort">
+                        <p class="ssl-rt-text">专业级DV为Class2 级的SSL证书产品，支持40位至256位自适应加密强度。同时验证域名所有权和证书申请人的真实身份，一个工作日内颁发。不仅保证了网站的机密信息从用户浏览器到服务器之间的传输是高强度加密传输的，是不会被非法窃取和非法篡改的；同时还保证了网站经营者的真实身份已经经过权威的第三方严格验证，让网上用户放心。此SSL证书可用于SSL VPN设备的SSL加密通信。</p>
+                        <span>专业级DV SSL证书能解决电子商务中遇到的五大问题(安全与信任)</span>
+                        <p>部署DV SSL证书，能 100% 保证网站在线交易数据传输的安全。</p>
+                        <p>浏览器地址栏显示安全锁标志和在网站显著位置显示网站安全认证标识， 能解决在线信任问题。</p>
+                        <p>部署DV SSL证书，能够增加网站在百度搜索中的排名，有利于SEO优化。</p>
+                        <p>部署DV SSL证书，能够有效防止运营商流量劫持。</p>
+                        <p>部署DV SSL证书，是苹果APP发布的“通行证”。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="clearfix"></div>
+                <div class="hvps-title"><h1><i class="i-title"></i>证书样板</h1></div>
+                <ul class="sslreport-list">
+                    <li>
+                        <p>如下图所示为 顶级EV增强版 SSL证书，证书浏览器效果图: <img src="__FRONTEND_IMAGES__SSL/20160713img5.png"></p>
+                    </li>
+                    <li>
+                        <p>下图为顶级EV增强版 SSL证书 证书主题显示，证书主题中“O”字段(Organization)会显示申请单位的名称(中文或英文单位名称)，同时有公司地址、注册号等</p>
+                        <img src="__FRONTEND_IMAGES__SSL/20160713img6.png">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <?php } ?>
+        <!-- 产品特性内容 end-->
+        <!-- 服务承诺 start-->
+        <div class="vpscontainerbg">
+            <div class="ky-container">
+                <div class="vpscn-title">
+                    选择我们的理由
+                </div>
+                <div class="clearfix"></div>
+                <ul class="fuwu-list">
+                    <li class="mright23">
+                        <div class="fuwu-title title-img1"></div>
+                        <h4 class="fuwu-h4">更信任</h4>
+                        <p>证书更信任。拥有全球受信任<br>的中文顶级根证书的商业CA，证<br>书全面支持中文显示，真网<br>站，一目了然。</p>
+                    </li>
+                    <li class="mright23">
+                        <div class="fuwu-title title-img2"></div>
+                        <h4 class="fuwu-h4">更安全</h4>
+                        <p>证书更安全。最高级别的4096位<br>加密，强度远高于其他品牌1024位，<br>通过第三方国际机构严格认证，<br>增强消费者信心，并有效防止网<br>络欺诈、网站机密信息<br>被窃取或篡改。</p>
+                    </li>
+                    <li class="mright23">
+                        <div class="fuwu-title title-img3"></div>
+                        <h4 class="fuwu-h4">更经济</h4>
+                        <p>价格更经济。专业的技术团队<br>及本地优势使证书的价格远低<br>于其他品牌的数字证书，景安<br>为所有电商企业普及SSL证书，<br>并为您的交易信息及机密数据保驾护航。</p>
+                    </li>
+                    <li>
+                        <div class="fuwu-title title-img4"></div>
+                        <h4 class="fuwu-h4">更快速</h4>
+                        <p>访问更快速。独有的OCSP服务<br>器，用户访问部署wosign证书<br>的网站比访问部署其他品牌证书<br>的网站打开时间要快6-10倍多！<br>不仅节省了用户的时间，而且大<br>大提升了网站的用户体验！</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 服务承诺 end-->
+	</div>
+	<div id="tab5_02" class="undis">
+        <div class="ky-product-2000">
+            <div class="module-wrap">
+                <div class="y-row hvps-title">
+                    <h1><i class="i-title"></i>产品参数</h1>
+                </div>
+            </div>
+        </div>
+        <!--产品参数内容 start-->
+        <?php if(strpos($product_info['api_name'],'ev') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-table mbottom20">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品名称：</th>
+                            <td width="34%">超安&nbsp;SSL&nbsp;Pro</td>
+                            <th class="hvps-thbg" width="16%">产品级别：</th>
+                            <td width="34%">顶级(Class&nbsp;4)</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品类型：</th>
+                            <td width="34%">EV&nbsp;SSL&nbsp;证书</td>
+                            <th class="hvps-thbg" width="16%">信任级别：</th>
+                            <td width="34%">
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">安全级别：</th>
+                            <td width="34%">
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                            </td>
+                            <th class="hvps-thbg" width="16%">身份验证级别：</th>
+                            <td width="34%">
+                                <span class="ssl-sfjbicon"></span>
+                                <span class="ssl-sfjbicon"></span>
+                                <span class="ssl-sfjbicon"></span>
+                                <span class="ssl-sfjbicon"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">证书主题显示：</th>
+                            <td width="34%">单位名称、注册号/注册地址</td>
+                            <th class="hvps-thbg" width="16%">通用性：</th>
+                            <td width="34%">支持所有浏览器(  <img src="__FRONTEND_IMAGES__SSL/140416img22.gif"> )，支持苹果和安卓手机</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">退款政策：</th>
+                            <td width="34%">30 天内 无条件取消订单退款</td>
+                            <th class="hvps-thbg" width="16%">免费SSL健康体检：</th>
+                            <td width="34%">证书安装后免费SSL部署健康体检，并免费提供安全漏洞修补指南和免费指导补漏</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">服务器安全扫描：</th>
+                            <td width="34%">免费为部署SSL证书的网站免费提供定时服务器漏洞检测、挂马检测和篡改检测服务</td>
+                            <th class="hvps-thbg" width="16%">免费安全防护：</th>
+                            <td width="34%">如果遭遇攻击，免费提供安全防护，解析到我们系统的前端防护系统即可</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">重新颁发：</th>
+                            <td width="34%">30天内支持无条件重新颁发</td>
+                            <th class="hvps-thbg" width="16%">根证书链密钥长度：</th>
+                            <td width="34%">4096位 - 2048位</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">加密强度：</th>
+                            <td width="34%">支持型128-256位加密</td>
+                            <th class="hvps-thbg" width="16%">中文与中文域名：</th>
+                            <td width="34%">支持中文单位名称 和 中文域名( 如：景安.中国 、景安.com 、景安.cn )
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">证明材料：</th>
+                            <td width="34%">需要验证申请单位的营业执照、等其他证明文件</td>
+                            <th class="hvps-thbg" width="16%">签发时间：</th>
+                            <td width="34%">1-3个工作日</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">顶级根证书：</th>
+                            <td width="34%">WoSign</td>
+                            <th class="hvps-thbg" width="16%">交叉签名根：</th>
+                            <td width="34%">UTN SGC</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">推荐用途：</th>
+                            <td width="34%">银行金融类电子商务网站(网上购物)</td>
+                            <th class="hvps-thbg" width="16%">安全认证标识：</th>
+                            <td width="34%"><img src="__FRONTEND_IMAGES__SSL/140416img23.jpg"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php }elseif(strpos($product_info['api_name'],'ov') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-table mbottom20">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品名称：</th>
+                            <td width="34%">超真OV&nbsp;SSL&nbsp;Pre</td>
+                            <th class="hvps-thbg" width="16%">产品级别：</th>
+                            <td width="34%">企业级&nbsp;(Class&nbsp;3)</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品类型：</th>
+                            <td width="34%">OV&nbsp;SSL&nbsp;证书</td>
+                            <th class="hvps-thbg" width="16%">信任级别：</th>
+                            <td width="34%">
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">安全级别：</th>
+                            <td width="34%">
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                            </td>
+                            <th class="hvps-thbg" width="16%">身份验证级别：</th>
+                            <td width="34%">
+                                <span class="ssl-sfjbicon"></span>
+                                <span class="ssl-sfjbicon"></span>
+                                <span class="ssl-sfjbicon"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">证书主题显示：</th>
+                            <td width="34%">单位名称和所在省市</td>
+                            <th class="hvps-thbg" width="16%">通用性：</th>
+                            <td width="34%">支持所有浏览器(  <img src="__FRONTEND_IMAGES__SSL/140416img22.gif"> )，支持苹果和安卓手机</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">重新颁发：</th>
+                            <td width="34%">30天内支持无条件重新颁发</td>
+                            <th class="hvps-thbg" width="16%">退款政策：</th>
+                            <td width="34%">14 天内无条件取消订单退款</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">服务器安全扫描：</th>
+                            <td width="34%">免费为部署SSL证书的网站免费提供定时服务器漏洞检测、挂马检测和篡改检测服务</td>
+                            <th class="hvps-thbg" width="16%">免费安全防护：</th>
+                            <td width="34%">如果遭遇攻击，免费提供安全防护，解析到我们系统的前端防护系统即可</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">免费SSL健康体检：</th>
+                            <td width="34%">证书安装后免费SSL部署健康体检，并免费提供安全漏洞修补指南和免费指导补漏</td>
+                            <th class="hvps-thbg" width="16%">中文与中文域名：</th>
+                            <td width="34%">支持中文单位名称 和 中文域名( 如：景安.中国 、景安.com 、景安.cn )</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">根证书链密钥长度：</th>
+                            <td width="34%">4096位 - 2048位</td>
+                            <th class="hvps-thbg" width="16%">加密强度：</th>
+                            <td width="34%">支持型128-256位加密</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">证明材料：</th>
+                            <td width="34%">需要验证申请单位的营业执照、等其他证明文件</td>
+                            <th class="hvps-thbg" width="16%">签发时间：</th>
+                            <td width="34%">1-3个工作日</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">顶级根证书：</th>
+                            <td width="34%">WoSign</td>
+                            <th class="hvps-thbg" width="16%">交叉签名根：</th>
+                            <td width="34%">UTN SGC</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">推荐用途：</th>
+                            <td width="34%">电子商务网站、电子政务网站企事业单位管理系统、电子邮件系统、VPN</td>
+                            <th class="hvps-thbg" width="16%">安全认证标识：</th>
+                            <td width="34%" colspan="3">无</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php }elseif(strpos($product_info['api_name'],'dv') !== false){ ?>
+        <div class="y-row main-wrap">
+            <div class="vps-box">
+                <div class="hvps-table mbottom20">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品名称：</th>
+                            <td width="34%">超酷&nbsp;SSL&nbsp;Pre</td>
+                            <th class="hvps-thbg" width="16%">产品类型：</th>
+                            <td width="34%">DV&nbsp;SSL&nbsp;证书</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">信任级别：</th>
+                            <td width="34%">
+                                <span class="ssl-xrjbicon"></span>
+                                <span class="ssl-xrjbicon"></span>
+                            </td>
+                            <th class="hvps-thbg" width="16%">安全级别：</th>
+                            <td width="34%">
+                                <span class="ssl-aqjbicon"></span>
+                                <span class="ssl-aqjbicon"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">身份验证级别：</th>
+                            <td width="34%">
+                                <span class="ssl-sfjbicon"></span>
+                            </td>
+                            <th class="hvps-thbg" width="16%">证书主题显示：</th>
+                            <td width="34%">只显示网站域名</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">通用性：</th>
+                            <td width="34%">支持所有浏览器(  <img src="__FRONTEND_IMAGES__SSL/140416img22.gif"> )，支持苹果和安卓手机</td>
+                            <th class="hvps-thbg" width="16%">退款政策：</th>
+                            <td width="34%">14 天内无条件取消订单退款</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">免费SSL健康体检：</th>
+                            <td width="34%">证书安装后免费SSL部署健康体检，并免费提供安全漏洞修补指南和免费指导补漏</td>
+                            <th class="hvps-thbg" width="16%">服务器安全扫描：</th>
+                            <td width="34%">免费为部署SSL证书的网站免费提供定时服务器漏洞检测、挂马检测和篡改检测服务</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">免费安全防护：</th>
+                            <td width="34%">如果遭遇攻击，免费提供安全防护，解析到我们系统的前端防护系统即可</td>
+                            <th class="hvps-thbg" width="16%">重新颁发：</th>
+                            <td width="34%">30天内支持无条件重新颁发</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">根证书链密钥长度：</th>
+                            <td width="34%">4096位 - 2048位</td>
+                            <th class="hvps-thbg" width="16%">加密强度：</th>
+                            <td width="34%">支持型128-256位加密</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">中文与中文域名：</th>
+                            <td width="34%">支持中文单位名称 和 中文域名( 如：景安.中国 、景安.com 、景安.cn )</td>
+                            <th class="hvps-thbg" width="16%">证明材料：</th>
+                            <td width="34%">只验证网站域名</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">签发时间：</th>
+                            <td width="34%">一个工作日</td>
+                            <th class="hvps-thbg" width="16%">顶级根证书：</th>
+                            <td width="34%">WoSign</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">交叉签名根：</th>
+                            <td width="34%">UTN SGC</td>
+                            <th class="hvps-thbg" width="16%">推荐用途：</th>
+                            <td width="34%">个人专业网站</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+        <!-- 产品参数内容 end-->
+        <!-- 服务承诺 start-->
+        <div class="vpscontainerbg m-top20">
+            <div class="ky-container">
+                <div class="vpscn-title">
+                    服务承诺
+                </div>
+                <div class="clearfix"></div>
+                <div class="y-row main-wrap">
+                    <ul class="content-list ssl-list clearfix">
+                        <li>
+                            <div class="content-list-body ddosbg">
+                                <h5 class="tool-list-title">高防数据中心有效抗DDoS攻击</h5>
+                                <p class="tool-list-text">横跨全国的分布式数据中心，600G以上带宽抗DDoS，并可随时应急调用带宽1.5TB，总防御能力超2T！</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="content-list-body ccbg">
+                                <h5 class="tool-list-title">高效的CC攻击拦截引擎</h5>
+                                <p class="tool-list-text">高效的CC攻击拦截引擎，无上限防御CC攻击。祝融防护引擎能根据访问者的URL，频率，行为等访问特征，迅速识别出CC攻击并进行拦截，保证拦截无漏传。</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="content-list-body ddosbg2">
+                                <h5 class="tool-list-title">全面抵御任何类型DDoS攻击</h5>
+                                <p class="tool-list-text">全面抵御任何类型的DDoS攻击，为最容易遭受攻击的金融借贷平台、游戏、电商、教育培训、竞价排名、医疗等高危网站制定专属策略，为网络安全保驾护航！</p>
+                            </div>
+                        </li>
+                        <li class="mod-version-last big-ddos">
+                            <div class="content-list-body">
+                                <h5 class="tool-list-title">大规模的DDoS攻击防御</h5>
+                                <p class="tool-list-text">大规模的DDoS攻击防御能力，企业无需担心DDoS攻击导致的业务中断！无需安装任何软硬件，通过智能DNS快速接入，自动触发，实时防护，无需干预。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 服务承诺 end-->
+    </div>
+        <!--服务 start-->
+        <div class="fuwu-box">
+            <div class="ky-container">
+                <div class="d-tbc d-tbc-first">
+                    <a target="_blank" href="#" class="service-item first-service-item">
+                        <span class="term term-1"></span>
+                    </a>
+                </div>
+                <div class="d-tbc">
+                    <a target="_blank" href="#" class="service-item">
+                        <span class="term term-2"></span>
+                    </a>
+                </div>
+                <div class="d-tbc">
+                    <a target="_blank" href="#" class="service-item">
+                        <span class="term term-3"></span>
+                    </a>
+                </div>
+                <div class="d-tbc d-tbc-last">
+                    <a target="_blank" href="#" class="service-item last-service-item">
+                        <span class="term term-4"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--服务 end-->
+    <div id="dialog"  title="确认产品信息"  style="display: none">
+        <form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+            <div class="dialog-main clearfix" >
+                <input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+                <input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+                <input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+                <input type="hidden"  name="mutil_domain" id="mutil_domain" value=""/>
+                <input type="hidden"  name="mutil_server" id="mutil_server" value=""/>
+                <input type="hidden"  name="global_domain" id="global_domain" value=""/>
+                <input type="hidden"  name="mutil_domain_step_id" id="mutil_domain_step_id" value=""/>
+                <div class="dialog-name"></div>
+                <h3 id="buy_product_name" style="text-align:center;" ></h3>
+            </div>
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">产品名称：</div>
+                <div class="dialog-pro"  id="product_des"></div>
+            </div>
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">产品价格：</div>
+                <div class="dialog-pro"  id="buy_price">试用1元</div>
+            </div>
+            <?php foreach($product_config as $key => $val){?>
+            <!-- 循环配置 -->
+            <div class="dialog-main clearfix">
+                <div class="dialog-name"><?php echo $val['config_key'];?>：</div>
+                <div class="dialog-pro">
+                    <?php if($val['config_key'] == '安全保险'):?>
+                    <span class="gf89"><?php echo $val['config_value'];?>万</span>
+                    <?php else:?>
+                    <span><?php echo $val['config_value'];?></span>
+                    <?php endif;?>
+                </div>
+            </div>
+            <?php }?><!-- 循环配置结束 -->
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">总计：</div>
+                <div class="dialog-pro"  id="total_price"></div>
+            </div>
+            <div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+                <a href="javascript:void(0);" class="dialog-check"  id="free_trial"  onclick="order_buy_info(this);">确认购买</a>
+            </div>
+        </form>
+    </div>
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__ssl-calc.js" charset="utf-8"></script>
+    <script type="text/javascript" language="javascript">
+        var dialog_buy = $("#dialog");
+        function submitbuy(product_id,free_trial){
+            /* 产品名称 */
+            var product_name = $("#"+product_id+"_product_name").val();
+            /* 价格 */
+            var $current_price = $('#current-price-'+product_id);
+            var price_id = $current_price.val();
+            /* 价格内容 */
+            var price = $('#price-year-'+product_id).text();
+            if(free_trial == 1){
+                $("#free_trial").html("试用");
+            }else{
+                $("#free_trial").html("确认购买");
+            }
+            var current_mutil_domain = $('#current-mutil-domain-'+product_id).val() ? $('#current-mutil-domain-'+product_id).val(): 1;
+            var current_mutil_server = $('#current-mutil-server-'+product_id).val() ? $('#current-mutil-server-'+product_id).val(): 0;
+            var current_global_domain = $('#current-global-domain-'+product_id).val() ? $('#current-global-domain-'+product_id).val(): 0;
+            var current_mutil_domain_step_id = $current_price.attr('data-current-mutil-domain-step-id');
+            $("#mutil_domain").val(current_mutil_domain);
+            $("#mutil_domain_step_id").val(current_mutil_domain_step_id);
+            $("#mutil_server").val(current_mutil_server);
+            $("#global_domain").val(current_global_domain);
+            $("#buy_free_trial").val(free_trial);
+            $("#buy_product_name").html(product_name);
+            $("#buy_price_id").val(price_id);
+            $("#buy_price").text(price);
+            $("#buy_product_id").val(product_id);
+            $("#product_des").html(product_name);
+            $("#total_price").html(price);
+            dialog_buy.dialog({
+                autoOpen: true,
+                modal : true,
+                width: 570,
+                resizable:false
+            });
+            dialog_buy.dialog('open');
+        }
+        var tooken = true;
+        function order_buy_info(obi){
+            if(tooken)
+            {
+                tooken = false;
+                if($(obi).html() == "试用")
+                {
+                    $(obi).html("试用中...");
+                }else
+                {
+                    $(obi).html("购买中...");
+                }
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo U('frontend/order/order_buy','',false);?>",
+                    dataType: 'json',
+                    data: $("#buy_from").serialize(),
+                    success: function(data){
+                        dialog_buy.dialog('close');
+                        if (data.status == 1){
+                            alert(data.info);
+                            setTimeout("window.location.href='"+data.url+"'",2000);
+                        }else{
+                            alert(data.info);
+                            setTimeout("window.location.reload()",2000);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript" language="javascript">
+        function setView5(n){
+            for(var i=1;i<=5;i++){
+                if(i == n){
+                    $('#tab5_0'+i).removeClass("undis");
+                    $('#tab5_0'+i).addClass("dis");
+                    $('#tab5_'+i).removeClass("nonav");
+                    $('#tab5_'+i).addClass("nav_on6");
+                }else{
+                    $('#tab5_'+i).removeClass("nav_on6");
+                    $('#tab5_'+i).addClass("nonav");
+                    $('#tab5_0'+i).removeClass("dis");
+                    $('#tab5_0'+i).addClass("undis");
+                }
+            }
+        }
+        $('.blue').on('click',function(){
+            $('.blue').removeClass('blue-under');
+            $(this).addClass('blue-under');
+        })
+    </script>
+</block>

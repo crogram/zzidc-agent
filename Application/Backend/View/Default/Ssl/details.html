@@ -1,0 +1,152 @@
+<extend name="Layouts/layout" />
+<block name="links"></block>
+<block name="content">
+    <div class="page-header">
+        <h1>
+            <i class="fa fa-home"></i> 首页
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                业务管理
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a  href="<?php echo U('Backend/Ssl/index', [  ], false);?>">SSL证书列表</a>
+                &amp; SSL证书详情
+            </small>
+            <a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Ssl/index', [  ], false);?>">SSL证书列表</a>
+        </h1>
+    </div><!-- end/.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<!-- 页面主题/start -->
+			<form class="form-horizontal" action="" role="form">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<div class="row">
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="">
+									业务编号：
+								</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['id'];?></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									产品名称：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['product_name'];?></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									开通时间：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['create_time'];?></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									到期时间：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['overdue_time'];?></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									服务期限：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['buy_time'];?><?php if($entity['free_trial'] == 1):?>天<?php else:?>个月 <?php endif;?></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									试用/购买：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $free_trial[$entity['free_trial']];?> </p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									业务状态：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $state[$entity['state']];?> </p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="">
+									备注信息：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['beizhu'];?> </p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="vspace-12-sm"></div>
+					<div class="col-xs-12 col-sm-6">
+						<div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="">
+                                    注册人：
+                                </label>
+                                <div class="col-sm-9">
+                                    <p class="lead" ><?php echo $entity['registrant'];?></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="">
+                                    手机号码：
+                                </label>
+                                <div class="col-sm-9">
+                                    <p class="lead" ><?php echo $entity['mobile'];?></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="">
+                                    电子邮箱：
+                                </label>
+                                <div class="col-sm-9">
+                                    <p class="lead" ><?php echo $entity['mail'];?></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="">
+                                    绑定域名：
+                                </label>
+                                <div class="col-sm-9">
+                                    <p class="lead" ><?php echo $entity['domain_name'];?></p>
+                                </div>
+                            </div>
+							<?php foreach($config as $k => $v):?>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="">
+									<?php echo $v['config_key'];?>：
+								</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $v['config_value'].' '.$v['unit'];?></p>
+								</div>
+							</div>
+							<?php endforeach;?>
+						</div>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="clearfix form-actions">
+					<div class="col-md-offset-3 col-md-9">
+						<a class="btn btn-info" href="<?php echo U('Backend/Ssl/index',[],false);?>">
+							<span class="glyphicon glyphicon-repeat"></span>
+							返回
+						</a>
+					</div>
+				</div>
+
+			</form>
+			<!-- 页面主题/end -->
+		</div>
+	</div>
+</block>
+<block name="scripts">
+	<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+	<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+	<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+	<script src="__COM_JS__messages_zh.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+</block>

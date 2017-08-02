@@ -1,0 +1,341 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <!--ky-main start-->
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a href="<?php echo U('frontend/order/orderlist','',false);?>">订单管理</a></li>
+            <li><a>SSL开通</a></li>
+        </ol>
+    </div>
+    <div class="conseole-ky-fuwuqi">
+        <div class="ky-panel-heading clearfix">
+            <div class="ky-panel-title">
+                SSL证书开通<a href="javascript:void(0);" class="btn-primary btn-reverse btn-icon-return margin-left-10" onclick="javascript:history.back(-1);">返 回</a>
+            </div>
+        </div>
+        <!--绑定域名-->
+        <form action="<?php echo U('frontend/ssl/ssl_dv_open','',false);?>" method="post" id="fill_info">
+            <div class="ky-panel-body" style="display: none" id="next1">
+                <div class="step-bar-outer clearfix text-center margin-bottom-20">
+                    <div class="step-bar step-bar-begin width16 step--current">
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>绑定域名</span>
+                        </div>
+                        <span class="step-arrow-right"></span>
+                    </div>
+                    <div class="step-bar step-bar-center width16">
+                        <span class="step-arrow-left"></span>
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>填写资料</span>
+                        </div>
+                        <span class="step-arrow-right"></span>
+                    </div>
+                    <div class="step-bar step-bar-end width16">
+                        <span class="step-arrow-left"></span>
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>提交完成</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="realmbox">
+                    <input type="text" style="display: none" name="yw_id" value="{$ssl_binfo.yid}"/>
+                    <input type="text" style="display: none" name="order_id" value="{$order_id}"/>
+                    <div class="pull-left overflow-hidden" id="add_domain">
+                        <div class="addrealm margin-bottom-20 overflow-hidden">
+                            <input type="text" value="" id="domain" class="realm-input">
+                            <a href="javascript:void(0);" onclick="add_domain()" class="addbtn"><img src="__FRONTEND_MEMBER__images/20161202img1.png" alt="+" title="添加域名"></a>
+                        </div>
+                        <volist name="ssl_binfo.domain_name" id="dname">
+                            <div class="realm-item">
+                                <div class="real-area">{$dname}</div>
+                                <a href="javascript:void(0);" onclick="shanchu(this)" class="delebtn"></a>
+                                <input type="text" style="display: none" name="domain[]" value="{$dname}"/>
+                            </div>
+                        </volist>
+                    </div>
+                    <div class="text-area">
+                        请在输入框内输入要添加的域名，点击“+”号后绑定添加的域名
+                    </div>
+                </div>
+                <a href="javascript:void(0);" onclick="next1(this)" name="next2" class="btn btn-default chongzhi-btn mtop40">下一页</a>
+            </div>
+            <div class="ky-panel-body" style="display: none;" id="next2">
+                <div class="step-bar-outer clearfix text-center margin-bottom-20">
+                    <div class="step-bar step-bar-begin width16">
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>绑定域名</span>
+                        </div>
+                        <span class="step-arrow-right"></span>
+                    </div>
+                    <div class="step-bar step-bar-center width16 step--current">
+                        <span class="step-arrow-left"></span>
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>填写资料</span>
+                        </div>
+                        <span class="step-arrow-right"></span>
+                    </div>
+                    <div class="step-bar step-bar-end width16">
+                        <span class="step-arrow-left"></span>
+                        <div class="step-colored">
+                            <span class="step-prefix"></span>
+                            <span>提交完成</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-title">
+                    注册人信息&gt;&gt;
+                </div>
+                <div class="foundbox mtop30">
+                    <div class="overflow-hidden">
+                        <div class="name-lable"><span class="gff8">*</span>&nbsp;姓名：</div>
+                        <div class="pull-left">
+                            <input type="text" value="<?php echo $fill['p_name'];?>" name="p_name" placeholder="请填写申请人姓名" class="name-input">
+                            <span class="error-reminder"></span>
+                        </div>
+                    </div>
+                    <div class="overflow-hidden mtop30">
+                        <div class="name-lable"><span class="gff8">*</span>&nbsp;Email：</div>
+                        <div class="pull-left">
+                            <input type="text" value="<?php echo $fill['p_email']; ?>" name="p_email" placeholder="请填写真实有效的邮箱，颁发证书时会将证书文件发送至此邮箱" class="name-input">
+                            <span class="error-reminder"></span>
+                        </div>
+                    </div>
+                    <div class="overflow-hidden mtop30">
+                        <div class="name-lable"><span class="gff8">*</span>&nbsp;手机号码：</div>
+                        <div class="pull-left">
+                            <input type="text" value="<?php echo $fill['p_phone']; ?>" name="p_phone" placeholder="如：13988888888" class="name-input">
+                            <span class="error-reminder"></span>
+                        </div>
+                    </div>
+                    <div class="overflow-hidden mtop30">
+                        <div class="name-lable">&nbsp;</div>
+                        <div class="pull-left">
+                            <a href="javascript:;" onclick="next(this)" name="next1" class="btn btn-default lan-btn margin-left-10">上一页</a>
+                            <a href="javascript:;" onclick="fill(this)" name="next3" class="btn btn-default chongzhi-btn margin-left-20">提交资料</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!--提交完成-->
+        <div class="ky-panel-body" style="display: none;" id="next3">
+            <div class="step-bar-outer clearfix text-center margin-bottom-20">
+                <div class="step-bar step-bar-begin width16">
+                    <div class="step-colored">
+                        <span class="step-prefix"></span>
+                        <span>绑定域名</span>
+                    </div>
+                    <span class="step-arrow-right"></span>
+                </div>
+                <div class="step-bar step-bar-center width16">
+                    <span class="step-arrow-left"></span>
+                    <div class="step-colored">
+                        <span class="step-prefix"></span>
+                        <span>填写资料</span>
+                    </div>
+                    <span class="step-arrow-right"></span>
+                </div>
+                <div class="step-bar step-bar-end width16 step--current">
+                    <span class="step-arrow-left"></span>
+                    <div class="step-colored">
+                        <span class="step-prefix"></span>
+                        <span>提交完成</span>
+                    </div>
+                </div>
+            </div>
+            <div class="succesbox">
+                <p class="tip-tit">恭喜您，您的申请资料已全部填写完整！</p>
+                <p class="font-size-16 mtop40">现需要提交至CA中心审核并合成证书，预计一个工作日，颁发证书时会发送邮件至</p>
+                <p class="font-size-16">“<?php echo $ssl_binfo['mail'];?>”的邮箱，打开邮件链接后为证书设置密码即可取回证书，请注意查收邮件。</p>
+                <div class="line-row"></div>
+                <p class="font-size-14 gff8 m-top20">注：取回证书时需要设置证书密码，此密码在后续的解压证书文件包及配置证书时将会用到，不可重置、</p>
+                <p class="font-size-14 gff8">不可找回，如果忘记，只能重新申请证书，请您妥善保管设置的密码。</p>
+                <a href="<?php echo U('frontend/ssl/ssllist',[],false);?>" class="btn btn-default chongzhi-btn" style="display:inline-block;margin-top:80px">完成</a>
+            </div>
+        </div>
+
+    </div>
+    <!--ky-main end-->
+</block>
+<block name="script">
+    <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+    <script src="__FRONTEND_JS__ajaxfileupload.js"></script>
+    <script>
+        var next_step = true;
+        function next(next){
+            var name = $(next).attr("name");
+            $(".ky-panel-body").css('display','none');
+            $("#"+name).css('display','block');
+        }
+        var open_step = "a[name='next<?php echo $ssl_binfo['open_step'];?>']";
+        next(open_step);
+        function fill(){
+            $('#fill_info').submit();
+        }
+        function next2() {
+            if (next_step) {
+                next_step = false;
+                var fill_info = $("#fill_info").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo U('frontend/ssl/ssl_dv_open','',false);?>",
+                    dataType: 'json',
+                    data: fill_info,
+                    success: function (data) {
+                        if(data.status == 1)
+                        {
+                            alert(data.info);
+                            setTimeout(function(){window.location.reload();},2000);
+                        }else{
+                            alert(data.info);
+                            setTimeout(function(){window.location.reload();},2000);
+                        }
+                        next_step = true;
+                    }
+                });
+            }
+        }
+        jQuery.validator.addMethod("sjhm", function(value,element) {
+            return this.optional(element) || /^1((3[0-9])|(4[57])|(5[0-35-9])|(7[0135678])|(8[0-9]))\d{8}$/.test(value);
+        }, "<i class='error-icon'></i>请输入正确格式的手机号或固定电话");
+        jQuery.validator.addMethod("zsxm", function(value,element) {
+            return this.optional(element) || /^[\u4e00-\u9fa5]{2,4}$/.test(value);
+        }, "<i class='error-icon'></i>请输入真实姓名(2-4位汉字)");
+        $("#fill_info").validate({
+            submitHandler:function(form){
+                next2();
+            },
+            errorPlacement: function(error,element) {
+                var error_msg = error.html();
+                element.next("span").html(error_msg);
+            },
+            rules:{
+                p_name:{
+                    required:true,
+                    zsxm:true
+                },
+                p_email:{
+                    required:true,
+                    email:true
+                },
+                p_phone:{
+                    required:true,
+                    sjhm:true
+                },
+                p_qq:{
+                    number:true
+                }
+            },
+            messages:{
+                p_name:{
+                    required:"<i class='error-icon'></i>请输入姓名(2-4位汉字)"
+                },
+                p_email:{
+                    required:"<i class='error-icon'></i>请输入邮箱地址",
+                    email:"<i class='error-icon'></i>请输入正确格式的邮箱"
+                },
+                p_phone:{
+                    required:"<i class='error-icon'></i>请输入手机号"
+                },
+                p_qq:{
+                    number:"<i class='error-icon'></i>请输入正确格式的QQ"
+                }
+            },
+            success: function(label,element) {
+                $(element).next("span").html("<i class='sure-icon'></i>");
+            }
+        });
+        function next1(d) {
+            if (next_step) {
+                next_step = false;
+                var domain_arr = $("input[name='domain[]']");
+                if (domain_arr.length <= 0) {
+                    alert("请输入您要绑定的域名，然后进行下一步！");
+                    next_step = true;
+                    return false;
+                }
+                setTimeout(next(d),2000);
+                next_step = true;
+            }
+        }
+        function shanchu(domain){
+            $(domain).parent().remove();
+        }
+        var current_mutil_domain = <?php echo $ssl_binfo['params'][0];?>;
+        var current_global_domain = <?php echo $ssl_binfo['params'][1];?>;
+        function add_domain() {
+            var domain_num = 0;
+            if(current_mutil_domain > 0){
+                domain_num = current_mutil_domain + 1;
+            }else if(current_global_domain > 0){
+                domain_num = current_global_domain;
+            }else{
+                domain_num = 1;
+            }
+            var domain_arr = $("input[name='domain[]']");
+            var domain = $("#domain").val();
+            if (domain_arr.length >= domain_num) {
+                alert("最多绑定" + domain_num + "个域名！");
+                return false;
+            }
+            if (domain == "") {
+                alert("请输入域名！");
+                return false;
+            }
+            var doname = /^([\w-]+\.)+((Name)|(no)|(nm.us)|(floro.no)|(karlsoy.no)|(ck.ua)|(gjemnes.no)|(enna.it)|(ac.fk)|(vestre-toten.no)|(bieszczady.pl)|(samnanger.no)|(tl)|(trento.it)|(ac.vn)|(is)|(pescara.it)|(org.pl)|(balsfjord.no)|(florence.it)|(bjugn.no)|(of.no)|(pu.it)|(gjesdal.no)|(radom.pl)|(net.al)|(in.ni)|(gov.hk)|(tw.cn)|(gs.cn)|(org.bi)|(net)|(dr.tr)|(vennesla.no)|(mi.us)|(gov.jo)|(int.vn)|(eun.eg)|(ah.no)|(mail.pl)|(nord-odal.no)|(ha.cn)|(net.mx)|(ra.it)|(go.ke)|(pistoia.it)|(zgorzelec.pl)|(edu.sv)|(mil.lv)|(net.kw)|(sch.id)|(mil.gt)|(suli.hu)|(eti.br)|(froya.no)|(rendalen.no)|(ri.us)|(ap.it)|(d.se)|(info.fj)|(plc.uk)|(k12.tr)|(sk)|(net.vn)|(hapmir.no)|(name.tt)|(med.pro)|(pila.pl)|(tokke.no)|(pc.pl)|(sula.no)|(shop.hu)|(co.nl)|(turystyka.pl)|(mil.br)|(sorreisa.no)|(lo.it)|(marnardal.no)|(tranoy.no)|(ag.it)|(nes.akershus.no)|(bridgend.sch.uk)|(massa-carrara.it)|(bygland.no)|(in.th)|(vibo-valentia.it)|(ca.us)|(vegarshei.no)|(leirfjord.no)|(jondal.no)|(hammarfeasta.no)|(org.je)|(kautokeino.no)|(fie.ee)|(info.bi)|(edu.al)|(bindal.no)|(gm)|(skien.no)|(chambagri.fr)|(law.pro)|(lc.it)|(hemne.no)|(net.lv)|(frosta.no)|(com.bi)|(fm.br)|(ia.us)|(mazowsze.pl)|(am)|(net.in)|(ac.cy)|(tydal.no)|(le.it)|(giske.no)|(aoste.it)|(meland.no)|(kumamoto.jp)|(org.pg)|(bydgoszcz.pl)|(edu.ki)|(va.it)|(orland.no)|(net.gr)|(ac.za)|(he.cn)|(psc.br)|(net.ar)|(imperia.it)|(ski.no)|(mil.ar)|(io)|(aknoluokta.no)|(nes.buskerud.no)|(mk.ua)|(s.se)|(web.do)|(im)|(slupsk.pl)|(edu.ua)|(mil.in)|(ws)|(web.id)|(org)|(gs.st.no)|(gniezno.pl)|(bronnoy.no)|(agro.pl)|(bronnoysund.no)|(gov.au)|(arezzo.it)|(org.az)|(orsta.no)|(isernia.it)|(sc.tz)|(frosinone.it)|(se)|(md)|(mielec.pl)|(kvam.no)|(org.ae)|(vanylven.no)|(gov.tw)|(as.us)|(org.ro)|(go.cr)|(inf.br)|(not.br)|(it)|(edu.ph)|(venezia.it)|(loabat.no)|(cv.ua)|(ab.ca)|(gr.it)|(js.cn)|(net.sa)|(sande.more-og-romsdal.no)|(pg.it)|(kvinesdal.no)|(lapy.pl)|(web.pk)|(travel.pl)|(mil.py)|(edu.pa)|(pol.tr)|(c.se)|(bmd.br)|(fosnes.no)|(rollag.no)|(leksvik.no)|(edu)|(edu.bz)|(com.az)|(bar.pro)|(gv.at)|(co.id)|(school.fj)|(edu.bo)|(coop)|(skedsmo.no)|(lavagis.no)|(by)|(co.ag)|(rn.it)|(tinn.no)|(edu.sb)|(vega.no)|(lv)|(al.it)|(tromsa.no)|(risor.no)|(eidsberg.no)|(gob.es)|(midtre-gauldal.no)|(to)|(frogn.no)|(ulsan.kr)|(reggioemilia.it)|(stokke.no)|(gov.ge)|(irc.pl)|(pomorze.pl)|(mu)|(ne.kr)|(mh)|(okayama.jp)|(org.kw)|(6bone.pl)|(oystre-slidre.no)|(toyama.jp)|(solund.no)|(eid.no)|(vefsn.no)|(askim.no)|(hyogo.jp)|(aquila.it)|(re)|(com.sg)|(氓s.no)|(loppa.no)|(folldal.no)|(pro.tt)|(net.lk)|(gs.tm.no)|(lund.no)|(net.ag)|(wegrow.pl)|(lecce.it)|(cuneo.it)|(net.kz)|(hk.cn)|(nic.im)|(or.th)|(rm.it)|(crimea.ua)|(bz.it)|(me)|(com.na)|(biz)|(dyroy.no)|(phd.jo)|(gov.ky)|(com.ru)|(sch.ir)|(mg)|(vadso.no)|(nysa.pl)|(klabu.no)|(fuoisku.no)|(ac.il)|(ar.it)|(nom.ag)|(gov.mk)|(ragusa.it)|(blackpool.sch.uk)|(net.ba)|(nom.pe)|(gausdal.no)|(os.hedmark.no)|(experts-comptables.fr)|(horten.no)|(imb.br)|(nome.pt)|(budejju.no)|(modalen.no)|(edu.lb)|(nz)|(net.jo)|(ny.us)|(lindesnes.no)|(nom.ni)|(nov.ru)|(sorfold.no)|(akrehamn.no)|(sauda.no)|(ga.us)|(campobasso.it)|(net.za)|(mo.cn)|(com.ge)|(com.lc)|(net.lc)|(szex.hu)|(jpn.com)|(asti.it)|(valer.ostfold.no)|(net.pl)|(leirvik.no)|(edu.cn)|(sex.pl)|(gov.gi)|(mil.ec)|(so)|(odessa.ua)|(gov.rw)|(kr)|(org.ve)|(sv)|(bu.no)|(massacarrara.it)|(es.kr)|(ad.jp)|(gov.al)|(ne.ug)|(sklep.pl)|(conf.lv)|(biz.tr)|(org.nz)|(gs.ah.no)|(gyeongbuk.kr)|(gyeonggi.kr)|(rahkkeravju.no)|(pro.fj)|(ggf.br)|(amot.no)|(edu.uy)|(rec.ro)|(cs.it)|(dni.us)|(alessandria.it)|(ac.cr)|(pharmacien.fr)|(gs.va.no)|(olawa.pl)|(daejeon.kr)|(oristano.it)|(fo)|(arq.br)|(usenet.pl)|(erotica.hu)|(agdenes.no)|(asia)|(net.ky)|(ml)|(ullensaker.no)|(laquila.it)|(steigen.no)|(gos.pk)|(snaase.no)|(tochigi.jp)|(g12.br)|(gov.lv)|(szkola.pl)|(beskidy.pl)|(cz.it)|(rec.br)|(com.py)|(com.mt)|(po.gov.pl)|(de.eu.org)|(strand.no)|(kanagawa.jp)|(me.uk)|(go.jp)|(terni.it)|(mo-i-rana.no)|(osaka.jp)|(gov.is)|(wakayama.jp)|(gg)|(jp)|(org.fk)|(zarow.pl)|(eu)|(flekkefjord.no)|(wroclaw.pl)|(reklam.hu)|(royrvik.no)|(org.fj)|(pordenone.it)|(hjelmeland.no)|(co.bi)|(com.sb)|(abo.pa)|(ee)|(org.cy)|(gov.cn)|(biz.fj)|(osoyro.no)|(gov.im)|(ac.pa)|(zakopane.pl)|(int.pt)|(bergen.no)|(net.je)|(grosseto.it)|(barlettaandriatrani.it)|(cherkassy.ua)|(rybnik.pl)|(id.us)|(konskowola.pl)|(somna.no)|(waw.pl)|(hokkaido.jp)|(ax)|(gov.br)|(aurland.no)|(badaddja.no)|(net.gg)|(mil.pg)|(livorno.it)|(presse.fr)|(tm.hu)|(za.org)|(tsk.tr)|(edu.co)|(guovdageaidnu.no)|(yokohama.jp)|(verdal.no)|(tana.no)|(press.se)|(bd.se)|(int.az)|(volda.no)|(ato.br)|(com)|(sm)|(ac.kr)|(edu.ky)|(tozsde.hu)|(pro.vn)|(priv.pl)|(art.br)|(rome.it)|(gd.cn)|(ac.id)|(net.nz)|(raholt.no)|(nesodden.no)|(bo.no)|(poltava.ua)|(vt.us)|(mil.uy)|(fjaler.no)|(org.pt)|(granvin.no)|(rawa-maz.pl)|(tysvar.no)|(bbs.tr)|(ly)|(org.sg)|(ishikawa.jp)|(org.uk)|(lier.no)|(notodden.no)|(ac.uk)|(g.se)|(gorlice.pl)|(lugansk.ua)|(info.az)|(wielun.pl)|(ao.it)|(assedic.fr)|(cat)|(hr)|(com.lb)|(sebastopol.ua)|(bologna.it)|(nedre-eiker.no)|(org.pa)|(seljord.no)|(or.us)|(jogasz.hu)|(benevento.it)|(lindas.no)|(edu.gt)|(org.lu)|(berlevag.no)|(nittedal.no)|(naroy.no)|(gov.ec)|(ascoli-piceno.it)|(gr)|(ilawa.pl)|(etnedal.no)|(bahccavuotna.no)|(ne.ke)|(sp.it)|(pp.ua)|(wloclawek.pl)|(mazury.pl)|(name.na)|(podlasie.pl)|(vic.edu.au)|(mt)|(do)|(bham.sch.uk)|(utazas.hu)|(varggat.no)|(tychy.pl)|(sykkylven.no)|(suldal.no)|(si.it)|(klodzko.pl)|(fr.it)|(pr.it)|(com.mx)|(zhitomir.ua)|(spjelkavik.no)|(edu.it)|(vg)|(rimini.it)|(vi.it)|(music.mobi)|(szczytno.pl)|(tm.se)|(gyeongnam.kr)|(fhs.no)|(a.no)|(com.so)|(novara.it)|(ostrowwlkp.pl)|(pri.ee)|(game.tw)|(sa.it)|(com.pt)|(or.cr)|(reggio-emilia.it)|(lowicz.pl)|(gs.nt.no)|(pisz.pl)|(vestre-slidre.no)|(grajewo.pl)|(siena.it)|(sport.hu)|(sejny.pl)|(miyagi.jp)|(viterbo.it)|(kopervik.no)|(org.es)|(stavanger.no)|(ancona.it)|(lviv.ua)|(vt.it)|(k.se)|(deatnu.no)|(odda.no)|(pw)|(shop.pl)|(com.fr)|(elk.pl)|(babia-gora.pl)|(nom.fr)|(srv.br)|(um.gov.pl)|(n-yorks.sch.uk)|(ebiz.tw)|(andasuolo.no)|(milan.it)|(ru)|(levanger.no)|(etc.br)|(sk.ca)|(gl)|(kommune.no)|(messina.it)|(pz.it)|(lt)|(skoczow.pl)|(ingatlan.hu)|(roma.it)|(ostrowiec.pl)|(malatvuopmi.no)|(bytom.pl)|(tc)|(tel.tr)|(malopolska.pl)|(sv.it)|(lebork.pl)|(hadsel.no)|(org.py)|(sch.lk)|(com.lv)|(ky.us)|(bel.tr)|(su)|(vn)|(info.au)|(brindisi.it)|(kherson.ua)|(info.hu)|(caserta.it)|(org.gt)|(net.cy)|(valle.no)|(med.sa)|(org.lv)|(niigata.jp)|(x.se)|(org.so)|(org.za)|(co.na)|(sc.ke)|(tolga.no)|(boleslawiec.pl)|(bs.it)|(tp.it)|(uzhgorod.ua)|(sortland.no)|(gen.in)|(m.se)|(bj.cn)|(fr.cr)|(lukow.pl)|(org.bo)|(nordreisa.no)|(miyazaki.jp)|(nsn.us)|(moe)|(khmelnitskiy.ua)|(com.ph)|(com.hk)|(vevelstad.no)|(alta.no)|(gs.ol.no)|(edu.lk)|(pd.it)|(gov.ae)|(net.mk)|(net.au)|(org.lc)|(net.py)|(org.uy)|(pro.br)|(gov.ua)|(nc.us)|(co.ug)|(malbork.pl)|(go.kr)|(jolster.no)|(w.se)|(ruovat.no)|(foggia.it)|(hn)|(time.no)|(gratangen.no)|(name.tr)|(hn.cn)|(edu.do)|(valer.hedmark.no)|(net.sb)|(avoues.fr)|(fedje.no)|(chiba.jp)|(overhalla.no)|(stordal.no)|(vik.no)|(gov.tt)|(edu.kw)|(gs.tr.no)|(klepp.no)|(asso.mg)|(org.mx)|(pruszkow.pl)|(forde.no)|(or.ke)|(emu.id.au)|(naustdal.no)|(dp.ua)|(va.no)|(aero)|(co.it)|(b忙rum.no)|(kartuzy.pl)|(soc.lk)|(wa.gov.au)|(asn.au)|(mosjoen.no)|(sunndal.no)|(saltdal.no)|(bl.it)|(cr)|(ud.it)|(pisa.it)|(gwangju.kr)|(com.de)|(kh.ua)|(eidskog.no)|(siljan.no)|(rakkestad.no)|(gov.ba)|(net.lu)|(od.ua)|(ballangen.no)|(haugesund.no)|(starachowice.pl)|(folkebibl.no)|(inderoy.no)|(biz.ni)|(etne.no)|(lubin.pl)|(gen.tr)|(ln.cn)|(ac.pg)|(sch.jo)|(catania.it)|(avellino.it)|(gov.it)|(gov.py)|(tv)|(sanok.pl)|(net.mt)|(co.pn)|(gov.ki)|(ostroleka.pl)|(com.ly)|(edu.br)|(suedtirol.it)|(coop.py)|(warszawa.pl)|(spydeberg.no)|(sondre-land.no)|(unjarga.no)|(co)|(shimane.jp)|(kvinnherad.no)|(caltanissetta.it)|(org.zw)|(smola.no)|(jl.cn)|(edu.pl)|(yamagata.jp)|(pro.cy)|(spb.ru)|(tm.pl)|(lardal.no)|(luster.no)|(com.kz)|(bialowieza.pl)|(la-spezia.it)|(hm)|(gamvik.no)|(alt.za)|(como.it)|(org.mt)|(mil.tz)|(mo.it)|(de.us)|(konyvelo.hu)|(ae)|(hornindal.no)|(il.us)|(tm.cy)|(it.eu.org)|(biz.vn)|(lierne.no)|(net.im)|(fi.cr)|(pi.it)|(re.it)|(f.se)|(za.net)|(balestrand.no)|(tn.it)|(bio.br)|(hurdal.no)|(crotone.it)|(stavern.no)|(gov.do)|(gb.net)|(gildeskal.no)|(masoy.no)|(snillfjord.no)|(poznan.pl)|(wf)|(net.so)|(navuotna.no)|(andebu.no)|(veterinaire.fr)|(egersund.no)|(store.ro)|(kolobrzeg.pl)|(sr.gov.pl)|(beiarn.no)|(ek)|(mc)|(tz)|(ehime.jp)|(agrar.hu)|(or.jp)|(nv.us)|(northants.sch.uk)|(randaberg.no)|(nnov.ru)|(lomza.pl)|(st)|(res.in)|(k12.il)|(sogndal.no)|(org.ag)|(sigdal.no)|(gov.in)|(tokyo.jp)|(dielddanuorri.no)|(prd.mg)|(norddal.no)|(go.ug)|(mil.bo)|(pro)|(co.in)|(org.ar)|(bozen.it)|(vardo.no)|(grue.no)|(targi.pl)|(me.us)|(ug)|(af)|(act.gov.au)|(net.ge)|(matera.it)|(evje-og-hornnes.no)|(co.tt)|(casino.hu)|(eg)|(biz.pl)|(hi.us)|(shizuoka.jp)|(kragero.no)|(hol.no)|(grong.no)|(masfjorden.no)|(fk)|(notaires.fr)|(sc.ug)|(sc.cn)|(gu.us)|(jessheim.no)|(gob.pa)|(selje.no)|(sn.cn)|(varoy.no)|(bari.it)|(nordkapp.no)|(sosnowiec.pl)|(fg.it)|(vet.br)|(or.bi)|(fukuoka.jp)|(cx)|(al)|(namsskogan.no)|(club.tw)|(name.az)|(svelvik.no)|(ai)|(rovno.ua)|(war.net.id)|(szczecin.pl)|(na)|(bc.ca)|(sola.no)|(os.hordaland.no)|(school.nz)|(aejrie.no)|(trogstad.no)|(n.se)|(net.mg)|(sveio.no)|(com.tt)|(tp.edu.tw)|(ecn.br)|(kr.com)|(molde.no)|(va)|(omasvuotna.no)|(gangwon.kr)|(bodo.no)|(trapani.it)|(songdalen.no)|(ag)|(gov.lk)|(realestate.pl)|(baidar.no)|(ba)|(mn.it)|(fi)|(kviteseid.no)|(nore-og-uvdal.no)|(salerno.it)|(i.ph)|(iveland.no)|(edu.lv)|(divttasvuotna.no)|(stryn.no)|(alaheadju.no)|(mil.az)|(sg)|(net.fk)|(com.mg)|(fi.it)|(fukushima.jp)|(jaworzno.pl)|(name.fj)|(mil.tw)|(wattle.id.au)|(gok.pk)|(pl)|(vang.no)|(mod.gi)|(hl.no)|(ternopil.ua)|(jgora.pl)|(org.br)|(gouv.fr)|(ss.it)|(hvaler.no)|(eidsvoll.no)|(web.ni)|(ind.gt)|(net.gt)|(com.kg)|(ms)|(sel.no)|(vercelli.it)|(ok.us)|(edu.in)|(az)|(tysnes.no)|(l.lc)|(leikanger.no)|(tv.bo)|(cng.br)|(ullensvang.no)|(cl)|(mil.kg)|(udine.it)|(mat.br)|(jo)|(si)|(cd)|(bjerkreim.no)|(on.ca)|(com.es)|(govt.nz)|(gt)|(com.lk)|(tm)|(org.sb)|(info.tr)|(powiat.pl)|(jx.cn)|(firm.in)|(net.id)|(ulvik.no)|(kv忙fjord.no)|(amli.no)|(cq.cn)|(sch.je)|(aid.pl)|(naklo.pl)|(tt)|(tmp.br)|(lodingen.no)|(fla.no)|(halden.no)|(adn.eg)|(olecko.pl)|(agrigento.it)|(macerata.it)|(al.no)|(gob.pe)|(gob.pk)|(ge)|(tr.no)|(kristiansund.no)|(incheon.kr)|(averoy.no)|(bardu.no)|(net.ph)|(org.vn)|(suwalki.pl)|(mbone.pl)|(wroc.pl)|(edu.py)|(jevnaker.no)|(or.ug)|(ac.ug)|(i.se)|(chungbuk.kr)|(priv.no)|(bn.it)|(tourism.pl)|(barum.no)|(com.pg)|(cnt.br)|(trondheim.no)|(sande.vestfold.no)|(dk)|(xyz)|(tas.gov.au)|(siellak.no)|(muni.il)|(la.us)|(ut.us)|(org.sa)|(tgory.pl)|(holtalen.no)|(ms.it)|(engerdal.no)|(o.se)|(gov.lb)|(ac.ir)|(gov)|(jeonbuk.kr)|(ascolipiceno.it)|(ltd.cy)|(tx.us)|(port.fr)|(sc.us)|(com.br)|(milano.it)|(pr.us)|(nm.cn)|(savona.it)|(chungnam.kr)|(com.sa)|(vgs.no)|(at.it)|(gaular.no)|(ind.br)|(tw)|(wa.us)|(org.ni)|(malvik.no)|(edu.tr)|(rissa.no)|(bi.it)|(hemnes.no)|(edu.mk)|(latina.it)|(qc.ca)|(vaapste.no)|(lecco.it)|(com.pe)|(hole.no)|(mo.us)|(net.ec)|(pk)|(ct.us)|(uk.com)|(sorum.no)|(skjervoy.no)|(donetsk.ua)|(gs.nl.no)|(tarnobrzeg.pl)|(ac.in)|(beardu.no)|(wiki.br)|(co.rs)|(ac.ae)|(org.ir)|(nikolaev.ua)|(net.kg)|(net.lb)|(elverum.no)|(org.im)|(haram.no)|(mr.no)|(stjordal.no)|(co.tz)|(per.sg)|(mn.us)|(gs.sf.no)|(com.sv)|(gs.jan-mayen.no)|(or.id)|(lc)|(arendal.no)|(ba.it)|(gs.mr.no)|(ac.ke)|(fredrikstad.no)|(nt.ro)|(bz)|(balsan.it)|(pl.ua)|(forum.hu)|(kagawa.jp)|(inf.mk)|(com.pk)|(starostwo.gov.pl)|(lg.jp)|(mx)|(edu.tw)|(rc.it)|(idf.il)|(gob.ve)|(glogow.pl)|(tm.mc)|(kvafjord.no)|(gob.bo)|(co.us)|(ringerike.no)|(fr.eu.org)|(org.ki)|(dep.no)|(auto.pl)|(eu.org)|(nsw.gov.au)|(edu.az)|(go.th)|(menu)|(zachpomor.pl)|(pub.sa)|(mantova.it)|(gov.pn)|(com.vn)|(edu.gr)|(moss.no)|(idrett.no)|(vestnes.no)|(ne.tz)|(cc)|(trd.br)|(mi.it)|(hl.cn)|(alvdal.no)|(pesaro-urbino.it)|(jur.pro)|(jan-mayen.no)|(wy.us)|(fjell.no)|(polkowice.pl)|(nom.pa)|(zaporizhzhe.ua)|(ge.it)|(holt氓len.no)|(edu.ec)|(meraker.no)|(fm)|(slg.br)|(firm.ro)|(nf)|(edu.pe)|(org.is)|(gov.ph)|(cosenza.it)|(mil.pe)|(vr.it)|(vc)|(st.no)|(edu.kg)|(bergamo.it)|(ibaraki.jp)|(coop.br)|(zt.ua)|(katowice.pl)|(kw)|(voss.no)|(ostre-toten.no)|(edu.ni)|(from.hr)|(busan.kr)|(lezajsk.pl)|(gs.vf.no)|(grane.no)|(kr.ua)|(padova.it)|(skodje.no)|(uk)|(ro.it)|(andoy.no)|(edu.gi)|(bialystok.pl)|(gx.cn)|(sapporo.jp)|(lu.it)|(info.ec)|(go.it)|(limanowa.pl)|(pp.ru)|(pt.it)|(royken.no)|(vestvagoy.no)|(vf.no)|(de)|(p.lc)|(lenvik.no)|(harstad.no)|(jeonnam.kr)|(so.it)|(pe.ca)|(int.is)|(sumy.ua)|(fetsund.no)|(isa.us)|(lesja.no)|(pv.it)|(if.ua)|(com.gt)|(com.ec)|(co.ve)|(aosta.it)|(algard.no)|(vossevangen.no)|(afjord.no)|(id.au)|(matta-varjjat.no)|(grp.lk)|(audnedaln.no)|(gob.gt)|(yamaguchi.jp)|(media.pl)|(publ.pt)|(sc.kr)|(edu.ge)|(vc.it)|(ab.se)|(frei.no)|(meldal.no)|(nordre-land.no)|(sor-fron.no)|(vagan.no)|(pomorskie.pl)|(trieste.it)|(com.tw)|(name.vn)|(cpa.pro)|(gub.uy)|(lakas.hu)|(balat.no)|(lyngen.no)|(gulen.no)|(iz.hr)|(org.ge)|(ostroda.pl)|(lodi.it)|(ovre-eiker.no)|(opole.pl)|(edu.rs)|(idv.tw)|(bievat.no)|(net.ru)|(kv忙nangen.no)|(gs.of.no)|(bjarkoy.no)|(tk)|(nom.ro)|(ca.it)|(austrheim.no)|(iwi.nz)|(midsund.no)|(mil.lu)|(saga.jp)|(org.al)|(asso.mc)|(alstahaug.no)|(kraanghke.no)|(skaun.no)|(sos.pl)|(fed.us)|(cieszyn.pl)|(fc.it)|(pp.se)|(h忙gebostad.no)|(pt)|(mil.ae)|(fnd.br)|(ed.jp)|(iwate.jp)|(travel)|(sd.cn)|(sor-varanger.no)|(art.do)|(net.do)|(skanit.no)|(nsw.edu.au)|(fukui.jp)|(mil.eg)|(web.za)|(cahcesuolo.no)|(ngo.lk)|(sauherad.no)|(odo.br)|(karpacz.pl)|(lel.br)|(wa.edu.au)|(co.lc)|(nc)|(org.tr)|(bo.telemark.no)|(rygge.no)|(konin.pl)|(osteroy.no)|(nom.es)|(hm.no)|(com.pl)|(org.co)|(com.ky)|(krodsherad.no)|(co.th)|(kids.us)|(gkp.pk)|(vlog.br)|(vestby.no)|(ve.it)|(mil.tr)|(net.br)|(info.vn)|(am.br)|(web.ba)|(pa)|(gs.svalbard.no)|(co.ir)|(geek.nz)|(games.hu)|(notteroy.no)|(li.it)|(kafjord.no)|(gy)|(co.je)|(sl)|(co.ke)|(loten.no)|(drammen.no)|(name.eg)|(com.ar)|(raisa.no)|(salangen.no)|(net.ve)|(kochi.jp)|(or.kr)|(ing.pa)|(rodoy.no)|(hk)|(tj.cn)|(sch.ae)|(net.uy)|(sch.sa)|(gs)|(kristiansand.no)|(saitama.jp)|(daegu.kr)|(gjerstad.no)|(gs.hl.no)|(nb.ca)|(com.gr)|(kyoto.jp)|(czeladz.pl)|(naamesjevuemie.no)|(gf)|(com.ve)|(co.mg)|(xj.cn)|(assn.lk)|(xxx)|(kawasaki.jp)|(brescia.it)|(nord-aurdal.no)|(net.pn)|(orkdal.no)|(2000.hu)|(org.my)|(film.hu)|(ltd.gi)|(ind.in)|(info.pl)|(mil.nz)|(tv.eg)|(ibestad.no)|(ks.ua)|(h.se)|(nissedal.no)|(lg.ua)|(przeworsk.pl)|(sa.cr)|(net.my)|(sogne.no)|(ppg.br)|(so.gov.pl)|(lutsk.ua)|(geometre-expert.fr)|(ac.se)|(name)|(co.im)|(dorset.sch.uk)|(sx.cn)|(eng.pro)|(or.at)|(hokksund.no)|(jus.br)|(pn)|(edu.ee)|(giehtavuoatna.no)|(stat.no)|(info.ni)|(porsangu.no)|(eigersund.no)|(fr)|(moareke.no)|(gov.my)|(ah.cn)|(piacenza.it)|(torsken.no)|(chieti.it)|(va.us)|(lucca.it)|(batsfjord.no)|(dn.ua)|(medecin.fr)|(ardal.no)|(napoli.it)|(asso.fr)|(info.eg)|(alesund.no)|(sirdal.no)|(nannestad.no)|(gliwice.pl)|(warmia.pl)|(cn)|(sh.cn)|(sc)|(zgora.pl)|(voagat.no)|(heroy.no)|(mil.fj)|(vv.it)|(luroy.no)|(tg)|(int.ru)|(net.ae)|(med.br)|(org.jo)|(nl.eu.org)|(opoczno.pl)|(je)|(int.lk)|(edu.sa)|(org.tw)|(romsa.no)|(prd.fr)|(gloucs.sch.uk)|(reggiocalabria.it)|(qsl.br)|(gloppen.no)|(podhale.pl)|(legnica.pl)|(swiebodzin.pl)|(biz.pk)|(go.tz)|(padua.it)|(wang)|(mosvik.no)|(donna.no)|(pe.kr)|(gsm.pl)|(ar.us)|(hotel.lk)|(nic.in)|(lerdal.no)|(verran.no)|(bomlo.no)|(nl)|(fyresdal.no)|(lk)|(pro.ec)|(bryne.no)|(langevag.no)|(bielawa.pl)|(eu.int)|(tysfjord.no)|(fuossko.no)|(okinawa.jp)|(org.ru)|(altoadige.it)|(hattfjelldal.no)|(th)|(al.us)|(y.se)|(froland.no)|(ve)|(edu.za)|(or.it)|(fe.it)|(nagasaki.jp)|(aq.it)|(per.jo)|(pvt.ge)|(go.id)|(catanzaro.it)|(ed.cr)|(hareid.no)|(tingvoll.no)|(wodzislaw.pl)|(gz.cn)|(t.se)|(com.ua)|(gov.pg)|(walbrzych.pl)|(media.hu)|(edu.my)|(wi.us)|(firenze.it)|(tr)|(belluno.it)|(org.cn)|(fin.ec)|(sandoy.no)|(flog.br)|(es)|(gjerdrum.no)|(rl.no)|(mb.ca)|(ro)|(mil.se)|(mi.th)|(nesna.no)|(kongsvinger.no)|(gr.jp)|(pavia.it)|(sch.uk)|(venice.it)|(forsand.no)|(co.fk)|(kvanangen.no)|(edu.mt)|(www.ro)|(enebakk.no)|(tananger.no)|(co.za)|(gq)|(pro.ae)|(org.mg)|(gov.kw)|(lyngdal.no)|(skanland.no)|(org.kg)|(ac)|(sandnessjoen.no)|(web.lk)|(to.it)|(uw.gov.pl)|(sor-aurdal.no)|(rana.no)|(or.tz)|(tv.it)|(click)|(po.it)|(org.sv)|(fitjar.no)|(cn.ua)|(rv.ua)|(forlicesena.it)|(vikna.no)|(adv.br)|(siracusa.it)|(com.tr)|(wlocl.pl)|(bolt.hu)|(cl.it)|(ac.im)|(berg.no)|(psi.br)|(zj.cn)|(my)|(tj)|(fylkesbibl.no)|(olkusz.pl)|(org.pe)|(ltd.lk)|(co.hu)|(org.il)|(verbania.it)|(biella.it)|(nagano.jp)|(skedsmokorset.no)|(olsztyn.pl)|(slask.pl)|(conf.au)|(gs.rl.no)|(lu)|(qh.cn)|(gorizia.it)|(kobierzyce.pl)|(info.ve)|(melhus.no)|(trana.no)|(bi)|(tn.us)|(weather.mobi)|(yk.ca)|(at)|(essex.sch.uk)|(net.hk)|(lahppi.no)|(org.ba)|(csiro.au)|(nt.no)|(tur.br)|(co.cr)|(davvesiida.no)|(skiptvet.no)|(ac.nz)|(gjovik.no)|(atm.pl)|(org.mk)|(xz.cn)|(mt.us)|(museum.no)|(com.do)|(ug.gov.pl)|(sch.gg)|(lillesand.no)|(bajddar.no)|(edu.ve)|(vi.us)|(net.pk)|(ivgu.no)|(com.cn)|(com.al)|(org.do)|(ms.us)|(chernigov.ua)|(parti.se)|(sd.us)|(ac.tz)|(tur.ar)|(org.na)|(hammerfest.no)|(ac.be)|(hu)|(gov.pk)|(utsira.no)|(bolzano.it)|(edu.is)|(lebesby.no)|(mil.id)|(edu.tt)|(augustow.pl)|(nl.no)|(nesset.no)|(in.us)|(md.us)|(gen.nz)|(czest.pl)|(gs.bu.no)|(stange.no)|(sld.do)|(ak.us)|(de.com)|(cci.fr)|(rindal.no)|(kutno.pl)|(xn--fiqz9s)|(aca.pro)|(varese.it)|(askvoll.no)|(gov.kz)|(net.tt)|(video.hu)|(parliament.cy)|(seoul.kr)|(mn)|(aremark.no)|(kazimierz-dolny.pl)|(ravenna.it)|(cm)|(hoylandet.no)|(larvik.no)|(gov.zw)|(sandefjord.no)|(ringsaker.no)|(az.us)|(r氓holt.no)|(tromso.no)|(ac.fj)|(dnepropetrovsk.ua)|(aure.no)|(farsund.no)|(gov.uk)|(asn.lv)|(co.ua)|(far.br)|(org.pn)|(roros.no)|(hiroshima.jp)|(askoy.no)|(press.cy)|(snasa.no)|(ki)|(hasvik.no)|(rade.no)|(name.cy)|(co.uk)|(gunma.jp)|(zlg.br)|(mc.it)|(bg.it)|(gob.do)|(gov.pt)|(gov.sg)|(wilts.sch.uk)|(re.kr)|(gop.pk)|(ri.it)|(gangaviika.no)|(co.jp)|(red.sv)|(modum.no)|(av.it)|(narvik.no)|(divtasvuodna.no)|(orkanger.no)|(kobe.jp)|(huissier-justice.fr)|(int)|(com.co)|(gifu.jp)|(gov.bz)|(edu.eg)|(ekloges.cy)|(sld.pa)|(pe)|(edu.pn)|(aeroport.fr)|(u.se)|(is.it)|(flora.no)|(off.ai)|(lavangen.no)|(namsos.no)|(sp.gov.br)|(pro.na)|(gs.fm.no)|(jelenia-gora.pl)|(dk.eu.org)|(aurskog-holand.no)|(ketrzyn.pl)|(ie)|(kg.kr)|(net.tr)|(kirkenes.no)|(kagoshima.jp)|(grimstad.no)|(oita.jp)|(cn.com)|(org.ai)|(turek.pl)|(gov.vn)|(swinoujscie.pl)|(ralingen.no)|(in.rs)|(laspezia.it)|(ua)|(mandal.no)|(chirurgiens-dentistes.fr)|(sarpsborg.no)|(hurum.no)|(la)|(org.pk)|(br)|(army.mil)|(nowaruda.pl)|(co.nz)|(nu)|(sr.it)|(co.zw)|(info)|(asker.no)|(com.pa)|(info.tt)|(modena.it)|(ce.it)|(int.bo)|(wolomin.pl)|(flakstad.no)|(org.kz)|(tr.it)|(uk.net)|(int.ni)|(perugia.it)|(an.it)|(ntr.br)|(pc.it)|(kalisz.pl)|(be)|(aomori.jp)|(edu.ar)|(ac.rs)|(rauma.no)|(lorenskog.no)|(name.hr)|(stranda.no)|(med.ec)|(evenes.no)|(nom.pl)|(stord.no)|(fot.br)|(rieti.it)|(biz.az)|(nom.fk)|(com.ni)|(habmer.no)|(mil.ge)|(mk)|(brumunddal.no)|(kiev.ua)|(rennebu.no)|(lind氓s.no)|(mil.jo)|(gaivuotna.no)|(esp.br)|(porsanger.no)|(biz.tt)|(kirovograd.ua)|(asnes.no)|(kz)|(mt.it)|(steinkjer.no)|(rs)|(z.se)|(vagsoy.no)|(rost.no)|(hobol.no)|(news.hu)|(fauske.no)|(com.ag)|(net.pt)|(com.is)|(com.hr)|(nesseby.no)|(ivano-frankivsk.ua)|(info.na)|(net.is)|(tm.fr)|(prato.it)|(ne.jp)|(gov.fk)|(mil.do)|(tottori.jp)|(bo)|(us)|(co.gg)|(zp.ua)|(snoasa.no)|(arts.ro)|(co.ni)|(net.tw)|(nara.jp)|(ringebu.no)|(nt.ca)|(ltd.uk)|(sex.hu)|(tynset.no)|(dovre.no)|(mie.jp)|(ky)|(namdalseid.no)|(tm.ro)|(ac.th)|(priv.hu)|(treviso.it)|(com.jo)|(mragowo.pl)|(org.gi)|(troandin.no)|(no.it)|(laakesvuemie.no)|(med.pa)|(honefoss.no)|(org.gr)|(potenza.it)|(gs.aa.no)|(gob.ni)|(finnoy.no)|(kent.sch.uk)|(swidnica.pl)|(gov.gg)|(trentino.it)|(ec)|(aukra.no)|(ph)|(sa.edu.au)|(mil.kr)|(kvalsund.no)|(net.ni)|(akita.jp)|(tm.no)|(uz)|(org.in)|(genova.it)|(cornwall.sch.uk)|(surrey.sch.uk)|(torino.it)|(sondrio.it)|(l忙rdal.no)|(edu.au)|(gov.tr)|(galsa.no)|(dj)|(selbu.no)|(edu.jo)|(ltd.co.im)|(edu.pt)|(ct.it)|(leka.no)|(herad.no)|(montevarchi.ar.it)|(com.my)|(rw)|(hamaroy.no)|(sf.no)|(aseral.no)|(net.ir)|(narviika.no)|(hb.cn)|(na.it)|(nieruchomosci.pl)|(meloy.no)|(net.cn)|(ac.jp)|(cri.nz)|(tjeldsund.no)|(art.pl)|(ne.us)|(web.ve)|(fj.cn)|(org.ee)|(nj.us)|(vinnica.ua)|(sendai.jp)|(gi)|(gs.oslo.no)|(ck)|(nu.ca)|(net.uk)|(upow.gov.pl)|(org.lb)|(edu.sg)|(kitakyushu.jp)|(uz.ua)|(aarborte.no)|(plc.co.im)|(stor-elvdal.no)|(sn氓ase.no)|(net.eg)|(flesberg.no)|(health.vn)|(mil.co)|(tokushima.jp)|(flatanger.no)|(int.ar)|(bremanger.no)|(barletta-andria-trani.it)|(ma.us)|(xn--fiqs8s)|(kr.it)|(ustka.pl)|(nuoro.it)|(gran.no)|(com.au)|(fermo.it)|(co.at)|(org.ua)|(krakow.pl)|(rel.pl)|(pa.it)|(eidfjord.no)|(lillehammer.no)|(net.az)|(ir)|(org.ky)|(ms.kr)|(org.hu)|(gov.sa)|(teramo.it)|(tranby.no)|(oksnes.no)|(im.it)|(gob.ar)|(halsa.no)|(zw)|(co.kr)|(stalowa-wola.pl)|(in)|(svalbard.no)|(nf.ca)|(navy.mil)|(parma.it)|(net.bo)|(nesoddtangen.no)|(vic.gov.au)|(holmestrand.no)|(jor.br)|(com.kw)|(gov.kg)|(cn.it)|(fam.pk)|(drobak.no)|(edu.hk)|(net.il)|(nord-fron.no)|(ts.it)|(bg)|(te.it)|(fl.us)|(pn.it)|(sh)|(tvedestrand.no)|(evenassi.no)|(stathelle.no)|(vindafjord.no)|(rg.it)|(ca)|(bearalvahki.no)|(gd)|(rennesoy.no)|(ks.us)|(km.ua)|(org.rs)|(b氓tsfjord.no)|(org.lk)|(us.com)|(sandnes.no)|(cz)|(gov.za)|(za.com)|(rzeszow.pl)|(ol.no)|(net.ua)|(uk.eu.org)|(davvenjarga.no)|(dc.us)|(biz.na)|(fusa.no)|(nagoya.jp)|(karmoy.no)|(nh.us)|(ac.ni)|(nl.ca)|(me.it)|(lunner.no)|(bedzin.pl)|(ac.zw)|(lom.no)|(nom.br)|(com.ki)|(gol.no)|(e.se)|(aa.no)|(moskenes.no)|(co.il)|(hs.kr)|(gov.je)|(hyllestad.no)|(name.ae)|(nu.it)|(ferrara.it)|(br.it)|(turin.it)|(frana.no)|(osen.no)|(vaga.no)|(yn.cn)|(vibovalentia.it)|(com.mk)|(mobi)|(edu.bi)|(sor-odal.no)|(mus.br)|(net.pe)|(lt.it)|(net.th)|(eu.com)|(leangaviika.no)|(malselv.no)|(as)|(eng.br)|(kongsberg.no)|(orskog.no)|(sci.eg)|(hoyanger.no)|(br.com)|(avocat.fr)|(pesarourbino.it)|(dlugoleka.pl)|(roan.no)|(gov.ve)|(gov.pl)|(gov.rs)|(info.ro)|(pm)|(ch)|(pa.us)|(cb.it)|(oslo.no)|(mil.kz)|(drangedal.no)|(tel)|(jeju.kr)|(zagan.pl)|(fst.br)|(agr.br)|(ht)|(tonsberg.no)|(com.ro)|(pulawy.pl)|(heroy.more-og-romsdal.no)|(en.it)|(fm.no)|(oygarden.no)|(nt.gov.au)|(ni)|(te.ua)|(org.hk)|(id.ir)|(marker.no)|(org.ph)|(edu.mx)|(web.tr)|(net.ai)|(mil.ni)|(blog.br)|(gov.cy)|(gov.il)|(hagebostad.no)|(net.fj)|(birkenes.no)|(av.tr)|(bokn.no)|(krokstadelva.no)|(forli-cesena.it)|(gov.sb)|(ac.at)|(romskog.no)|(kepno.pl)|(id.lv)|(nd.us)|(genoa.it)|(verona.it)|(oyer.no)|(mielno.pl)|(erotika.hu)|(qld.gov.au)|(prochowice.pl)|(mil.no)|(sassari.it)|(cagliari.it)|(gov.bo)|(sund.no)|(vicenza.it)|(kaszuby.pl)|(pe.it)|(gov.bi)|(skjak.no)|(vaksdal.no)|(net.sg)|(chernovtsy.ua)|(li)|(karasjohka.no)|(kvitsoy.no)|(reggio-calabria.it)|(co.az)|(bykle.no)|(hjartdal.no)|(gmina.pl)|(tv.br)|(gov.ar)|(idv.hk)|(org.au)|(gov.ir)|(karasjok.no)|(hof.no)|(gov.gr)|(net.pg)|(vb.it)|(city.hu)|(hemsedal.no)|(nx.cn)|(palermo.it)|(hotel.hu)|(sn氓sa.no)|(kharkov.ua)|(hamar.no)|(storfjord.no)|(bahcavuotna.no)|(monza.it)|(bo.it)|(radoy.no)|(com.ee)|(bamble.no)|(adm.br)|(edu.kz)|(priv.at)|(net.pa)|(greta.fr)|(notts.sch.uk)|(trysil.no)|(stargard.pl)|(mil.pl)|(com.eg)|(cim.br)|(hitra.no)|(cremona.it)|(pa.gov.pl)|(surnadal.no)|(kg)|(jorpeland.no)|(porsgrunn.no)|(gov.co)|(skierva.no)|(gov.fj)|(rovigo.it)|(com.fj)|(elblag.pl)|(fet.no)|(oppegard.no)|(ac.cn)|(name.mk)|(cr.it)|(unsa.ba)|(naples.it)|(org.se)|(oppdal.no)|(gov.lu)|(vn.ua)|(edu.vn)|(ch.it)|(austevoll.no)|(in.ua)|(edu.es)|(cc.na)|(alto-adige.it)|(gs.hm.no)|(wv.us)|(ta.it)|(arna.no)|(stjordalshalsen.no)|(ngo.pl)|(muosat.no)|(org.gg)|(tv.tr)|(com.cy)|(gob.mx)|(tjome.no)|(com.gi)|(slattum.no)|(sa.gov.au)|(com.ai)|(ns.ca)|(org.eg)|(oh.us)|(shiga.jp)|(edu.pk)|(edu.ba)|(au)|(sokndal.no)|(mil)|(taranto.it)|(aichi.jp)|(hi.cn)|(yamanashi.jp)|(mjondalen.no)|(gob.sv)|(com.bo)|(ma)|(biz.cy)|(gov.eg)|(pp.az)|(miasta.pl)|(ga)|(cf)|(ink)|(top)|(club)|(casa)|(work)|(science)|(support)|(systems)|(iq)|(qa)|(abogado)|(academy)|(accountants)|(active)|(actor)|(adult)|(agency)|(airforce)|(allfinanz)|(alsace)|(amsterdam)|(android)|(apartments)|(aquarelle)|(archi)|(army)|(arpa)|(associates)|(attorney)|(auction)|(audio)|(autos)|(axa)|(band)|(bank)|(bar)|(barclaycard)|(barclays)|(bargains)|(bayern)|(beer)|(berlin)|(best)|(bid)|(bike)|(bingo)|(bio)|(black)|(blackfriday)|(bloomberg)|(blue)|(bmw)|(bnpparibas)|(boats)|(boo)|(boutique)|(brussels)|(budapest)|(build)|(builders)|(business)|(buzz)|(bzh)|(cab)|(cal)|(camera)|(camp)|(cancerresearch)|(canon)|(capetown)|(capital)|(caravan)|(cards)|(care)|(career)|(careers)|(cartier)|(cash)|(catering)|(cbn)|(center)|(ceo)|(cern)|(channel)|(chat)|(cheap)|(christmas)|(chrome)|(church)|(citic)|(city)|(claims)|(cleaning)|(clinic)|(clothing)|(coach)|(codes)|(coffee)|(college)|(cologne)|(community)|(company)|(computer)|(condos)|(construction)|(consulting)|(contractors)|(cooking)|(cool)|(country)|(courses)|(credit)|(creditcard)|(cricket)|(crs)|(cruises)|(cuisinella)|(cymru)|(dabur)|(dad)|(dance)|(dating)|(day)|(dclk)|(deals)|(degree)|(delivery)|(democrat)|(dental)|(dentist)|(desi)|(design)|(dev)|(diamonds)|(diet)|(digital)|(direct)|(directory)|(discount)|(dnp)|(docs)|(domains)|(doosan)|(durban)|(dvag)|(eat)|(education)|(email)|(emerck)|(energy)|(engineer)|(engineering)|(enterprises)|(equipment)|(esq)|(estate)|(eurovision)|(eus)|(events)|(everbank)|(exchange)|(expert)|(exposed)|(fail)|(fans)|(farm)|(fashion)|(feedback)|(finance)|(financial)|(firmdale)|(fish)|(fishing)|(fit)|(fitness)|(flights)|(florist)|(flowers)|(flsmidth)|(fly)|(foo)|(forsale)|(foundation)|(frl)|(frogans)|(fund)|(furniture)|(futbol)|(gal)|(gallery)|(garden)|(gbiz)|(gdn)|(gent)|(ggee)|(gift)|(gifts)|(gives)|(glass)|(gle)|(global)|(globo)|(gmail)|(gmo)|(gmx)|(goldpoint)|(goog)|(google)|(gop)|(graphics)|(gratis)|(green)|(gripe)|(guide)|(guitars)|(guru)|(hamburg)|(hangout)|(haus)|(healthcare)|(help)|(here)|(hermes)|(hiphop)|(hiv)|(holdings)|(holiday)|(homes)|(horse)|(host)|(hosting)|(house)|(how)|(ibm)|(ifm)|(immo)|(immobilien)|(industries)|(ing)|(institute)|(insure)|(international)|(investments)|(irish)|(iwc)|(jcb)|(jetzt)|(jobs)|(joburg)|(juegos)|(kaufen)|(kddi)|(kim)|(kitchen)|(kiwi)|(koeln)|(krd)|(kred)|(kyoto)|(lacaixa)|(land)|(lat)|(latrobe)|(lawyer)|(lds)|(lease)|(legal)|(lgbt)|(lidl)|(life)|(lighting)|(limited)|(limo)|(link)|(loans)|(london)|(lotte)|(lotto)|(ltda)|(luxe)|(luxury)|(madrid)|(maison)|(management)|(mango)|(market)|(marketing)|(marriott)|(media)|(meet)|(melbourne)|(meme)|(memorial)|(miami)|(mini)|(moda)|(monash)|(money)|(mormon)|(mortgage)|(moscow)|(motorcycles)|(mov)|(museum)|(nagoya)|(navy)|(network)|(neustar)|(new)|(nexus)|(ngo)|(nhk)|(nico)|(ninja)|(nra)|(nrw)|(ntt)|(nyc)|(okinawa)|(one)|(ong)|(onl)|(ooo)|(organic)|(osaka)|(otsuka)|(ovh)|(paris)|(partners)|(parts)|(party)|(pharmacy)|(photo)|(photography)|(photos)|(physio)|(pics)|(pictures)|(pink)|(pizza)|(place)|(plumbing)|(pohl)|(poker)|(porn)|(post)|(praxi)|(press)|(prod)|(productions)|(prof)|(properties)|(property)|(pub)|(qpon)|(quebec)|(realtor)|(recipes)|(red)|(rehab)|(reise)|(reisen)|(reit)|(ren)|(rentals)|(repair)|(report)|(republican)|(rest)|(restaurant)|(reviews)|(rich)|(rio)|(rip)|(rocks)|(rodeo)|(rsvp)|(ruhr)|(ryukyu)|(saarland)|(sale)|(samsung)|(sarl)|(saxo)|(sca)|(scb)|(schmidt)|(schule)|(schwarz)|(scot)|(services)|(sew)|(sexy)|(shiksha)|(shoes)|(shriram)|(singles)|(sky)|(social)|(software)|(sohu)|(solar)|(solutions)|(soy)|(space)|(spiegel)|(study)|(style)|(sucks)|(supplies)|(supply)|(surf)|(surgery)|(suzuki)|(sydney)|(taipei)|(tatar)|(tattoo)|(tax)|(technology)|(temasek)|(tennis)|(tienda)|(tips)|(tires)|(tirol)|(today)|(tokyo)|(tools)|(town)|(toys)|(trade)|(training)|(trust)|(tui)|(university)|(uno)|(uol)|(vacations)|(vegas)|(ventures)|(versicherung)|(vet)|(viajes)|(video)|(villas)|(vision)|(vlaanderen)|(vodka)|(vote)|(voting)|(voto)|(voyage)|(wales)|(watch)|(webcam)|(website)|(wed)|(wedding)|(whoswho)|(wien)|(wiki)|(williamhill)|(wme)|(works)|(world)|(wtc)|(wtf)|(yachts)|(yandex)|(yodobashi)|(yoga)|(yokohama)|(youtube)|(zip)|(zone)|(zuerich))$/;
+            var flag_domain = doname.test(domain);
+            var result = domain.split('.');
+            if (!flag_domain || result[0].substr(0, 1) == "-") {
+                alert("域名格式不正确！");
+                return false;
+            }
+            var dreg = /_/g;
+            var darr = domain.match(dreg);
+            if(darr != null){
+                if(darr.length > 0){
+                    alert("域名格式不正确！");
+                    return false;
+                }
+            }
+            var dlength = domain.length;
+            if(dlength > 20){
+                alert("域名最长为20个字符！");
+                return false;
+            }
+            var add = true;
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "<?php echo U('frontend/ssl/check_domain','',false);?>",
+                dataType: 'json',
+                data: {ymbd: domain},
+                success: function (data) {
+                    if (data.status == 1) {
+                        alert("该域名已经申请过该类型的证书，请重新填写或吊销原证书！");
+                        add = false;
+                    }
+                }
+            });
+            if (add) {
+                var api_name = "<?php echo $ssl_binfo['api_name'];?>";
+                domain_arr.each(function () {
+                    if (domain == $(this).val()) {
+                        alert("域名重复！");
+                        add = false;
+                    }
+                });
+                if (add) {
+                    $("#add_domain").append('<div class="realm-item"><div class="real-area">' + domain + '</div><a href="javascript:void(0);" onclick="shanchu(this)" class="delebtn"></a><input type="text" style="display: none" name="domain[]" value="' + domain + '"/></div>');
+                }
+            }
+        }
+    </script>
+</block>

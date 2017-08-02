@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+/*luanyongjian*/
+.sugg-bg{background:#d5c9b8 url(../images/20160818img2.png) no-repeat top center;height:159px;overflow:hidden}
+.sugg-tit{font-size:30px;line-height:38px;margin-top:60px}
+.sugg-tit i{width:3px;height:38px;display:inline-block;background:#009fd9;margin-right:15px;vertical-align:middle}
+.sugg-container{overflow:hidden;padding-top:45px;padding-bottom:45px}
+.sugg-table td{line-height:42px;font-size:14px;color:#666;height:42px;padding-bottom:25px}
+.sugg-table input{width:270px;border:#bbbaba 1px solid;padding-left:20px;line-height:42px;height:42px;border-radius:4px;outline:none;float:left}
+.sugg-table input:focus{border:1px solid #0097ea;background:#ecf6fc}
+.checkbox{width:150px;overflow:hidden;margin-left:20px}
+.checkbox *{float:left}
+.rg-radio{cursor:pointer}
+.rg-radio-icon{background:url(../images/20160818img1.png) no-repeat 0 -13px;width:13px;height:13px;overflow:hidden;margin-right:5px;margin-top:16px}
+.checked .rg-radio-icon{background-position:0 0}
+.rg-radio input{display:none}
+.citylistbox{width:290px;border:#bbbaba 1px solid;padding-left:20px;height:42px;border-radius:4px;outline:none;float:left;margin-right:20px}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+color: #aaa9a9; 
+} 
+input:-moz-placeholder, textarea:-moz-placeholder { 
+color: #aaa9a9; 
+} 
+input::-moz-placeholder, textarea::-moz-placeholder { 
+color: #aaa9a9; 
+} 
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+color: #aaa9a9; 
+} 
+.rightnote{float:left;margin-left:10px;margin-top:5px;line-height:34px;font-size:12px;color:#0097ea}
+.erronote{float:left;margin-left:10px;margin-top:5px;line-height:34px;font-size:12px;color:#ff0000}
+.textarea{width:575px;height:90px;border:1px solid #bbbaba;border-radius:4px;resize:none;outline:none;padding:15px 26px 0 15px;float:left}
+.surebtn{width:120px;height:36px;background:#0097ea;text-align:center;line-height:36px;color:#fff;display:block;font-size:16px;margin-left:192px}
+.surebtn:hover{background:#1f87c2;color:#fff}
+.col-left{float:left}
+.col-img{border:solid 1px #bbbaba;width:135px;height:102px;position:relative;border-radius:3px;display:block}
+.col-left .close-img{background:url(../images/20151114img2.gif) no-repeat;width:24px;height:24px;display:inline-block;position:absolute;right:-2px;top:-2px}
+.col-img:hover{border:solid 1px #0097ea}
+.col-right{float:left;font-size:14px;color:#b6b5b5;margin-left:20px;line-height:26px}
+.attachment{width:95px;height:37px;color:#009de0;line-height:37px;background:#fff;border:1px solid #009de0;border-radius:3px;text-align:center;display:block;margin-top:12px}
+.attachment:hover{background:#009de0;color:#fff;-webkit-transition: all .3s;
+-moz-transition: all .3s;
+-ms-transition: all .3s;
+-o-transition: all .3s}
+.tijiaobtn{width:143px;height:42px;background:#ff8800;border-radius:4px;line-height:42px;color:#fff;font-size:14px;text-align:center;display:block;margin-left:100px;margin-top:15px}
+.tijiaobtn:hover{color:#fff;background:#e9820c;-webkit-transition: all .3s;
+-moz-transition: all .3s;
+-ms-transition: all .3s;
+-o-transition: all .3s}
+

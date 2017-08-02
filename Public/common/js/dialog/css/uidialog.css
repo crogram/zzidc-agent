@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* CSS Document */
+/*dialog添加内容自定义样式表*/
+body{font-family:"Microsoft Yahei","Hiragino Sans GB","arial","sans-serif","Helvetica","宋体";font-size:12px}
+li{list-style:none}
+.clearfix {/* 触发 hasLayout */zoom:1; }
+.clearfix:after {content: "."; display: block; height:0; clear:both;visibility:hidden}
+.clearboth{clear:both;height:0;font-size:1px;line-height:0px}
+button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle}
+input,button,select,textarea{outline:none;font-family:"Microsoft Yahei";}
+address, caption, cite, code, dfn, em, i, strong, th, var, optgroup {
+font-style: normal;font-weight:normal}
+button,input{*overflow:visible;line-height:normal}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"]{cursor:pointer;-webkit-appearance:button}
+label,select,button,input[type="button"],input[type="reset"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"]{cursor:pointer}
+input{vertical-align:middle}
+/*自定义样式*/
+#dialog{overflow:hidden}
+#dialog-link{text-decoration:none;position:relative}
+.txtcenter{text-align:center}
+.txtcenter-line{text-align:center;line-height:60px}
+/*按钮靠右显示*/
+.btn-style{background-color: #0073ea;float:right;margin-right:10px;
+border:solid 1px #0073ea;
+background-image:-webkit-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:-moz-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:-o-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:linear-gradient(to top, #0073ea, #1d83ed);
+font-weight:bold;color:#fff;padding:0 20px;line-height:30px;border-radius:2px;
+-webkit-border-radius:2px;
+-moz-border-radius:2px;
+-ms-border-radius:2px;
+-o-border-radius:2px
+}
+.btn-style:hover{background:#1281f3}
+.btn-style2{background-color:#e3e3e3;float:right;
+border:solid 1px #c0c0c0;
+background-image:-webkit-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:-moz-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:-o-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:linear-gradient(to top, #ddd, #e7e7e7);font-weight:bold;color:#333;padding:0 20px;line-height:30px;border-radius:2px;
+-webkit-border-radius:2px;
+-moz-border-radius:2px;
+-ms-border-radius:2px;
+-o-border-radius:2px
+}
+.btn-style2:hover{background:#f2f2f2}
+/*按钮居中显示*/
+.btn-style3{background-color: #0073ea;margin-right:10px;
+border:solid 1px #0073ea;
+background-image:-webkit-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:-moz-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:-o-linear-gradient(bottom, #0073ea, #1d83ed);
+background-image:linear-gradient(to top, #0073ea, #1d83ed);
+font-weight:bold;color:#fff;padding:0 20px;line-height:30px;border-radius:2px;
+-webkit-border-radius:2px;
+-moz-border-radius:2px;
+-ms-border-radius:2px;
+-o-border-radius:2px
+}
+.btn-style3:hover{background:#1281f3}
+.btn-style4{background-color:#e3e3e3;
+border:solid 1px #c0c0c0;
+background-image:-webkit-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:-moz-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:-o-linear-gradient(bottom, #ddd, #e7e7e7);
+background-image:linear-gradient(to top, #ddd, #e7e7e7);font-weight:bold;color:#333;padding:0 20px;line-height:30px;border-radius:2px;
+-webkit-border-radius:2px;
+-moz-border-radius:2px;
+-ms-border-radius:2px;
+-o-border-radius:2px
+}
+.btn-style4:hover{background:#f2f2f2}
+/*磁盘列表*/
+.cipan{width:400px;margin:0 auto}
+.cipan ul{margin-left:30px}
+.cipan ul li{font-size:14px;overflow:hidden;line-height:24px;margin-bottom:10px}
+.dt{float:left;width:100px;text-align:right;margin-right:10px}
+.dd{float:left;}
+.cipan-input{width:48px;height:24px;line-height:24px;border:1px solid #ccc;padding:0 6px;margin-right:10px}

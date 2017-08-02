@@ -1,0 +1,17 @@
+Bootstrap是Twitter推出的一个用于前端开发的开源工具包。它由Twitter的设计师Mark Otto和Jacob Thornton合作开发,是一个CSS/HTML框架
+Bootstrap中文网站：http://www.bootcss.com/
+
+该插件依赖于jquery
+
+引用路径：
+<!-- 核心CSS文件 -->
+<link rel="stylesheet" href="<s:text name="global.resource.uri"/>plugin/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- 可选主题文件（一般不用引入） -->
+<link rel="stylesheet" href="<s:text name="global.resource.uri"/>plugin/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- 依赖于jQuery文件，在插件之前引入 -->
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 核心JS文件 -->
+<script src="<s:text name="global.resource.uri"/>plugin/bootstrap/3.3.5/js/bootstrap.min.js"></script>

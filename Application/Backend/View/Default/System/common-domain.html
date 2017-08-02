@@ -1,0 +1,52 @@
+<form class="form-horizontal" id="form-domain" action="<?php echo U('Backend/System/commonSetup', [], false);?>" method="post" name="form-domain"  role="form">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="others_domain">
+                英文域名：
+            </label>
+            <div class="col-sm-9 inline">
+                <div class="col-xs-10 col-sm-8 control-group">
+                    <?php foreach($others_domain as $k => $v):?>
+                            <div class="radio inline">
+                                <label>
+                					<input <?php if(in_array($v['id'], $default_domain)):?>checked="checked"<?php endif;?> name="others_domain[]" type="checkbox" class="ace" value="<?php echo $v['id'];?>">
+                					<span class="lbl"><?php echo $v['product_name'];?> </span>
+                                </label>
+                            </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+        </div>
+
+    <hr />
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="chinese_domain">
+                中文域名：
+            </label>
+            <div class="col-sm-9 inline">
+                <div class="col-xs-10 col-sm-8 control-group">
+                    <?php foreach($chinese_domain as $k => $v):?>
+                        <div class="radio inline">
+                            <label>
+            					<input <?php if(in_array($v['id'], $default_domain)):?>checked="checked"<?php endif;?> name="chinese_domain[]" type="checkbox" class="ace" value="<?php echo $v['id'];?>">
+            					<span class="lbl"><?php echo $v['product_name'];?> </span>
+                            </label>
+                        </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info" onclick="configure('domain')" >
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    修改
+                </a>
+            </div>
+        </div>
+
+</form>

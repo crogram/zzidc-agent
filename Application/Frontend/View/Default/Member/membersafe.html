@@ -1,0 +1,180 @@
+<extend name="Hyzx/member"/>
+<block  name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>用户中心</a></li>
+            <li><a>安全中心</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">安全中心</div>
+            </div>
+            <div class="info-user-wanshan gff8 m-top20 clearfix">
+                <div class="pull-left">
+                    <i class="wanshan-icon mright10"></i>
+                    修改之后请牢记密码，以免带来不必要的损失。
+                </div>
+            </div>
+            <div class="ky-form" style="padding-top: 20px;">
+                <div class="ky-tabs-container clearfix div-pay-tool">
+                    <ul class="text-center pull-left clearfix">
+                        <li id="tab5_1" class="ky-tab ky-tab--current" onClick="setView5(1)"><a href="javascript:;">通过旧密码修改</a></li>
+                        <!-- <li id="tab5_2" class="ky-tab" onClick="setView5(2)" ><a href="javascript:;">通过手机验证</a></li>
+                        <li id="tab5_3" class="ky-tab" onClick="setView5(3)" selectid="22"><a href="javascript:;">通过邮箱验证</a></li> -->
+                    </ul>
+                </div>
+                <div id="tab5_01" class="undis">
+                    <form id="modify"  name="modify"  action="<?php echo U('frontend/member/memeber_modify','',false);?>" class="form-horizontal ky-form margin-bottom-60 tab-group-2"  method="post" >
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">用户名：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <span  style="opacity:1">{$member_info.user_name}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">旧密码：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <div class="input-contain">
+                                    <input type="password" class="ky-input-reset ky-label-long" name="old_pass"  id="old_pass">
+                                    <div id="error_oldpass" class="kyregister-msg" style="margin-left:0;display:none">
+                                        <i class="kyregister-msg-icon icon-c mright6"></i>
+                                        <span class="gf00"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">新密码：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <div class="input-contain">
+                                    <input type="password" class="ky-input-reset ky-label-long"  name="user_pass"  id="user_pass">
+                                    <div id="error_userpass" class="kyregister-msg" style="margin-left:0;display:none">
+                                        <i class="kyregister-msg-icon icon-c mright6"></i>
+                                        <span class="gf00"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label font-size-14">
+                                <span class="inline-block">确认密码：</span>
+                            </div>
+                            <div class="col-xs-10 ky-form-control validate-control">
+                                <div class="input-contain">
+                                    <input type="password" class="ky-input-reset ky-label-long"   name="user_pass2"  id="user_pass2">
+                                    <div id="error_userpass" class="kyregister-msg" style="margin-left:0;display:none">
+                                        <i class="kyregister-msg-icon icon-c mright6"></i>
+                                        <span class="Validform_checktip gf00"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="ky-control-label">&nbsp;</div>
+                            <div class="col-xs-10 ky-form-control">
+                                <button class="btn btn-default chongzhi-btn">修改密码</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--基本信息右侧 end-->
+</block>
+<block name="script">
+    <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+    <script src="__COM_JS__messages_zh.js"></script>
+    <script src="__COM_JS__md5.js"></script>
+    <script type="text/javascript">
+        function updater(form){
+            $.ajax({
+                type: 'post',
+                url: '<?php echo U("frontend/member/memeber_modify","",false);?>',
+                dataType: 'json',
+                data: $('#modify').serialize(),
+                success: function(data){
+                    if (data.code == 1){
+                        alert(data.msg);
+                        setTimeout(function(){
+                            self.location.href = data.url;
+                        },1500);
+                    }else{
+                        alert(data.msg);
+                        $("#old_pass").val('');
+                        $("#user_pass").val('');
+                        $("#user_pass2").val('');
+                    }
+                }
+            });
+        }
+        $("#modify").validate({
+            submitHandler:function(form){
+                // $("#old_pass").val(hex_md5($("#old_pass").val()));
+                // $("#user_pass").val(hex_md5($("#user_pass").val()));
+                // $("#user_pass2").val(hex_md5($("#user_pass2").val()));
+                updater(form);
+            },
+            errorPlacement: function(error, element) {
+                element.next().show();
+                error.appendTo(element.next().find('span')[0]);
+            },
+            rules:{
+                old_pass:{
+                    required:true
+                },
+                user_pass:{
+                    required:true,
+                    minlength: 8
+                },
+                user_pass2:{
+                    required:true,
+                    equalTo: "#user_pass"
+                }
+            },
+            messages:{
+                old_pass:{
+                    required:"请输入旧密码"
+                },
+                user_pass:{
+                    required:"请输入新密码",
+                    minlength: "密码长度不能小于 8 位"
+                },
+                user_pass2:{
+                    required:"请输入确认密码",
+                    equalTo: "两次密码输入不一致"
+                }
+            },
+            success: function(label) {
+                label.parent().parent().hide();
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        function setView5(n){
+            for(var i=1;i<=5;i++){
+                if(i == n){
+                    $('#tab5_0'+i).removeClass("undis");
+                    $('#tab5_0'+i).addClass("dis");
+                    $('#tab5_'+i).removeClass("");
+                    $('#tab5_'+i).addClass("ky-tab--current");
+                }else{
+                    $('#tab5_'+i).removeClass("ky-tab--current");
+                    $('#tab5_'+i).addClass("");
+                    $('#tab5_0'+i).removeClass("dis");
+                    $('#tab5_0'+i).addClass("undis");
+                }
+            }
+        }
+    </script>
+</block>

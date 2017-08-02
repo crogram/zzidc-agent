@@ -1,0 +1,253 @@
+{/* 后台模板布局继承页面 */ }
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>景安代理平台管理后台</title>
+	    <meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		{/* 后台自定义css引入位置 */ }
+		<block name="links"></block>
+		{/* 后台基础css */ }
+		<include file="Layouts/html_header" />
+
+</head>
+
+<body class="no-skin">
+		{/* 后台顶部 */ }
+	<include file="Layouts/top_line" />
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			{/* 后台菜单列表 */ }
+			<include file="Layouts/left_menu" />
+
+			<!-- 页面主体 -->
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+			<div class="main-content-inner">
+				<!-- 面包屑导航/开始 -->
+			 {/* include file="Layouts/breadcrumbs" */}
+				<!-- 面包屑导航/结束 -->
+            	<div class="page-content">
+	           	 	{/* 后台主题内容引入位置 */ }
+					<include file="Layouts/right_content" />
+	           </div><!-- /.page-content -->
+
+			</div>
+			</div><!-- /.main-content -->
+
+			 {/* 后台页面底部 */ }
+			<include file="Layouts/footer" />
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+
+		</div><!-- /.main-container -->
+
+
+{/* 后台基础js脚本 */ }
+<include file="Layouts/html_scripts" />
+{/* 后台底部js脚本引入位置 */ }
+<block name="scripts"></block>
+<script type="text/javascript">
+
+$(function(){
+	var uri_c = "<?php echo CONTROLLER_NAME;?>";
+	var uri_a = "<?php echo ACTION_NAME;?>";
+	$('.nav-list').find('li').each(function(i, e){
+		var $this = $(this);
+		var c = $this.attr('data-c');
+		var a = $this.attr('data-a');
+		if (uri_a == a && uri_c == c) {
+			$this.addClass('active');
+			var $parent = $this.parent().parent('li');
+			if ($parent.is('li')) {
+				$parent.addClass('active');
+				$parent.addClass('open');
+			}
+		}
+	});
+});
+
+function doOneTouchBackup(){
+	var url = "<?php echo U('Backend/Index/oneTouchBackup', [], false);?>";
+	var dialog = null;
+	$.ajax({
+		type : "get",
+		dataType : "json",
+		url : url,
+		beforeSend: function(){
+			dialog = bootbox.dialog({
+				message: '<p><i class="fa fa-spin fa-spinner"></i>开始备份数据库数据和程序文件...请稍后</p>',
+				closeButton: false
+			});
+		},
+		success : function(data){
+			dialog.modal('hide');
+			alertBox(data.info);
+		}
+	});
+}
+
+function oneTouchBackup(){
+	var url = "<?php echo U('Backend/Index/isCallable', [], false);?>";
+	$.ajax({
+		type : "get",
+		dataType : "json",
+		url : url,
+		success : function(data){
+			if (data.status == 1) {
+				doOneTouchBackup();
+			}else {
+				alertBox('系统检测当前未开启set_time_limit()函数,由于备份程序执行时间过长，不支持一键备份！');
+			}
+		}
+	});
+}
+
+	(function($){
+		var min_height = 150;
+		if( $(window).height() > 350 ){
+			min_height = $(window).height()-200;
+		}
+		$('.page-body').css( { 'min-height': min_height } );
+
+		$.ajax({
+			type: 'GET',
+			dataType: 'json',
+			url: '<?php echo U("Backend/Index/updatable", false, []);?>',
+			success: function(data){
+				if (data.status == 1) {
+					$('#update-li').removeClass('grey').addClass('green');
+					$('#update-i').addClass('icon-animated-bell');
+					$('#update-a').find('span').text('有新版本');
+					$('#update-a').click(function(){
+						isCallable();
+					});
+				}
+			}
+		});
+
+
+	})($);
+
+	function adminUpdatePassword(){
+		confirmBox('<p class="text-center">新密码应为数字字母的组合，且包含大小写字母</p><form class="bootbox-form" name="form-pwd" id="form-pwd"><div class="space-4"></div><input  placeholder="请输入原密码" class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="old_pwd" id="old_pwd" value=""><div class="space-4"></div><div class="space-4"></div><input placeholder="请输入新密码" class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="new_pwd" id="new_pwd" value=""><div class="space-4"></div><div class="space-4"></div><input placeholder="请输入确认密码" class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="confirm_pwd" id="confirm_pwd" value=""><div class="space-4"></div></form>', function(){
+			var url = "<?php echo U('Backend/Index/updatePwd', [], false);?>";
+			$.ajax({
+				type : "POST",
+				dataType : "json",
+				data: $('#form-pwd').serialize(),
+				url : url,
+				success : function(data){
+					if (data.status == 1) {
+						location.reload(true)
+					}else {
+						alertBox(data.info);
+					}
+				}
+			});
+		});
+	}
+
+	function isCallable(){
+		var url = "<?php echo U('Backend/Index/isCallable', [], false);?>";
+		$.ajax({
+			type : "get",
+			dataType : "json",
+			url : url,
+			success : function(data){
+				if (data.status == 1) {
+					updateSoftware();
+				}else {
+					bootbox.confirm({
+					    message: '<p class="muted text-center text-danger ">系统检测当前未开启set_time_limit()函数,由于程序执行时间限制，本次只备份数据库数据和核心程序文件(Application目录)。如需要备份全部数据库数据和程序文件，请开启set_time_limit()函数。</p>',
+					    buttons: {
+					        confirm: {
+					            label: '我不管我不管，我就要升级！',
+					            className: ' btn-danger btn-sm'
+					        },
+					        cancel: {
+					            label: '好的，现在就去开启这个函数',
+					            className: 'btn-success btn-sm'
+					        }
+					    },
+					    callback: function (result) {
+					        if (result) {
+								updateSoftware();
+					        }
+					    }
+					});
+				}
+			}
+		});
+	}
+
+	function updateSoftware(){
+			var dialog = null;
+			var url = '<?php echo U("Backend/Index/update", [], false);?>';
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				beforeSend: function(){
+					dialog = bootbox.dialog({
+						message: '<p><i class="fa fa-spin fa-spinner"></i>正在获取系统软件版本信息...</p>',
+						closeButton: true
+					});
+				},
+				success : function(data){
+					if (data.status == 1) {
+						dialog.find('.bootbox-body').html(data.info);
+					}else {
+						dialog.find('.bootbox-body').html('<p><i class="fa fa-bullhorn"></i> '+data.info+'</p>');
+						setTimeout(function(){
+							dialog.modal('hide');
+						}, 2000);
+					}
+				}
+			});
+
+	}
+
+	function clearCache(){
+		var dialog = null;
+		var url = '<?php echo U("Backend/Index/clearCache", [], false);?>';
+		$.ajax({
+			type : "get",
+			dataType : "json",
+			url : url,
+			beforeSend: function(){
+				dialog = bootbox.dialog({
+				    message: '<p><i class="fa fa-spin fa-spinner"></i>正在清除缓存...</p>',
+				    closeButton: false
+				});
+			},
+			success : function(data){
+				var info = '';
+				if (data.status == 1) {
+					info = '<p><i class="fa fa-bullhorn"></i> 清除完成</p>';
+				}else {
+					info = '<p><i class="fa fa-bullhorn"></i> '+data.info+'</p>';
+				}
+				dialog.find('.bootbox-body').html(info);
+				setTimeout(function(){
+					dialog.modal('hide');
+				}, 2000);
+			}
+		});
+
+	}
+
+
+</script>
+</body>
+</html>

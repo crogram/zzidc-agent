@@ -1,0 +1,686 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kyvps.css">
+</block>
+<block name="content">
+<div class="ky-container">
+                <div class="vps-title puji-icon">
+                    <span class="xh-name"><?php echo $product_info['product_name'];?></span>
+                    &nbsp;<?php echo $product_config['cpu_info'];?>&nbsp;/&nbsp;<?php echo $product_config['memory_config'];?>&nbsp;内存&nbsp;/&nbsp;<?php echo $product_config['ip'];?>/&nbsp;BGP多线
+                </div>
+            </div>
+            <div class="ky-container">
+        <div class="vpsbanner">
+            <ul>
+                <li>
+                    <div class="vps-left">
+                        价格：
+                    </div>
+                    <div class="vps-right">
+                        <span class="vps-price gff8 money"></span>
+                    </div>
+                </li>
+                 <li>
+                    <div class="vps-left">
+                        带宽配额：
+                    </div>
+                    <div class="vps-right" id="<?php echo $product_info['id'];?>_network_bandwidth">
+                        <span style="color: #FF0000;font-size: 16px;"><?php echo $product_config['network_bandwidth'];?></span>（BGP多线）
+                    </div>
+                </li>
+                <li>
+                    <div class="vps-left">
+                        地区：
+                    </div>
+                    <div class="vps-right">
+                        <div class="checkbox2">
+                                <lable class="xt-radio checked" for="">
+                                    <span class="jf-name">郑州多线机房</span>
+                                </lable>
+                          </div>
+                    </div>
+                </li>
+                 <li>
+                    <div class="vps-left">
+                        期限：
+                    </div>
+                    <div class="vps-right">
+                    	<div class="databox">
+                    		<?php foreach($product_price as $key=>$val){?>
+                            <a id="<?php echo $val['id'];?>" class="v-choose <?php if($price_id == $val['id']){echo 'v-selected';}?>" <?php if($key+1 == count($product_price)){echo 'style="border-right:1px solid #bbb"';}?> onclick="checkBuyPrice(<?php echo $val['id'];?>,'<?php echo $val['product_price'];?>');"><?php if(($val['month']%12) == 0){echo ($val['product_price'].'/'.$val['month']/12)."年"; }else{echo  $val['product_price'].'/'.$val['month']."月";}?><i></i></a>
+                            <input type="hidden"  id="money_<?php echo $val['id'];?>" value="<?php echo $val['product_price'];?>元"/>
+                            <?php }?>
+                       </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="vps-left">
+                        操作系统：
+                    </div>
+                    <?php if($product_info['api_ptype'] == 'fastcloudvps'){?>
+                    <div class="vps-right">
+                        <div class="checkbox2"  id="<?php echo $product_info['id'];?>_checkbox">
+                        <input id="<?php echo $product_info['id'];?>_buyType" type="hidden" name="buyType" value="<?php if(isset($system_type)){echo $system_type;}else{echo  1;}?>" /> 
+                                <lable class="xt-radio" for=""  id="<?php echo $product_info['id'];?>_1"  onclick="checkedSystem(<?php echo $product_info['id']?>,'1')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio"  name="system_type" value="1"   checked="checked" ><span class="jf-name">Windows2003</span>
+                                </lable>
+                                <lable class="xt-radio" for=""  id="<?php echo $product_info['id'];?>_0"  onclick="checkedSystem(<?php echo $product_info['id']?>,'0')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio"  name="system_type" value="0"><span class="jf-name">CentOS&nbsp;6.7</span>
+                                </lable>
+                                <lable class="xt-radio" for="" id="<?php echo $product_info['id'];?>_2"  onclick="checkedSystem(<?php echo $product_info['id']?>,'2')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio"  name="system_type" value="2"><span class="jf-name">Windows2008</span>
+                                </lable>
+                            </div>
+                    </div>
+                    <?php }else {?>
+                    <div class="vps-right">
+                        <div class="checkbox2"  id="<?php echo $product_info['id'];?>_checkbox">
+                        <input id="<?php echo $product_info['id'];?>_buyType" type="hidden" name="buyType" value="<?php if(isset($system_type)){echo $system_type;}else{echo  1;}?>" /> 
+                                <lable class="xt-radio" for=""  id="<?php echo $product_info['id'];?>_1"  onclick="checkedSystem(<?php echo $product_info['id']?>,'1')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio"  name="system_type" value="1"   checked="checked" ><span class="jf-name">Windows2003</span>
+                                </lable>
+                                <lable class="xt-radio" for=""  id="<?php echo $product_info['id'];?>_0"  onclick="checkedSystem(<?php echo $product_info['id']?>,'0')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio"  name="system_type" value="0"><span class="jf-name">CentOS&nbsp;6.7</span>
+                                </lable>
+                            </div>
+                    </div>
+                    <?php }?>
+                </li>
+                <li>
+                	<a href="javascript:void(0);"  class="vps-btn"   onclick="submitbuy(<?php echo $product_info['id'];?>,'0');">立即购买</a>
+                    <a href="javascript:void(0);"  class="vps-btn vps-btn-try" onclick="submitbuy(<?php echo $product_info['id'];?>,'1');">申请试用</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="ky-product-777">
+		<div class="module-wrap"> 
+			<div class="float-box y-row">
+				<div>
+					<ul class="menu-box y-clear">
+						<li id="tab5_1" class="y-left nav_on6"  style="cursor:pointer;" class=""><a href="javascript:void(0);"  onClick="setView5(1)" class="blue-under blue">产品特性</a></li>
+						<li id="tab5_2" class="y-left" ><a href="javascript:void(0);" class="blue" onClick="setView5(2)">产品参数</a></li>
+						<li id="tab5_3" class="y-left" ><a href="javascript:void(0);" class="blue" onClick="setView5(3)">测试报告</a></li>
+					</ul>
+				</div>
+			</div>
+			<div style="height:10px"></div>
+		</div>
+	</div>
+	<div id="tab5_01" class="dis">
+	<div class="ky-product-2000">
+		<div class="module-wrap">
+			<div class="y-row hvps-title">
+				<h1><i class="i-title"></i>产品特性</h1>
+			</div>
+		</div>
+	</div>
+	<div class="y-row main-wrap"> 
+		<div class="vps-box">
+             <div class="hvps-item">
+                  <ul>
+                      <li class="item-mright5 mright3">
+                          <a href="" class="item-link2 link-a2"></a>
+                          <div class="item-righttxt">
+                            <h5 class="item-h5">平台快</h5>
+                            <p>云计算技术架构，<br>
+                             1000台高性能服务器资<br>
+                             源池，运算速度更快</p>
+                          </div>
+                      </li>
+                      <li class="item-mright5">
+                          <a href="" class="item-link2 link-b2"></a>
+                          <div class="item-righttxt">
+                          <h5 class="item-h5">带宽快</h5>
+                          <p>BGP电信联通移动铁通多线骨干<br>
+                           网络接入，直连机房核心设备，<br>
+                           单点VPS带宽最高达7M</p>
+                          </div>
+                      </li>
+                      <li>
+                          <a href="" class="item-link2 link-c2"></a>
+                          <div class="item-righttxt">
+                          <h5 class="item-h5">系统快</h5>
+                          <p>专为网站用户定制服务<br>
+                            器操作系统，优化系统<br>
+                             结构，简洁、高效</p>
+                          </div>
+                      </li>
+                      <li class="item-mright5 mright3">
+                          <a href="" class="item-link2 link-d2"></a>
+                          <div class="item-righttxt">
+                          <h5 class="item-h5">运算快</h5>
+                          <p>超大CPU内存资源，<br>
+                           多线程运算，网站运<br>
+                           行速度提高40%</p>
+                          </div>
+                      </li>
+                      <li class="item-mright5">
+                          <a href="" class="item-link2 link-e2"></a>
+                          <div class="item-righttxt">
+                          <h5 class="item-h5">服务快</h5>
+                          <p>1分钟即可开通使用，专线400<br>
+                          电话及QQ，多途径申报工单，<br>
+                           1分钟故障受理，无需等待</p>
+                          </div>
+                      </li>
+                      <li>
+                          <a href="" class="item-link2 link-f2"></a>
+                          <div class="item-righttxt">
+                          <h5 class="item-h5">系统快</h5>
+                          <p>赠送独立云数据库，千兆网络，<br>
+                           内网连接，与快云VPS完美结合<br>
+                           数据安全且读写速度更快</p>
+                          </div>
+                      </li>
+                  </ul>
+             </div>
+              <div class="clearfix"></div>
+              <div class="hvps-title"><h1><i class="i-title"></i>优越的快云VPS运行环境</h1></div>
+              <ul class="jifang-list">
+                  <li class="mright">
+                      <div class="jifang-img4"></div>
+                      <p>1000台高性能服务器大型集群，拥有万兆网络接入，40G带宽出口。</p>
+                  </li>
+                  <li class="mright">
+                      <div class="jifang-img5"></div>
+                      <p>快云机房采用骨干双路电源供电，大容量的UPS可以提供10个小时的在线电力保障。</p>
+                  </li>
+                  <li>
+                      <div class="jifang-img6"></div>
+                      <p>2*800kw+2*900kw大功率柴油发电机组，保证99.99%以上的电力持续供应率。</p>
+                  </li>
+              </ul>
+		</div>
+	</div>
+	</div>
+	<div id="tab5_02" class="undis">
+	<div class="ky-product-2000">
+		<div class="module-wrap">
+			<div class="y-row hvps-title">
+				<h1><i class="i-title"></i>产品参数</h1>
+			</div>
+		</div>
+	</div>
+	<div class="y-row main-wrap"> 
+		<div class="vps-box">
+           <div class="hvps-table">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">产品名称：</th>
+                            <td width="34%"><?php echo $product_info['product_name'];?></td>
+                            <th class="hvps-thbg" width="16%">IP地址：</th>
+                            <td width="34%"><?php echo $product_config['ip'];?></td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">品质保障：</th>
+                            <td width="34%">
+                                <a href="" class="xin" style="position:relative;top:12px;*top:4px" title="景安产品无条件退款政策-景安网络"></a>
+                                <a href="" class="xin2" style="position:relative;top:12px;*top:4px" title="SLA服务品质保障承诺-景安网络"></a>
+                                <a href="" class="xin3" style="position:relative;top:12px;*top:4px" title="无忧服务，让您无忧托付-景安网络"></a>
+                            </td>
+                            <th class="hvps-thbg" width="16%">内网IP地址：</th>
+                            <td width="34%">独享内网IP一个</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">CPU：</th>
+                            <td width="34%"><?php echo $product_config['cpu_info'];?></td>
+                            <th class="hvps-thbg" width="16%">线路类型：</th>
+                            <td width="34%">BGP多线(电信、联通、移动、铁通)</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">V-CPU：</th>
+                            <td width="34%"><?php echo $product_config['v_cpu'];?></td>
+                            <th class="hvps-thbg" width="16%">带宽配额：</th>
+                            <td width="34%"><?php echo $product_config['network_bandwidth'];?>(BGP多线)</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">内存类型：</th>
+                            <td width="34%"><?php echo $product_config['memory_to_config'];?></td>
+                            <th class="hvps-thbg" width="16%">赠送云数据库：</th>
+                            <td width="34%"><span style="font-size:12px">DB-1型&nbsp;3G+3G备份&nbsp;MySQL5.5或MS&nbsp;SQL&nbsp;Server2012</span></td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">硬盘：</th>
+                            <td width="34%"><?php echo $product_config['disk_to_config'];?></td>
+                            <th class="hvps-thbg" width="16%">操作系统：</th>
+                            <td width="34%">Windows2003
+                                <?php if($product_info['api_ptype'] == 'fastcloudvps'){?>
+                                / windows2008
+                                <?php } ?>/ centos 6.7</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="16%">网卡：</th>
+                            <td width="34%">千兆网卡</td>
+                            <th class="hvps-thbg" width="16%"></th>
+                            <td width="34%">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+            <div class="hvps-title"><h1><i class="i-title"></i>配置参数详情</h1></div>
+            <div class="hvps-table" style="padding-bottom:50px">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th class="hvps-thbg" width="20%">7*24免费服务类型：</th>
+                            <td width="80%">7*24免费服务内容</td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="20%">操作系统：</th>
+                            <td width="80%">
+                                <p>
+                                    <span class="i-width">1、重启系统</span>
+                                    <span class="i-width">2、重装windows系统</span>
+                                    <span class="i-width">3、重装linux系统</span>
+                                    <span class="i-width">4、操作系统打补丁</span>
+                                </p>
+                                <p>
+                                    <span class="i-width">5、修改系统密码</span>
+                                    <span class="i-width">6、基本安全设置</span>
+                                    <span class="i-width">7、查看系统状态</span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="20%">环境配置类：</th>
+                            <td width="80%">
+                                <p>
+                                    <span class="i-width">1、IIS配置</span>
+                                    <span class="i-width">2、Apache配置</span>
+                                    <span class="i-width">3、MSSQL安装配置</span>
+                                    <span class="i-width">4、MYSQL安装配置 </span>
+                                </p>
+                                <p>
+                                    <span class="i-width">5、.NET环境配置</span>
+                                    <span class="i-width">6、PHP环境配置</span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="hvps-thbg" width="20%">网络服务：</th>
+                            <td width="80%">
+                                <p>
+                                    <span class="i-width">1、远程连不上</span>
+                                    <span class="i-width">2、部分地区无法访问</span>
+                                    <span class="i-width">3、网络异常流量处理</span>
+                                    <span class="i-width">4、服务器向外发包</span>
+                                </p>
+                                <p>
+                                    <span class="i-width">5、ARP攻击处理</span>
+                                    <span class="i-width">6、24小时流量监控</span>
+                                    <span class="i-width">7、连网与开机</span>
+                                    <span class="i-width">8、应客户要求断网</span>
+                                    <span class="i-width">9、应客户要求关机</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>	   
+        </div>
+	</div>
+	</div>
+	<div id="tab5_03" class="undis">
+	<div class="ky-product-2000">
+		<div class="module-wrap">
+			<div class="y-row hvps-title">
+				<h1><i class="i-title"></i>测试报告</h1>
+			</div>
+		</div>
+	</div>
+	<div class="y-row main-wrap"> 
+		<div class="vps-box">
+				<p class="test-txt">站长工具是站长工作的必备工具。通过站长工具可以洞悉SEO数据变化，还可以检测网站死链接、蜘蛛访问、HTML格式检测、网站速度测试、友情链接检查、网站域名IP查询、PR、权重查询、alexa、whois查询等，是国内目前公认的测试IP数据的工具之一。其中的各站点响应的时间越短，说明网速越快。</p>
+               <div class="test-table">
+                  <table>
+                      <tbody>
+                          <tr>
+                              <th width="18%">序号</th>
+                              <th width="22%">Ping的地址</th>
+                              <th width="20%">相应IP</th>
+                              <th width="20%">相应时间</th>
+                              <th width="20%">TTL</th>
+                          </tr>
+                          <tr>
+                              <td width="18%">1</td>
+                              <td width="22%">四川绵阳[电信]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">68毫秒</td>
+                              <td width="20%">54</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">2</td>
+                              <td width="22%">安徽淮北[电信]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">40毫秒</td>
+                              <td width="20%">54</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">3</td>
+                              <td width="22%">江苏无锡[电信]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">26毫秒</td>
+                              <td width="20%">51</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">4</td>
+                              <td width="22%">河南新乡[多线]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">7毫秒</td>
+                              <td width="20%">55</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">5</td>
+                              <td width="22%">河南郑州[多线]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">8毫秒</td>
+                              <td width="20%">55</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">6</td>
+                              <td width="22%">深圳[移动]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">130毫秒</td>
+                              <td width="20%">47</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">7</td>
+                              <td width="22%">美国芝加哥[海外]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">231毫秒</td>
+                              <td width="20%">50</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">8</td>
+                              <td width="22%">台湾[海外]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">73毫秒</td>
+                              <td width="20%">51</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">9</td>
+                              <td width="22%">香港[海外]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">82毫秒</td>
+                              <td width="20%">50</td>
+                          </tr>
+                          <tr>
+                              <td width="18%">10</td>
+                              <td width="22%">德国[海外]</td>
+                              <td width="20%">116.255.214.3</td>
+                              <td width="20%">371毫秒</td>
+                              <td width="20%">48</td>
+                          </tr>
+                          <tr>
+                               <td colspan="5">
+                                  <p><span class="i-width2">最快：河南新乡[多线]7毫秒</span><span class="i-width2">最慢：德国[海外]371毫秒</span></p>
+                                  <p><span class="i-width2">电信平均：45毫秒</span><span class="i-width2">联通平均：38毫秒</span></p>
+                               </td>
+                          </tr>
+                      </tbody>
+                  </table>
+               </div>
+               <div class="hvps-title"><h1><i class="i-title"></i>硬盘读写速度</h1></div>
+               <p class="test-txt">HDTunePro（硬盘专业工具）是一款强大的硬盘测试工具，它能够将你的硬盘型号、文件基准信息、硬盘扇区的好坏、健康信息、磁盘监视等等多项有关硬盘信息及其使用情况反映出来。其中“基准”测试硬盘的传输速率,反映硬盘读写速读，平均值越大、存取时间越短读取硬盘速度越快。</p>
+               <div class="text-img">
+                  <img src="__FRONTEND_IMAGES__20160416img9.gif" width="585" height="474" alt="硬盘读写速度">
+              </div>
+               <div class="hvps-title"><h1><i class="i-title"></i>IOPS数据</h1></div>
+               <p class="test-txt">HDTunePro（硬盘专业工具）是一款强大的硬盘测试工具，它能够将你的硬盘型号、文件基准信息、硬盘扇区的好坏、健康信息、磁盘监视等等多项有关硬盘信息及其使用情况反映出来。其中“随机存取”反映硬盘所能承受的瞬间读写能力，“平均存取时间”和“平均速度”是主要参数，平均存取时间越短，平均速度越大，反映硬盘瞬间读写能力越高。</p>
+               <div class="text-img">
+                  <img src="__FRONTEND_IMAGES__20160416img10.gif" width="587" height="474" alt="IOPS数据">
+              </div>
+               <div class="hvps-title"><h1><i class="i-title"></i>CPU处理能力</h1></div>
+               <p class="test-txt">      Fritz Chess Benchmark是国际象棋软件Fritz自带的电脑棋力测试程序，由于支持多线程，而且它做的是大量科学计算，所有经常被网友用来测试电脑的科学运算能力，它通过模拟电脑思考国际象棋的算法通过测量部分测试电脑成绩。其中的“每秒千步”和“对比倍数”反映CPU的处理速度，数值越大，CPU处理速度越快。这里我们只进行单线程测试。</p>
+               <div class="text-img">
+                  <img src="__FRONTEND_IMAGES__20160416img11.gif" width="391" height="466" alt="CPU处理能力">
+              </div>	   
+        </div>
+	</div>
+	</div>
+	<div class="vpscontainerbg">
+          <div class="ky-container">
+            <div class="vpscn-title">
+                服务承诺
+             </div>
+          <div class="clearfix"></div>
+          <ul class="fuwu-list">
+              <li class="mright23">
+                  <div class="fuwu-title title-img1"></div>
+                  <h4 class="fuwu-h4">顶级网络</h4>
+                  <p>BGP多线接入</p>
+                  <p>直连中国骨干网络</p>
+                  <p>120G超大出口带宽</p>
+                  <p>高容灾、扩容能力</p>
+                  <p>完美解决互联互通速度问题</p>
+              </li>
+              <li class="mright23">
+                  <div class="fuwu-title title-img2"></div>
+                  <h4 class="fuwu-h4">多重防护</h4>
+                  <p>大型集群防火墙+IDS防护</p>
+                  <p>黑白名单过滤系统</p>
+                  <p>非法信息排查系统</p>
+                  <p>安全宝网站漏洞防护</p>
+                  <p>多重安保门禁防护</p>
+              </li>
+              <li class="mright23">
+                  <div class="fuwu-title title-img3"></div>
+                  <h4 class="fuwu-h4">7x24</h4>
+                  <p>不限次重启及重装系统服务</p>
+                  <p>不限次免费环境安装调试</p>
+                  <p>7*24小时免费流量监控</p>
+                  <p>临时备机及应急带宽服务</p>
+              </li>
+              <li>
+                  <div class="fuwu-title title-img4"></div>
+                  <h4 class="fuwu-h4">消费保障</h4>
+                  <p>SLA服务品质保障承诺</p>
+                  <p>7天无条件全额退款承诺</p>
+                  <p>消费者保障计划</p>
+              </li>
+          </ul>
+      </div>
+   </div>
+	<div class="fuwu-box">
+		<div class="ky-container">
+			<div class="d-tbc d-tbc-first">
+				<a target="_blank" href="#" class="service-item first-service-item">
+					<span class="term term-1"></span>
+				</a>
+			</div>
+			<div class="d-tbc">
+				<a target="_blank" href="#" class="service-item">
+					<span class="term term-2"></span>
+				</a>
+			</div>
+			<div class="d-tbc">
+				<a target="_blank" href="#" class="service-item">
+					<span class="term term-3"></span>
+				</a>
+			</div>
+			<div class="d-tbc d-tbc-last">
+				<a target="_blank" href="#" class="service-item last-service-item">
+					<span class="term term-5"></span>
+				</a>
+			</div>
+			<div class="d-tbc">
+				<a target="_blank" href="#" class="service-item">
+					<span class="term term-4"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="<?php echo $product_info['id'];?>_product_name" value="<?php echo $product_info['product_name'];?>"/>
+	<div id="dialog"  title="确认产品信息"  style="display: none">
+	<form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+		<div class="dialog-main clearfix" >
+				<input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+				<input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+				<input type="hidden"  name="system_type" id="buy_system_type"  value=""/>
+				<input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+			<div class="dialog-name">产品名称：</div>
+			<div class="dialog-pro"  id="buy_product_name"></div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">操作系统：</div>
+			<div class="dialog-pro" id="czxt">Linux</div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">产品价格：</div>
+			<div class="dialog-pro"  id="buy_price">试用1元</div>
+		</div>
+		<div class="dialog-main clearfix" >
+			<div class="dialog-name" >带宽配额：</div>
+			<div class="dialog-pro"  id="buy_bandwidth" ></div>
+		</div>
+		<div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+			<a href="javascript:void(0);" class="dialog-check"  id="free_trial"  onclick="order_buy_info(this);">确认购买</a>
+		</div>
+		</form>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" language="javascript">
+    var dialog_buy = $("#dialog");
+function submitbuy(id,free_trial){
+	var system_type = '';
+	/* 产品ID */
+	var product_id = "<?php echo $product_info['id'];?>";
+	/* 产品名称 */
+	var product_name = $("#"+id+"_product_name").val();
+	/* 带宽配额 */
+	var bandwidth = $("#"+id+"_network_bandwidth").text();
+	/* 价格 */
+	var price_id = $(".v-selected").attr("id");
+	/* 年限 */
+	var price = $("#"+price_id).text();
+	/* 价格 */
+	var pice = price_id.split('_');
+	var money = $("#money_"+pice[1]).val();
+	/* 操作系统 */
+	if($("#"+id+"_0").hasClass( 'checked')){
+		system_type = 'CentOS 6.7';
+	}else if($("#"+id+"_1").hasClass( 'checked')){
+		system_type = 'Windows2003';
+	}else if($("#"+id+"_2").hasClass( 'checked')){
+		system_type = 'Windows2008';
+	}
+	if(free_trial == 1){
+		$("#free_trial").html("试用");
+	}else{
+		$("#free_trial").html("确认购买");
+	}
+	$("#buy_product_id").val(product_id);
+	$("#buy_free_trial").val(free_trial);
+	$("#buy_product_name").html(product_name);
+	$("#buy_price_id").val(price_id);
+	$("#buy_system_type").val(system_type);
+	$("#buy_price").html(price);
+	$("#czxt").text(system_type);
+	$("#buy_bandwidth").html(bandwidth);
+    dialog_buy.dialog({
+		autoOpen: true,
+		modal : true,
+		width: 570,
+		height:270,
+		resizable:false
+	});
+    dialog_buy.dialog('open');
+}
+var tooken = true;
+function order_buy_info(obi){
+    if(tooken)
+    {
+        tooken = false;
+        if($(obi).html() == "试用")
+        {
+            $(obi).html("试用中...");
+        }else
+        {
+            $(obi).html("购买中...");
+        }
+        $.ajax({
+            type: 'post',
+            url: "<?php echo U('frontend/order/order_buy','',false);?>",
+            dataType: 'json',
+            data: $("#buy_from").serialize(),
+            success: function(data){
+                dialog_buy.dialog('close');
+                if (data.status == 1){
+                    alert(data.info);
+                    setTimeout("window.location.href='"+data.url+"'",2000);
+                }else{
+                    alert(data.info);
+                    if(data.info == '账户余额不足，即将跳转充值页面'){
+                   	 	setTimeout("window.location.href='"+data.url+"'",2000);
+                   }else{
+                  		 setTimeout("window.location.reload()",2000);
+                   }
+                }
+            }
+        });
+    }
+}
+</script>
+<script type="text/javascript" language="javascript">
+$(function(){ 
+	/* 判断传递操作系统 */
+	var id = "<?php echo $product_info['id'];?>";
+	var type = $("#"+id+"_buyType").val();
+	if(type == 1){
+		var system_type = 'windows2003';
+	}else if(type ==0){
+		var system_type = 'linux';
+	}else if(type == 2){
+		var system_type = 'windows2008';
+	}
+	checkedSystem(id,type);
+	/* 判断传递价格 */
+	var price = "<?php echo $price;?>";
+	$(".money").text(price+"元");
+}); 
+/* 选择价格 */
+function checkBuyPrice(id,price){
+	$(".v-choose").removeClass('v-selected');
+	$("#"+id).addClass('v-selected');
+	$(".money").text(price+"元");
+}
+function checkedSystem(id,system_type){
+	$("#"+id+"_checkbox").children().removeClass("checked");
+	$("#"+id+"_"+system_type).addClass('checked');
+	$("#"+id+"_"+system_type).find('input').attr('checked','true');/* div下input:radio选中状态 */
+	$("#"+id+"_"+system_type).find('input').val();//获取到选中操作系统的值
+}
+</script>
+<script type="text/javascript" language="javascript">
+	function setView5(n){
+		for(var i=1;i<=5;i++){
+			if(i == n){
+				$('#tab5_0'+i).removeClass("undis");
+				$('#tab5_0'+i).addClass("dis");
+				$('#tab5_'+i).removeClass("nonav");
+				$('#tab5_'+i).addClass("nav_on6");
+			}else{
+				$('#tab5_'+i).removeClass("nav_on6");
+				$('#tab5_'+i).addClass("nonav");
+				$('#tab5_0'+i).removeClass("dis");
+				$('#tab5_0'+i).addClass("undis");
+			}
+		}
+	}
+	$('.blue').on('click',function(){
+		$('.blue').removeClass('blue-under');
+		$(this).addClass('blue-under');
+ })
+</script>
+</block>

@@ -1,0 +1,225 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	<link rel="stylesheet" href="__COM_STATICS__bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					文章管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a href="<?php echo U('Backend/Article/index', [  ], false);?>">文章列表</a>
+					&amp; 新增文章
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Article/index', [  ], false);?>">文章列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Article/recording', [  ], false);?>" role="form" method="post" name="update" id="update">
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="type">
+				文章分类
+			</label>
+
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" name="type" id="type">
+						<?php foreach($type as $k => $v):?>
+							<option value="<?php echo $k;?>" >
+								<?php echo $v;?>
+							</option>
+						<?php endforeach;?>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="state">
+				是否展示
+			 </label>
+
+			<div class="col-sm-9">
+				<select class="col-xs-10 col-sm-5" name="state" id="state">
+						<?php foreach($state as $k => $v):?>
+							<option value="<?php echo $k;?>" >
+								<?php echo $v;?>
+							</option>
+						<?php endforeach;?>
+				</select>
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="title">
+				 文章标题
+			 </label>
+
+			<div class="col-sm-9">
+			<input type="text" id="title" name="title"  value="" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="summary">
+				 文章摘要
+			 </label>
+
+			<div class="col-sm-9">
+			<input type="text" id="summary" name="summary"  value="" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="problem_content">
+				文章内容
+			</label>
+
+			<div class="col-sm-9">
+				<div class="col-xs-11 col-sm-11">
+				<script id="container" name="content" type="text/plain">
+				        请输入文章内容...
+				    </script>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit" >
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						提交
+					</button>
+					<a class="btn btn-info" href="<?php echo U('Backend/Article/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<js href="__COM_STATICS__ueditor/ueditor.config.js" />
+<js href="__COM_STATICS__ueditor/ueditor.all.min.js" />
+<script type="text/javascript">
+
+$(function(){
+	var ue = UE.getEditor('container',{
+		serverUrl :'{:U('Api/Ueditor/ueditor','',false)}',
+		autoClearinitialContent : true,
+	});
+})
+
+	function updater(form){
+		form.submit();
+	}
+	$("#update").validate({
+		submitHandler:function(form){
+			updater(form);
+        },
+		onclick:false,
+		onfocusout:false,
+		onkeyup:false,
+		errorPlacement: function (error, element){
+			var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+
+			$("#update").before($alert);
+
+		},
+		rules:{
+			state:{
+				required:true,
+				number:true
+			  },
+			overdue_time:{
+				required:true,
+				date:true
+			},
+			service_time:{
+				required:true,
+				digits:true
+			},
+			free_trial:{
+				required:true,
+				digits:true
+			},
+			ip_address:{
+				required:true
+			},
+			user_id:{
+				required:true
+			}
+		},
+	  	messages:{
+	  		state:{
+				required:"业务状态必须选择",
+				number:"业务状态参数格式不对",
+		  	},
+			overdue_time:{
+				required:"到期时间不能为空",
+				date:"到期时间格式非法"
+			},
+			service_time:{
+				required:"购买时间不能为空",
+				digits:"购买时间必须输入整数"
+			},
+			free_trial:{
+				required:"免费试用天数不能为空",
+				digits:"免费试用天数必须输入整数"
+			},
+			ip_address:{
+				required:"IP地址必须填写"
+			},
+			user_id:{
+				required:"会员必须选择"
+			}
+		}
+	});
+
+</script>
+
+</block>

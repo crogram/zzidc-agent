@@ -1,0 +1,289 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" href="__BACKEND_CSS__table.css" />
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/datepicker.css" />
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/jquery-ui.custom.min.css">
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/jquery.gritter.css">
+</block>
+<block name="content">
+	<div class="page-header">
+		<h1>
+			<i class="fa fa-home"></i>首页
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				业务管理
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				快云数据库列表
+			</small>
+			<!--<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Clouddb/create',[],false);?>">录入快云服务器业务</a>-->
+			<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Product/create',[],false);?>">录入业务</a>
+		</h1>
+	</div><!-- end/.page-header -->
+	<div class=" row">
+		<div class="col-xs-12">
+			<a  class="btn btn-white btn-sm btn-primary" href="<?php echo U('Backend/Clouddb/index', [  ], false);?>">
+				业务总数(<?php echo $counter['total'];?>)
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary" href="javascript:void(0);" onclick="searchByState(1)">
+				正常业务(<?php echo $counter['successful'];?>)
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary" href="javascript:void(0);" onclick="searchByState(2)">
+				已删除业务(<?php echo $counter['deleted'];?>)
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary" href="javascript:void(0);" onclick="searchByState(3)">
+				过期业务(<?php echo $counter['expired'];?>)
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary" href="javascript:void(0);" onclick="searchByState(4)">
+				失败业务(<?php echo $counter['failed'];?>)
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary pull-right" href="javascript:void(0);" onclick="syncBatch('diff')">
+				差异同步所有业务
+			</a>
+			<a  class="btn btn-white btn-sm btn-primary pull-right" href="javascript:void(0);" onclick="syncBatch('all')">
+				同步本地已有业务
+			</a>
+			<div class="space"></div>
+			<form id="form-search" class="form-inline">
+				{/* 表格头部的搜索筛选 */}
+				<include file="Table/search" />
+				<input type="hidden"  name="perpage"  id="perpage" value="<?php echo $per_page;?>"/>
+				<?php if( !empty($sorted) ):?>
+				<?php foreach($sorted as $k => $v):?>
+				<input class="sort-input" type="hidden" name="<?php echo $k;?>" id="<?php echo $k;?>" value="<?php echo empty($request[$k]) ? '': $request[$k];?>"/>
+				<?php endforeach;?>
+				<?php endif;?>
+			</form>
+			<div class="space"></div>
+			<table id="simple-table" class="table table-hover  table-bordered">
+				<thead>
+				{/* 表格头部/开始 */}
+				<tr>
+					<?php foreach($th as $k => $v ):?>
+					<?php if($k != 'wwdz' && $k != 'iops' && $k != 'conn' && $k != 'iops' && $k != 'memory' && $k != 'disk'):?>
+					<?php if($k == 'user_id' || $k == 'ipaddress'):?>
+					<?php continue;?>
+					<?php endif;?>
+					<th class="center">
+						<?php if( $k == C('SORT_PREFIX').'id' ):?>
+						<label class="pos-rel">
+							<input type="checkbox" class="ace">
+							<span class="lbl"></span>
+						</label>
+						<?php endif;?>
+						<?php echo $v['display_name'];?>
+						<?php if($v['sortable'] == true):?>
+						<?php if( empty( $request[$k]) ):?>
+						<span class="glyphicon glyphicon-sort" onclick="sort('<?php echo $k;?>', -1)"></span>
+						<?php elseif( $request[$k] == 1):?>
+						<span class="glyphicon glyphicon-sort-by-attributes" onclick="sort('<?php echo $k;?>', -1)"></span>
+						<?php elseif( $request[$k] == -1 ):?>
+						<span class="glyphicon glyphicon-sort-by-attributes-alt" onclick="sort('<?php echo $k;?>', 1)"></span>
+						<?php endif;?>
+						<?php endif;?>
+					</th>
+					<?php endif;?>
+					<?php endforeach;?>
+					<th>操作
+						<a href="<?php echo U('Backend/Clouddb/index', [ ], false);?>">
+							<span class="glyphicon glyphicon-refresh"></span>
+						</a>
+					</th>
+				</tr>
+				{/* 表格头部/结束 */}
+				</thead>
+				<tbody>
+				{/* 表格内容/开始 */}
+				<?php foreach( $data as $k => $v ):?>
+				<tr>
+					<?php foreach( $th_raw as $kk => $vv ):?>
+						<?php if($vv == 'id'):?>
+						<td class="center">
+							<label class="pos-rel">
+								<input type="checkbox" class="ace bid" value="<?php echo $v[$vv]?>" name="bid[]">
+								<span class="lbl"><?php echo $v[$vv]?></span>
+							</label>
+						</td>
+						<?php elseif($vv == 'user_id'):?>
+						<?php elseif($vv == 'wwdz'):?>
+						<?php elseif($vv == 'nwdz'):?>
+							<td class="center">
+								<label class="pos-rel">
+									<span class="lbl">
+										内网：<br /><?php echo $v['nwdz'];?><br />外网：<br /><?php echo $v['wwdz'];?>
+									</span>
+								</label>
+							</td>
+						<?php elseif($vv == 'login_name'):?>
+							<td class="center">
+								<label class="pos-rel">
+									<span class="lbl">
+										<?php if($v['user_id'] < 1):?>
+										<?php echo $v[$vv]?>
+										<?php else:?>
+										<a target="_blank" href="<?php echo U('Backend/Member/details', [ 'id'=> $v['user_id'] ], false);?>" title="会员详情"><?php echo $v[$vv]?></a><a target="_blank" href="<?php echo U('Backend/Member/loginMember', [ 'id'=> $v['user_id'] ], false);?>" title="点我去前台"> >></a>
+										<?php endif;?>
+									</span>
+								</label>
+							</td>
+						<?php elseif($vv == 'version'):?>
+						<?php elseif($vv == 'memory'):?>
+						<?php elseif($vv == 'iops'):?>
+						<?php elseif($vv == 'conn'):?>
+						<?php elseif($vv == 'disk'):?>
+						<td class="center">
+							<label class="pos-rel">
+								<span class="lbl">
+									版本：<?php echo $v['version'];?>
+									<br />内存：<?php echo $v['memory'];?>
+									<br />硬盘：<?php echo $v['disk'];?>
+									<br />IOPS：<?php echo $v['iops'];?>
+									<br />最大连接数：<?php echo $v['conn'];?>
+								</span>
+							</label>
+						</td>
+						<?php else:?>
+							<td class="center">
+								<label class="pos-rel">
+									<?php if( !empty($search[$vv]['data']) ):?>
+									<span class="lbl"><?php echo $search[$vv]['data'][$v[$vv]]?></span>
+									<?php else:?>
+									<span class="lbl"><?php echo $v[$vv]?></span>
+									<?php endif;?>
+								</label>
+							</td>
+						<?php endif;?>
+					<?php endforeach;?>
+					<td>
+						<a target="_blank" href="<?php echo U('Backend/Clouddb/details/',[ 'id' => $v['id'] ],false);?>">详情</a>
+						<a href="<?php echo U('Backend/Clouddb/update/',[ 'id' => $v['id'] ],false);?>">修改</a>
+						<a href="javascript:void(0);" onclick="assignment(<?php echo $v['id'];?>)">转让</a>
+						<a href="javascript:void(0);"  onclick="erase(<?php echo $v['id'];?>)">删除</a>
+						<a href="javascript:void(0);" onclick="sync(<?php echo $v['api_bid'];?>)">同步</a>
+					</td>
+				</tr>
+				<?php endforeach;?>
+				{/* 表格内容/结束 */}
+				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="13">
+						<label>
+							<span class="lbl">选中业务转让到</span>
+							<a href="javascript:void(0);" onclick="selectMember()">会员(点击选择会员)</a>
+						</label>
+						<label class="col-md-offset-1">
+							<span class="lbl">选中业务</span>
+							<a href="javascript:void(0);" onclick="batchDelete()">批量删除</a>
+						</label>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+			<include file="Layouts/pagination" />
+		</div>
+	</div>
+	<input type="hidden" id="sum-pages"  value="<?php echo $sum_pages;?>" />
+	<input type="hidden" id="current-page"  value="<?php echo $current_page;?>" />
+	<input type="hidden" id="current-url"  value="<?php echo U('Backend/Clouddb/index', [ ], false);?>" />
+	<input type="hidden" id="current-business"  value="Clouddb" />
+</block>
+<block name="scripts">
+	<script src="__COM_JS__pagination.js"></script>
+	<script src="__BACKEND_JS__table.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/date-time/bootstrap-datepicker.min.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/date-time/locales/bootstrap-datepicker.zh-CN.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/jquery.gritter.min.js"></script>
+	<script src="__BACKEND_JS__sync-business.js"></script>
+	<script type="text/javascript">
+		function batchDelete(){
+			var bids = '';
+			$('input.bid:checked').each(function( i, e){
+				bids += $(this).val()+',';
+			});
+			bids = bids.substr(0,bids.length-1);
+			if (bids == '') {
+				alert('您没有选择要删除的业务');
+				return false;
+			}
+			url = "<?php echo U('Backend/Clouddb/batcherase/', '',false);?>/ids/"+bids;
+			confirmBox('您确定要删除这些业务吗？', function(){
+				$.ajax({
+					type : "get",
+					dataType : "json",
+					url : url,
+					success : function(data){
+						alertBox(data.info, function(){
+							location.reload(true)
+						});
+					}
+				});
+			});
+		}
+		function erase(bid){
+			var url = '';
+			url = "<?php echo U('Backend/Clouddb/erase/', '',false);?>/id/"+bid;
+			confirmBox('您确定要删除该业务吗？', function(){
+				$.ajax({
+					type : "get",
+					dataType : "json",
+					url : url,
+					success : function(data){
+						if (data.status == 1) {
+							location.reload(true)
+						}else {
+							alertBox(data.info);
+						}
+					}
+				});
+			});
+		}
+		function counterman(uid, bids){
+			var url = "<?php echo U('Backend/Clouddb/assignment', [], false);?>/uid/"+uid+"/bids/"+bids;
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				success : function(data){
+					if (data.status == 1) {
+						location.reload(true)
+					}else {
+						alertBox(data.info);
+					}
+				}
+			});
+		}
+		function selectMember(){
+			var subWindow = window.open("<?php echo U('Backend/Member/radio', [], false)?>",'newwindow','width=900,height=800,scrollbars=yes');
+
+		}
+		window._callback = function(uid, uname){
+			var bids = '';
+			$('input.bid:checked').each(function( i, e){
+				bids += $(this).val()+',';
+			});
+			bids = bids.substr(0,bids.length-1);
+			if (!uid) {
+				alert('您没有选择转让会员');
+				return false;
+			}
+			if (bids == '') {
+				alert('您没有选择转让业务');
+				return false;
+			}
+			counterman(uid, bids);
+		};
+		function assignment(bid){
+			$('input.bid[value="'+bid+'"]').prop("checked", true);
+			selectMember();
+		}
+		function searchByState(val){
+			$("#state").val(val);
+			formSearch();
+		}
+		$('.date-picker').datepicker({
+			language: 'zh-CN',
+			autoclose: true,
+			todayHighlight: true
+		})
+	</script>
+</block>

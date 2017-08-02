@@ -1,0 +1,152 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="content">
+<!--domainbanner start-->
+<div class="domain-bg">
+	<div class="ky-container">
+		<div class="domain-f40">
+			<p class="domain-bgtitle">域名</p>
+			<div class="domain-bannerserch">
+				<form  id="domain" method="post">
+					<div class="serchdomain clearfix">
+						<input class="getdomainname" type="text"  name="domain" value=""  placeholder="请输入要查询的域名，如jingan" onfocus="this.placeholder=''"/>
+						<div class="divselect-box1 divselect3 divselect-bg">
+							<cite><?php echo $domian_list['0']['product_name'];?>(<?php if($domian_list['0']['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)</cite>
+							<input type="hidden" name="suffix"  id="suffix"  value="<?php echo $domian_list['0']['product_name'];?>(<?php if($domian_list['0']['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)"/>
+							<ul style="text-indent: 10px; display: none;overflow-y: auto" id="domain_list" >
+								<?php foreach($default_domain as $key=>$val){?>
+								<input type="hidden"  name="domain_list[]"  value="<?php echo $val['id'];?>" />
+								<li><a href="javascript:void(0);"  ><?php echo $val['product_name'];?>(<?php if($val['api_ptype'] == 'endomain'){echo '英文域名';}else{echo '中文域名';}?>)</a></li>
+								<?php }?>
+							</ul>
+						</div>
+						<a href="javascript:void(0)" onclick="domain_query()">查域名</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--domainbanner end-->
+<!--domainpricelist start-->
+<div class="domain-contain-bg">
+	<div class="domain-contain">
+		<div class="domain-tabcontain">
+			<ul class="clearfix">
+				<li class="domain-tab  domain-tab-current">
+					<a>域名注册</a>
+				</li>
+				<li class="domain-line"></li>
+			</ul>
+		</div>
+		<div class="y-row main-wrap">
+			<div class="domain-lantab clearfix">
+				<span class="spradio"  onclick="domain_tb(1)"  id="endomain"><i class="spradio-check"></i>英文域名</span>
+				<span class="spradio"  onclick="domain_tb(2)"  id="cndomain"><i></i>中文域名</span>
+			</div>
+			<div class="tx-table ptop20 domaintb"  id="endomain_tb" style="display:block">
+				<table>
+					<tbody>
+					<tr>
+						<th width="272px" class="fweight">域名</th>
+						<th width="270px" class="fweight">注册价格</th>
+						<th width="271px" class="fweight">续费价格</th>
+						<th width="287px" class="fweight" style="margin-right:1em">域名描述</th>
+					</tr>
+					</tbody>
+				</table>
+				<div class="dominlist">
+					<table>
+						<tbody>
+						<?php foreach($endomain as $val){?>
+						<tr>
+							<td width="25%"><?php echo $val['product_name'];?></td>
+							<?php foreach($val['price'] as $price_key =>$price_val){?>
+							<?php if($price_val['type'] == '0'){?>
+							<td width="25%"><?php echo $price_val['product_price'];?></td>
+							<?php }?>
+							<?php } ?>
+							<?php foreach($val['price'] as $price_key =>$price_val){?>
+							<?php if($price_val['type'] == '1'){?>
+							<td width="25%"><?php echo $price_val['product_price'];?></td>
+							<?php }?>
+							<?php } ?>
+							<td width="25%"><?php echo $val['product_des'];?></td>
+						</tr>
+						<?php }?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="tx-table ptop20 domaintb"  id="cndomain_tb"  style="display:none">
+				<table>
+					<tbody>
+					<tr>
+						<th width="272px" class="fweight">域名</th>
+						<th width="270px" class="fweight">首年注册</th>
+						<th width="271px" class="fweight">续费</th>
+						<th width="287px" class="fweight" style="margin-right:1em">转入</th>
+					</tr>
+					</tbody>
+				</table>
+				<div class="dominlist">
+					<table>
+						<tbody>
+						<?php foreach($cndomain as $val){?>
+						<tr>
+							<td width="25%"><?php echo $val['product_name'];?></td>
+							<?php foreach($val['price'] as $price_key =>$price_val){?>
+							<?php if($price_val['type'] == '0'){?>
+							<td width="25%"><?php echo $price_val['product_price'];?></td>
+							<?php }?>
+							<?php } ?>
+							<?php foreach($val['price'] as $price_key =>$price_val){?>
+							<?php if($price_val['type'] == '1'){?>
+							<td width="25%"><?php echo $price_val['product_price'];?></td>
+							<?php }?>
+							<?php } ?>
+							<td width="25%"><?php echo $val['product_des'];?></td>
+						</tr>
+						<?php }?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--donmainpricelist end-->
+</block>
+<block name="script">
+	<script type="text/javascript" language="javascript">
+		function domain_tb(numb){
+			if(numb == 1){
+				$("#cndomain").children('i').removeClass('spradio-check');
+				$('#endomain_tb').show();
+				$("#endomain").children('i').addClass('spradio-check');
+				$('#cndomain_tb').hide();
+			}else{
+				$("#endomain").children('i').removeClass('spradio-check');
+				$('#cndomain_tb').show();
+				$("#cndomain").children('i').addClass('spradio-check');
+				$('#endomain_tb').hide();
+			}
+		}
+		$(".divselect-box1 ul li").click(function(){
+			var txt = $(this).text();
+			$(".divselect-box1 cite").html(txt);
+			$("#suffix").val(txt);
+		});
+		function domain_query(){
+			var domain = $(".getdomainname").val();
+			var href = "{:U('frontend/domain/domain_query', [], false)}";
+			var parms = "/Searchdomain/"+domain;
+			var url = href+parms;
+			$("#domain").attr("action", url);
+			$("#domain").submit();
+		}
+	</script>
+</block>

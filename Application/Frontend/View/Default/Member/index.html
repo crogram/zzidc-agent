@@ -1,0 +1,321 @@
+<extend name="Hyzx/member"  />
+<block  name="links"></block>
+<block name="right">
+    <!--ky-main start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <div class="ky-new-box">
+                <span class="inline-block g666 weight400 mright10">公告:</span>
+                <div class="inline-block">
+                    <ul class="notice-list">
+                        <volist name="notices" id="notice">
+                            <li>
+                                <span class="new-date">[{$notice.create_time|date='Y-m-d',###}]</span>
+                                <a href="{:U('Article/article_details',array('id'=>$notice['id']),false)}" class="new-alink">{$notice.title}</a>
+                            </li>
+                        </volist>
+                        <li><a href="{:U('Article/articlelist',array('type'=>3),false)}">更多&gt;&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 引用主体 -->
+        <div class="container-fluid">
+            <div class="home-tier-1">
+                <div class="tier-1-block">
+                    <div class="ky-panel home-tier-1">
+                        <div class="user-detail-container clearfix">
+                            <div class="user-avatar pull-left text-center">
+                                <img src="__FRONTEND_MEMBER__images/user-icon.png" alt="{$site_config.site_name}">
+                            </div>
+                            <div class="pull-left user-detail">
+                                <div class="user-detail-box margin-bottom-20">
+                                    <a class="username-outer text-overflow fsize20" title="{$member_info.user_name}"><span class="g333">Hi，</span>{$member_info.user_name}</a>
+                                </div>
+                                <div class="user-level">
+                                    <p><span class="g333">安全等级：</span><a>中</a></p>
+                                    <!--<p class="m-top4"><span class="g333">会员级别：</span><span class="g009">核心会员</span></p>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="operate-container-right">
+                            <i class="renzheng-icon"></i>
+                            <span class="fsize14 g666 inline-block">用户中心：</span>
+                            <a href="{:U('frontend/member/memberinfo','',false)}" class="margin-left-20 font-size-14 renzheng-link">会员资料</a>
+                            <a href="{:U('frontend/member/membersafe','',false)}" class="margin-left-20 font-size-14 renzheng-link">安全中心</a>
+                        </div>
+                    </div>
+                </div>
+                <!--客服 start-->
+                <div class="tier-1-block">
+                    <div class="ky-panel home-tier-1 secretary-panel">
+                        <div class="ky-panel home-tier-1 secretary-panel">
+                            <div class="personal-detail secretary-detail">
+                                <img src="__FRONTEND_MEMBER__images/yue-icon.png" alt="账户余额">
+                            </div>
+                            <div class="secretary-operate font-size-14 text-center">
+                                <div class="operate-links">
+                                    <span class="user-operate-name">可用余额：</span>
+                                    <span class="detail-count-container">
+                                        <span class="user-balance">{$member_info.balance.0}</span><span>.{$member_info.balance.1}</span> 元
+                                    </span>
+                                    <a href="<?php echo U('frontend/financial/member_recharge','',false);?>" class="btn btn-default chongzhi-btn">立即充值</a>
+                                </div>
+                                <div class="more-operate text-link">
+                                    <span class="user-operate-name">更多操作：</span>
+                                    <a href="<?php echo U('frontend/financial/member_account_info','',false);?>">财务信息</a>
+                                    <span class="user-operate-spacing">|</span>
+                                    <a href="<?php echo U('frontend/financial/member_transactions_list','',false);?>">交易记录</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--客服 end-->
+                <!--代办业务 start-->
+                <div class="tier-1-block">
+                    <div class="ky-panel home-tier-1">
+                        <ul class="nav nav-tabs detail-tabs">
+                            <li class="fsize16">待办业务</li>
+                        </ul>
+                        <div class="clearfix wo-panel" >
+                            <ul class="products-renew-lists text-link">
+                                <li class="clearfix">
+                                <span class="pull-left user-wo-detail user-wo-closed">
+                                    <a href="<?php echo U('frontend/order/orderlist', [ 'state'=>6], false);?>">未开通订单</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a href="<?php echo U('frontend/order/orderlist', [ 'state'=>6], false);?>" >
+                                        共<span class="user-detail-count wkt">0</span>个
+                                    </a>
+                                </span>
+                                </li>
+                                <li class="clearfix">
+                                <span class="pull-left user-wo-detail user-wo-unevaluated">
+                                    <a href="<?php echo U('frontend/order/orderlist', [ 'state'=>3], false);?>">待处理订单</a>
+                                </span>
+                                <span class="pull-right">
+                                    <a href="<?php echo U('frontend/order/orderlist', [ 'state'=>3], false);?>">
+                                        共<span class="user-detail-count dcl">0</span>个
+                                    </a>
+                                </span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="pull-left user-wo-detail user-wo-closed">
+                                      <a href="<?php echo U('frontend/order/orderlist',['state'=>4],false);?>">待审核订单</a>
+                                    </span>
+                                    <span class="pull-right">
+                                        <a href="<?php echo U('frontend/order/orderlist',['state'=>4],false);?>">
+                                            共<span class="user-detail-count dsh">0</span>个
+                                        </a>
+                                    </span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="pull-left user-wo-detail user-wo-undone">
+                                      <a>待续费业务</a>
+                                    </span>
+                                    <span class="pull-right">
+                                        <a>共<span class="user-detail-count dxf">0</span>个</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--代办业务 end-->
+            </div>
+            <!--我的快云产品 start-->
+            <div class="home-tier-3">
+                <div class="clearfix">
+                    <div class="pull-left home-tier-3-left">
+                        <div class="ky-panel">
+                            <div class="home-panel-heading">我的产品</div>
+                            <div class="clearfix products-detail-panel clearfix">
+                                <ul class="user-products-lists pull-left text-link">
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item font-size-14 fweight">虚拟主机</span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>0], false);?>">国内主机&织梦主机</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>0], false);?>">
+                                                共<span class="user-detail-count gnzj">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>1], false);?>">香港主机</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>1], false);?>">
+                                                共<span class="user-detail-count hkzj">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>2], false);?>">美国主机</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>2], false);?>">
+                                                共<span class="user-detail-count usazj">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/cloudspace/cloudspacelist', '', false);?>">云空间</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/cloudspace/cloudspacelist', '', false);?>">
+                                                共<span class="user-detail-count ykj">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>3], false);?>">云虚拟主机</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhostlist',['virtual_type'=>3], false);?>">
+                                                共<span class="user-detail-count yunzj">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <ul class="user-wo-lists pull-left text-link">
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item font-size-14 fweight">快云产品</span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-cloud">
+                                            <a href="<?php echo U('frontend/cloudserver/cloudserverlist','',false);?>">快云服务器</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/cloudserver/cloudserverlist','',false);?>">
+                                                共<span class="user-detail-count ffwq">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-ip">
+                                            <a href="<?php echo U('frontend/ip/iplist','',false);?>">IP</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/ip/iplist','',false);?>">
+                                                共<span class="user-detail-count fip">0</span>个
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-shuju">
+                                            <a href="<?php echo U('frontend/clouddb/clouddblist','',false);?>">快云数据库</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/clouddb/clouddblist','',false);?>">
+                                                共<span class="user-detail-count fsjk">0</span>个
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-cdn">
+                                            <a href="<?php echo U('frontend/vps/vpslist','', false);?>">VPS</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/vps/vpslist','', false);?>">
+                                                共<span class="user-detail-count vps">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix user-products-lists-last">
+                                        <span class="pull-left user-detail-item user-vps">
+                                            <a href="<?php echo U('frontend/fastvps/fastvpslist','', false);?>">快云VPS</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/fastvps/fastvpslist','', false);?>">
+                                                共<span class="user-detail-count fvps">0</span>台
+                                            </a>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <ul class="user-products-lists pull-left text-link pleft20">
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item font-size-14 fweight">SSL证书&域名</span>
+                                    </li>
+                                    <li class="clearfix user-products-lists-last">
+                                        <span class="pull-left user-detail-item user-ssl">
+                                            <a href="<?php echo U('frontend/ssl/ssllist','', false);?>">SSL证书</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/ssl/ssllist','', false);?>">
+                                                共<span class="user-detail-count ssl">0</span>个
+                                            </a>
+                                        </span>
+                                    </li>
+                                    <li class="clearfix">
+                                        <span class="pull-left user-detail-item user-d">
+                                            <a href="<?php echo U('frontend/domain/domainlist', '', false);?>">域名</a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="<?php echo U('frontend/domain/domainlist', '', false);?>">
+                                                共<span class="user-detail-count ym">0</span>个
+                                            </a>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--ky-main end-->
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(function(){
+            order_count("6");
+            order_count("4");
+            order_count("3");
+            business_count();
+        });
+        function order_count(state){
+            $.post('<?php echo U("frontend/order/state_count",array(),false)?>',{"state":state},function(date){
+                if(date.status == "ok"){
+                    if(state == 6){
+                        $(".wkt").text(date.sum);
+                    }
+                    if(state == 3){
+                        $(".dcl").text(date.sum);
+                    }
+                    if(state == 4){
+                        $(".dsh").text(date.sum);
+                    }
+                }
+            },'json');
+        }
+        function business_count(){
+            $.post('<?php echo U("frontend/member/state_count","",false)?>',function(date){
+                if(date.status == "ok"){
+                    $(".dxf").text(date.sum.dxf);
+                    $(".gnzj").text(date.sum.gnzj);
+                    $(".hkzj").text(date.sum.hkzj);
+                    $(".usazj").text(date.sum.usazj);
+                    $(".yunzj").text(date.sum.yunzj);
+                    $(".vps").text(date.sum.vps);
+                    $(".fvps").text(date.sum.fvps);
+                    $(".ffwq").text(date.sum.ffwq);
+                    $(".fsjk").text(date.sum.fsjk);
+                    $(".fip").text(date.sum.fip);
+                    $(".ykj").text(date.sum.ykj);
+                    $(".ssl").text(date.sum.ssl);
+                    $(".ym").text(date.sum.ym);
+                }
+            },'json');
+        }
+    </script>
+</block>

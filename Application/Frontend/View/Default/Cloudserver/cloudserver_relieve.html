@@ -1,0 +1,130 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+	<!--ky-main start-->
+	<div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/cloudserver/cloudserverlist','',false);?>">快云服务器管理</a></li>
+                <li><a>快云服务器解绑IP</a></li>
+            </ol>
+        </div>
+		<div class="">
+			<div class="conseole-ky-fuwuqi">
+				<div class="ky-panel-heading clearfix">
+					<div class="info-user-title">
+						<h4>快云服务器解绑IP <a href="javascript:void(0);" class="btn-primary btn-reverse btn-icon-return margin-left-10" onclick="javascript:history.back(-1);">返 回</a></h4>
+					</div>
+				</div>
+				<div class="ky-panel-body">
+				<form action="<?php echo U('frontend/cloudserver/cloudserver_relieve','',false);?>"  method="post"  id="ip">
+				<input type="hidden"  name="cloudserver_id"  value="<?php echo $id;?>"/>
+				<input type="hidden"  name="cloudserver_ip_id"  value="<?php echo $ip_id;?>"/>
+				<input type="hidden"  name="cloudserver_api_bid"  value="<?php echo $api_bid;?>"/>
+				<input type="hidden"  name="cloudserver_ip_bid"  value="<?php echo $ip_bid;?>"/>
+					<table class="ky-table margin-bottom-20">
+						<tbody>
+							<tr>
+								<td width="15%" class="text-right pright10">
+									快云服务器业务编号
+								</td>
+								<td width="40%">
+									<?php echo $api_bid;?>
+								</td>
+								<td width="10%" class="text-right pright10">
+									IP业务编号
+								</td>
+								<td width="40%">
+									<?php echo $ip_bid;?>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									IP地址
+								</td>
+								<td width="40%" colspan="3">
+								<?php echo $ipaddress;?>
+								</td>
+								<td width="40%">
+									{$cloudserver_info.api_id}
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									备注
+								</td>
+								<td width="40%" colspan='3'>
+									<?php if($beizhu == null){echo "暂未备注";}else{echo $beizhu;}?>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									解绑IP地址
+								</td>
+								<td colspan="3">
+              							 <input type="text" class="login-input"  id="ipdz" name="ipdz"   placeholder="IP地址"  value="{$ipaddress}"  required onfocus="this.blur()"/>
+              							 <span class="gf00"></span>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+								&nbsp;
+								</td>
+								<td colspan="3">
+									<button class="btn btn-default chongzhi-btn"  type="botton" >确认解绑</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="dialog" title="提示信息" style="display:none">
+		<div class="cipan clearfix">
+			<ul>
+				<li>
+					<div class="dd" style="margin:0 auto">
+						 <p id="bz" style="margin:0 auto">  
+                <img src="static/images/ladomg.gif" width="50xp" height="50px" />  
+                <font style="height:30px;vartical-algin:center;padding-left:5px" id="synctext"></font>  
+            	</p>  
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</block>
+<block name="script">
+<script src="__FRONTEND_JS__common/common-header.js"></script>
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+function updater(form){
+	yesOrNoDialog("确认解绑","确认解绑吗?", function(){
+		form.submit();
+	},"");
+}
+$("#ip").validate({
+	submitHandler:function(form){
+		updater(form);
+    },
+    rules:{
+    	ipdz:{
+			required:true,
+		  },
+	},errorPlacement: function(error, element) {  
+        error.appendTo(element.next('span'));
+    },
+    messages:{
+    	ipdz:{
+			required:"IP地址不能为空",
+	  	},
+	},
+});
+</script>
+</block>

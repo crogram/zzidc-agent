@@ -1,0 +1,180 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					网站设置 &amp; 邮箱设置
+				</small>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+<form class="form-horizontal" id="form-mail" action="<?php echo U('Backend/System/mail', [], false);?>" method="post" name="form-mail"  role="form">
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="mailaddress">
+				邮箱地址：
+			</label>
+			<div class="col-sm-9">
+				<input type="text"  id="mailaddress" name="mailaddress" value="<?php echo $mail_info['mailaddress'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">你的邮箱地址将会在邮件发件人栏</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="smtpaddress">
+				SMTP服务器地址：
+			</label>
+			<div class="col-sm-9">
+				<input type="text"  id="smtpaddress" name="smtpaddress" value="<?php echo $mail_info['smtpaddress'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">你的邮箱SMTP服务器地址</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="mailpassword">
+				邮箱密码：
+			</label>
+			<div class="col-sm-9">
+				<input type="text"  id="mailpassword" name="mailpassword" value="<?php echo $mail_info['mailpassword'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">你的邮箱密码</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="portaddress">
+				端口地址：
+			</label>
+			<div class="col-sm-9">
+				<input type="text"  id="portaddress" name="portaddress" value="<?php echo $mail_info['portaddress'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">SMTP服务器端口地址</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="mailaddcc">
+				抄送邮箱帐号：
+			</label>
+			<div class="col-sm-9">
+				<input type="text"  id="mailaddcc" name="mailaddcc" value="<?php echo $mail_info['mailaddcc'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle">限填一个,多则发送失败</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			 <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info" onclick="addBz();" >
+                    测试邮件
+                </a>
+            </div>
+		</div>
+		
+        <div class="space-4"></div>
+
+		<div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info" onclick="configure('mail')" >
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    修改
+                </a>
+            </div>
+        </div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+
+<script type="text/javascript">
+
+function configure(form_name) {
+	var url = "<?php echo U('Backend/System/mailSetup', [], false);?>/form/mail";
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		data: $('#form-'+form_name).serialize(),
+		url : url,
+		success : function(data){
+			if (data.status == 1) {
+				
+				location.reload(true)
+			}else {
+				alertBox(data.info);
+			}
+		}
+	});
+}
+
+</script>
+
+<script type="text/javascript">
+var dialog = null;
+function addBz(){
+	var text = "<form action='<?php echo U('Backend/System/mailtest', [], false);?>' method='post' name='form-mail'  role='form'><div><input type='text' size='60' id='mailtest' name='mailtest' value='' class='col-xs-10 col-sm-5' placeholder='请输入要发送的邮箱地址'></div><a style='height:35px' class='btn btn-info' onclick='mailtest()' > 发送</a></form>";
+	dialog = bootbox.dialog({
+		message:text,
+	});
+}
+function mailtest(){
+	var url = '<?php echo U("Backend/System/mailtest","", false);?>';
+	var mailtest = $("#mailtest").val();
+	dialog.modal('hide');
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		data:'test='+mailtest,
+		url : url,
+		beforeSend: function(){
+			dialog = bootbox.dialog({
+				message: '<p><i class="fa fa-spin fa-spinner"></i>正在发送测试邮件，请稍候</p>',
+				closeButton: false
+			});
+		},
+		success : function(data){
+			if (data.status == 1) {
+				dialog.modal('hide');
+				dialog = bootbox.dialog({
+					message:data.msg,
+				});
+				setTimeout(function(){dialog.modal('hide');},2000);
+			}else {
+				alertBox(data.msg);
+				dialog.modal('hide');
+			}
+		}
+	});
+}
+</script>
+</block>

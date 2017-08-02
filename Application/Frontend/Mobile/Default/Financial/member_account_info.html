@@ -1,0 +1,33 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+<body class="bcfff">
+<nav class="ky-title p-fixed">
+    <a href="javascript:;" onclick="window.history.back();" class="return-icona"></a>余额
+    <!--<a href="<?php echo U('frontend/financial/member_transactions_list','',false);?>" class="my-detail">明细</a>-->
+</nav>
+<section class="circle-mine">
+    <p class="cir-min-line1">账户余额(元)</p>
+    <p class="cir-min-line2"><?php $balance = explode('.',$account_info['balance']);echo $balance[0];?>.<?php echo $balance[1];?></p>
+</section>
+<section class="balance-list">
+    <ul>
+        <li class="list-line1-ba mtop28">
+            <span class="ky-icons"></span>
+            <span class="">可用余额:</span>
+            <span class="rt-num-fw"><?php $balance = explode('.',$account_info['balance']); echo $balance[0];?>.<?php echo $balance[1];?></span>
+        </li>
+        <li class="list-line1-ba">
+            <span class="ky-icons1"></span>
+            <span class="">账户累计消费现金(元):</span>
+            <span class="rt-num-fw"><?php $purchases = explode('.',$account_info['purchases']);echo $purchases[0];?>.<?php echo $purchases[1];?></span>
+        </li>
+    </ul>
+</section>
+<section class="recharge">
+    <!--<a href="<?php echo U('frontend/financial/member_recharge','',false);?>" class="rechargea">充值</a>-->
+    <a href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');" class="rechargea">充值</a>
+</section>
+</body>
+</block>
+<block name="script"></block>

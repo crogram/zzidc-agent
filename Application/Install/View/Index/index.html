@@ -1,0 +1,24 @@
+<extend name="Layouts/layout" />
+
+
+<block name="header">
+
+    <h3 class="masthead-brand ">景安代理平台--安装引导</h3>
+    <ul class="nav masthead-nav">
+      <li class="active"><a href="javascript:void(0);">1.欢迎</a></li>
+      <li><a href="javascript:void(0);">2.环境检测</a></li>
+      <li><a href="javascript:void(0);">3.配置安装</a></li>
+    <li ><a href="javascript:void(0);">4.完成</a></li>
+    </ul>
+
+</block>
+
+<block name="content">
+
+    <h1 class="cover-heading"></h1>
+    <p class="lead">欢迎您安装景安代理平台</p>
+    <p class="lead">
+      <a href="<?php echo U('Install/Index/check', [], false);?>" class="btn btn-lg btn-default">下一步<span class="glyphicon glyphicon-arrow-right"></span>检测环境</a>
+    </p>
+
+</block>

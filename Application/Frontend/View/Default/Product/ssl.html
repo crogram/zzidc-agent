@@ -1,0 +1,307 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__COM_JS__dialog/css/uidialog.css" />
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__agentssl.css">
+</block>
+{/* 首页主体开始 */}
+<block name="content">
+    {/* banner图开始 */}
+    <include file="Product/product_banner" />
+    {/* banner图结束 */}
+    <div class="vpscontainerbg">
+        <div class="ky-container">
+            <div class="vps-contianer">
+                <div class="vps-col clearfix">
+                    <?php $k=0;foreach($products as $key=>$val){?>
+                    <?php if($val['product_name'] != '基础级DV' && $val['product_name'] != '企业级OV 增强版' && $val['product_name'] != '顶级EV 增强版'): $k++;?>
+                    <input type="hidden"  id="<?php echo $val['id'];?>_product_id"  value="<?php echo $val['id']?>" />
+                    <input type="hidden"  id="<?php echo $val['id'];?>_product_name" value="<?php echo $val['product_name'];?>"/>
+                    <input type="hidden" id="current-price-<?php echo $val['id'];?>" name="current_price" data-current-price="<?php echo $val['price_list'][0]['product_price'];?>" value="<?php echo $val['price_list'][0]['id'];?>" data-current-mutil-domain-step="<?php echo $multi_domains_price[$val['id']]['step'];?>" data-current-mutil-domain-step-id="<?php echo $multi_domains_price[$val['id']]['id'];?>" data-current-years="1">
+                    <div class="xinghao" style="<?php if( $k!=0 && (($k%3) == 0)):?>margin-right:0; <?php endif;?>" >
+                        <div class="modelbox">
+                            <span class="modelicon icon-item1"></span>
+                            <span class="model-tit"><?php echo $val['product_name'];?></span>
+                        </div>
+                        <ul class="config-row">
+                            <li>
+                                <div class="vpsinfoleft">产品名称：</div>
+                                <div class="vpsinforight" id="product-des-<?php echo $val['id']?>">
+                                    <?php echo $val['product_des'];?>
+                                </div>
+                            </li>
+                            <?php foreach($val['config'] as $config_key=>$config_val){?><!-- 循环配置 -->
+                            <!-- 产品名称和配置名称匹配 -->
+                            <li class="config-<?php echo $val['id'];?>">
+                                <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+                                <div class="vpsinforight">
+                                    <?php if($config_val['config_key'] == '安全保险'):?>
+                                    <span class="gf89"><?php echo $config_val['config_value'].$config_val['unit'];?></span>
+                                    <?php else:?>
+                                    <?php echo $config_val['config_value'];?>
+                                    <?php endif;?>
+                                </div>
+                            </li>
+                            <!-- 产品名称和配置名称匹配结束 -->
+                            <?php }?><!-- 循环配置结束 -->
+                            <!-- 多域名证书/start -->
+                            <li id="multi_domain_text_<?php echo $val['id'];?>" style="display: none;color: red"><div class="vpsinforight">通配型和多域名不可同时选选择！</div></li>
+                            <li id="multi_domain_<?php echo $val['id'];?>">
+                                <div class="vpsinfoleft">是否选择<span class="g009"><a title="多域名SSL证书是在一个SSL证书中含有多个CN字段(公用名称)，支持多个不同域名。">多域型证书</a>：</span></div>
+                                <div class="vpsinforight clearfix">
+                                    <div class="xt-radio  mutil-domain-<?php echo $key;?>" for="" data-flag="mutil-domain-<?php echo $key;?>" data-extra="for-multi-domain" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="multi-domain-<?php echo $val['id'];?>" value="1" ><span>是</span>
+                                    </div>
+                                    <div class="xt-radio checked mutil-domain-<?php echo $key;?>" for="" data-flag="mutil-domain-<?php echo $key;?>" data-extra="for-multi-domain" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="multi-domain-<?php echo $val['id'];?>" value="0" ><span>否</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="for-multi-domain-<?php echo $val['id']?> extra-section">
+                                <div class="vpsinfoleft"><span class="g009"><a title="证书默认绑定一个带www的和不带www的主域名。&#10;若需要绑定更多域名，请增加绑定域名个数！">增加域名个数</a>：</span></div>
+                                <div class="vpsinforight  sslsize clearfix">
+                                    <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-domain" data-operator="-" onclick="revaluation(this, <?php echo $val['id'];?>)">-</a>
+                                    <input type="text" class="sslsizeinp" id="current-mutil-domain-<?php echo $val['id'];?>" value="0" readonly="readonly"/>
+                                    <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-domain" data-operator="+" onclick="revaluation(this, <?php echo $val['id'];?>)">+</a>
+                                </div>
+                            </li>
+                            <!-- 多域名证书/end -->
+                            <!-- 通配型证书or多服务器部署/start -->
+                            <?php if($val['multi-servers']):?>
+                            <li>
+                                <div class="vpsinfoleft">是否选择<span class="g009"><a title="即同一张SSL证书同时在多台物理服务器上部署。">多服务器部署</a>：</span></div>
+                                <div class="vpsinforight clearfix">
+                                    <div class="xt-radio  mutil-server-<?php echo $key;?>" for="" data-flag="mutil-server-<?php echo $key;?>" data-extra="for-multi-server" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="mutil-server-<?php echo $val['id']?>" value="1"><span>是</span>
+                                    </div>
+                                    <div class="xt-radio checked mutil-server-<?php echo $key;?>" for="" data-flag="mutil-server-<?php echo $key;?>" data-extra="for-multi-server" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="mutil-server-<?php echo $val['id']?>" value="0"><span>否</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="for-multi-server-<?php echo $val['id']?> extra-section">
+                                <div class="vpsinfoleft"><span class="g009"><a title="一张EV证书只能在一台服务器上部署，若需要在多台服务器上安装，请增加绑定服务器个数。">增加服务器个数</a>：</span></div>
+                                <div class="vpsinforight  sslsize clearfix">
+                                    <a href="javascript:void(0);" class="sslsizebtn" data-flag="current-mutil-server" data-operator="-" onclick="revaluation(this, <?php echo $val['id'];?>)">-</a>
+                                    <input type="text" class="sslsizeinp" id="current-mutil-server-<?php echo $val['id'];?>" value="0" readonly="readonly" />
+                                    <a href="javascript:void(0);" class="sslsizebtn"  data-flag="current-mutil-server" data-operator="+" onclick="revaluation(this, <?php echo $val['id'];?>)">+</a>
+                                </div>
+                            </li>
+                            <?php endif;?>
+                            <!-- 我是分割线 -->
+                            <?php if($val['is_global']):?>
+                            <li id="is_global_text_<?php echo $val['id'];?>" style="display: none;color: red"><div class="vpsinforight">通配型和多域名不可同时选选择！</div></li>
+                            <li id="is_global_<?php echo $val['id'];?>">
+                                <div class="vpsinfoleft">是否选择<span class="g009"><a title="通配型SSL证书支持同一域名下的所有二级域名">通配型证书</a>：</span></div>
+                                <div class="vpsinforight clearfix">
+                                    <div class="xt-radio  global-domain-<?php echo $key;?>" for="" data-flag="global-domain-<?php echo $key;?>" data-extra="for-global-domain" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="global_domain-<?php echo $val['id']?>" value="1"><span>是</span>
+                                    </div>
+                                    <div class="xt-radio checked global-domain-<?php echo $key;?>" for="" data-flag="global-domain-<?php echo $key;?>" data-extra="for-global-domain" data-p-id="<?php echo $val['id'];?>">
+                                        <span class="xt-radio-icon"></span>
+                                        <input type="radio" name="global_domain-<?php echo $val['id']?>" value="0"><span>否</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="for-global-domain-<?php echo $val['id']?> extra-section">
+                                <div class="vpsinfoleft"><span class="g009"><a title="绑定一个主域名后，证书支持此域名下的所有二级域名。&#10;（通配型暂时只能绑定一个通配型域名）">绑定域名个数</a>：</span></div>
+                                <div class="vpsinforight  sslsize clearfix">
+                                    <!--<a href="javascript:void(0);" class="sslsizebtn" data-flag="current-global-domain" data-operator="-" onclick="revaluation(this, <?php echo $val['id'];?>)">-</a>-->
+                                    <input type="text" class="sslsizeinp" id="current-global-domain-<?php echo $val['id'];?>" value="0" readonly="readonly"/>
+                                    <!--<a href="javascript:void(0);" class="sslsizebtn"  data-flag="current-global-domain" data-operator="+" onclick="revaluation(this, <?php echo $val['id'];?>)">+</a>-->
+                                </div>
+                            </li>
+                            <?php endif;?>
+                            <!-- 通配型证书or多服务器部署/end -->
+                            <!-- 价格/start -->
+                            <li>
+                                <div class="vpsinfoleft">价格：</div>
+                                <div class="vpsinforight">
+                                    <span id="price-year-<?php echo $val['id'];?>" class="gf89 price-year-<?php echo $val['id'];?>" ><?php echo $val['price_list'][0]['product_price'];?> 元</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="vpsinfoleft">购买年限：</div>
+                                <div class="vpsinforight clearfix">
+                                    <div class="clearifx">
+                                        <?php foreach($val['price_list'] as $price_key=>$price_value){ ?>
+                                        <a id="years-<?php echo $price_value['id'];?>" href="javascript:void(0);" data-price="<?php echo $price_value['product_price'];?>" data-p-id="<?php echo $val['id'];?>" class="years years-<?php echo $val['id'];?> <?php if($price_key ==0 ):?>orange<?php endif;?>" onclick="selectYear(this,<?php echo $price_value['id'];?>)" data-years="<?php echo $price_value['month']/12;?>" ><?php echo $price_value['month']/12;?> 年
+                                            <?php if($price_key ==0 ):?><i class="binggo"></i><?php endif;?>
+                                        </a>
+                                        <?php }?>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- 价格/end -->
+                            <li>
+                                <div class="vpsinfoleft">地址栏效果：</div>
+                                <div class="vpsinforight sslwebimg clearfix">
+                                    <img src="__FRONTEND_IMAGES__SSL/161020img<?php echo $val['address_effect'];?>.png">
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="dashline"></div>
+                        <div class="buybtnbox">
+                            <?php if($val['product_name'] == '企业级OV 增强版' || $val['product_name'] == '顶级EV 增强版'):?>
+                            <a href="javascript:void(0);" class="tryout" onclick="submitbuy(<?php echo $val['id'];?>,'1');"><i></i>试用</a>
+                            <?php endif;?>
+                            <a href="javascript:void(0);" class="buy"  onclick="submitbuy(<?php echo $val['id'];?>,'0');"><i></i>购买</a>
+                            <a href="javascript:void(0);" class="detail" onclick="sslDetail(<?php echo $val['id'];?>);return false;">详情</a>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--vps四大特性 start-->
+    <div class="ssltips-bg">
+        <div class="ssltips">
+            <div class="ssltips-title">
+                <i></i>产品说明
+            </div>
+            <div class="ssltips-text">
+                <div class="ssltips-p clearfix"><i></i><p>EV SSL: 扩展验证型SSL（Extended Validation SSL）;OV SSL: 机构验证型SSL（Organization Validation SSL）;<br>IV SSL:个人验证型（Individuals Validation SSL）;DV SSL: 域名验证型SSL（Domain Validation SSL）。 </p></div>
+                <div class="ssltips-p clearfix"><i></i><p>加密强度：分40位、56位、128位、256位等，目前常用浏览器（如：IE6、IE7、IE8、火狐3等等）都支持128位加密，<br>只有0.2%用户仍然在使用不支持128位加密的不安全的低版本浏览器。</p></div>
+                <div class="ssltips-p clearfix"><i></i><p>身份验证级别：分 Class 1 （一级，只验证Email）、Class 2（二级，验证Email和验证个人身份证明文件）、Class 3（三级，验证Email、验证单位身份验证文件、第三方数据库核实）、Class 4（四级，全球统一标准的扩展验证标准，验证Email、验证单位身份证明文件、验证申请人身份证明文件、第三方数据库核实）。</p></div>
+            </div>
+        </div>
+    </div>
+    <!--vps四大特性 end-->
+    <div id="dialog"  title="确认产品信息"  style="display: none">
+        <form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+            <div class="dialog-main clearfix" >
+                <input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+                <input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+                <input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+                <input type="hidden"  name="mutil_domain" id="mutil_domain" value=""/>
+                <input type="hidden"  name="mutil_server" id="mutil_server" value=""/>
+                <input type="hidden"  name="global_domain" id="global_domain" value=""/>
+                <input type="hidden"  name="mutil_domain_step_id" id="mutil_domain_step_id" value=""/>
+                <div class="dialog-name"></div>
+                <h3 id="buy_product_name" style="text-align:center;" ></h3>
+            </div>
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">产品名称：</div>
+                <div class="dialog-pro"  id="product_des"></div>
+            </div>
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">产品价格：</div>
+                <div class="dialog-pro"  id="buy_price">试用1元</div>
+            </div>
+            <div class="dialog-main clearfix">
+                <div class="dialog-name">总计：</div>
+                <div class="dialog-pro"  id="total_price"></div>
+            </div>
+            <div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+                <a href="javascript:void(0);" class="dialog-check"  id="free_trial"  onclick="order_buy_info(this);">确认购买</a>
+            </div>
+        </form>
+    </div>
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__ssl-calc.js" charset="utf-8"></script>
+    <script type="text/javascript" language="javascript">
+        var dialog_buy = $("#dialog");
+        function submitbuy(product_id,free_trial){
+
+            /* 产品名称 */
+            var product_name = $("#"+product_id+"_product_name").val();
+            /* 价格 */
+            var $current_price = $('#current-price-'+product_id);
+            var price_id = $current_price.val();
+            /* 价格内容 */
+            var price = $('#price-year-'+product_id).text();
+            if(free_trial == 1){
+                $("#free_trial").html("试用");
+            }else{
+                $("#free_trial").html("确认购买");
+            }
+            var current_mutil_domain = $('#current-mutil-domain-'+product_id).val() ? $('#current-mutil-domain-'+product_id).val(): 1;
+            var current_mutil_server = $('#current-mutil-server-'+product_id).val() ? $('#current-mutil-server-'+product_id).val(): 0;
+            var current_global_domain = $('#current-global-domain-'+product_id).val() ? $('#current-global-domain-'+product_id).val(): 0;
+            var current_mutil_domain_step_id = $current_price.attr('data-current-mutil-domain-step-id');
+
+            $("#mutil_domain").val(current_mutil_domain);
+            $("#mutil_domain_step_id").val(current_mutil_domain_step_id);
+            $("#mutil_server").val(current_mutil_server);
+            $("#global_domain").val(current_global_domain);
+            $("#buy_free_trial").val(free_trial);
+            $("#buy_product_name").html(product_name);
+            $("#buy_price_id").val(price_id);
+            $("#buy_price").text(price);
+            $("#buy_product_id").val(product_id);
+            $("#product_des").html($('#product-des-'+product_id).text());
+            $("#total_price").html(price);
+            $(".wrap_div").remove();
+            $('.config-'+product_id).each(function(i, e){
+                var $divs = $(this).html();
+                $divs = $divs.replace(/vpsinfoleft/g, "dialog-name");
+                $divs = $divs.replace(/vpsinforight/g, "dialog-pro");
+                $wrap_div = $('<div class="dialog-main clearfix wrap_div"></div>');
+                $('#buy_price').parent().after($wrap_div.html($divs));
+            });
+            dialog_buy.dialog({
+                autoOpen: true,
+                modal : true,
+                width: 570,
+                resizable:false
+            });
+            dialog_buy.dialog('open');
+        }
+        var tooken = true;
+        function order_buy_info(obi){
+            if(tooken)
+            {
+                tooken = false;
+                if($(obi).html() == "试用")
+                {
+                    $(obi).html("试用中...");
+                }else
+                {
+                    $(obi).html("购买中...");
+                }
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo U('frontend/order/order_buy','',false);?>",
+                    dataType: 'json',
+                    data: $("#buy_from").serialize(),
+                    success: function(data){
+                        dialog_buy.dialog('close');
+                        tooken = true;
+                        if (data.status == 1){
+                            alert(data.info);
+                            setTimeout("window.location.href='"+data.url+"'",2000);
+                        }else{
+                            alert(data.info);
+                            if(data.info == '账户余额不足，即将跳转充值页面'){
+                           	 	setTimeout("window.location.href='"+data.url+"'",2000);
+                           }else{
+                          		 setTimeout("window.location.reload()",2000);
+                           }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+    <script type="text/javascript" language="javascript">
+        function sslDetail(product_id){
+            var $current_price = $('#current-price-'+product_id);
+            var price_id = $current_price.val();
+            var current_mutil_domain = $('#current-mutil-domain-'+product_id).val() ? $('#current-mutil-domain-'+product_id).val(): 1;
+            var current_mutil_server = $('#current-mutil-server-'+product_id).val() ? $('#current-mutil-server-'+product_id).val(): 1;
+            var current_global_domain = $('#current-global-domain-'+product_id).val() ? $('#current-global-domain-'+product_id).val(): 1;
+            var current_mutil_domain_step_id = $current_price.attr('data-current-mutil-domain-step-id');
+            var domain = "{:U('frontend/product/ssldetail', [], false)}";
+            var pathinfo = "/product/"+product_id+"/mutil_domain/"+current_mutil_domain+"/price/"+price_id+"/mutil_server/"+current_mutil_server+"/global_domain/"+current_global_domain+"/mutil_domain_step_id/"+current_mutil_domain_step_id;
+            var url = domain+pathinfo;
+            window.open(url);
+        }
+    </script>
+</block>

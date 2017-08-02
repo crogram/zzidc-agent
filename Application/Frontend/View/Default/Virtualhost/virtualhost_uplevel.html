@@ -1,0 +1,163 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+    <!--virtualhost_uplevel start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/virtualhost/virtualhostlist',[ 'virtual_type'=>$_GET['virtual_type']], false);?>">
+                        <if condition="$Think.get.virtual_type == 0">
+                            虚拟<elseif condition="$Think.get.virtual_type == 1"/>
+                            香港<elseif condition="$Think.get.virtual_type == 2"/>
+                            美国<elseif condition="$Think.get.virtual_type == 3"/>
+                            云虚拟</if>主机管理</a></li>
+                <li><a><if condition="$Think.get.virtual_type == 0">
+                        虚拟<elseif condition="$Think.get.virtual_type == 1"/>
+                        香港<elseif condition="$Think.get.virtual_type == 2"/>
+                        美国<elseif condition="$Think.get.virtual_type == 3"/>
+                        云虚拟</if>主机升级确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">
+                        <if condition="$Think.get.virtual_type == 0">
+                            虚拟<elseif condition="$Think.get.virtual_type == 1"/>
+                            香港<elseif condition="$Think.get.virtual_type == 2"/>
+                            美国<elseif condition="$Think.get.virtual_type == 3"/>
+                            云虚拟</if>主机升级确认订单
+                    </div>
+                </div>
+                <div class="ky-panel-body">
+                    <table class="ky-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th width="15%">产品名称</th>
+                            <th width="15%">绑定域名</th>
+                            <th width="15%">IP地址</th>
+                            <th width="15%">剩余服务期限</th>
+                            <th width="20%">开通时间</th>
+                            <th width="20%">到期时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{$virtualhost_info.product_name}</td>
+                            <td>{$virtualhost_info.domain_name}</td>
+                            <td>{$virtualhost_info.ip_address}</td>
+                            <td>
+                                <if condition="$virtualhost_info.overdue_month lt 0"><font color="red">已过期</font><else/><font color="red">{$virtualhost_info.overdue_month}月</font></if>
+                            </td>
+                            <td>{$virtualhost_info.open_time}</td>
+                            <td>{$virtualhost_info.overdue_time}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="contentbox">
+                        <div class="listitem">
+                            <div class="item-left vps-list-left">
+                                <span>升级方案：</span>
+                            </div>
+                            <div class="item-right jifang-item ptop10">
+                                <div class="col-xs-8 ky-form-control validate-control">
+                                    <div class="input-contain width426">
+                                        <notempty name="up_product">
+                                            <select class="ky-input-reset width460" id="up_select" onchange="show_up()" style="width: 180px;">
+                                                <option value=-1>请选择升级方案</option>
+                                                <volist name="up_product" id="up">
+                                                    <option value="{$up.id}" >{$up.product_name}</option>
+                                                </volist>
+                                            </select>
+                                        </notempty>
+                                        <empty name="up_product">
+                                            <div>
+                                            <!-- 如果是云虚拟主机极速III型则不显示增值链接 -->
+                                              <?php if($virtualhost_info['api_name'] != 'cloudVirtual.JS.III') {?>
+                                            <font color="red" style="font-size: 18px">已经是最高配置，要继续升级，请&nbsp;
+                                            <a href="<?php echo U('frontend/virtualhost/virtualhost_appreciation',['virtualhost_id'=>$virtualhost_info['id'],'virtual_type'=>$_GET['virtual_type']], false);?>">增值</a></font>
+                                            <?php }else{?>
+                                            <font color="red" style="font-size: 18px">已经是最高配置</font>
+                                            <?php }?>
+                                            </div>
+                                        </empty>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <volist name="up_config_list" id="config">
+                        <table class="ky-table margin-bottom-20" id="config{$config[0].up_product_id}" style="display: none">
+                            <thead>
+                            <tr>
+                                <th colspan="4" style="text-align: center; color: red; font-weight: bold;">升级产品相关配置对比</th>
+                            </tr>
+                            <tr align="center">
+                                <td width="25%">对比项</td>
+                                <td width="25%">原产品配置</td>
+                                <td width="25%">升级后产品配置{$up_config_list.source}</td>
+                                <td width="25%">配置差</td>
+                            </tr>
+                            </thead>
+                            <volist name="config" id="cf">
+                                <tr align="center">
+                                    <td>{$cf.name}</td>
+                                    <td>{$cf.source}</td>
+                                    <td>{$cf.up}</td>
+                                    <td>{$cf.gap}</td>
+                                </tr>
+                            </volist>
+                            <form action="<?php echo U('frontend/virtualhost/virtualhost_uplevel','', false);?>" method="post" onsubmit="return on_sumit()">
+                                <input type="hidden" name="virtualhost_id" value="{$virtualhost_info.id}"/>
+                                <input type="hidden" name="up_product_id" value="{$config[0].up_product_id}"/>
+                                <input type="hidden" name="virtual_type" value="{$virtual_type}"/>
+                                <tr>
+                                    <td>实际应付<span class="tot-price">{$config[0].price}</span>元</td>
+                                    <td colspan="3" align="center">
+                                        <input style="text-align:center" class="buybtn" id="payspan" type="submit" value="确认升级"/>
+                                        <div id="loadingspan" align="center" style="height: 50px;line-height: 50px;display: none">
+                                            <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                            <font color="red">正在升级，请稍候。请勿刷新此页面。</font>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </form>
+                        </table>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--virtualhost_uplevel end-->
+</block>
+<block name="script">
+    <script type="text/javascript">
+        function on_sumit() {
+            var selected=$("#up_select").val();
+            if (selected == -1) {
+                alert("请选择升级方案!");
+                return false;
+            }
+            else if (confirm('确认信息无误后,请点击确定!')) {
+                $("#payspan").hide();
+                $("#loadingspan").show();
+                return true;
+            }
+            return false;
+        }
+        function show_up(){
+            var option= $("#up_select").find("option");
+            for(var i=0;i<option.length;i++){
+                if(option[i].value != -1){
+                    $("#config"+option[i].value).hide();
+                }
+            }
+            var selected=$("#up_select").val();
+            if(selected!=-1){
+                $("#config"+selected).show();
+            }
+        }
+    </script>
+</block>

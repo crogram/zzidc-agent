@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+tr.detail-row {
+    display: none;
+}
+
+tr.detail-row.open {
+    display: table-row;
+}

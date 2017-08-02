@@ -1,0 +1,776 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+	<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__virtualhost.css">
+</block>
+<block name="content">
+	<div class="ky-container">
+		<div class="vps-title puji-icon">
+			<span class="xh-name">{$product_info.product_name}</span>
+		</div>
+	</div>
+	<div class="ky-container">
+		<div class="vpsbanner">
+			<ul>
+				<li>
+					<div class="vps-left">
+						价格：
+					</div>
+					<div class="vps-right">
+						<span class="vps-price gff8 money" ></span>
+					</div>
+				</li>
+				<li id="linux_data">
+					<?php if($product_info['api_ptype'] == 'host' || $product_info['api_ptype'] == 'cloudVirtual' || $product_info['api_ptype'] == 'cloudspace'){?>
+					<div class="vps-left"  >
+						快云数据库共享版容量：
+					</div>
+					<div class="vps-right"  id="<?php echo $product_info['id'];?>_linux_data">
+												<span class="much-lang">
+						                        	<?php echo $product_config['data_capacity'];?>
+												</span>
+					</div>
+					<?php }else if($product_info['api_ptype'] == 'hkhost' || $product_info['api_ptype'] == 'usahost' ){?>
+					<div class="vps-left"  >
+						数据库容量：
+					</div>
+					<div class="vps-right"  id="<?php echo $product_info['id'];?>_linux_data">
+												<span class="much-lang">
+						                         	<?php echo $product_config['data_capacity'];?>
+												</span>
+					</div>
+					<?php }else if($product_info['api_ptype'] == 'dedehost' ){?>
+					<div class="vps-left"  >
+						数据库容量：
+					</div>
+					<div class="vps-right"  id="<?php echo $product_info['id'];?>_linux_data">
+												<span class="much-lang">
+													<?php echo $product_config['data_capacity'];?>
+												</span>
+					</div>
+					<?php }?>
+				</li>
+				<li id="windows_data" style="display:none">
+					<div class="vps-left"  >
+						数据库容量：
+					</div>
+					<div class="vps-right"  id="<?php echo $product_info['id'];?>_windows_data">
+						0G
+					</div>
+				</li>
+				<li>
+					<div class="vps-left">
+						地区：
+					</div>
+					<div class="vps-right">
+						<div class="checkbox2">
+							<span class="jf-name"><?php if($product_info['area_code'] == 4001 || $product_info['area_code'] == 4008){?>郑州机房<?php }else if($product_info['area_code'] == 4002){?>香港机房<?php }else if($product_info['area_code'] == 4005){?>美国机房<?php }?></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="vps-left">
+						期限：
+					</div>
+					<div class="vps-right">
+						<div class="databox">
+							<?php foreach($product_price as $key=>$val){?>
+							<a id="<?php echo $val['id'];?>" onclick="checkBuyPrice(<?php echo $val['id'];?>,'<?php echo $val['product_price'];?>');" class="v-choose <?php if($price_id == $val['id']){echo 'v-selected';}?>  <?php if($key+1 == count($product_price)){echo 'br-have';}?>"><?php if(($val['month']%12) == 0){echo ($val['month']/12)."年"; }else{echo  $val['month']."月";}?><i></i></a>
+							<input type="hidden"  id="money_<?php echo $val['id'];?>" value="<?php echo $val['product_price'];?>元"/>
+							<?php }?>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="vps-left">选择脚本：</div>
+					<input id="<?php echo $product_info['id'];?>_buyType" type="hidden" name="buyType" value="<?php if($system_type !=null){echo $system_type;}else{echo  0;}?>" />
+					<?php if($product_info['api_ptype'] == 'dedehost'){?><a id="<?php echo $product_info['id'];?>_linux" href="javascript:void(0);" class="vhostcheck active">php <i class="binggo"></i></a>
+					<?php }else{?>
+					<a id="<?php echo $product_info['id'];?>_linux" href="javascript:void(0);" class="vhostcheck active" onclick="checkBuyType(<?php echo $product_info['id'];?>, 'linux');">php<i class="binggo"></i></a>
+					<a id="<?php echo $product_info['id'];?>_windows" href="javascript:void(0);" class="vhostcheck" onclick="checkBuyType(<?php echo $product_info['id'];?>, 'windows');">asp.net</a>
+					<?php } ?>
+				</li>
+				<?php if($product_info['api_ptype'] == 'cloudspace'){ ?>
+				<li id="linux_language">
+					<div class="vps-left">支持语言：</div> <span class="much-lang">PHP 5.2/5.3/5.4、HTML、CGI、伪静态</span>
+				</li>
+				<li id="windows_language" style="display:none">
+					<div class="vps-left">支持语言：</div> <span class="much-lang">.NET 2.0/3.5/4.0、ASP、HTML、CGI、伪静态</span>
+				</li>
+				<?php } else { ?>
+				<li id="linux_language">
+					<div class="vps-left">支持语言：</div> <span class="much-lang">PHP
+					5.2/5.3/5.4/5.5/5.6、html、CGI、伪静态</span>
+				</li>
+				<li id="windows_language" style="display:none">
+					<div class="vps-left">支持语言：</div> <span class="much-lang">ASP、html、.net2.0/3.5/4.0、CGI、伪静态</span>
+				</li>
+				<?php } ?>
+				<li>
+					<a href="javascript:void(0);" class="vps-btn"  onClick="submitbuy(<?php echo $product_info['id'];?>,0)">立即购买</a>
+					<a href="javascript:void(0);" class="vps-btn vps-btn-try" onClick="submitbuy(<?php echo $product_info['id'];?>,1)">申请试用</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--快云服务器产品导航 start-->
+	<div class="tab-nav-middle">
+		<div class="tab_on clearfix">
+			<ul class="fix-nav fix-nav1">
+				<li id="tab5_1" class="nav_on6"  style="cursor:pointer;"><a href="javascript:void(0);"  onClick="setView5(1)" class="blue-under blue">产品介绍</a></li>
+				<li id="tab5_2"  style="cursor:pointer;"><a href="javascript:void(0);" class="blue" onClick="setView5(2)">产品参数</a></li>
+				<li id="tab5_3"  style="cursor: pointer;"><a href="javascript:void(0);" class="blue" onClick="setView5(3)">测试报告</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--快云服务器产品导航 end-->
+	<!-- 产品概述start -->
+	<div id="tab5_01" class="dis">
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>产品介绍</h1>
+				</div>
+			</div>
+		</div>
+		<div class="survey-con">
+			<div class="survey-icon"></div>
+			<p class="survey-font">
+				<span class="ftblue-16"><?php echo $site_config['site_name']; if($product_info['api_ptype'] == 'host'){echo '国内主机';}else if($product_info['api_ptype'] == 'hkhost' ){echo '香港主机';}else if($product_info['api_ptype'] == 'usahost'){echo '美国主机';}else if($product_info['api_ptype'] == 'cloudVirtual'){echo '云虚拟主机';}else if($product_info['api_ptype'] == 'dedehost'){echo '织梦主机';}elseif($product_info['api_ptype'] == 'cloudspace'){echo '云空间';}?></span>，
+				<?php if($product_info['api_ptype'] == 'host'){echo '采用【Y4】软硬件技术，依托自建机房多线骨干网支撑，低成本高利用率，为中小微企业提供最大便利。 景安虚拟主机具有单独的域名、IP（或共享IP），拥有完成的Internet服务器功能，自主研发管理平台，单站点自主环境配置简单便捷，防病毒、防攻击等功能一应俱全。';
+									}else if($product_info['api_ptype'] == 'hkhost' ){echo '专业<span style="color:red">免备案</span>主机， 机房位于香港新世界机房。机房内采用独立的UPS供电和柴油发电机组，软件监控全自动切换电力，保证7×24不间断供电；24小时冷气恒温恒湿系统保证室内温度在摄氏25度以下；拥有上万个IP资源储备。提供进出口国际大宽带，机房线路稳定可靠有保障。';
+				}else if($product_info['api_ptype'] == 'usahost'){echo '专业为外贸公司网站、境外商务网站等需要海外服务的客户网站提供。免备案！美国主机机房位于美国芝加哥，优选自美国服务器机房--SK机房。机房硬件防火集群为多层防护集群，分三层过滤，防御能力强，安全系数高，不限流量。国际大宽带，资源充足，机房线路稳定可靠有保障。';
+				}else if($product_info['api_ptype'] == 'cloudVirtual'){echo '服务器宿主架构采用景安自行研发的私有云技术，高可用集群云架构，分布式存储站点数据，避免单点故障影响，具备千兆带宽、高在线率、CDN智能容错、360安全防护等多项优势，多线路网络无障碍高速访问，特别适用于对网站运行质量有较高要求的用户，在线率达99.9%。';
+				}else if($product_info['api_ptype'] == 'dedehost'){echo '织梦内容管理系统(DedeCms) 以简单、实用、开源而闻名，是国内知名的PHP开源网站管理系统，基于PHP+MySQL的技术架构。 景安专业织梦主机，打造更专业、更专用、更纯净的织梦主机，使其在稳定性、安全性和操作性三方面都更具特色。';
+				}elseif($product_info['api_ptype'] == 'cloudspace'){echo '新版云空间是景安网络自主研发的资源独享型新产品。除了具有普通版云空间独立IP地址、自助管理、多站点创建、多数据库创建、数据保障、网络安全保障等功能外，还增加了专属区域内所有资源独享，容量增大，流量不限，大幅度的提升了空间访问质量，不仅可以在原有基础上进一步节省人力、物力、财力投入，还可以让您网站质量更好，做自己的VIP，让您的网站打开的更快！';
+				}?>
+			</p>
+		</div>
+	</div>
+
+	<!-- 产品概述ending -->
+	<!--  产品参数 start -->
+	<div id="tab5_02" class="undis">
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>配置参数详情</h1>
+				</div>
+			</div>
+		</div>
+		<table class="survey-table">
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">产品名称</td>
+				<td colspan="2" class="21and" style="text-align:center"><?php echo $product_info['product_name']?></td>
+			</tr>
+			<tr>
+				<td width="25.5%" class="survey-name">品质保障</td>
+				<td colspan="2" class="21and" style="text-align:center">
+					<a href="#" class="belief-icon xin"></a>
+					<a href="#" class="belief-icon xin2"></a>
+					<a href="#" class="belief-icon xin3"></a>
+				</td>
+			</tr>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">操作系统</td>
+				<td width="37.2%" class="w-37">windows</td>
+				<td width="37.2%" class="w-37">linux</td>
+			</tr>
+			<tr>
+				<td width="25.5%" class="survey-name">Web服务</td>
+				<td width="37.2%" class="w-37">IIS7</td>
+				<td width="37.2%" class="w-37">Apache</td>
+			</tr>
+			<?php if($product_info['api_ptype'] == 'cloudspace'){?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">脚本语言</td>
+				<td width="37.2%" class="w-37">.NET 2.0/3.5/4.0/4.5、ASP、HTML、CGI、伪静态</td>
+				<td width="37.2%" class="w-37">PHP 5.2/5.3/5.4、HTML、CGI、伪静态</td>
+			</tr>
+			<?php } else {?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">脚本语言</td>
+				<td width="37.2%" class="w-37">ASP、html、.net2.0/3.5/4.0、CGI、伪静态</td>
+				<td width="37.2%" class="w-37">PHP 5.2/5.3/5.4/5.5/5.6、html、CGI、伪静态</td>
+			</tr>
+			<?php } ?>
+			<tr>
+				<td width="25.5%" class="survey-name">数据库类型</td>
+				<td width="37.2%" class="w-37">ACCESS</td>
+				<td width="37.2%" class="w-37"><?php if($product_info['api_ptype'] == 'host' || $product_info['api_ptype'] == 'cloudVirtual' || $product_info['api_ptype'] == 'cloudspace'){echo 'MYSQL快云数据库共享版';}else{echo '数据库容量';}?></td>
+			</tr>
+			<?php if($product_info['api_ptype'] == 'cloudspace'){?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">空间容量</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['space_capacity'];?></td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['space_capacity'];?></td>
+			</tr>
+			<?php } else {?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">数据库容量</td>
+				<td width="37.2%" class="w-37">0G</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['data_capacity'];?></td>
+			</tr>
+			<tr>
+				<td width="25.5%" class="survey-name">数据库个数</td>
+				<td width="37.2%" class="w-37">0个</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['data_num'];?></td>
+			</tr>
+			<?php } ?>
+			<tr>
+				<td width="25.5%" class="survey-name">月流量</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['month_flow_rate'];?></td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['month_flow_rate'];?></td>
+			</tr>
+			<?php if($product_info['api_ptype'] == 'cloudspace'){?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">带宽</td>
+				<td width="37.2%" class="w-37">每个网站200KB/秒</td>
+				<td width="37.2%" class="w-37">每个网站200KB/秒</td>
+			</tr>
+			<?php } else {?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">带宽</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['network_bandwidth'];?></td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['network_bandwidth'];?></td>
+			</tr>
+			<?php }?>
+			<tr>
+				<td width="25.5%" class="survey-name">并发连接数</td>
+				<td width="37.2%" class="w-37">不限</td>
+				<td width="37.2$" class="w-37">不限</td>
+			</tr>
+			<?php if($product_info['api_ptype'] != 'cloudspace'){?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">域名绑定数量</td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['domain_number'];?></td>
+				<td width="37.2%" class="w-37"><?php echo $product_config['domain_number'];?></td>
+			</tr>
+			<?php }?>
+			<?php if($product_info['api_ptype'] == 'cloudspace'){?>
+			<tr>
+				<td width="25.5%" class="survey-name">三级域名</td>
+				<td width="37.2%" class="w-37">不赠送</td>
+				<td width="37.2%" class="w-37">不赠送</td>
+			</tr>
+			<?php }else {?>
+			<tr>
+				<td width="25.5%" class="survey-name">三级域名</td>
+				<td width="37.2%" class="w-37">赠送</td>
+				<td width="37.2%" class="w-37">赠送</td>
+			</tr>
+			<?php }?>
+			<?php if($product_info['api_ptype'] == 'cloudspace'){?>
+			<tr>
+				<td width="25.5%" class="survey-name">机房线路</td>
+				<td colspan="2" class="21and" style="text-align:center"><?php if($product_info['area_code'] == 4001 || $product_info['area_code'] == 4008){echo '郑州机房';}else if($product_info['area_code'] == 4002){echo '香港机房';}else if($product_info['area_code'] == 4005){echo '美国机房'; }?> BGP多线</td>
+			</tr>
+			<?php }else{?>
+			<tr class="grey-back">
+				<td width="25.5%" class="survey-name">机房线路</td>
+				<td width="37.2%" class="w-37"><?php if($product_info['area_code'] == 4001 || $product_info['area_code'] == 4008){echo '郑州机房';}else if($product_info['area_code'] == 4002){echo '香港机房';}else if($product_info['area_code'] == 4005){echo '美国机房'; }?></td>
+				<td width="37.2%" class="w-37"><?php if($product_info['area_code'] == 4001 || $product_info['area_code'] == 4008){echo '郑州机房';}else if($product_info['area_code'] == 4002){echo '香港机房';}else if($product_info['area_code'] == 4005){echo '美国机房'; }?></td>
+			</tr>
+			<tr>
+				<td width="25.5%" class="survey-name">价格</td>
+				<td colspan="2" class="21and  money" style="text-align:center">299 元</td>
+			</tr>
+			<?php }?>
+		</table>
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>组件支持</h1>
+				</div>
+			</div>
+		</div>
+		<div class="hvps-table">
+			<table>
+				<tbody>
+				<tr>
+					<th class="hvps-thbg" width="20%">网页动画播放器</th>
+					<td width="80%">Shock Wave、Flash</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="20%">支持音频文件</th>
+					<td width="80%">MIDI、MP3</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="20%">Zend Optimizer</th>
+					<td width="80%">v3.3</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="20%">图形的扩展库</th>
+					<td width="80%">gd v2.0</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="20%">rewrite模块</th>
+					<td width="80%">mod_rewrite</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>控制面板</h1>
+				</div>
+			</div>
+		</div>
+		<div class="hvps-table">
+			<table>
+				<tbody>
+				<tr>
+					<th class="hvps-thbg" width="16%">站点配置</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">主机域名绑定</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">FTP密码修改</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">数据库管理</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">站点状态</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">IIS\Apache重启功能</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">.NET版本设置</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">默认首页设置</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">404错误页面设置</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">在线解压缩</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">在线web上传</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">FTP软件上传</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">独立管理平台</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">设置错误提示</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">360网站卫士</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">设置IP限制</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">防盗链设置</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%">网站同步</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+				</tr>
+				<tr>
+					<th class="hvps-thbg" width="16%">开启Gzip压缩</th>
+					<td width="34%" class="text-cen">
+						<img src="__FRONTEND_IMAGES__20161017img13.gif" alt="">
+					</td>
+					<th class="hvps-thbg" width="16%"></th>
+					<td width="34%" class="text-cen"></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!--  产品参数 ending -->
+	<!-- 测试报告start -->
+	<div id="tab5_03" class="undis">
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>IP测试数据</h1>
+				</div>
+			</div>
+		</div>
+		<p class="test-txt">&nbsp;&nbsp;站长工具是站长工作的必备工具。通过站长工具可以洞悉SEO数据变化，还可以检测网站死链接、蜘蛛访问、HTML格式检测、网站速度测试、友情链接检查、网站域名IP查询、PR、权重查询、alexa、whois查询等，是国内目前公认的测试IP数据的工具之一。其中的ping测试主要是测试国内、海外各线路访问服务器的响应时间，响应的时间越短，说明网速越快，网站打开越快。</p>
+		<div class="vps-box">
+
+			<div class="test-table">
+				<table>
+					<tbody>
+					<tr>
+						<th width="18%">序号</th>
+						<th width="22%">Ping的地址</th>
+						<th width="20%">响应IP</th>
+						<th width="20%">响应时间</th>
+						<th width="20%">TTL</th>
+					</tr>
+					<tr>
+						<td width="18%">1</td>
+						<td width="22%">河南郑州[多线]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">6毫秒</td>
+						<td width="20%">54</td>
+					</tr>
+					<tr>
+						<td width="18%">2</td>
+						<td width="22%">上海[联通]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">59毫秒</td>
+						<td width="20%">53</td>
+					</tr>
+					<tr>
+						<td width="18%">3</td>
+						<td width="22%">北京[联通]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">18毫秒</td>
+						<td width="20%">49</td>
+					</tr>
+					<tr>
+						<td width="18%">4</td>
+						<td width="22%">宁波[联通]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">62毫秒</td>
+						<td width="20%">50</td>
+					</tr>
+					<tr>
+						<td width="18%">5</td>
+						<td width="22%">英国[海外]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">320毫秒</td>
+						<td width="20%">50</td>
+					</tr>
+					<tr>
+						<td width="18%">6</td>
+						<td width="22%">安徽滁州[联通]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">130毫秒</td>
+						<td width="20%">47</td>
+					</tr>
+					<tr>
+						<td width="18%">7</td>
+						<td width="22%">美国芝加哥[海外]</td>
+						<td width="20%">116.255.214.3</td>
+						<td width="20%">44毫秒</td>
+						<td width="20%">49</td>
+					</tr>
+					<tr>
+						<td width="18%">8</td>
+						<td width="22%">江苏无锡[电信]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">33毫秒</td>
+						<td width="20%">51</td>
+					</tr>
+					<tr>
+						<td width="18%">9</td>
+						<td width="22%">香港[海外]</td>
+						<td width="20%">116.255.214.3</td>
+						<td width="20%">82毫秒</td>
+						<td width="20%">50</td>
+					</tr>
+					<tr>
+						<td width="18%">10</td>
+						<td width="22%">上海[电信]</td>
+						<td width="20%">203.171.230.28</td>
+						<td width="20%">37毫秒</td>
+						<td width="20%">53</td>
+					</tr>
+					<tr>
+						<td colspan="5">
+							<p><span class="i-width2">最快：河南郑州[多线] 6 毫秒</span><span class="i-width2">最慢：英国[海外] 320 毫秒</span></p>
+							<p><span class="i-width2">电信平均： 35 毫秒</span><span class="i-width2">联通平均： 43 毫秒</span></p>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+		</div>
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>FTP上传测试</h1>
+				</div>
+			</div>
+		</div>
+		<p class="test-txt">&nbsp;&nbsp;作为影响虚拟主机使用最大的一项功能，FTP上传速度的快慢严重关系到网站的快速发布。本次测试采用FlashFXP进行上传测试，FlashFXP是一款功能强大、界面简洁直观、操作方便快捷的FXP/FTP软件，支持彩色文字显示、目录（和子目录）的文件传输、FTP代理及Socks 3&4等，是常用的FTP上传下载软件。</p>
+		<div class="text-img">
+			<img src="__FRONTEND_IMAGES__20161017img11.jpg" width="495" height="297" alt="硬盘读写速度"/>
+		</div>
+		<div class="ky-product-2000">
+			<div class="module-wrap">
+				<div class="y-row hvps-title">
+					<h1><i class="i-title"></i>网站速度测试</h1>
+				</div>
+			</div>
+		</div>
+		<p class="test-txt">&nbsp;&nbsp;HDTunePro（硬盘专业工具）是一款强大的硬盘测试工具，它能够将你的硬盘型号、文件基准信息、硬盘扇区的好坏、健康信息、磁盘监视等等多项有关硬盘信息及其使用情况反映出来。其中“随机存取”反映硬盘所能承受的瞬间读写能力，“平均存取时间”和“平均速度”是主要参数，平均存取时间越短，平均速度越大，反映硬盘瞬间读写能力越高。</p>
+		<div class="text-img">
+			<img src="__FRONTEND_IMAGES__20161017img12.jpg" width="475" height="297" alt="IOPS数据"/>
+		</div>
+	</div>
+	<!-- 测试报告ending -->
+
+	<!--产品特性标题 start-->
+	<div class="ky-product-2000">
+		<div class="module-wrap">
+			<div class="y-row hvps-title">
+				<h1><i class="i-title"></i>产品特性</h1>
+			</div>
+		</div>
+	</div>
+	<!--产品特性标题 end-->
+	<!--产品特性内容 start-->
+	<div class="feature-contain">
+		<ul class="feature-ul">
+			<li>
+				<a class="feature-icon tea-icon1"></a>
+				<div class="feature-font">
+					<a class="teat-t">更稳定</a>
+					<a class="teat-ff">集群架构，高配置服务器，多网点分布式部署，避免单点故障影响</a>
+				</div>
+			</li>
+			<li>
+				<a class="feature-icon tea-icon2"></a>
+				<div class="feature-font">
+					<a class="teat-t">更安全</a>
+					<a class="teat-ff">BGP电信联通移动铁通多线骨干网络接入，直连机房核心设备，单点VPS带宽最高达7M</a>
+				</div>
+			</li>
+			<li>
+				<a class="feature-icon tea-icon3"></a>
+				<div class="feature-font">
+					<a class="teat-t">更快速</a>
+					<a class="teat-ff">千兆带宽，多CDN镜像节点加速，BGP多线机房支撑，全网无障碍高速访问</a>
+				</div>
+			</li>
+			<li class="padno-30">
+				<a class="feature-icon tea-icon4"></a>
+				<div class="feature-font">
+					<a class="teat-t">更优惠</a>
+					<a class="teat-ff">多年付更优惠，最高6折优惠</a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="dialog"  title="确认产品信息"  style="display: none">
+		<form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+			<div class="dialog-main clearfix">
+				<input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+				<input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+				<input type="hidden"  name="system_type" id="buy_system_type"  value=""/>
+				<input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+				<div class="dialog-name">产品名称：</div>
+				<div class="dialog-pro"  id="buy_product_name"><?php echo $product_info['product_name'];?></div>
+			</div>
+			<div class="dialog-main clearfix">
+				<div class="dialog-name">操作系统：</div>
+				<div class="dialog-pro" id="czxt">Linux</div>
+			</div>
+			<div class="dialog-main clearfix">
+				<div class="dialog-name">产品价格：</div>
+				<div class="dialog-pro"  id="buy_price"></div>
+			</div>
+			<div class="dialog-main clearfix" >
+				<div class="dialog-name" id="dbname">数据库：</div>
+				<div class="dialog-pro"  id="dbval" >共享型500M</div>
+			</div>
+			<div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+				<a href="javascript:void(0);"  onclick="order_buy_info(this);" class="dialog-check"  id="free_trial"  >确认购买</a>
+			</div>
+		</form>
+	</div>
+</block>
+<block name="script">
+	<script type="text/javascript" language="javascript">
+        var dialog_buy = $("#dialog");
+		function submitbuy(id,free_trial){
+			/* 产品ID */
+			var product_id = "<?php echo $product_info['id'];?>";
+			/* 产品名称 */
+			var product_name = $("#"+id+"_product_name").val();
+			/* 操作系统 */
+			var system_type = $("#"+id+"_buyType").val();
+			/* 价格 */
+			var price_id = $(".v-selected").attr("id");
+			/* 数据库 */
+			var database = $("#"+id+"_base:nth-child(2)").text();
+			/* 年限 */
+			var price = $("#"+price_id).text();
+			/* 价格 */
+			var pice = price_id.split('_');
+			var money = $("#money_"+pice[0]).val();
+			if(system_type == 1){
+				type = 'windows';
+				dbval = $("#"+id+"_windows_data").text()
+			}else{
+				type = 'linux';
+				var dbval = $("#"+id+"_linux_data").text()
+			}
+			if(free_trial == 1){
+				$("#free_trial").html("试用");
+			}else{
+				$("#free_trial").html("确认购买");
+			}
+			$("#buy_product_id").val(product_id);
+			$("#buy_free_trial").val(free_trial);
+			$("#buy_product_name").html(product_name);
+			$("#buy_price_id").val(price_id);
+			$("#buy_system_type").val(system_type);
+			$("#buy_price").html(money+"/"+price);
+			$("#czxt").text(type);
+			$("#dbval").html(dbval);
+            dialog_buy.dialog({
+				autoOpen: true,
+				modal : true,
+				width: 570,
+				height:270,
+				resizable:false
+			});
+            dialog_buy.dialog('open');
+		}
+        var tooken = true;
+        function order_buy_info(obi){
+            if(tooken)
+            {
+                tooken = false;
+                if($(obi).html() == "试用")
+                {
+                    $(obi).html("试用中...");
+                }else
+                {
+                    $(obi).html("购买中...");
+                }
+                $.ajax({
+                    type: 'post',
+                    url: "<?php echo U('frontend/order/order_buy','',false);?>",
+                    dataType: 'json',
+                    data: $("#buy_from").serialize(),
+                    success: function(data){
+                        dialog_buy.dialog('close');
+                        if (data.status == 1){
+                            alert(data.info);
+                            setTimeout("window.location.href='"+data.url+"'",2000);
+                        }else{
+                            alert(data.info);
+                            setTimeout("window.location.reload()",2000);
+                        }
+                    }
+                });
+            }
+        }
+	</script>
+	<script type="text/javascript" language="javascript">
+		$(function(){
+			/* 判断传递操作系统 */
+			var id = "<?php echo $product_info['id'];?>";
+			var type = $("#"+id+"_buyType").val();
+			if(type ==1){
+				var system_type = 'windows';
+			}else if(type ==0){
+				var system_type = 'linux';
+			}
+			checkBuyType(id,system_type);
+			/* 判断传递价格 */
+			var price = "<?php echo $price;?>";
+			$(".money").text(price+"元");
+		});
+		/* 选择操作系统 */
+		function checkBuyType(id,system_type){
+			$("#"+id+"_linux").removeClass('active');
+			$("#"+id+"_windows").removeClass('active');
+			$("#"+id+"_windows").find('i').remove();//删除
+			$("#"+id+"_linux").find('i').replaceWith(' ');//替换
+			if(system_type == 'windows'){
+				$("#linux_data").hide();
+				$("#linux_language").hide();
+				$("#windows_language").show();
+				$("#windows_data").show();
+				$("#"+id+"_windows").addClass('active');
+				$("#"+id+"_windows").html($("#"+id+"_windows").html()+'<i class="binggo"></i>');
+			}else if(system_type == 'linux'){
+				$("#windows_language").hide();
+				$("#windows_data").hide();
+				$("#linux_data").show();
+				$("#linux_language").show();
+				$("#"+id+"_linux").addClass('active');
+				$("#"+id+"_linux").html($("#"+id+"_linux").html()+'<i class="binggo"></i>');
+			}
+			if(system_type == 'windows'){
+				type = 1;
+			}else if(system_type == 'linux'){
+				type = 0;
+			}
+			$("#"+id+"_buyType").val(type);
+		}
+		/* 选择价格 */
+		function checkBuyPrice(id,price){
+			$(".v-choose").removeClass('v-selected');
+			$("#"+id).addClass('v-selected');
+			$(".money").text(price+"元");
+		}
+	</script>
+	<script type="text/javascript" language="javascript">
+		function setView5(n){
+			for(var i=1;i<=5;i++){
+				if(i == n){
+					$('#tab5_0'+i).removeClass("undis");
+					$('#tab5_0'+i).addClass("dis");
+					$('#tab5_'+i).removeClass("nonav");
+					$('#tab5_'+i).addClass("nav_on6");
+				}else{
+					$('#tab5_'+i).removeClass("nav_on6");
+					$('#tab5_'+i).addClass("nonav");
+					$('#tab5_0'+i).removeClass("dis");
+					$('#tab5_0'+i).addClass("undis");
+				}
+			}
+		}
+		$('.blue').on('click',function(){
+			$('.blue').removeClass('blue-under');
+			$(this).addClass('blue-under');
+		})
+	</script>
+</block>

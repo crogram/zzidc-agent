@@ -1,0 +1,172 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>云空间子站点管理</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">云空间子站点</div>
+                <a href="<?php echo U('frontend/article/articlelist',[keywords=>'云空间子站点'],false);?>" target="_blank" class="server-help pull-right">云空间子站点帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab ky-tab--current"><a>云空间子站点</a></li>
+                    </ul>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="8%">
+                            业务编号
+                        </th>
+                        <th width="17%">
+                            IP地址
+                        </th>
+                        <th width="10%">
+                            状态
+                        </th>
+                        <th width="14%">
+                            产品配置
+                        </th>
+                        <if condition="$Think.get.order eq ASC">
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/cloudspace/cloudspacelist', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a></th>
+                            <else/>
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/cloudspace/cloudspacelist', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a></th>
+                        </if>
+                        <th width="13%">操作</th>
+                    </tr>
+                    </thead>
+                    <volist name="info"  id="data">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <p>{$data.business_id}</p>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">IP地址：{$data.ip_address} </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <if condition="$data.state == 1">
+                                    <span class="text-success ny-state-icon server-state-run">正常</span>
+                                    <elseif condition="$data.state == 2"/>
+                                    <span class="text-success ny-state-icon server-state-stop">过期</span>
+                                    <elseif condition="$data.state == 4"/>
+                                    <span class="text-success ny-state-icon server-state-stop">失败</span>
+                                </if>
+                            </td>
+                                <td class="ky-td-multi-lines">
+                                <div class="text-stress">空间：{$data.site_capacity}M</div>
+                                <div class="text-stress">流量：<?php  if($data['site_flow'] == 0){echo "不限制";}else{echo $data['site_flow'];}?></div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">开通时间：{$data.create_time}</div>
+                                <div class="text-stress">到期时间：{$data.overdue_time}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == 1){?>
+                                <a href="<?php echo U('frontend/Jump/user_call_self', [ 'business_id' => $data['business_id'] ,'api_name' => $data['api_name'],'business_mark'=> $data['ip_address'],'input_name' =>$data['api_ptype'] ], false);?>" target= _blank>管理</a>
+                                <?php }else{?>
+                                ————
+                                <?php }?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="7">
+                                <p>您好像没有相关产品哦，<a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudspace'],false);?>" class="g009">点此了解一下吧！</a></p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40"  id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var tooken = true;
+        function tbajax(tb)
+        {
+            if(tooken)
+            {
+                tooken = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    confirm(data.info);
+                    window.location.reload();
+                },'json');
+            }
+        }
+        function changeMarkdb(id){
+            var remark = $("#remark_"+id).val();
+            if(remark=="" ||  remark==null){
+                $("#remark").val("请输入备注信息");
+            }else{
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                width: 400,
+                resizable:false,
+                buttons: [
+                    {
+                        text: "确认",
+                        click: function() {
+                            var bz = $("#remark").val();
+                            $.post('<?php echo U("frontend/cloudspace/remark",array(),false)?>',{"remark":bz,"id":id},function(date){
+                                if(date=="ok"){
+                                    alert('成功');
+                                }else{
+                                    alert('失败');
+                                }
+                                location.reload();
+                            },'json');
+                            $( this ).dialog( "close" );
+                        }
+                    },
+                    {
+                        text: "重置",
+                        click: function() {
+                            document.getElementById("remark").value="";
+                        }
+                    },
+                    {
+                        text: "取消",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+</block>

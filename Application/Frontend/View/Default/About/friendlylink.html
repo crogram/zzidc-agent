@@ -1,0 +1,31 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__about.css">
+</block>
+<block name="content">
+    <!--友情链接内容开始-->
+    <div class="sugg-bg">
+        <div class="ky-container">
+            <div class="sugg-tit">
+                <i></i>关于我们
+            </div>
+        </div>
+    </div>
+    <div class="ky-container clearfix">
+        <div class="left-nav">
+            <a href="{:U('About/about','',false)}">公司简介</a>
+            <a href="{:U('About/friendlylink','',false)}" class="current">友情链接</a>
+        </div>
+        <div class="rightcontainer" style="width:940px">
+            <div class="link-wrap">
+                <volist name="links" id="link">
+                    <div class="link-txt">
+                        <a href="{$link.link_url}" title="{$link.link_explain}" target="_blank">{$link.link_name}</a>
+                    </div>
+                </volist>
+            </div>
+        </div>
+    </div>
+    <!--友情链接内容结束-->
+</block>
+<block name="script"></block>

@@ -1,0 +1,197 @@
+<extend name="Hyzx/member"  />
+<block  name="links"></block>
+<block name="right">
+	<div class="crumb-container" data-nav="phoenix">
+		<ol class="breadcrumb ky-crumb">
+			<li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>会员中心</a></li>
+			<li><a>会员信息</a></li>
+		</ol>
+	</div>
+	<div class="">
+		<div class="conseole-ky-fuwuqi">
+			<div class="ky-panel-heading clearfix">
+				<div class="ky-panel-title">基本信息</div>
+			</div>
+			<div class="info-user-wanshan gff8 m-top20">
+				<i class="wanshan-icon"></i>请完善以下信息，方便我们更好地为您服务！
+			</div>
+			<div class="ky-tabs-container clearfix m-top20 div-pay-tool">
+				<ul class="text-center pull-left clearfix">
+					<li id="tab5_1" class="ky-tab ky-tab--current"><a>基本信息</a></li>
+				</ul>
+			</div>
+			<div class="ky-form">
+				<form class="form-horizontal" method="post" id="modify">
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+							用户名:
+						</div>
+						<div class="col-xs-10 ky-form-control">
+							{$member_info.login_name}
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+                            <span class="necessary-mark">*</span>
+							用户昵称:
+						</div>
+						<div class="col-xs-10 ky-form-control validate-control">
+							<input type="text" name="user_name"  id="user_name"  class="ky-input-reset ky-long-input" value="{$member_info.user_name}">
+							<span id="error_username" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+							<span class="necessary-mark">*</span>
+							身份证号:
+						</div>
+						<div class="col-xs-10 ky-form-control validate-control">
+							<input type="text" name="user_code"  id="user_code"  class="ky-input-reset ky-long-input" value="{$member_info.user_code}">
+							<span id="error_usercode" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group choose-verify-method font-size-14">
+						<div class="ky-control-label">
+							<span class="necessary-mark">*</span>
+							QQ：
+						</div>
+						<div class="col-xs-10 ky-form-control validate-control">
+							<input type="text" name="user_qq"  id="user_qq" class="ky-input-reset ky-long-input" value="{$member_info.user_qq}">
+							<span id="error_userqq" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+                            <span class="necessary-mark">*</span>
+							邮箱：
+						</div>
+						<div class="col-xs-10 ky-form-control">
+							<input type="text" name="user_mail"  id="user_mail" class="ky-input-reset ky-long-input" value="{$member_info.user_mail}">
+							<span id="error_usermail" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+                            <span class="necessary-mark">*</span>
+							手机号码：
+						</div>
+						<div class="col-xs-10 ky-form-control">
+							<input type="text"  name="user_mobile"  id="user_mobile"  class="ky-input-reset ky-long-input" value="{$member_info.user_mobile}">
+							<span id="error_usermobile" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group font-size-14">
+						<div class="ky-control-label">
+                            <span class="necessary-mark">*</span>
+							所在地区：
+						</div>
+						<div class="col-xs-10 ky-form-control">
+							<select name="user_province" onchange="change_city()" id="user_province" style="width:150px;"></select>
+							<select name="user_city" id="user_city" style="width:150px;"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label font-size-14">
+							联系地址:
+						</div>
+						<div class="col-xs-10 ky-form-control validate-control">
+							<input type="text" name="user_address"   id="user_address"  class="ky-input-reset ky-address-input"  value="{$member_info.user_address}" >
+							<span id="error_useraddress" class="error-reminder gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="ky-control-label">
+							&nbsp;
+						</div>
+						<div class="col-xs-10 ky-form-control">
+							<button class="btn btn-default chongzhi-btn"  type="submit">保存</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--基本信息右侧 end-->
+	</div>
+</block>
+<block name="script">
+	<script src="__BACKEND_JS__city_cascade.js"></script>
+	<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+	<script src="__COM_JS__messages_zh.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			province_load('<?php echo $member_info["user_province"];?>','<?php echo $member_info["user_city"];?>');
+		});
+	</script>
+	<script type="text/javascript">
+		function updater(form){
+			form.submit();
+		}
+		$("#modify").validate({
+			submitHandler:function(form){
+				updater(form);
+			},
+			errorPlacement: function(error, element) {
+				element.next().show();
+				error.appendTo(element.next());
+			},
+			rules:{
+				user_name:{
+                    required:true,
+					maxlength: 20
+				},
+				user_code:{
+					required:true,
+					digits:true,
+					minlength: 18
+				},
+				user_qq:{
+                    required:true,
+					digits:true
+				},
+				user_mail:{
+                    required:true,
+					email:true
+				},
+				user_mobile:{
+                    required:true,
+					minlength : 11,
+					isMobile : true
+				},
+				user_address:{
+                    required:true
+				}
+			},
+			messages:{
+				user_name:{
+                    required:"请填写用户名",
+					maxlength: "姓名长度最大20位"
+				},
+				user_code:{
+                    required:"请填写身份证号码",
+					digits:"请输入合法的数字",
+					minlength: "身份证号长度不能小于 18 位"
+				},
+				user_qq:{
+                    required:"请填写QQ号码",
+					digits:"请输入合法的数字"
+				},
+				user_mail:{
+                    required:"请填写邮箱",
+					email:"请输入正确格式的电子邮箱"
+				},
+				user_mobile:{
+                    required:"请填写手机号码",
+					minlength : "确认手机不能小于11个字符",
+					isMobile : "请正确填写您的手机号码"
+				},
+				user_address:{
+                    required:"请填写联系地址"
+				}
+			},
+			success: function(label) {
+				//label.parent().parent().hide();
+			}
+		});
+	</script>
+</block>

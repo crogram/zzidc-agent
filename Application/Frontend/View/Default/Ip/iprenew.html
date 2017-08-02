@@ -1,0 +1,220 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>IP管理</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">IP</div>
+                <a href="<?php echo U('frontend/Help/help_retrieval',[keywords=>'ip'],false);?>" target="_blank" class="server-help pull-right">IP帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab"><a href="<?php echo U('frontend/ip/iplist', '', false);?>">IP<em class="chenggong">0</em></a></li>
+                        <li class="ky-tab ky-tab--current"><a href="<?php echo U('frontend/ip/iprenew', '', false);?>">待续费<em class="chuli">0</em></a></li>
+                    </ul>
+                </div>
+                <div class="server-operates clearfix margin-bottom-20">
+                    <form action="<?php echo U('frontend/ip/iprenew', '', false);?>"  class="pull-left" method="post">
+                        <input type="text"  name="select"  class="pull-left ky-input-reset search-group-input" placeholder="输入标识、产品名称、备注">
+                        <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                    </form>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="8%">
+                            业务编号
+                        </th>
+                        <th width="17%">
+                            IP地址/备注
+                        </th>
+                        <th width="10%">
+                            状态
+                        </th>
+                        <th width="10%">
+                            带宽
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                        <if condition="$Think.get.order eq ASC">
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/ip/iprenew', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a></th>
+                            <else/>
+                            <th width="20%">开通日期/到期日期<a  href="<?php echo U('frontend/ip/iprenew', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a></th>
+                        </if>
+                        <th width="13%">操作</th>
+                    </tr>
+                    </thead>
+                    <volist name="info"  id="data">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <p><?php echo $data["api_bid"];?></p>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">外网IP：<?php echo $data["ipaddress"];?></div>
+                                <div>
+                                    备注：<span id="bz_{$data.yid}"><if condition="$data.beizhu eq null">未备注,添加备注信息<else/>{$data.beizhu}</if></span>
+                                    <input  type="hidden"  value="{$data.beizhu}"  id="remark_<?php echo $data['id'];?>"/>
+                                    <a href="javascript:void(0);" class="change-name edit-name margin-left-10" title="修改备注"  onclick="changeMarkdb('<?php echo $data['id'];?>')"></a>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['belong_server'] == null || $data['belong_server'] == 0){echo "未绑定";}else{echo "已绑定";}?><i class="list-style2"></i>
+                                <?php if($data['state'] == '1'){?>
+                                <span class="g00b">正常</span>
+                                <?php }elseif($data['state'] == '3'){?>
+                                <span class="gf00">已过期</span>
+                                <?php }elseif($data['state'] == '2'){?>
+                                <span class="gf00">已删除</span>
+                                <?php }elseif($data['state'] == '4'){?>
+                                <span class="gf00">失败</span>
+                                <?php }?>
+                            </td>
+                            <td>
+                                <?php echo $data["bandwidth"];?>M
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-muted">
+                                    <span>产品名称：{$data.product_name}</span>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">开通时间：{$data.create_time}</div>
+                                <div class="text-stress">到期时间：{$data.overdue_time}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == 1){?>
+                                   	<div>
+                                        <a href="<?php echo U('frontend/ip/ip_renewals',['ip_id'=>$data['yid']],false);?>">续费</a>
+                                        <span class="text-muted operate-spacing">|</span>
+                                        <a href="<?php echo U('frontend/ip/ip_upgrade',['ip_id'=>$data['yid']],false);?>">升级</a>
+                                    </div>
+                                    <div>
+                                        <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/ip/memberSync',['business_id'=>$data['api_bid'],'ptype'=>'cloudserver.ip'],false);?>">同步</a>
+                                    </div>
+                               <?php } ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="7">
+                                <p>暂无30天内到期业务！</p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40"  id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var tooken = true;
+        function tbajax(tb)
+        {
+            if(tooken)
+            {
+                tooken = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    alert(data.info);
+                    setTimeout(function(){window.location.reload();},1500);
+                },'json');
+            }
+        }
+        function changeMarkdb(id){
+            var remark = $("#bz_"+id).text();
+            if(remark=="" ||  remark==null){
+                $("#remark").val("请输入备注信息");
+            }else{
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                resizable:false,
+                width: 400,
+                buttons: [
+                    {
+                        text: "确认",
+                        click: function() {
+                            var bz = $("#remark").val();
+                            $.post('<?php echo U("frontend/cloudserver/remark",array(),false)?>', {
+                                "remark": bz,
+                                "id": id
+                            }, function (date) {
+                                if (date == "ok") {
+                                    $("#bz_"+id).text(bz);
+                                    alert('成功');
+                                } else {
+                                    alert('失败');
+                                }
+                            }, 'json');
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "重置",
+                        click: function() {
+                            document.getElementById("remark").value="";
+                        }
+                    },
+                    {
+                        text: "取消",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+      <script>
+    $(function(){
+    	state_count("1");
+    	state_count("2");
+    });
+    function state_count(state){
+    	$.post('<?php echo U("frontend/ip/state_count",array(),false)?>',{"state":state},function(date){
+    		if(date.status == "ok"){
+    			if(state == 1){
+    				$(".chenggong").text(date.sum);
+    			}else if(state == 2){
+    				$(".chuli").text(date.sum);
+    			}
+    		}
+    	},'json');
+    }
+    </script>
+</block>

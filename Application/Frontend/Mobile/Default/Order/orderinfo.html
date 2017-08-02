@@ -1,0 +1,92 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+<nav class="ky-title">
+    <a href="javascript:;" class="return-icona" onclick="window.history.go(-1);"></a>订单详情
+</nav>
+<section class="look-order">订单概览</section>
+<section class="order-wrapper">
+    <ul class="order-listul">
+        <li>
+            <span class="od-leftsp">订单编号</span>
+            <span class="od-rightcon"><?php echo $order_info['id'];?></span>
+        </li>
+        <li>
+            <span class="od-leftsp">订单类型</span>
+            <span class="od-rightcon">
+                <if condition="$order_info.type == 0 ">新增
+                    <elseif condition="$order_info.type == 1 " />增值
+                    <elseif condition="$order_info.type == 2 "/>续费
+                    <elseif condition="$order_info.type == 3 "/>变更方案
+                    <elseif condition="$order_info.type == 4 "/>转正
+                </if>
+            </span>
+        </li>
+        <li>
+            <span class="od-leftsp">订单状态</span>
+            <span class="od-rightcon">
+                <if condition="$order_info.state == 0 ">失败
+                    <elseif condition="$order_info.state == 1 " />成功
+                    <elseif condition="$order_info.state == 2 "/>待处理
+                    <elseif condition="$order_info.state == 3 "/>处理中
+                    <elseif condition="$order_info.state == 4 "/>审核中
+                    <elseif condition="$order_info.state ==  5"/>已删除
+                    <elseif condition="$order_info.state ==  6"/>已付款
+                </if>
+            </span>
+        </li>
+        <li>
+            <span class="od-leftsp">订单金额</span>
+            <span class="od-rightcon cff8800">{$order_info.charge}元</span>
+        </li>
+        <li>
+            <span class="od-leftsp">消费期限</span>
+            <span class="od-rightcon">{$order_info.order_time}个月</span>
+        </li>
+        <li class="bb-none">
+            <span class="od-leftsp">下单时间</span>
+            <span class="od-rightcon">{$order_info.complete_time}</span>
+        </li>
+    </ul>
+</section>
+<section class="ky-pro-deta">产品详情</section>
+<section class="order-wrapper">
+    <ul class="order-listul">
+        <li>
+            <span class="od-leftsp">产品名称</span>
+            <span class="od-rightcon">{$order_info.product_name}</span>
+        </li>
+        <li class="clearfix heightauto">
+            <span class="od-leftsp va-top">产品详情</span>
+            <div class="right-detalist">
+                <p>订单标识：{$order_info.api_id}</p>
+                <?php if($order_info['product_type'] != 20 && $order_info['product_type'] !=9 && $order_info['product_type'] !=10 ){ ?>
+                <p>主机线路：<?php if($order_info['area_code'] == 4001 || $order_info['area_code'] == 4008){echo '国内';}else if($order_info['area_code'] == 4002){echo '香港';}else if($order_info['area_code'] == 4005){echo '美国'; }?></p>
+                <p>操作系统：<if condition="$order_info.system_type == 0">Linux<else/>Windows</if></p>
+                <?php } ?>
+                <p>
+                    <span style="vertical-align: top;">备注：</span>
+                    <span style="width: 6rem;display: inline-block;">{$order_info.order_log}</span>
+                </p>
+            </div>
+        </li>
+        <!--<li>-->
+            <!--<span class="od-leftsp">操作</span>-->
+            <!--<span class="od-rightcon scs">-->
+                <!--<?php if($order_info['state'] == 3  && ($order_info['product_type'] == 7 || $order_info['product_type'] == 8 || $order_info['product_type'] == 15 || $order_info['product_type'] == 16 || $order_info['product_type'] == 17)){?>-->
+                <!--<a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/order/order_getinfo',['order_id'=>$order_info['id']],false);?>">获取业务信息</a>-->
+                <!--<?php }else {?>-->
+                <!--<?php if($order_info['order_type'] ==0 && ($order_info['state']==6 || $order_info['state']==12 || $order_info['state']==11)){?>-->
+                <!--<a href="<?php echo U('frontend/order/order_open',['order_id'=>$order_info['id']],false);?>">开通</a>-->
+                <!--<?php }elseif($order_info['order_type'] ==0 && ($order_info['state']==2)){?>-->
+                <!--<span> | </span>-->
+                <!--<a href="<?php echo U('frontend/ssl/ssl_business_open',['order_id'=>$order_info['id']],false);?>">继续开通</a>-->
+                <!--<?php }else{ ?>-->
+                <!--<span>——</span>-->
+                <!--<?php }} ?>-->
+            <!--</span>-->
+        <!--</li>-->
+    </ul>
+</section>
+</block>
+<block name="script"></block>

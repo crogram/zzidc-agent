@@ -1,0 +1,155 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					广告图片管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a href="<?php echo U('Backend/Ad/index', [  ], false);?>">广告图片列表</a>
+					&amp; 广告图片详情
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Ad/index', [  ], false);?>">广告图片列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="" role="form">
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="id">
+				广告图片编号：
+			</label>
+			<div class="col-sm-8">
+				<p class="lead" ><?php echo $entity['id'];?></p>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="">
+				广告图片位置：
+			</label>
+			<div class="col-sm-8">
+				<p class="lead" ><?php echo $location[$entity['location']];?></p>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="">
+				是否展示：
+			 </label>
+			 <div class="col-sm-8">
+ 				<p class="lead" ><?php echo $is_show[$entity['is_show']];?></p>
+ 			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="state">
+				 广告图片标题：
+			 </label>
+			 <div class="col-sm-8">
+ 				<p class="lead" ><?php echo $entity['title'];?></p>
+ 			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="link_url">
+				 跳转链接：
+			 </label>
+
+			<div class="col-sm-8">
+ 				<p class="lead" ><a target="_blank" href="<?php echo $entity['link_url'];?>"><?php echo $entity['link_url'];?></a></p>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="description">
+						广告图片描述：
+					 </label>
+
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $entity['description'];?></p>
+					</div>
+				</div>
+				<div class="space-4"></div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="charge">
+				创建时间：
+			 </label>
+			 <div class="col-sm-8">
+ 				<p class="lead" ><?php echo $entity['create_at'];?></p>
+ 			</div>
+		</div>
+
+						<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="charge">
+				更新时间：
+			 </label>
+			 <div class="col-sm-8">
+ 				<p class="lead" ><?php echo $entity['update_at'];?></p>
+ 			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="">
+				图片：
+			</label>
+			<div class="col-sm-8">
+				<p><a href="<?php echo $entity['img_url'];?>" target="_blank">
+					<img style="width:600px;height:300px;" src="<?php echo $entity['img_url'];?>" alt="" />
+				</a></p>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="clearfix form-actions">
+			<div class="col-md-offset-3 col-md-9">
+				<a class="btn btn-info" href="<?php echo U('Backend/Ad/index', [  ], false);?>">
+					<span class="glyphicon glyphicon-repeat"></span>
+					返回
+				</a>
+			</div>
+		</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<script type="text/javascript">
+
+</script>
+
+</block>

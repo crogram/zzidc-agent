@@ -1,0 +1,29 @@
+该插件是表单验证框架，一行代码搞定整站的表单验证！，依赖于jquery
+
+1、引入css
+<!-- 核心CSS文件 -->
+<link rel="stylesheet" href="<s:text name="global.resource.uri"/>plugin/validform/5.3.2/css/validform.css">
+
+2、引入js （依赖于jquery 1.4.3 以上版本都可以）
+
+<!-- 依赖于jQuery文件，在插件之前引入 -->
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 核心JS文件 -->
+<script src="<s:text name="global.resource.uri"/>plugin/validform/5.3.2/validform.min.js"></script>
+
+3、给需要验证的表单元素绑定附加属性
+
+<form class="demoform">
+<input type="text" value="" name="name" datatype="s5-16" errormsg="昵称至少5个字符,最多16个字符！" />
+</form>
+4、初始化，就这么简单
+$(".demoform").Validform();
+
+注：
+1、Validform有非压缩、压缩和NCR三个版本提供下载，NCR是通用版，当你页面因编码问题，提示文字出现乱码时可以使用这个版本；
+2、Validform没有限定必须使用table结构，它可以适用于任何结构，需要在tiptype中定义好位置关系。
+
+
+
+http://validform.rjboy.cn/

@@ -1,0 +1,91 @@
+<include file="Login/header" />
+	<!--登录start-->
+		<div class="ky-container">
+			<div class="login-logo" style="color:red;font-size: larger;">
+				<div class="fonn3">验证您的账户信息</div>
+    				<div class="rgicon"><span class="pdright">作为您修改密码的重要凭证，务必保证信息的真实准确。</span></div>
+			</div>
+			<div class="login-box-bg">
+			<form  name="login"  id="login"  action="<?php echo U('Frontend/Login/find_pass', '', false);?>" method="post"  >
+				<div class="login-box">
+					<div class="login-h5">
+						通过邮箱找回密码
+					</div>
+					<div class="form-group">
+					<label for="user_name">登录名</label>
+						<input type="text" class="login-input"  id="login_name" name="login_name"   placeholder="登录名"  value="" required/>
+						<div id="error_loginname" class="kyregister-msg" style="margin-left:0;display:none">
+							<i class="kyregister-msg-icon icon-c mright6"></i>
+							<span class="gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="user_pass">邮箱</label>
+						<input type="user_mail" class="login-input"  id="user_mail"  name="user_mail" placeholder="注册时填写邮箱" value="">
+						<div id="error_mail"class="kyregister-msg" style="margin-left:0;display:none">
+							<i class="kyregister-msg-icon icon-c mright6"></i>
+							<span class="gf00"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div><label for="captcha">验证码</label></div>
+						<div>
+							<input id="captcha" name="captcha" type="text" class="login-input" placeholder="请输入验证码" style="width: 50%" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')"/>
+							<img id="captcha-img" onclick="this.src='<?php echo U('Frontend/Login/captcha',[],false);?>/type/frontend_sign_in/time/'+Math.random();" src="<?php echo U('Frontend/Login/captcha', [], false);?>/type/frontend_sign_in" alt="点击图片刷新验证码" class="col-sm-5" style="height:34px;vertical-align: middle">
+						</div>
+					</div>
+					<div class="form-group"  id="sub">
+						<button class="kylogin-link fsize16"  type="submit">登录</button>
+					</div>
+					<div class="form-group login-txt">
+						<a href="<?php echo U('frontend/login/register','',false);?>">免费注册</a>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	<!--登录end-->
+	<!--底部start-->
+	<include file="Login/footer" />
+	<!--底部end-->
+</body>
+</html>
+<script src="__FRONTEND_JS__1.8.2.jquery.js"></script>
+<script src="__FRONTEND_JS__common/common-header.js"></script>
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__COM_JS__md5.js"></script>
+<script type="text/javascript">
+function updater(form){
+	form.submit();
+}
+$("#login").validate({
+	submitHandler:function(form){
+		updater(form);
+    },
+    errorPlacement: function(error, element) {
+    	element.next().show();
+        error.appendTo(element.next().find('span')[0]);
+    },
+    rules:{
+		user_name:{
+			required:true,
+		  },
+		  user_mail:{
+				required:true,
+				email: true
+		 }
+	},
+    messages:{
+  		login_name:{
+			required:"请输入用户名",
+	  	},
+	  	user_mail:{
+		   required:"请输入邮箱",
+		 }
+	},
+	success: function(label) {
+		label.parent().parent().hide();
+	},
+});
+</script>

@@ -1,0 +1,189 @@
+<extend name="Layouts/layout" />
+
+
+<block name="header">
+
+    <h3 class="masthead-brand ">景安代理平台--安装引导</h3>
+    <ul class="nav masthead-nav">
+      <li ><a href="javascript:void(0);">1.欢迎</a></li>
+      <li ><a href="javascript:void(0);">2.环境检测</a></li>
+      <li class="active"><a href="javascript:void(0);">3.配置安装</a></li>
+      <li ><a href="javascript:void(0);">4.完成</a></li>
+    </ul>
+
+</block>
+
+<block name="content">
+
+    <h1 class="cover-heading">代理平台配置安装</h1>
+    <hr>
+
+        <form class="form-horizontal" role="form" id="installing" method="post">
+
+      <div class="form-group">
+        <label for="address" class="col-sm-4 control-label">数据库连接地址：</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="address" name="address" placeholder="请输入您的数据库连接地址">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="port" class="col-sm-4 control-label">数据库连接端口号：</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="port" name="port" placeholder="请输入您的数据库端口号">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="database_username" class="col-sm-4 control-label">数据库账号：</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="database_username" name="database_username" placeholder="请输入您的数据库账号">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="database_password" class="col-sm-4 control-label">数据库密码：</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="database_password" name="database_password" placeholder="请输入您的数据库密码">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="database_name" class="col-sm-4 control-label">数据库名：</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="database_name" name="database_name" placeholder="请输入数据库名">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+      
+      <div class="form-group" style="width:750px;color:red" >
+			注意：1.修改mysql数据库配置文件中的sql_mode修改为sql_mode='NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES'</br>2.请确保数据库支持innodb引擎</span>
+        </div>
+        <hr>
+
+      <div class="form-group">
+        <label for="admin_username" class="col-sm-4 control-label">管理员账号：</label>
+        <div class="col-sm-6">
+          <input type="text" onblur="test_email(this)" onfocus="clearHelp(this)" class="form-control" id="admin_username" name="admin_username" placeholder="请输入邮箱作为后台管理员账号">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="admin_password" class="col-sm-4 control-label">管理员密码：</label>
+        <div class="col-sm-6">
+          <input onblur="test_password(this)" onfocus="clearHelp(this)"  type="password" class="form-control" id="admin_password" name="admin_password" placeholder="包含数字和大小写字母8到20位">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="admin_conform_password" class="col-sm-4 control-label">管理员确认密码：</label>
+        <div class="col-sm-6">
+          <input onblur="conform_password(this)" onfocus="clearHelp(this)" type="password" class="form-control" id="admin_conform_password" name="admin_conform_password" placeholder="包含数字和大小写字母8到20位">
+          <span class="help-block " style="color:#FF4500;"></span>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-10">
+            <a onclick="installing()" href="javascript:void(0);" class="btn btn-lg btn-default pull-feft">
+                <span class="glyphicon glyphicon-wrench"></span>安装
+            </a>
+        </div>
+      </div>
+
+    </form>
+
+</block>
+
+<block name="scripts">
+    <script src="/Public/backend/statics/aceadmin/js/bootbox.min.js"></script>
+    <script src="/Public/backend/js/boot-box.js"></script>
+<script type="text/javascript">
+
+    function isEmail(str){
+        var reg = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        return reg.test(str);
+    }
+
+    function test_email(obj){
+        var $obj = $(obj);
+        if ( !isEmail( $obj.val() ) ) {
+            $obj.next('span').html('请输入正确的邮箱格式哦！');
+        }
+    }
+
+    function clearHelp(obj){
+        $(obj).next('span').html('');
+    }
+
+    function conform_password(obj){
+        var $obj = $(obj);
+        if ( $obj.val() != $('#admin_password').val()) {
+            $obj.next('span').html('两次密码不一致！');
+        }
+    }
+
+    function test_password(obj){
+        var $obj = $(obj);
+        if ( !passwordIsStrong( $obj.val() ) ) {
+            $obj.next('span').html('管理员的密码太简单啦，不安全，在换一个试试吧(数字和大小写字母6到20位)！');
+        }
+    }
+
+    function passwordIsStrong(pwd) {
+        var reg = /^(?=.*?[A-Za-z]+)(?=.*?[0-9]+)(?=.*?[A-Z]).*$/;
+        return pwd.match(reg);
+    }
+
+    function installing(){
+        var url = "<?php echo U('Install/Index/installing', [], false);?>";
+
+        if (!isEmail( $('#admin_username').val() )) {
+            alert('请输入正确的邮箱格式哦！');
+            return false;
+        }
+        if( !passwordIsStrong( $('#admin_password').val() ) ){
+            alert('管理员的密码太简单啦，不安全，在换一个试试吧(数字和大小写字母6到20位)！');
+            return false;
+        }
+        if( $('#admin_conform_password').val() != $('#admin_password').val() ){
+            alert('管理员的密码和确认密码不一致哦！');
+            return false;
+        }
+        var dialog = null;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $('#installing').serialize(),
+            dataType: 'json',
+            beforeSend: function(){
+                dialog = bootbox.dialog({
+                    message: '<p style="color:#000;" ><i class="fa fa-spin fa-spinner"></i>代理平台安装中...可能需要几分钟的时间，请稍等片刻</p>',
+                    closeButton: false
+                });
+            },
+            success: function(data){
+                dialog.modal('hide');
+                if (data.status == 1) {
+                    $('#container').html('');
+                    $('#container').prepend(data.info);
+                }else {
+                    if (data.url == '') {
+                        alert(data.info);
+                    }else {
+                        window.location.href = data.url;
+                    }
+                }
+            },
+        });
+    }
+</script>
+</block>

@@ -1,0 +1,65 @@
+<extend name="Layouts/layout" />
+
+
+<block name="header">
+
+    <h3 class="masthead-brand ">景安代理平台--安装引导</h3>
+    <ul class="nav masthead-nav">
+      <li ><a href="javascript:void(0);">1.欢迎</a></li>
+      <li class="active"><a href="javascript:void(0);">2.环境检测</a></li>
+      <li><a href="javascript:void(0);">3.配置安装</a></li>
+    <li ><a href="javascript:void(0);">4.完成</a></li>
+    </ul>
+
+</block>
+
+<block name="content">
+
+    <h1 class="cover-heading">代理平台运行环境检测</h1>
+    <hr>
+    <?php foreach($env as $k => $v):?>
+        <div class="row">
+                <div class="col-md-4 text-right"><?php echo $v['display'];?></div>
+                <div class="col-md-3 text-left">需求：<?php echo $v['allow'];?></div>
+                <div class="col-md-3  text-left">当前：<?php echo $v['current'];?></div>
+                <div class="col-md-1  text-left "><?php if($v['result']):?><span class="glyphicon glyphicon-ok"  style="color:lightgreen;"></span><?php else:?><span class="glyphicon glyphicon-remove" style="color:red;"></span><?php endif;?></div>
+        </div>
+    <?php endforeach;?>
+    <hr>
+
+    <?php $allow = true;?>
+    <?php foreach($file_and_dir as $k => $v):?>
+        <div class="row">
+                <div class="col-md-5 text-right"><?php echo $v['display'].'['.$k.']';?></div>
+                <div class="col-md-2 text-left">需求：<?php echo $v['allow'];?></div>
+                <div class="col-md-3  text-left">当前：<?php echo $v['current'];?></div>
+                <div class="col-md-1  text-left "><?php if($v['result']):?><span class="glyphicon glyphicon-ok"  style="color:lightgreen;"></span><?php else:?><span class="glyphicon glyphicon-remove" style="color:red;"></span><?php $allow = false;$error .= $v['display'].$v['current']."<br />";endif;?></div>
+        </div>
+    <?php endforeach;?>
+    <hr>
+
+    <?php foreach($func as $k => $v):?>
+        <div class="row">
+                <div class="col-md-5 text-right"><?php echo $v['display'];?></div>
+                <div class="col-md-2 text-left">需求：<?php echo $v['allow'];?></div>
+                <div class="col-md-3  text-left">当前：<?php echo $v['current'];?></div>
+                <div class="col-md-1  text-left "><?php if($v['result']):?><span class="glyphicon glyphicon-ok"  style="color:lightgreen;"></span><?php else:?><span class="glyphicon glyphicon-remove" style="color:red;"></span><?php $allow = false;$error .= $v['display'].$v['current']."<br />";endif;?></div>
+        </div>
+    <?php endforeach;?>
+    <hr>
+
+    <p class="lead" >
+        <?php if(!empty($error)):?><div  data-toggle="modal" data-target="#check-error" ><?php endif;?>
+            <a  href="<?php echo U('Install/Index/setup', [], false);?>" class="btn btn-lg btn-default <?php if(!empty($error)):?>disabled<?php endif;?>" >下一步<span class="glyphicon glyphicon-arrow-right"></span>配置安装</a>
+        <?php if(!empty($error)):?></div><?php endif;?>
+    </p>
+<?php if(!empty($error)):?>
+<div class="modal fade " id="check-error" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="color:red;">
+                <?php echo $error;?>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+</block>

@@ -1,0 +1,251 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>SSL证书管理</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">SSL证书</div>
+                <a href="<?php echo U('frontend/Help/help_retrieval',[keywords=>'ssl'],false);?>" target="_blank" class="server-help pull-right">SSL证书帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab ky-tab--current">
+                            <a href="<?php echo U('frontend/ssl/ssllist','', false);?>">SSL证书<em class="chenggong">0</em></a>
+                        </li>
+                        <li class="ky-tab">
+                            <a href="<?php echo U('frontend/ssl/sslrenew','', false);?>">待续费业务<em class="chuli">0</em></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="server-operates clearfix margin-bottom-20">
+                    <form action="<?php echo U('frontend/ssl/ssllist','', false);?>"  class="pull-left" method="post">
+                        <input type="text"  name="select"  class="pull-left ky-input-reset search-group-input" placeholder="输入业务编号、产品名称、备注、绑定域名">
+                        <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                    </form>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="">业务编号</th>
+                        <th width="">业务标识/备注</th>
+                        <th width="">产品名称</th>
+                        <th width="">绑定域名</th>
+                        <th width="">注册人信息</th>
+                        <th width="">试用/购买</th>
+                        <if condition="$Think.get.order eq DESC">
+                            <th width="">开通日期/到期日期
+                                <a  href="<?php echo U('frontend/ssl/ssllist', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+                                <else/>
+                            </th>
+                            <th width="">开通日期/到期日期
+                                <a  href="<?php echo U('frontend/ssl/ssllist', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a>
+                            </th>
+                        </if>
+                        <th width="">状态</th>
+                    </tr>
+                    </thead>
+                    <volist name="info" id="data">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <p>{$data.business_id}</p>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <!--<div class="text-stress">业务标识：{$data.domain_name} </div>-->
+                                <div>
+                                    备注：<if condition="$data.beizhu eq null">未备注,添加备注信息<else/>{$data.beizhu}</if>
+                                    <input  type="hidden"  value="{$data.beizhu}"  id="remark_{$data.yid}"/>
+                                    <a href="javascript:void(0);" class="change-name edit-name margin-left-10" title="修改备注"  onclick="changeMarkdb('{$data.yid}')"></a>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-muted">
+                                    <span>产品名称：{$data.product_name}</span>
+                                </div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php $domain_name = explode(",",$data["domain_name"]);
+                                foreach($domain_name as $domain){
+                                echo $domain."</br>";
+                                }?>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">注册人：{$data.registrant}</div>
+                                <div class="text-stress">邮箱：{$data.mobile}</div>
+                                <div class="text-stress">联系电话：{$data.mail}</div>
+                            </td>
+                            <td>
+                                <if condition="$data.free_trial == 0">购买<else/>试用</if>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">开通时间：{$data.create_time}</div>
+                                <div class="text-stress">到期时间：{$data.overdue_time}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <if condition="$data.state == 1">
+                                    <span class="text-success ny-state-icon server-state-run">已颁发</span>
+                                    <!--<a href="<?php echo U('frontend/ssl/ssl_info',['ssl_id'=>$data['yid']],false);?>">详情</a>-->
+                                    <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/ssl/memberSync',['business_id'=>$data['business_id']],false);?>">同步</a>
+                                    <elseif condition="$data.state == 2"/>
+                                    <span class="text-success ny-state-icon server-state-stop">已删除</span>
+                                    <elseif condition="$data.state == 3"/>
+                                    <span class="text-success ny-state-icon server-state-stop">已过期</span>
+                                    <elseif condition="$data.state == 4"/>
+                                    <span class="text-success ny-state-icon server-state-stop">失败</span>
+                                    <elseif condition="$data.state == 6"/>
+                                    <span><img src="__FRONTEND_IMAGES__loading.gif" />正在开通，耐心等候1--2分钟！</span>
+                                    <elseif condition="$data.state == 9"/>
+                                    <span class="text-success ny-state-icon server-state-weizhi">已开通未获取状态</span>
+                                    <elseif condition="($data.state == 11)or($data.state == 12)"/>
+                                    <span class="text-success ny-state-icon server-state-ceshi">开通未完成</span>
+                                </if>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="7">
+                                <p>您好像没有相关产品哦，<a href="#" class="g009">点此了解一下吧！</a></p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40"  id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var token = true;
+        function tbajax(tb)
+        {
+            if(token)
+            {
+                token = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    alert(data.info);
+                    setTimeout(function(){window.location.reload();},1500);
+                },'json');
+            }
+        }
+        $(function(){
+            var business_open = "<?php echo $not_open;?>";
+            console.log(business_open);
+            var kt_url = "<?php echo U('frontend/ssl/get_open_progress',[],false);?>";
+            get_progress(business_open,kt_url);
+        });
+        function get_progress(business,url) {
+            if (business != '') {
+                var state = 0;
+                var int = window.setInterval(function () {
+                    var bid = business.split(",");
+                    for (i = 0; i < bid.length; i++) {
+                        $.ajax({
+                            type: "POST",
+                            url: url + "/ssl_id/" + bid[i],
+                            datatype: "json",
+                            success: function (data) {
+                                if (data.status == 1) {
+                                    clearInterval(int);
+                                    location.reload();
+                                } else if (data.status == 0) {
+                                    if (data.info != "") {
+                                        clearInterval(int);
+                                        alert(data.info);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }, 15000);
+            }
+        }
+        function changeMarkdb(id){
+            var remark = $("#remark_"+id).val();
+            if(remark=="" ||  remark==null){
+                $("#remark").val("请输入备注信息");
+            }else{
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                resizable:false,
+                width: 400,
+                buttons: [{
+                    text: "确认",
+                    click: function() {
+                        var bz = $("#remark").val();
+                        $.post('<?php echo U("frontend/ssl/remark",array(),false)?>',{"remark":bz,"id":id},function(date){
+                            if(date=="ok"){
+                                alert('成功');
+                            }else{
+                                alert('失败');
+                            }
+                            location.reload();
+                        },'json');
+                        $( this ).dialog( "close" );
+                    }}, {
+                        text: "重置",
+                        click: function() {
+                            document.getElementById("remark").value="";
+                        }
+                    }, {
+                        text: "取消",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                ]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+    <script>
+    $(function(){
+    	state_count("1");
+    	state_count("2");
+    });
+    function state_count(state){
+    	$.post('<?php echo U("frontend/ssl/state_count",array(),false)?>',{"state":state},function(date){
+    		if(date.status == "ok"){
+    			if(state == 1){
+    				$(".chenggong").text(date.sum);
+    			}else if(state == 2){
+    				$(".chuli").text(date.sum);
+    			}
+    		}
+    	},'json');
+    }
+    </script>
+</block>

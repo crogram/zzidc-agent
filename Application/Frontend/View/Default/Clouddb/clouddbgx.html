@@ -1,0 +1,302 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+    <style>
+        .disabletrain{background:#a7afb3;width: 110px;height: 36px;line-height: 36px;display: inline-block;color: #fff;font-size: 14px;margin-left: 10px;text-align: center;cursor:default;}
+        .disabletrain:hover{color: #fff;}
+    </style>
+</block>
+<block name="content">
+    <!--快云服务器标题 start-->
+    <div class="ky-nav-box">
+        <div class="ky-container">
+            <i class="i-line"></i><span class="g333">快云数据库</span>
+        </div>
+    </div>
+    <!--快云服务器标题 end-->
+    <!--快云服务器购买配置 end-->
+    <form action=""></form>
+    <div class="ky-container clearfix">
+        <div class="contentbox content-left">
+            <div class="listitem">
+                <div class="item-left">
+                    <span>类型：</span>
+                </div>
+                <div class="item-right jifang-item" style="padding-top:10px">
+                    <ul class="ul-item">
+                        <li><a href="clouddbdx" >独享版</a></li>
+                        <li class="libg"><a href="clouddbgx" class="liselect">共享版</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="listitem">
+                <div class="item-left">
+                    <span>选择版本：</span>
+                </div>
+                <div class="item-right jifang-item" style="padding-top:10px">
+                    <ul class="ul-item" >
+                        <li class="liselect"><a href="javascript:;" class="liselect">MySql5.5</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="listitem">
+                <div class="item-left">
+                    <span>选择机房：</span>
+                </div>
+                <div class="item-right jifang-item" style="padding-top:10px">
+                    <ul class="ul-item" id="choosejf">
+
+                        <li>
+                            <a id="4001" class="liselect"  href="javascript:void(0)" dqbh="4001" onclick="selectZone(this)">郑州机房</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="listitem">
+                <div class="item-left">
+                    <span>连接数：</span>
+                </div>
+                <div class="item-right jifang-item" style="padding-top:10px">
+                    <ul class="ul-item">
+                        <li class="text-left">50个</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="listitem">
+                <div class="item-left">
+                    <span>存储空间：</span>
+                </div>
+                <div class="item-right jifang-item ptop10">
+                    <div class="slider-date" id="slider-date-1">
+                        <!--底层-->
+                        <ul class="slider-bg clearfix" >
+                            <li style="width:125px">5G</li>
+                            <li style="width:125px">10G</li>
+                            <li style="width:125px">15G</li>
+                            <li style="width:140px">20G</li>
+                        </ul>
+                        <!--互动层-->
+                        <div class="slider-bar">
+                            <ul class="slider-bg clearfix">
+                                <li width_=135 skip=1 min=0 style="width:125px">5G</li>
+                                <li width_=130 skip=1 min=5 style="width:125px">10G</li>
+                                <li width_=130 skip=1 min=10 style="width:125px">15G</li>
+                                <li width_=150 skip=1 min=15 style="width:140px">20G</li>
+                            </ul>
+                            <!--滑块按钮-->
+                            <a href="javascript:;"  class="slider-bar-btn"><i></i><i></i></a>
+                        </div>
+                    </div>
+
+                    <div class="shuju-box">
+                        <input type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" class="bk-disk-input" onafterpaste="this.value=this.value.replace(/\D/g,'')" id="diskinput">
+                    </div>
+                    <div class="shuju-danwei">
+                        G
+                    </div>
+                    <div class="shuju-box30">
+                        <span class="bk-number-arrow"></span>
+                        <span class="bk-number-arrow2"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="listitem m-top10">
+                <div class="item-left">
+                    <span>选择时长：</span>
+                </div>
+                <div class="item-right jifang-item ptop10 ">
+                    <div class="slider-date" id="slider-date-1">
+                        <!--底层-->
+                        <ul class="slider-bg clearfix">
+                            <li style="width:38px;">1</li>
+                            <li style="width:38px;">2</li>
+                            <li style="width:38px;">3</li>
+                            <li style="width:38px;">4</li>
+                            <li style="width:38px;">5</li>
+                            <li style="width:38px;">6</li>
+                            <li style="width:38px;">7</li>
+                            <li style="width:38px;">8</li>
+                            <li style="width:38px;">9</li>
+                            <li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>1年</li>
+                            <li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>2年</li>
+                            <li style="width:38px;text-align:right;margin-right:8px;"><i class="hui"></i>3年</li>
+                        </ul>
+                        <!--互动层-->
+                        <div class="slider-bar">
+                            <ul class="slider-bg clearfix">
+                                <li width_=45 skip=1 min=0 style="width:38px;">1<span>1个月</span></li>
+                                <li width_=45 skip=1 min=1 style="width:38px;">2<span>2个月</span></li>
+                                <li width_=45 skip=1 min=2 style="width:38px;">3<span>3个月</span></li>
+                                <li width_=45 skip=1 min=3 style="width:38px;">4<span>4个月</span></li>
+                                <li width_=45 skip=1 min=4 style="width:38px;">5<span>5个月</span></li>
+                                <li width_=45 skip=1 min=5 style="width:38px;">6<span>6个月</span></li>
+                                <li width_=45 skip=1 min=6 style="width:38px;">7<span>7个月</span></li>
+                                <li width_=45 skip=1 min=7 style="width:38px;">8<span>8个月</span></li>
+                                <li width_=45 skip=1 min=8 style="width:38px;">9<span>9个月</span></li>
+                                <li width_=46 skip=3 min=9 style="width:38px;text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>1年</li>
+                                <li width_=52 skip=12 min=12 style="width:38px;text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>2年</li>
+                                <li width_=52 skip=12 min=24 style="width:38px;text-align:right;margin-right:8px;width:42px"><i class="hui2"></i>3年</li>
+                            </ul>
+                            <!--滑块按钮-->
+                            <a href="javascript:;" class="slider-bar-btn"><i></i><i></i></a>
+                        </div>
+                    </div>
+                    <div class="shuju-box">
+                        <input type="text"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="bk-disk-input" id="timeinput" value="1">
+                    </div>
+                    <div class="shuju-danwei">
+                        月
+                    </div>
+                    <div class="shuju-box30">
+                        <span class="bk-number-arrow"></span>
+                        <span class="bk-number-arrow2"></span>
+                    </div>
+                    <div class="year-tip-box">
+                        <div class="year-tip" style="display:none;left:500px;">
+                            仅需10个月费用即可享受12个月服务
+                            <div class="year-tip-img"></div>
+                        </div>
+                        <div class="year-tip" style="display:none;left:550px;">
+                            仅需20个月费用即可享受24个月服务
+                            <div class="year-tip-img"></div>
+                        </div>
+                        <div class="year-tip" style="display:none;left:600px;">
+                            仅需30个月费用即可享受36个月服务
+                            <div class="year-tip-img"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="nav_left_layout" class="content-right mtop30">
+            <h5 class="content-right-h5">
+                当前配置
+            </h5>
+            <ul class="content-right-ul ptop10 clearfix">
+                <li>
+                    <div class="content-right-title">机房：</div>
+                    <div class="content-right-title2">郑州机房</div>
+                </li>
+                <li>
+                    <div class="content-right-title">硬盘：</div>
+                    <div class="content-right-title2">5G</div>
+                </li>
+                <li>
+                    <div class="content-right-title">时长：</div>
+                    <div class="content-right-title2">1个月</div>
+                </li>
+                <li>
+                    <div class="content-right-title">总价：</div>
+                    <div class="content-right-title2"><span class="fwqxh-price">0</span>元</div>
+                </li>
+            </ul>
+            <div class="buy-bottom">
+                <a href="javascript:;" id="buy" class="xze-link3">立即购买</a>
+            </div>
+        </div>
+    </div>
+    <!--快云服务器购买配置 end-->
+    <form action="<?php echo U('frontend/clouddb/clouddb_buy','',false);?>" method="post" id="addcart">
+        <input type="hidden" id="api_ptype" name="api_ptype" value="clouddb">
+        <input type="hidden" id="price" name="price" value="0">
+        <input type="hidden" id="config" name="config" value="gx">
+        <input type="hidden" id="spacesize" name="spacesize" value="5">
+        <input type="hidden" id="version" name="version" value="MySql5.5">
+        <input type="hidden" id="dqbh" name="dqbh" value="4001">
+        <input type="hidden" id="gmqx" name="gmqx" value="1">
+        <input type="hidden" name="istry" value="1">
+    </form>
+</block>
+<block name="script">
+    <script src="__FRONTEND_JS__gainet.core.js"></script>
+    <script src="__FRONTEND_JS__gainet.ui.newslider.ky.js"></script>
+    <script>
+        var login  = "false"=="true";
+        $(function(){
+            $("#dqbh").val($("#choosejf a").eq(0).attr("dqbh"));
+        });
+        /*选择版本*/
+        $("#choosebb a").click(function(){
+            $("#choosebb a").removeClass("liselect");
+            $("#version").val($(this).html());
+            $(this).addClass("liselect");
+        });
+        var tdtspace=gainet(".ptop10:eq(0)").slider(
+                {"end":{"startwidth":14,"max":20,"text":"20G"},"default_":1,"label":"G","isnumber":false,"isdiy":true,"callback":selectspace});
+        var tdt=gainet(".ptop10:eq(1)").slider(
+                {"end":{"startwidth":16,"max":36,"text":"3年"},"default":1,"label":"月","isnumber":false,"isdiy":true,"callback":selectshichang});
+        function selectspace(val){
+            if(val==0){
+                val=1;
+                tdtspace.setBarValue(val);
+            }
+            $("#spacesize").val(val);
+            $(".content-right-title2").eq(1).html(val+"G");
+            getBuyPrice(val,$("#dqbh").val(),$("#timeinput").val());
+        }
+        function selectshichang(val){
+            if(val==0){
+                val=1;
+                tdt.setBarValue(val);
+            }
+            $(".content-right-title2").eq(2).html(val+"个月");
+            $("#gmqx").val(val);
+            if(val==12){
+                $(".year-tip").eq(0).show().siblings().hide();
+            }else if(val==24){
+                $(".year-tip").eq(1).show().siblings().hide();
+            }else if(val==36){
+                $(".year-tip").eq(2).show().siblings().hide();
+            }else{
+                $(".year-tip").hide();
+            }
+            getBuyPrice($("#diskinput").val(),$("#dqbh").val(),val);
+        }
+        function getBuyPrice(disk, dqbh, gmqx){
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/buyPrice','',false);?>",
+                data:{"spacesize" :disk,"dqbh" :dqbh,"gmqx" :gmqx,"config":"gx"},
+                type:"post",
+                success:function(data){
+                    if(!data.flag){
+                        alert("获取价格异常");
+                        $(".fwqxh-price").html(0);
+                        $("#buy").removeClass("xze-link3").addClass("disabletrain");
+                    }else{
+                        $(".fwqxh-price").html(data.price);
+                    }
+                }
+            })
+        }
+        $(".xze-link3").click(function(){
+            if($("#buy").hasClass("disabletrain")){
+                return;
+            }
+            $("#price").val($(".fwqxh-price").html());
+            $("#buy").addClass("disabletrain").html("购买中...");
+//            $("#addcart").submit();
+            addcart();
+        });
+        function addcart()
+        {
+            var data = $("#addcart").serialize();
+            $.ajax({
+                url:"<?php echo U('frontend/clouddb/clouddb_buy','',false);?>",
+                data:data,
+                type:"post",
+                success:function(data){
+                    if(data.status == 1){
+                        alert(data.info);
+                        setTimeout(function(){window.location.href=data.url;},2500);
+                    }else{
+                        alert(data.info);
+                        setTimeout(function(){window.location.reload();},2500);
+                    }
+                }
+            })
+        }
+    </script>
+</block>

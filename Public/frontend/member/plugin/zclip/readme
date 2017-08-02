@@ -1,0 +1,26 @@
+该插件是实现复制内容到剪贴板的功能，依赖于jquery，
+
+具体使用方法如下：
+<!-- 依赖于jQuery文件，在插件之前引入 -->
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 核心JS文件 -->
+<script src="<s:text name="global.resource.uri"/>plugin/zclip/1.1.1/jquery.zclip.min.js"></script>
+$(function(){
+    $('#copy_input').zclip({
+        path: '<s:text name="global.resource.uri"/>plugin/zclip/1.1.1/zeroClipboard.swf',
+        copy: function(){//复制内容
+            return $('#mytext').val();
+        },
+        afterCopy: function(){//复制成功
+            $("<span id='msg'/>").insertAfter($('#copy_input')).text('复制成功');
+        }
+    });
+});
+
+注意的是如果是复制的内容来自输入框input、textarea等，copy对象使用：
+copy: function(){
+	return $('#mytext').val();
+}
+如果是复制的内容来自页面元素div、p之类的，copy对象使用：
+copy: $('#mytext').text();

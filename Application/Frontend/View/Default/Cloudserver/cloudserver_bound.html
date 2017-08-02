@@ -1,0 +1,183 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+	<!--ky-main start-->
+	<div class="ky-main home-page">
+		<div class="crumb-container" data-nav="phoenix">
+			<ol class="breadcrumb ky-crumb">
+				<li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+				<li><a href="<?php echo U('frontend/cloudserver/cloudserverlist','',false);?>">快云服务器管理</a></li>
+				<li><a>快云服务器绑定IP</a></li>
+			</ol>
+		</div>
+		<div class="">
+			<div class="conseole-ky-fuwuqi">
+				<div class="ky-panel-heading clearfix">
+					<div class="info-user-title">
+						<h4>快云服务器绑定IP<a href="javascript:void(0);" class="btn-primary btn-reverse btn-icon-return margin-left-10" onclick="javascript:history.back(-1);">返 回</a></h4>
+					</div>
+				</div>
+				<div class="ky-panel-body">
+				<form action="<?php echo U('frontend/cloudserver/cloudserver_bound','',false);?>"  method="post"  id="ip">
+				<input type="hidden"  name="cloudserver_id"  value="<?php echo $id;?>"/>
+				<input type="hidden"  name="cloudserver_api_bid"  value="<?php echo $api_bid;?>"/>
+					<table class="ky-table margin-bottom-20">
+						<tbody>
+							<tr>
+								<td width="15%" class="text-right pright10">
+									快云服务器业务编号
+								</td>
+								<td width="40%">
+									<?php echo $api_bid;?>
+								</td>
+								<td width="10%" class="text-right pright10">
+									操作系统
+								</td>
+								<td width="40%">
+									<?php echo $os_type;?>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									服务时间
+								</td>
+								<td width="40%" >
+								<div class="text-stress">开通时间：<?php echo $create_time;?></div>
+									<div class="text-stress">到期时间：<?php echo $overdue_time;?></div>
+								</td>
+								<td width="10%" class="text-right pright10">
+									机房
+								</td>
+								<td width="40%">
+									<?php if($area_code == '4001'){echo "郑州机房";}else{echo "香港机房";}?>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									备注
+								</td>
+								<td width="40%" colspan='3'>
+									<?php if($beizhu == null){echo "暂未备注";}else{echo $beizhu;}?>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									绑定IP地址
+								</td>
+								<?php if($ip_state == '1'){?>
+								<td colspan="3">
+										<input type="text" class="login-input"      value="122.114.127.161"  readOnly="true"/>
+								</td>
+								<?php }else{?>
+								<td colspan="3">
+              							 <!-- <input type="text" class="login-input"  id="ipdz" name="ipdz"   placeholder="请输入要绑定的IP地址"  value="" required /> -->
+										 <select class="" name="ipdz" id="ipdz" required>
+											 <option value="-1">请选择</option>
+										 	<?php foreach($ip_info as $k => $v):?>
+												<option value="<?php echo $v['ipaddress']?>">
+													<?php echo $v['ipaddress']?>
+												</option>
+											<?php endforeach;?>
+										 </select>
+              							 <span class="gf00"></span>
+								</td>
+								<?php }?>
+							</tr>
+							<?php if($ip_state == '1'){?>
+							<tr>
+								<td width="10%" class="text-right pright10">
+								&nbsp;
+								</td>
+								<td colspan="3">
+									<span><img src="__FRONTEND_IMAGES__loading.gif" />IP正在绑定，耐心等候1--2分钟！</span>
+								</td>
+							</tr>
+							<?php }else{?>
+							<tr>
+								<td width="10%" class="text-right pright10">
+								&nbsp;
+								</td>
+								<td colspan="3">
+									<button class="btn btn-default chongzhi-btn"  type="submit">确认绑定</button>
+								</td>
+							</tr>
+							<?php }?>
+						</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<div  id="dialog"  title="备注信息" style="display: none">
+						<div class="cipan clearfix">
+							<ul>
+								<li>
+									<div class="dd">
+										<textarea rows="4" cols="40"  id="remark"></textarea>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+</block>
+<block name="script">
+<script src="__FRONTEND_JS__common/common-header.js"></script>
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script type="text/javascript">
+var int ='';
+$(function(){
+var state = "<?php echo $ip_state;?>";
+if(state == 1){
+int = setInterval("clock()",5000);
+}
+});
+function clock(){
+	$.ajax({
+	    //提交数据的类型 POST GET
+	    type:"GET",
+	    //提交的网址
+	    url:"<?php echo U('frontend/cloudserver/IpProgress',['cloudserver_id'=>$id,'ip'=>$ip_bid],false);?>",
+	    //提交的数据
+	    //返回数据的格式
+	    datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+	    //成功返回之后调用的函数
+	    success:function(data){
+		    	if(data.status == 'y')
+				{
+		    		clearInterval(int);
+		    		var domain = "{:U('frontend/cloudserver/cloudserverlist', [], false)}";
+		    		var url = domain;
+		    		location.href = url;
+			    }else if(data.status == 'no'){
+			    	clearInterval(int);
+			    	alert(data.message);
+			    }
+	    }
+	 });
+}
+</script>
+<script type="text/javascript">
+function updater(form){
+	form.submit();
+}
+$("#ip").validate({
+	submitHandler:function(form){
+		updater(form);
+    },
+    rules:{
+    	ipdz:{
+			required:true,
+		  },
+	},errorPlacement: function(error, element) {
+        error.appendTo(element.next('span'));
+    },
+    messages:{
+    	ipdz:{
+			required:"IP地址不能为空",
+	  	},
+	},
+});
+</script>
+</block>

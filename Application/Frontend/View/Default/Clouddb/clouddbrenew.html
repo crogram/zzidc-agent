@@ -1,0 +1,235 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>快云数据库管理</a></li>
+        </ol>
+    </div>
+    <div class="">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">快云数据库</div>
+                <a href="<?php echo U('frontend/Help/help_retrieval',[keywords=>'快云数据库'],false);?>" target="_blank" class="server-help pull-right">快云数据库帮助文档</a>
+            </div>
+            <div class="ky-panel-body">
+                <div class="ky-tabs-container clearfix margin-bottom-20">
+                    <ul class="text-center pull-left clearfix">
+                        <li class="ky-tab"><a href="<?php echo U('frontend/clouddb/clouddblist',[], false);?>">快云数据库<em class="chenggong">0</em></a></li>
+                        <li class="ky-tab ky-tab--current"><a href="<?php echo U('frontend/clouddb/clouddbrenew',[], false);?>">待续费业务<em class="chuli">0</em></a></li>
+                    </ul>
+                </div>
+                <div class="server-operates clearfix margin-bottom-20">
+                    <form action="" class="pull-left" method="post">
+                        <input type="text"  name="select"  class="pull-left ky-input-reset search-group-input" placeholder="输入业务标识、业务编号、备注">
+                        <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                    </form>
+                </div>
+                <table class="ky-table margin-bottom-20">
+                    <thead>
+                    <tr>
+                        <th width="">业务编号</th>
+                        <th width="">业务标识/备注</th>
+                        <th width="">线路/状态</th>
+                        <th width="">IP地址</th>
+                        <th width="">产品名称/类型</th>
+                        <th width="">产品配置</th>
+                        <if condition="$Think.get.order eq ASC">
+                            <th width="">开通日期/到期日期<a href="<?php echo U('frontend/clouddb/clouddblist',[ 'order'=>'DESC'], false);?>"  class="filter-icon"></a></th>
+                            <else/>
+                            <th width="">开通日期/到期日期<a href="<?php echo U('frontend/clouddb/clouddbrenew',[ 'order'=>'ASC'], false);?>"  class="filter-icon"></a></th>
+                        </if>
+                        <th width="">操作</th>
+                    </tr>
+                    </thead>
+                    <volist name="info"  id="data">
+                        <tbody>
+                        <tr>
+                            <td><?php echo $data['api_bid'];?></td>
+                            <td class="ky-td-multi-lines">
+                                <div>业务标识：{$data.ywbs}</div>
+                                <div>
+                                    备注：<span id="bz_{$data.yid}"><if condition="$data.beizhu eq null">未备注,添加备注信息<else/>{$data.beizhu}</if></span>
+                                    <input  type="hidden"  value="{$data.beizhu}"  id="remark_<?php echo $data['yid'];?>"/>
+                                    <a href="javascript:void(0);" class="change-name edit-name margin-left-10" title="修改备注"  onclick="changeMarkdb('{$data.yid}')"></a>
+                                </div>
+                            </td>
+                            <td  class="ky-td-multi-lines">
+                                <p><?php if($data['area_code'] == '4001'){echo "郑州机房";}elseif($data['area_code'] == '4002'){echo "香港机房";}elseif($data['area_code'] == '4003'){echo "北京机房";}?></p>
+                                <?php if($data["state"] == '1'){?>
+                                <span class="text-success ny-state-icon server-state-run">正常</span>
+                                <?php }elseif($data["state"] == '3'){?>
+                                <span class="text-success ny-state-icon server-state-stop">过期</span>
+                                <?php }elseif($data["state"] == '2'){?>
+                                <span class="text-success ny-state-icon server-state-stop">删除</span>
+                                <?php }elseif($data["state"] == '4'){?>
+                                <span class="text-success ny-state-icon server-state-stop">失败</span>
+                                <?php }?>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == '5'){?>
+                                <a>-----</a>
+                                <?php } else {?>
+                                <div class="text-stress">外网IP：<?php echo $data['wwdz'];?></div>
+                                <div class="text-stress">内网IP：<?php echo $data['nwdz'];?></div>
+                                <?php }?>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">产品类别：{$data.product_name}</div>
+                                <div class="text-stress">产品名称：{$data.version}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <div class="text-stress">内存：<?php echo $data['memory'];?> MB</div>
+                                <div class="text-stress">硬盘：{$data.disk} G</div>
+                                <div class="text-stress">IOPS：{$data.iops}</div>
+                                <div class="text-stress">最大连接数：{$data.conn}</div>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == '5'){?>
+                                <a>---</a>
+                                <?php }else{?>
+                                <div class="text-stress">开通时间：<?php echo $data["create_time"];?></div>
+                                <div class="text-stress">到期时间：<?php echo $data["overdue_time"];?></div>
+                                <?php }?>
+                            </td>
+                            <td class="ky-td-multi-lines">
+                                <?php if($data['state'] == 2 || $data['state'] == 4){?>
+                                — —
+                                <?php }elseif($data['state'] == '5'){?>
+                                <div><span><img src="__FRONTEND_IMAGES__loading.gif" />正在开通，耐心等候1--2分钟！</span></div>
+                                <?php }elseif($data['state'] == '6'){?>
+                                <div><span><img src="__FRONTEND_IMAGES__loading.gif" />正在升级，耐心等候1--2分钟！</span></div>
+                                <?php }elseif($data['free_trial'] == 0){?>
+                                <div>
+                                    <?php if($data['state'] == 1){?>
+                                	<a href="<?php echo U('frontend/Jump/user_call_self',['input_name'=>$data['api_ptype'],'business_id'=>$data['api_bid'],'api_name'=>'cloudsjk','business_mark'=>$data['ywbs']],false);?>"  class="renew-server" target="_blank">管理</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <?php } ?>
+                                    <a href="<?php echo U('frontend/clouddb/clouddb_renewals',['clouddb_id'=>$data['yid']],false);?>" class="renew-server">续费</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/clouddb/memberSync', ['business_id'=>$data['api_bid'],'ptype'=>$data['api_ptype']], false);?>">同步</a>
+                                </div>
+                                <?php if($data['state'] == 1){?>
+                                <div>
+                                    <a href="<?php echo U('frontend/clouddb/clouddb_uplevel',['clouddb_id'=>$data['yid']],false);?>">升级</a>
+                                </div>
+                                <?php }}else{ ?>
+                                <div>
+                                    <?php if($data['state'] == 1){?>
+                                    <a href="<?php echo U('frontend/Jump/user_call_self',['input_name'=>$data['api_ptype'],'business_id'=>$data['api_bid'],'api_name'=>$data['api_name'],'business_mark'=>$data['ywbs']],false);?>"  class="renew-server" target="_blank">管理</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <?php } ?>
+                                    <a href="<?php echo U('frontend/clouddb/clouddb_onformal',['clouddb_id'=>$data['yid']],false);?>" class="renew-server">转正</a>
+                                    <span class="text-muted operate-spacing">|</span>
+                                    <a href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/clouddb/memberSync',['business_id'=>$data['api_bid'],'ptype'=>$data['api_ptype']], false);?>">同步</a>
+                                </div>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </volist>
+                    <empty name="info">
+                        <tbody>
+                        <tr>
+                            <th colspan="8">
+                                <p>暂无30天内到期业务！</p>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </empty>
+                </table>
+                <!-- 引入分页 -->
+                <include file="Hyzx/member_page" />
+            </div>
+        </div>
+    </div>
+    <div  id="dialog"  title="备注信息" style="display: none">
+        <div class="cipan clearfix">
+            <ul>
+                <li>
+                    <div class="dd">
+                        <textarea rows="4" cols="40"  id="remark" style="resize: none"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        var tooken = true;
+        function tbajax(tb){
+            if(tooken){
+                tooken = false;
+                var url = $(tb).attr("url");
+                $.post(url,function(data){
+                    alert(data.info);
+                    setTimeout(function(){window.location.reload();},1500);
+                },'json');
+            }
+        }
+        function changeMarkdb(id) {
+            var remark = $("#bz_"+id).text();
+            if (remark == "" || remark == null) {
+                $("#remark").val("请输入备注信息");
+            } else {
+                $("#remark").val(remark);
+            }
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal: true,
+                resizable: false,
+                width: 400,
+                buttons: [{
+                    text: "确认",
+                    click: function () {
+                            var bz = $("#remark").val();
+                            $.post('<?php echo U("frontend/clouddb/remark",array(),false)?>',
+                                    {"remark": bz, "id": id},
+                                    function (date) {
+                                        if (date == "ok") {
+                                            $("#bz_"+id).text(bz);
+                                            alert('成功');
+                                        } else {
+                                            alert('失败');
+                                        }
+                                    }, 'json');
+                            $(this).dialog("close");
+                        }
+                    }, {
+                    text: "重置",
+                    click: function () {
+                        document.getElementById("remark").value = "";
+                    }}, {
+                    text: "取消",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }]
+            });
+        }
+        $(function(){
+            $( ".bz" ).on('click',function( event ) {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
+    <script>
+    $(function(){
+    	state_count("1");
+    	state_count("2");
+    });
+    function state_count(state){
+    	$.post('<?php echo U("frontend/clouddb/state_count",array(),false)?>',{"state":state},function(date){
+    		if(date.status == "ok"){
+    			if(state == 1){
+    				$(".chenggong").text(date.sum);
+    			}else if(state == 2){
+    				$(".chuli").text(date.sum);
+    			}
+    		}
+    	},'json');
+    }
+    </script>
+</block>

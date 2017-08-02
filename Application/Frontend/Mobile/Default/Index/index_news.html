@@ -1,0 +1,13 @@
+<!-- 新闻中心 -->
+<div class="news text-center">
+	<h3>新闻中心</h3>
+	<ul class="news-list text-left">
+	<volist name="news" id="new">
+		<li><a href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');" url="{:U('Article/article_details',array('id'=>$activity['id']),false)}" class="jinzhitiaozhuan">
+			<span class="data disblock pull-left">{$new.create_time|date='m.d',###}</span><span class="disblock pull-left margin-l16-r36">|</span>{$new.title}
+		</a></li>
+		</volist>
+		<li><a href="javascript:alertMsg('提示','该功能暂未上线,敬请期待！');" url="{:U('Article/articlelist',array('type'=>1),false)}" class="jinzhitiaozhuan g009">查看全部</a></li>
+	</ul>
+</div>
+<!-- 新闻中心结束 -->

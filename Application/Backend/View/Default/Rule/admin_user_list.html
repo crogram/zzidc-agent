@@ -1,0 +1,47 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	
+</block>
+
+<block name="content">
+<div class="panel panel-default">
+  <div class="panel-heading">
+	<h3 class="panel-title bjy-admin-nav">
+    <i class="fa fa-home"></i> 首页 
+    &gt;
+    后台管理
+    &gt;
+    管理员列表
+	    <a class=" btn btn-success pull-right btn-xs" href="{:U('Backend/Rule/add_admin')}">添加管理员</a>
+	</h3>
+  </div>
+  
+  <div class="panel-body">
+<table class="table table-striped table-hover">
+    <tr>
+        <th width="10%">用户名</th>
+        <th>用户组</th>
+        <th>操作</th>
+    </tr>
+    <foreach name="data" item="v">
+        <tr>
+            <td>{$v['username']}</td>
+            <td>{$v['title']}</td>
+            <td>
+                <a href="{:U('Backend/Rule/edit_admin',array('id'=>$v['id']))}">修改权限或密码</a>
+                <if condition="$v.id neq '1'">
+                <a href="{:U('Backend/Rule/del_admin',array('id'=>$v['id']))}">删除管理员</a>
+               	</if>
+            </td>
+        </tr>
+    </foreach>
+</table>
+   </div>
+  <!-- 面板主体结束 -->
+</div>
+</block>
+
+<block name="scripts">
+
+</block>

@@ -1,0 +1,130 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					网站设置 &amp; seo优化
+				</small>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+			<table id="simple-table" class="table table-hover  table-bordered">
+				<thead>
+	<tr>
+		<th>
+				<label class="pos-rel">
+					<span class="lbl">位置</span>
+				</label>
+		</th>
+		<th>
+				<label class="pos-rel">
+					<span class="lbl">keywords</span>
+				</label>
+		</th>
+		<th>
+				<label class="pos-rel">
+					<span class="lbl">description</span>
+				</label>
+		</th>
+		<th>
+				<label class="pos-rel">
+					<span class="lbl">title</span>
+				</label>
+		</th>
+		<th>操作
+				<a href="<?php echo U('Backend/System/seo', [ ], false);?>">
+					<span class="glyphicon glyphicon-refresh"></span>
+				</a>
+		</th>
+
+</tr>
+</thead>
+<tbody>
+<tr>
+	<?php foreach($seo_info as $k =>$v):?>
+		<td class="center">
+			<label class="pos-rel">
+				<span class="lbl"><?php echo $v['sys_des']?></span>
+			</label>
+		</td>
+		<?php $values = explode('!', $v['sys_value']);?>
+		<td class="center">
+			<label class="pos-rel">
+				<span class="lbl" id="keywords-<?php echo $v['sys_id']?>"><?php echo $values[0]?></span>
+			</label>
+		</td>
+		<td class="center">
+			<label class="pos-rel">
+				<span class="lbl" id="description-<?php echo $v['sys_id']?>"><?php echo $values[1]?></span>
+			</label>
+		</td>
+		<td class="center">
+			<label class="pos-rel">
+				<span class="lbl" id="title-<?php echo $v['sys_id']?>"><?php echo $values[2]?></span>
+			</label>
+		</td>
+<td>
+<a href="javascript:void(0);" onclick="update(<?php echo $v['sys_id']?>,'<?php echo $v['sys_key']?>')">修改</a>
+</td>
+</tr>
+<?php endforeach;?>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+
+
+
+<script type="text/javascript">
+
+function update(sid, key){
+	var keywords = $('#keywords-'+sid).text();
+	var description = $('#description-'+sid).text();
+	var title = $('#title-'+sid).text();
+	confirmBox('<p class="text-center">不能含有英文感叹号</p><form class="bootbox-form" name="form-seo" id="form-seo"><div class="space-4"></div><input class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="keywords" id="keywords" value="'+keywords+'"><div class="space-4"></div><div class="space-4"></div><input class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="description" id="description" value="'+description+'"><div class="space-4"></div><div class="space-4"></div><input class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" name="title" id="title" value="'+title+'"><div class="space-4"></div><input type="hidden" name="sys_key" id="sys_key" value="'+key+'" /></form>', function(){
+		configure();
+	});
+}
+
+
+function configure() {
+	var url = "<?php echo U('Backend/System/seoSetup', [], false);?>/form/seo";
+	$.ajax({
+		type : "POST",
+		dataType : "json",
+		data: $('#form-seo').serialize(),
+		url : url,
+		success : function(data){
+			if (data.status == 1) {
+				location.reload(true)
+			}else {
+				alertBox(data.info);
+			}
+		}
+	});
+}
+
+</script>
+
+</block>

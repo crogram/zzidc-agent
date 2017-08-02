@@ -1,0 +1,123 @@
+<!--头部导航start-->
+<div class="<?php if($is_product_info){?>ky-nav-bg3<?php }else if($is_help_info) {?>ky-nav-bg2<?php } ?>">
+    <div class="ky-nav <?php if($is_index || $is_product_info || $is_help_info){?>ky-nav-bg<?php }?>" style="z-index:4">
+        <div class="ky-container">
+            <div class="ky-nav-logo">
+                <a href="{:U('frontend/index/index', '', false)}"><img src="{$site_config['logo_url']}" width="120" height="42" alt="{$site_config['site_name']}"/></a>
+            </div>
+            <div class="ky-nav-menu">
+                <div data-spm="2">
+                    <div class="ky-header">
+                        <div class="ky-header-inner clearfix">
+                            <!-- 导航菜单 -->
+                            <ul class="menu item pull-left" id="J_common_header_menu" data-spm="201">
+                                <li class="top-menu-item" has-dropdown="false" menu-type="">
+                                    <a  class="menu-hd top-menu-item-link" href="<?php echo U('frontend/index/index', '', false);?>">首页</a>
+                                </li>
+                                <li class="top-menu-item" has-dropdown="false" menu-type="">
+                                    <a  class="menu-hd top-menu-item-link" href="<?php echo U('frontend/domain/domain', '', false);?>">域名</a>
+                                </li>
+                                <li class="top-menu-item" has-dropdown="true" menu-type="solution">
+                                    <span class="menu-hd">虚拟主机</span>
+                                    <div class="menu-dropdown solutions solution-bg" style="width:176px">
+                                        <div class="menu-dropdown-inner module-padding solution-inner clearfix">
+                                            <div class="module-wrap" style="width:160px;margin-right:20px">
+                                                <div class="module-bd">
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'host'],false);?>">国内主机</a>
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'hkhost'],false);?>">香港主机</a>
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudspace'],false);?>">云空间</a>
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'dedehost'],false);?>">织梦主机</a>
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'usahost'],false);?>">美国主机</a>
+                                                    <a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudVirtual'],false);?>">云虚拟主机</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!--解决方案-->
+                                <li class="top-menu-item" has-dropdown="true" menu-type="solution">
+                                    <span class="menu-hd">VPS</span>
+                                    <div class="menu-dropdown solutions solution-bg" style="width:176px">
+                                        <div class="menu-dropdown-inner module-padding solution-inner clearfix">
+                                            <div class="module-wrap" style="width:160px;margin-right:20px">
+                                                <div class="module-bd">
+                                                    <a href="<?php echo  U('frontend/product/vps' ,['type'=>'fastvps'],false);?>">快云VPS</a>
+                                                    <a href="<?php echo  U('frontend/product/vps' ,['type'=>'hkvps'],false);?>">香港VPS</a>
+                                                    <?php if($site_config['agent_level'] >= 4 && $site_config['agent_level'] != 9){ ?>
+                                                    <a href="<?php echo  U('frontend/product/vps' ,['type'=>'domesticvps'],false);?>">特卖VPS</a>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!--快云产品-->
+                                <li class="top-menu-item" has-dropdown="true" menu-type="solution">
+                                    <span class="menu-hd">快云产品</span>
+                                    <div class="menu-dropdown solutions solution-bg" style="width:176px">
+                                        <div class="menu-dropdown-inner module-padding solution-inner clearfix">
+                                            <div class="module-wrap" style="width:160px;margin-right:20px">
+                                                <div class="module-bd">
+                                                    <a href="<?php echo U('frontend/cloudserver/cloudserverShow','',false);?>">快云服务器</a>
+                                                    <a href="<?php echo U('frontend/clouddb/clouddbShow','',false);?>">快云数据库</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!--SSL-->
+                                <li class="top-menu-item" has-dropdown="true" menu-type="solution">
+                                    <a class="menu-hd" href="<?php echo U('frontend/product/ssl','',false);?>">SSL证书</a>
+                                    <div class="menu-dropdown solutions solution-bg" style="width:176px">
+                                        <div class="menu-dropdown-inner module-padding solution-inner clearfix">
+                                            <div class="module-wrap" style="width:160px;margin-right:20px">
+                                                <div class="module-bd">
+                                                    <a href="<?php echo U('frontend/product/ssl','',false);?>">DV证书</a>
+                                                    <a href="<?php echo U('frontend/product/ssl','',false);?>">OV证书</a>
+                                                    <a href="<?php echo U('frontend/product/ssl','',false);?>">EV证书</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gt-nav-login">
+                <input type="hidden" value=''/>
+                <!-- a href="#">购物车</a><span class="stick">|</span> -->
+                <?php if($site_config['white_list'] == 'yes'){?>
+                <a href="<?php echo U('frontend/white/whitelist','',false);?>">白名单</a><span class="stick">|</span>
+                <?php }?>
+                <a href="{:U('Help/helpindex','',false)}" target="_blank">帮助中心</a><span class="stick">|</span>
+                <div class="login-op" style="height:32px">
+                    <div id="login" class="state-log-out">
+                        <a href="<?php echo U('frontend/login/login', '', false);?>" class="text">登录</a>
+                        <span class="stick">|</span>
+                        <a href="<?php echo U('frontend/login/register','',false);?>" class="text btn-sign-up">注册</a>
+                    </div>
+                </div>
+                <div class="login-op">
+                    <div  id="login_out"  class="state-log-in" style="display:none;top: -1px;">
+                        <a id="h_username" href="<?php echo U('frontend/member/index','',false)?>" class="user-id">
+                            <span class="user-name" id="login_name"></span>
+                            <i class="triangle-down"></i>
+                        </a>
+                        <!-- 退出浮层 -->
+                        <div id="h_logout_btn" class="nav-down-style nav-down-style-1" style="display:none;">
+                            <ul class="nav-down-menu">
+                                <li><a href="<?php echo U('frontend/login/logout', '', false);?>">退出</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <span class="stick">|</span>
+                <a href="<?php echo U('frontend/member/index', '', false);?>">会员中心</a>
+            </div>
+        </div>
+    </div>
+    <block name="search"></block>
+</div>
+<!--头部导航end-->

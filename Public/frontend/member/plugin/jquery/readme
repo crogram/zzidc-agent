@@ -1,0 +1,8 @@
+jquery各个版本的类文件
+
+引用路径：
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.4.4/jquery.min.js"></script>
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.7.2/jquery.min.js"></script>
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.9.1/jquery.min.js"></script>
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/1.11.3/jquery.min.js"></script>
+<script src="<s:text name="global.resource.uri"/>plugin/jquery/2.1.4/jquery.min.js"></script>

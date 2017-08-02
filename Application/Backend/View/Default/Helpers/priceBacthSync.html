@@ -1,0 +1,114 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<!-- <small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					后台首页
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					友情链接列表
+				</small> -->
+				<!-- <a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Links/create', [], false);?>">新增友情链接</a> -->
+			</h1>
+
+		</div><!-- end/.page-header -->
+		<div class=" row">
+			<div class="col-xs-12">
+<!--  页面主题/开始 -->
+
+    <div class="row text-center">
+        <p class="lead">批量修改价格</p>
+    </div>
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Helpers/priceBacthSynchronizer', [  ], false);?>" role="form" method="post" name="price-bacth-sync" id="price-bacth-sync">
+
+        <div class="form-group">
+        	<label class="col-sm-4 control-label no-padding-right" for="ptype">
+        		<span style="color:red;" class="fa fa-asterisk"></span>
+        		产品类型：
+        	 </label>
+
+        	<div class="col-sm-8">
+        		<select class="col-xs-10 col-sm-5" name="ptype" id="ptype">
+        				<?php foreach($ptype as $k => $v):?>
+        					<option value="<?php echo $k;?>">
+        						<?php echo $v;?>
+        					</option>
+        				<?php endforeach;?>
+        		</select>
+        		<span class="help-inline col-xs-12 col-sm-7">
+        			<span class="middle text-danger">对什么产品进行更正?</span>
+        		</span>
+        	</div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right" for="">
+                功能说明：
+             </label>
+
+            <div class="col-sm-8">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle text-danger">选中需要更新的产品类型进行价格批量修改。</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info" onclick="priceBacthSync(1)" >
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    只修改景安价格
+                </a>
+                <a class="btn btn-info" onclick="priceBacthSync(2)" >
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    同时修改景安和代理销售价格
+                </a>
+            </div>
+        </div>
+
+    </form>
+
+<!--  页面主题/结束 -->
+			</div>
+		</div>
+
+</block>
+
+<block name="scripts">
+    <!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+    <script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+    <script src="__COM_JS__messages_zh.js"></script>
+	<script type="text/javascript">
+        function priceBacthSync(type){
+			$form = $('#price-bacth-sync');
+            var url = "<?php echo U('Backend/Helpers/priceBacthSynchronizer', [  ], false);?>/type/"+type;
+            var dialog = null;
+            $.ajax({
+                type : "POST",
+                data: $form.serialize(),
+                dataType : "json",
+                url : url,
+                beforeSend: function(){
+                    dialog = bootbox.dialog({
+                        message: '<p><i class="fa fa-spin fa-spinner"></i>正在同步价格...请稍后</p>',
+                        closeButton: false
+                    });
+                },
+                success : function(data){
+                    dialog.modal('hide');
+                    alertBox(data.info);
+                }
+            });
+    	}
+
+	</script>
+</block>

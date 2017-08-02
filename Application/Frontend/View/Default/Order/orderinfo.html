@@ -1,0 +1,130 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+	<!--ky-main start-->
+	<div class="ky-main home-page">
+		<div class="crumb-container" data-nav="phoenix">
+			<ol class="breadcrumb ky-crumb">
+				<li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+				<li><a href="<?php echo U('frontend/order/orderlist','',false);?>">订单管理</a></li>
+				<li><a>订单详情</a></li>
+			</ol>
+		</div>
+		<div class="">
+			<div class="conseole-ky-fuwuqi">
+				<div class="ky-panel-heading clearfix">
+					<div class="info-user-title">
+						<h4>订单详情<a href="javascript:void(0);" class="btn-primary btn-reverse btn-icon-return margin-left-10" onclick="javascript:history.back(-1);">返 回</a></h4>
+					</div>
+				</div>
+				<div class="ky-panel-body">
+				<form action="<?php echo U('frontend/virtualhost/virtualhost_open','',false);?>"  method="post"  id="order_form">
+				<input type="hidden"  name="product_id"  value="{$order_info.product_id}"/>
+				<input type="hidden"  name="virtual_type"  value="<?php if($order_info['area_code'] == '4001' || $order_info['area_code']){echo '0';}elseif($order_info['area_code'] == '4002'){echo '1';}elseif($order_info['area_code'] == '4005'){echo '2';}?>"/>
+				<input type="hidden"  name="order_id"  value="{$order_info.id}"/>
+					<table class="ky-table margin-bottom-20">
+						<tbody>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									订单号
+								</td>
+								<td width="40%">
+									<?php echo $order_info['id'];?>
+								</td>
+								<td width="10%" class="text-right pright10">
+									API订单号
+								</td>
+								<td width="40%">
+									{$order_info.api_id}
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									订单状态
+								</td>
+								<td width="40%">
+									<if condition="$order_info.state == 0 ">失败
+										<elseif condition="$order_info.state == 1 " />成功
+										<elseif condition="$order_info.state == 2 "/>待处理
+										<elseif condition="$order_info.state == 3 "/>处理中
+										<elseif condition="$order_info.state == 4 "/>审核中
+										<elseif condition="$order_info.state ==  5"/>已删除
+										<elseif condition="$order_info.state ==  6"/>已付款
+									</if>
+								</td>
+								<td width="10%" class="text-right pright10">
+									类型
+								</td>
+								<td width="40%">
+									<if condition="$order_info.order_type == 0 ">新增
+										<elseif condition="$order_info.order_type == 1 " />增值
+										<elseif condition="$order_info.order_type == 2 "/>续费
+										<elseif condition="$order_info.order_type == 3 "/>变更方案
+										<elseif condition="$order_info.order_type == 4 "/>转正
+									</if>
+								</td>
+							</tr>
+							<?php if($order_info['product_type'] != 20 && $order_info['product_type'] !=9 && $order_info['product_type'] !=10 ){ ?>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									操作系统
+								</td>
+								<td width="40%">
+									<if condition="$order_info.system_type == 0">Linux<else/>Windows</if>
+								</td>
+								<td width="10%" class="text-right pright10">
+									主机线路
+								</td>
+								<td width="40%">
+									<?php if($order_info['area_code'] == 4001 || $order_info['area_code'] == 4008){echo '国内';}else if($order_info['area_code'] == 4002){echo '香港';}else if($order_info['area_code'] == 4005){echo '美国'; }?>
+								</td>
+							</tr>
+							<?php } ?>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									产品类别
+								</td>
+								<td width="40%">
+									{$order_info.product_name}
+								</td>
+								<td width="10%" class="text-right pright10">
+									购买价格
+								</td>
+								<td width="40%">
+									<span class="gff8">{$order_info.charge}元</span>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									完成时间
+								</td>
+								<td width="40%">
+									{$order_info.complete_time}
+								</td>
+								<td width="10%" class="text-right pright10">
+									购买期限
+								</td>
+								<td width="40%">
+									<span class="gff8">{$order_info.order_time}个月</span>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%" class="text-right pright10">
+									备注
+								</td>
+								<td width="40%" colspan='3'>
+									{$order_info.order_log}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</block>
+<block name="script">
+</block>

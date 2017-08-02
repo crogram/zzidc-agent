@@ -1,0 +1,45 @@
+<form class="form-horizontal" id="form-api" action="<?php echo U('Backend/System/configure', [], false);?>" method="post" name="form-api"  role="form">
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right "  for="api_url">API接口地址：</label>
+            <div class="col-sm-8">
+                    <p class="lead" > <a href="<?php echo $basic_info['api_url'];?>"><?php echo $basic_info['api_url'];?></a></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right" for="api_access_id">
+                Access Id：
+            </label>
+            <div class="col-sm-8">
+                <input type="text" id="api_access_id" name="api_access_id"  value="<?php echo $basic_info['api_access_id'];?>" class="col-xs-10 col-sm-5">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">景安审核通过发送的Access Id</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right" for="api_access_key">
+                Access Key：
+            </label>
+            <div class="col-sm-8">
+                <input type="text" id="api_access_key" name="api_access_key"  value="<?php echo $basic_info['api_access_key'];?>" class="col-xs-10 col-sm-5">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">景安审核通过发放的Access Key</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <a class="btn btn-info" onclick="configure('api')" >
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    修改
+                </a>
+            </div>
+        </div>
+
+</form>

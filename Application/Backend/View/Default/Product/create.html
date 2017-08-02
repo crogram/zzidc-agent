@@ -1,0 +1,178 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" href="__COM_STATICS__bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+</block>
+<block name="content">
+	<div class="page-header">
+		<h1>
+			<i class="fa fa-home"></i> 首页
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				业务管理 &amp; 录入业务
+			</small>
+		</h1>
+	</div><!-- end/.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="<?php echo U('Backend/Product/recording',[],false);?>" role="form" method="post" name="update" id="update">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="business_id">
+						<span style="color:red;" class="fa fa-asterisk"></span>API业务编号：
+					</label>
+					<div class="col-sm-9">
+						<input type="text" name="business_id"  id="business_id" value="" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle"></span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="type">
+						<span style="color:red;" class="fa fa-asterisk"></span>产品类型：
+					</label>
+					<div class="col-sm-9">
+						<select class="col-xs-10 col-sm-5" name="type" id="type">
+							<option value="" selected="selected">—请选择—</option>
+                            <option value="vps">VPS</option>
+                            <option value="fastcloudvps">快云VPS</option>
+                            <option value="host">国内虚拟主机</option>
+                            <option value="dedehost">织梦虚拟主机</option>
+                            <option value="hkhost">香港虚拟主机</option>
+                            <option value="usahost">美国虚拟主机</option>
+                            <option value="cloudVirtual">云虚拟主机</option>
+                            <option value="domain">域名</option>
+                            <option value="cloudspace">云空间</option>
+                            <option value="cloudserver">快云服务器</option>
+                            <option value="cloudserverIP">快云服务器IP</option>
+                            <option value="clouddb">快云数据库</option>
+						</select>
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle"></span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"  for="note_appended">
+						备注说明：
+					</label>
+					<div class="col-sm-9">
+						<textarea class="limited col-xs-10 col-sm-5" id="note_appended" name="beizhu" maxlength="100"></textarea>
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle">最多100个字</span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="login_name">
+						会员账号：
+					</label>
+					<div class="col-sm-9">
+						<input type="text" readonly="readonly"  id="login_name" name="login_name" value="" class="col-xs-10 col-sm-5">
+						<input type="hidden"  id="user_id" name="user_id"  value="" >
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle">
+                                <a href="javascript:void(0);" onclick="deleteMember()">取消选择</a>
+								<a href="javascript:void(0);" onclick="selectMember()">会员(点击选择会员)</a>
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="clearfix form-actions">
+					<div class="col-md-offset-3 col-md-9">
+						<button class="btn btn-info" type="submit">
+							<i class="ace-icon fa fa-check bigger-110"></i>录入
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+<block name="scripts">
+	<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+	<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+	<script src="__COM_JS__messages_zh.js"></script>
+	<script src="__COM_STATICS__bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="__COM_STATICS__bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+	<script type="text/javascript">
+        var tooken = true;
+		function recording() {
+            if(tooken)
+            {
+                tooken = false;
+                var data = $("#update").serialize();
+                var url = "<?php echo U('Backend/Product/recording',[],false);?>";
+                $.post(url,data,function(data){
+                    if(data.status == 0){
+                        alert(data.info);
+                        setTimeout(function(){window.location.reload()},1500);
+                    }else if(data.status == 1){
+                        alert(data.info);
+                        setTimeout(function(){window.location.href=data.url},1500);
+                    }
+                    tooken = true;
+                });
+            }
+		}
+		$('textarea.limited').inputlimiter({
+			remText: '还可以在输入%n个字',
+			limitText: '最多只允许输入 %n个字.'
+		});
+		function selectMember(){
+			var subWindow = window.open("<?php echo U('Backend/Member/radio',[],false)?>",'newwindow','width=900,height=800,scrollbars=yes');
+		}
+        function deleteMember(){
+            $('#user_id').val("");
+            $('#login_name').val("");
+        }
+		window._callback = function(uid, uname){
+			if (!uid) {
+				alert('您没有选择转让会员');
+				return false;
+			}
+			$('#user_id').val(uid);
+			$('#login_name').val(uname);
+		};
+		$("#update").validate({
+			submitHandler:function(form){
+				recording();
+			},
+			onclick:false,
+			onfocusout:false,
+			onkeyup:false,
+			errorPlacement: function (error, element){
+                $(element).next("span").find("span").html(error);
+                $("#update").before(false);
+			},
+			rules:{
+                business_id:{
+                    required:true,
+                    number:true
+                },
+                type:{
+                    required:true
+                },
+				user_id:{
+					required:true
+				}
+			},
+			messages:{
+                business_id:{
+                    required:"请输入API业务编号",
+                    number:"API业务编号格式不对，必须是数字"
+                },
+                type:{
+                    required:"请选择产品类型"
+                },
+				user_id:{
+					required:"会员必须选择"
+				}
+			}
+		});
+	</script>
+</block>

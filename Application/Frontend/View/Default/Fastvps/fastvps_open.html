@@ -1,0 +1,180 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <!--ky-main start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/order/orderlist','',false);?>">订单管理</a></li>
+                <li><a>快云VPS开通</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="info-user-title">
+                        <h4>快云VPS开通<a href="javascript:void(0);" class="btn-primary btn-reverse btn-icon-return margin-left-10" onclick="javascript:history.back(-1);">返 回</a></h4>
+                    </div>
+                </div>
+                <div class="ky-panel-body">
+                    <form action="<?php echo U('frontend/fastvps/fastvps_open','',false);?>"  method="post"  id="order_form">
+                        <input type="hidden"  name="product_id"  value="{$order_info.product_id}"/>
+                        <input type="hidden"  name="virtual_type"  value="<?php if($order_info['area_code'] == '4001' || $order_info['area_code']){echo '0';}elseif($order_info['area_code'] == '4002'){echo '1';}elseif($order_info['area_code'] == '4005'){echo '2';}?>"/>
+                        <input type="hidden"  name="order_id"  value="{$order_info.id}"/>
+                        <table class="ky-table margin-bottom-20">
+                            <tbody>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    订单号
+                                </td>
+                                <td width="40%">
+                                    <?php echo $order_info['id'];?>
+                                </td>
+                                <td width="10%" class="text-right pright10">
+                                    操作系统
+                                </td>
+                                <td width="40%">
+                                    <if condition="$order_info.system_type == 1 ">Windows<else/>Linux</if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    订单状态
+                                </td>
+                                <td width="40%">
+                                    <if condition="$order_info.state == 0 ">失败
+                                        <elseif condition="$order_info.state == 1 " />成功
+                                        <elseif condition="$order_info.state == 2 "/>待处理
+                                        <elseif condition="$order_info.state == 3 "/>处理中
+                                        <elseif condition="$order_info.state == 4 "/>审核中
+                                        <elseif condition="$order_info.state ==  5"/>已删除
+                                        <elseif condition="$order_info.state ==  6"/>已付款
+                                    </if>
+                                </td>
+                                <td width="10%" class="text-right pright10">
+                                    API订单号
+                                </td>
+                                <td width="40%">
+                                    {$order_info.api_id}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    类型
+                                </td>
+                                <td width="40%">
+                                    <if condition="$order_info.type == 0 ">新增
+                                        <elseif condition="$order_info.type == 1 " />增值
+                                        <elseif condition="$order_info.type == 2 "/>续费
+                                        <elseif condition="$order_info.type == 3 "/>变更方案
+                                        <elseif condition="$order_info.type == 4 "/>转正
+                                    </if>
+                                </td>
+                                <td width="10%" class="text-right pright10">
+                                    完成时间
+                                </td>
+                                <td width="40%">
+                                    {$order_info.complete_time}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    产品类别
+                                </td>
+                                <td width="40%">
+                                    {$order_info.product_name}
+                                </td>
+                                <td width="10%" class="text-right pright10">
+                                    购买价格
+                                </td>
+                                <td width="40%">
+                                    <span class="gff8">{$order_info.charge}元</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    主机线路
+                                </td>
+                                <td width="40%">
+                                    <?php if($order_info['area_code'] == 4001 || $order_info['area_code'] == 4008){echo '国内';}else if($order_info['area_code'] == 4002){echo '香港';}else if($order_info['area_code'] == 4005){echo '美国'; }?>
+                                </td>
+                                <td width="10%" class="text-right pright10">
+                                    购买期限
+                                </td>
+                                <td width="40%">
+                                    <span class="gff8">{$order_info.order_time}个月</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    备注
+                                </td>
+                                <td width="40%" colspan='3'>
+                                    {$order_info.order_log}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    租赁协议
+                                </td>
+                                <td colspan="3">
+                                    <div class="tc-15-first-checkbox inline-block">
+                                        <input type="checkbox"  class="tc-15-checkbox" style="margin:0 6px 0 0"  id="lease">
+                                    </div>我已阅读，理解并接受<a href="javascript:void(0);"  onclick="Lease();" class="g009 vps-link">《快云VPS租赁协议》</a>&nbsp;&nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">
+                                    &nbsp;
+                                </td>
+                                <td colspan="3">
+                                    <a href="javascript:void(0);" class="btn btn-default chongzhi-btn" onclick="Submit();">确认开通</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog" title="租赁协议" style="display: none;overflow-y:scroll;">
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+        function Lease(){
+            var lease ='<div class="new_xieyi_nr"><div align="center" style="font-size: 15px;font-weight: 900;">VPS租赁服务协议</div><p></p><p style="text-align:left"><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">&nbsp;&nbsp;尊敬的景安网络用户：</span></p><p style="text-align:left;margin-top:0px;margin-bottom:0px;"><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢您选择郑州市景安计算机网络技术有限公司为您提供的快云</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">vps</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">/香港</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">vps</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">/云服务器/（以下统称“</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">vps</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">”）服务。请您认真细致地阅读以下的服务条款。用户只有同意了下述服务条款才能正式进入在线快云</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">vps</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">/香港</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">vps</span><span style="font-style:normal;font-family:"宋体";background:#ffffff;color:#000000;font-size:12px;font-weight:normal">/云服务器申请程序。</span></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p style="text-align:left;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:15px;font-weight:bold"></span>&nbsp;</p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px;font-weight:bold">甲方：</span></p><p style="text-align:left;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:15px;font-weight:bold"></span>&nbsp;</p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px;font-weight:bold">乙方</span><span style="font-family:"宋体";font-size:12px">：郑州市景安计算机网络技术有限公司</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px"></span>&nbsp;</p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px;font-weight:bold">甲方的权利和义务</span><span style="font-family:"宋体";font-size:12px">：</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">1.</span><span style="font-family:"宋体";color:#000000;font-size:12px">甲方必须遵守中华人民共和国有关法律、法规，不得制作、复制、发布、传播任何法律、法规禁止的有害信息。严禁甲方为第三方提供转接流量等类似业务，如甲方违约，乙方有权随时终止服务。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">2.如果甲方利用本合同服务进行的经营活动需要获得国家有关部门的认可或批准，甲方应获得国家有关部门的认可或批准。</span><span style="font-family:"宋体";font-size:12px">特别是甲方未有</span><span style="font-family:"宋体";font-size:12px">I</span><span style="font-family:"宋体";font-size:12px">S</span><span style="font-family:"宋体";font-size:12px">P</span><span style="font-family:"宋体";font-size:12px">、IDC经营许可证的不可从事虚拟主机业务，甲方不得对所租用的资源再次转租。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">3.甲方如果在服务器上安装软件，所需要的软件版权/许可/使用权由甲方自行解决，因此造成的法律责任与乙方无关。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">4.甲方应向乙方提供甲方的营业执照的复印件或其它有效身份证明复印件。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">5.甲方应按时向乙方交纳本合同约定的费用。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">6.</span><span style="font-family:"宋体";font-size:12px">甲方网站如为经营性或非经营性网站应自行在当地通信管理部门办理经营性或非经营性ICP许可证或ICP备案手续，甲方如开办聊天室、BBS、新闻等栏目应根据相关法规政策要求获得批准或进行登记备案手续</span><span style="font-family:"宋体";color:#000000;font-size:12px">。甲方需对下级接入用户再接入的用户进行资格审查并负监督责任。若发现甲方违反上述规定，乙方将无条件停止甲方的接入服务，并且因此造成的损失乙方无任何责任。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">7.甲方对使用服务器所引起的任何经济、政治、法律等责任负完全责任。甲方同意，如发生上述事件，与乙方没有任何关系，乙方也不应对此或对第三方承担任何责任或者义务。</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";color:#000000;font-size:12px">8.</span><span style="font-family:"宋体";font-size:12px">依据《非经营性互联网信息服务备案管理办法》第二十三条规定，如备案信息不真实，将关闭网站并注销备案。甲方承诺并确认所提交的所有备案信息真实有效，当备案信息发生变化时应及时办理相关变更手续，如因未及时变更而导致备案信息不准确，乙方有权依法对接入网站进行关闭处理。</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px"></span>&nbsp;</p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px;font-weight:bold">乙方的权利和义务</span><span style="font-family:"宋体";font-size:12px">：</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">1.对服务器进行硬件日常维护和流量记录，以保证服务器的正常运行，日常维护不包括对服务器上数据的备份工作，数据备份工作由甲方自行负责。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">2.保留因甲方违反本合同规定和国家法律、法规等，终止服务器运行的权利。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">3.按照本合同收取相关费用。</span></p><p style="line-height:16px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">4.因乙方原因，造成服务器的正常工作中断，乙方以小时为单位，以月费为基数，按平均每小时费用的二倍向甲方赔偿。乙方最高赔偿限额不超过甲方已向乙方支付的当月费用总额。</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">5.<span style="font-family:宋体">消除非甲方人为操作所出现的故障。但非乙方控制范围之内的事项除外。</span></span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px"></span>&nbsp;</p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">其他：&nbsp;</span></p><p style="text-align:justify;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">1.乙方承诺购买七日内无条件退款，使用过程中退还剩余费用。</span></p><p style="text-align:justify;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">2.因履行本合同或与本合同有关的一切争议，双方当事人应通过友好协商方式解决。因履行本合同产生的纠纷，双方同意由合同签订地法院管辖。</span></p><p style="text-align:justify;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">3.任何一方对在本合同履行过程中以任何方式获知的另一方商业秘密或其他技术及经营信息均负有保密义务。</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">4.合同附件作为合同不可分割的一部分，具有合同正文同样的法律效力。本合同签署于中国郑州，自签定之日起生效。</span></p><p style="margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px"></span>&nbsp;</p><p style="text-align:left;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:15px;font-weight:bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;郑州市互联网信息安全责任书</span></p><div style="text-align:left"><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">为了明确各互联网数据中心（IDC）和开展虚拟主机业务的单位所应履行的安全管理职责&nbsp;，进一步规范互联网数据中心（IDC）和开展虚拟主机业务的单位的经营行为，确保互联网络与信息安全同时为客户营造一个安全洁净的网络环境，根据《计算机信息网络国际联网安全保护管理办法》等有关法律法规的规定，责任单位将认真落实如下责任：</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">一、自觉遵守法律、行政法规和其他有关规定，接受公安机关的安全监督、检查和指导，如实向公安机关提供有关安全保护的信息、资料及数据文件，协助公安机关查处通过国际联网的计算机信息网络的违法犯罪行为。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">二、不利用国际联网危害国家安全、泄露国家秘密，不侵犯国家的、社会的、集体的利益和公民的合法权益，不从事犯罪活动。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">三、不利用国际联网制作、复制、查阅和传播下列信息：&nbsp;&nbsp;</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（一）煽动抗拒、破坏宪法、法律和行政法规实施的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（二）煽动颠&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;覆国家政权，推翻社会主义制度的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（三）煽动分裂国家、破坏国家统一的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（四）煽动民族仇恨、民族歧视，破坏民族团结的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（五）捏造或者歪曲事实，散布谣言，扰乱社会秩序的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（六）宣扬封建迷信、淫秽、色情、赌博、暴力、凶杀、恐怖，教唆犯罪的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（七）公然侮辱他人或者捏造事实诽谤他人的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（八）损害国家机关信誉的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（九）其他违反宪法、法律和行政法规的。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">四、不从事下列危害计算机信息网络安全的活动：&nbsp;</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（—）未经允许，进人计算机信息网络或者使用计算机信息网络资源的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（二）未经允许，对计算机信息网络功能进行删除、修改或者增加的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（三）未经允许，对计算机信息网络中存储、处理或者传输的数据和应用程序进行删除、修改增加的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（四）故意制作、传播计算机病毒等破坏性程序的；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">（五）其他危害计算机信息网络安全的。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">五、建立安全保护管理制度，落实各项安全保护技术措施，保障本单位网络运行安全和信息安全；</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">六、严格按照国家相关的法律法规做好本单位网络的信息安全管理工作，设立信息安全责任人和信息安全审查员，信息安全责任人和信息安全审查员在参加市公安局网监分局认可的安全技术培训后，持证上岗。每月由信息安全审查员定期对本单位的接入用户及主机托管用户、主机租用用户、虚拟主机用户的安全审计日志及信息发布内容进行检查，发现有以上二、三、四点所列情形之一的，应当保留有关原始记录，并在24小时内向景安数据中心报告。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">七、按照国家有关规定，删除本单位网络中含有以上第三条内容的地址、目录或关闭服务器。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">八、与本单位所属接入用户及主机租用、托管用户和虚拟主机用户签订互联网信息安全承诺书，明确其责任、规范其管理维护行为。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">九、对本单位接入用户及主机托管、主机租用和虚拟主机的用户应采用实名登记，并将用户变更情况于每月25日前报送景安数据中心。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">十、变更名称、住所、法定代表人或者主要负责人、网络资源或者终止经营活动，须到公安机关办理有关手续或者备案。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">十一、本责任书自签署之日起生效。&nbsp;&nbsp;&nbsp;</span></p><p style="text-align:left;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:15px;font-weight:bold">郑州市互联网信息安全承诺书</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">一、本单位（或个人）因为使用景安数据中心的互联网络资源，郑重承诺遵守本承诺书的有关条款，如有违反本承诺书有关条款的行为，由本单位（或个人）承担由此带来的一切民事、行政和刑事责任。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;二、本单位（或个人）承诺遵守《中华人民共和国计算机信息系统安全保护条例》和《计算机信息网络国际联网安全保护管理办法》等国家的有关法律、法规和行政规章制度。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;三、本单位（或个人）开设的网站，在开通联网的30天内到郑州市公安局网监部门履行备案手续，并将接受郑州市公安局公共信息网络安全监察处的监督和检查，如实主动提供有关安全保护的信息、资料及数据文件，积极协助有关部门查处通过国际联网的计算机信息网络违法犯罪行为。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;四、本单位（或个人）保证不利用国际互联网危害国家安全、泄露国家秘密，不侵犯国家的、社会的、集体的利益和公民的合法权益，不从事违法犯罪活动。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;五、本单位（或个人）承诺严格按照国家相关的法律法规做好网站的信息安全管理工作，设立信息安全责任人和信息安全审查员，信息安全责任人和信息安全审查员在参加郑州市公安局公共信息网络安全监察处认可的安全技术培训后，持证上岗。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;六、本单位（或个人）承诺健全各项互联网安全保护管理制度和落实各项安全保护措施。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;七、本单位（或个人）承诺不制作、复制、查阅和传播下列信息：</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1．反对宪法所确定的基本原则的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2．危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3．损害国家荣誉和利益的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4．煽动民族仇恨、民族歧视，破坏民族团结的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5．破坏国家宗教政策，宣扬邪教和封建迷信的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6．散布谣言，扰乱社会秩序，破坏社会稳定的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7．散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8．侮辱或者诽谤他人，侵害他人合法权益的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9．含有法律、行政法规禁止的其他内容的。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;八、本单位（或个人）承诺不从事下列危害计算机信息网络安全的活动：</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1．未经允许，进入计算机信息网络或者使用计算机信息网络资源的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2．未经允许，对计算机信息网络功能进行删除、修改或者增加的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3．未经允许，对计算机信息网络中存储或者传输的数据和应用程序进行删除、修改或者增加的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4．故意制作、传播计算机病毒等破坏性程序的；</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5．其他危害计算机信息网络安全的。</span></p><p style="text-align:left;line-height:13px;text-indent:24px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">九、本单位（或个人）承诺当计算机信息系统发生重大安全事故时，立即采取应急措施，保留有关原始记录，并在24小时内向郑州市景安数据中心报告。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;十、若违反本承诺书有关条款和国家相关法律法规的，本单位（或个人）直接承担相应法律责任；造成第三方财产损失的，本单位（或个人）将在国家有关机关确认的责任范围内直接赔偿。</span></p><p style="text-align:left;line-height:13px;margin-top:0px;margin-bottom:0px;"><span style="font-family:"宋体";font-size:12px">&nbsp;&nbsp;&nbsp;&nbsp;十一、本承诺书自签署之日起生效。</span></p></div><p></p></div>';
+            $("#dialog").html(lease);
+            $("#dialog").dialog({
+                autoOpen: true,
+                modal : true,
+                width: 800,
+                height: 700,
+                buttons:[{
+                    text: "确认",
+                    click: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }]
+            });
+        }
+        var chongzhi_btn = true;
+        function Submit(){
+            if ($('#lease').is(':checked')) {
+                if(chongzhi_btn)
+                {
+                    chongzhi_btn = false;
+                    $("#order_form").submit();
+                }
+                else
+                {
+                    alert("正在开通，请耐心等待！");
+                }
+            }else{
+                alert("请仔细阅读租赁协议并打勾！");
+            }
+        }
+    </script>
+</block>

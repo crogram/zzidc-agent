@@ -1,0 +1,249 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+<div class="ky-main home-page">
+		<div class="crumb-container" data-nav="phoenix">
+			<ol class="breadcrumb ky-crumb">
+				<li>
+					<a href="https://mc.kuaiyun.cn:443/" class="crumb-home">会员中心</a>
+				</li>
+				<li>
+					<a href="ip/toiplist">IP管理</a>
+				</li>
+				<li>
+					<a>IP升级</a>
+				</li>
+			</ol>
+		</div>
+		<div class="">
+			<div class="conseole-ky-fuwuqi">
+				<div class="ky-panel-heading clearfix">
+					<div class="ky-panel-title">IP升级<a href="javascript:history.go(-1)" class="btn-primary btn-reverse btn-icon-return margin-left-10">返 回</a></div>
+				</div>
+				<div class="ky-panel-body">
+					<table class="ky-table margin-bottom-20">
+						<thead>
+							<tr>
+								<th width="25%">公网IP</th>
+								<th width="25%">IP到期时间</th>
+								<th width="25%">带宽</th>
+								<th width="25%">临时增值带宽</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="ky-td-multi-lines"><?php echo $ipaddress;?></td>
+								<td class="ky-td-multi-lines"><?php echo $overdue_time;?></td>
+								<td class="ky-td-multi-lines"><?php echo $bandwidth;?>Mbps</td>
+								<td class="ky-td-multi-lines"><?php echo $temp_upgrade;?>Mbps</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="contentbox">
+						<!--续费时长 start-->
+							<div class="listitem">
+								<div class="item-left">
+									<span>公网带宽：</span>
+								</div>
+								<div class="item-right jifang-item ptop10">
+									
+									<div class="slider-date" id="slider-date-1">
+										<!--底层-->
+										<ul class="slider-bg clearfix">
+											<li style="width:30px">1M</li>
+											<li style="width:100px">10M</li>
+											<li style="width:170px">50M</li>
+											<li style="width:230px">100M</li>
+										</ul>
+										<!--互动层-->
+										<div class="slider-bar" style="width: 167.5px;">
+											<ul class="slider-bg clearfix">
+												<li width_="30" skip="1" min="0" style="width:30px">1M</li>
+												<li width_="105" skip="1" min="1" style="width:100px">10M</li>
+												<li width_="185" skip="1" min="10" style="width:170px">50M</li>
+												<li width_="230" skip="1" min="50" style="width:230px">100M</li>
+											</ul>
+										<!--滑块按钮-->
+										<a href="javascript:;" class="slider-bar-btn"><i></i><i></i></a>
+										</div>
+								</div>
+								
+								
+								<div class="shuju-box">
+										<input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" class="bk-disk-input" onafterpaste="this.value=this.value.replace(/\D/g,'')" id="diskinput">
+									</div>
+									<div class="shuju-danwei">
+											M
+									</div>
+									<div class="shuju-box30">
+										<span class="bk-number-arrow"></span>
+										<span class="bk-number-arrow2"></span>
+									</div>
+								</div>
+							</div>
+						<!--续费时长 end-->
+					</div>
+					<div class="box-fixed">
+						<div class="account-fix">
+							<div class="h-54">
+						<div class="paybox">
+							<a href="javascript:;" onclick="tijiao(this)" class="paybtn">去支付</a>
+						</div>
+						<div class="total">
+							<p style="margin-top:20px"><span class="total-span">应付总额：</span><span class="tot-price">¥0</span></p>
+						</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="resultinfo" title="温馨提醒" style="display:none"></div>
+<div id="showtinfo" title="温馨提醒" style="display:none"></div>
+<div id="confirmdialog" title="操作提醒" style="display:none"></div>
+</block>
+<block name="script">
+<script src="__FRONTEND_JS__gainet.core.js"></script>
+<script src="__FRONTEND_JS__gainet.ui.newslider.ky.js"></script>
+<script type="text/javascript">
+function showMsg(msg,func){
+	$("#showtinfo").empty().append(msg);
+	$("#showtinfo").dialog({
+		autoOpen: false,
+		width: 360,
+		title:'操作提示',
+		zIndex:10000,
+		resizable :false,
+		modal: true
+	}).dialog("open");
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	$("td").addClass("ky-td-multi-lines");
+})
+	var maxdk;
+	var ccspace;
+	var msg;
+	if(<?php echo $area_code;?>==4001){
+			msg="郑州IP总带宽不能大于100M！";
+			maxdk=100;
+		}else{
+			msg="香港IP总带宽不能大于20M！";
+			maxdk=20;
+		}
+	var tdtspace=gainet(".ptop10:eq(0)").slider(
+					{"end":{"startwidth":<?php echo $bandwidth;?>,"max":maxdk,"text":maxdk+"M"},"default_":<?php echo $bandwidth;?>,"label":"M","isnumber":false,"isdiy":true,"callback":selectspace});
+	 	function selectspace(val){
+	 	if(val==<?php echo $bandwidth;?>){
+			$(".tot-price").html("¥"+0.0);
+			$("#zj").val(0.0);
+		}
+	 	if(<?php echo $bandwidth;?> > maxdk-0){
+	 		showMsg(msg);
+ 			val=maxdk-0;
+			tdtspace.setBarValue(val);
+ 		}
+ 		if(val< "<?php echo $bandwidth;?>"){
+ 			val="<?php echo $bandwidth;?>";
+			tdtspace.setBarValue(val);
+ 		}
+ 		ccspace=val;
+ 		$("#diskinput").val(val);
+ 		if(val!="<?php echo $bandwidth;?>"){
+			getprice(val,"<?php echo $area_code;?>","<?php echo $buy_time;?>",0,"<?php echo $api_bid;?>");
+		}
+	} 
+	//根据选择时长获取价格
+	function getprice(band,dqbh,gmqx,flag,ipbh){
+		$.ajax({
+			url:"<?php echo U('frontend/ip/count_ipPrice','',false);?>",
+			data:{"bandwidth":band,"dqbh":dqbh,"gmqx":0,"flag":flag,"ipbh":ipbh,},
+			type:"POST",
+			async:false, 
+			success:function(data){
+					if(data>0){
+						$("#zj").val(data);
+						if($("#zkj").html()>0){
+						if(Number(data-$("#zkj").html())<0){
+							$("#kybtext").val(Math.ceil(data));
+							$("#kyb").val(Math.ceil(data));
+							$("#zk").html(Math.ceil(data));
+							$("#zkj").html(Math.ceil(data));
+							data=0;
+						}else{
+							data=parseFloat(data-$("#zkj").html()).toFixed(2);
+						}
+						}
+					}
+					$(".tot-price").html("¥"+data);
+			}
+		})
+	}
+	var flag = true;
+	function tijiao(par){
+		 if(ccspace=="<?php echo $bandwidth;?>"){
+		 	showMsg("您当前所选配置没有改变!");
+		 	return;
+		}
+		if(ccspace<"<?php echo $bandwidth;?>"){
+				showMsg("您当前所选配置不能低于原始配置!");
+				return;
+			}
+		if("<?php echo $bandwidth;?>">maxdk-0){
+			showMsg("业务信息有误，请刷新重试!");
+				return;
+		}
+		if(flag == true){
+			flag = false;
+			$.ajax({
+		 		url:"<?php echo U('frontend/ip/ip_upgrade','',false);?>",
+				data:{"ip_id":"<?php echo $id;?>","ipbh":"<?php echo $api_bid;?>","daikuan":ccspace,},
+				type:"POST",
+				dataType:"json",
+				beforeSend:function(){
+					 $(par).css({"color":"#999999","background-color":"#e8e8e8"});
+		 			 $(par).addClass("disablehref");
+		             $(par).html("操作中...");
+				},
+				success:function(data){
+						$(par).css({"color":"","background-color":""});
+						$(par).removeClass("disablehref");
+						$(par).html("去支付");
+						flag = true;
+						$("#resultinfo").empty().append(data.mes);
+							$("#resultinfo").dialog({
+								autoOpen: false,
+								width: 360,
+								title:'操作提示',
+								zIndex:10000,
+								resizable :false,
+								modal: true,
+								buttons:{
+									"确定":function(){
+											if(data.url!=null&&data.url!=''){
+												window.location.href=data.url;
+											}else{
+												document.location.reload();//当前页面  
+											}
+										$(this).dialog("close");
+									}
+								},
+								close:function(){
+											if(data.url!=null&&data.url!=''){
+												window.location.href=data.url;
+											}else{
+												document.location.reload();//当前页面  
+											}
+								}
+							}).dialog("open");
+				}
+		 	})
+		}
+		 	
+		 }
+		
+
+</script>
+</block>

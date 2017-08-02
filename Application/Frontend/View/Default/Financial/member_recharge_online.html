@@ -1,0 +1,53 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+                <li><a>财务管理</a></li>
+                <li><a>在线充值</a></li>
+            </ol>
+        </div>
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">在线充值</div>
+            </div>
+            <div class="clearfix">
+                <form class="form-horizontal ky-form margin-bottom-60 tab-group-2"  action="https://mapi.alipay.com/gateway.do/{$zfb_parm.zfb_str}" method="get" target="_blank">
+                    <div class="form-group">
+                        <div class="ky-control-label ky-label-long font-size-14">
+                            充值状态：</div>
+                        <div class="col-xs-8 ky-form-control">等待付款</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="ky-control-label ky-label-long font-size-14">
+                            充值方式：</div>
+                        <div class="col-xs-8 ky-form-control">支付宝</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="ky-control-label ky-label-long font-size-14">
+                            支付编号：</div>
+                        <div class="col-xs-8 ky-form-control">
+                            {$zfb_parm.orderNo}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="ky-control-label ky-label-long font-size-14">金额：
+                        </div>
+                        <div class="col-xs-8 ky-form-control">
+                            <span class="fwqxh-price"> {$zfb_parm.money}元 </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="ky-control-label ky-label-long">&nbsp;</div>
+                        <div class="col-xs-8 ky-form-control">
+                            <button class="btn btn-default chongzhi-btn"  type="submit">确认充值</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>

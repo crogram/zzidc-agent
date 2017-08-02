@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col-xs-12">
+         <div class="row" style="overflow-y:auto; max-height:40rem;">
+                     <h3 class="text-center">可升级列表</h3>
+                    <p class="muted text-center text-danger ">
+                        程序更新注意事项：如果存在多个版本，请依次升级，不要直接升级到最新版本。
+                    </p>
+             <div id="accordion" class="accordion-style1 panel-group accordion-style2">
+
+                 <!-- 列表开始 -->
+                    <?php $i = 0;foreach($version_info as $k =>$v):?>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $i;?>" aria-expanded="false">
+								<i class="bigger-110 ace-icon fa fa-angle-right" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+								&nbsp;版本号：<?php echo $v['id'];?>
+							</a>
+						</h4>
+					</div>
+					<div class="panel-collapse collapse " id="collapse-<?php echo $i;?>" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+
+                            <p class="muted text-center text-info">
+                                文件名：<a href="http://download.api.zzidc.com/files/<?php echo $v['name'];?>" title="下载升级包手动更新"><?php echo $v['name'];?></a>
+                            </p>
+
+                            <?php if(!empty($v['sqlfile'])):?>
+                            <p class="muted text-center text-danger ">
+                                有SQL文件更新,更新时请检查各目录执行写入权限
+                            </p>
+
+                            <?php endif?>
+                            <blockquote>
+    							<p class="muted">
+    								<?php echo $v['update'];?>
+    							</p>
+    						</blockquote>
+                            <?php if($i == 0):?>
+                            <div class="row text-center">
+                                <a onclick="softwareBackup('<?php echo $v['id'];?>')" class="btn btn-sm btn-white btn-info " href="javascript:void(0);" role="button">
+                                    <i class="ace-icon fa fa-cloud-download bigger-110"></i>
+                                    <span class="bigger-110 no-text-shadow">升级</span>
+                                </a>
+                            </div>
+                            <?php else:?>
+                                <div class="row text-center">
+                                    <a class="btn btn-sm btn-white btn-info disabled " href="javascript:void(0);" role="button">
+                                        <i class="ace-icon fa fa-cloud-download bigger-110"></i>
+                                        <span class="bigger-110 no-text-shadow">请先升级之前的版本</span>
+                                    </a>
+                                </div>
+                            <?php endif;?>
+						</div>
+					</div>
+				</div>
+                    <?php $i++;?>
+                    <?php endforeach;?>
+                    <!-- 列表结束 -->
+
+			</div>
+         </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+    $('[href="#collapse-0"]').trigger('click');
+});
+    function softwareBackup(version){
+        var dialog = null;
+        var stage = 1;
+        var url = '<?php echo U("Backend/Index/updating", [], false);?>/version/'+version+'/stage/';
+        $('.bootbox-close-button').trigger('click');
+        //备份文件
+        $.ajax({
+            type : "get",
+            dataType : "json",
+            url : url+stage,
+            beforeSend: function(){
+
+                dialog = bootbox.dialog({
+                    message: '<p><i class="fa fa-spin fa-spinner"></i>升级进行中，正在备份文件，此过程可能需要很长时间，请耐心等待...</p>',
+                    closeButton: false
+                });
+            },
+            success : function(data){
+                var info = '';
+                if (data.status == 1) {
+					info = '<p><i class="fa fa-bullhorn"></i>备份文件成功，现在下载更新文件</p>';
+                }else {
+					info = '<p><i class="fa fa-bullhorn"></i> '+data.info+'</p>';
+                }
+                dialog.find('.bootbox-body').html(info);
+                setTimeout(function(){
+                    dialog.modal('hide');
+                    if (data.status == 1) {
+                        UpdateingFileDownloading(version);
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    function UpdateingFileDownloading(version){
+        var dialog = null;
+        var stage = 2;
+        var url = '<?php echo U("Backend/Index/updating", [], false);?>/version/'+version+'/stage/';
+        //下载
+        $.ajax({
+            type : "get",
+            dataType : "json",
+            url : url+stage,
+            beforeSend: function(){
+                dialog = bootbox.dialog({
+                    message: '<p><i class="fa fa-spin fa-spinner"></i>升级进行中，正在获取更新文件，此过程可能需要很长时间，请耐心等待...</p>',
+                    closeButton: false
+                });
+            },
+            success : function(data){
+                var info = '';
+                if (data.status == 1) {
+                    info = '<p><i class="fa fa-bullhorn"></i>更新文件下载成功，现在开始更新平台</p>';
+                }else {
+                    info = '<p><i class="fa fa-bullhorn"></i> '+data.info+'</p>';
+                }
+                dialog.find('.bootbox-body').html(info);
+                setTimeout(function(){
+                    dialog.modal('hide');
+                    if (data.status == 1) {
+                        softwareUpdating(version);
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    function softwareUpdating(version){
+        var dialog = null;
+        var stage = 3;
+        var url = '<?php echo U("Backend/Index/updating", [], false);?>/version/'+version+'/stage/';
+        //替换文件
+        $.ajax({
+            type : "get",
+            dataType : "json",
+            url : url+stage,
+            beforeSend: function(){
+                dialog = bootbox.dialog({
+                    message: '<p><i class="fa fa-spin fa-spinner"></i>升级进行中，正在更新平台，此过程可能需要很长时间，请耐心等待...</p>',
+                    closeButton: false
+                });
+            },
+            success : function(data){
+                var info = '';
+                if (data.status == 1) {
+                    info = '<p><i class="fa fa-bullhorn"></i>平台更新成功，3秒后将退出登录！欢迎您再次回来</p>';
+                }else {
+                    info = '<p><i class="fa fa-bullhorn"></i> '+data.info+'</p>';
+                }
+                dialog.find('.bootbox-body').html(info);
+                setTimeout(function(){
+                    dialog.modal('hide');
+                    if (data.status == 1) {
+                        window.location.href = data.url;
+                    }
+                }, 3000);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,341 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" href="__COM_STATICS__bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+</block>
+<block name="content">
+	<div class="page-header">
+		<h1>
+			<i class="fa fa-home"></i>首页
+			<small>
+				<i class="ace-icon fa fa-angle-double-right"></i>
+				业务管理 &amp; 录入快云数据库业务
+			</small>
+			<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Clouddb/index',[],false);?>">快云数据库列表</a>
+		</h1>
+	</div><!-- end/.page-header -->
+	<div class="row">
+		<div class="col-xs-12">
+			<form class="form-horizontal" action="<?php echo U('Backend/Clouddb/recording',[],false);?>" role="form" method="post" name="update" id="update">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="product_name">产品名称：</label>
+                    <div class="col-sm-9">
+                        <input type="text" readonly="readonly" name="product_name" id="product_name" value="快云数据库" class="col-xs-10 col-sm-5">
+                        <input type="hidden" id="product_id" name="product_id" value="306" >
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="api_bid">
+						<span style="color:red;" class="fa fa-asterisk"></span>API业务编号：
+					</label>
+					<div class="col-sm-9">
+						<input type="text" name="api_bid" id="api_bid" value="" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="overdue_time">
+						<span style="color:red;" class="fa fa-asterisk"></span>到期时间：
+                    </label>
+					<div class="col-sm-9">
+						<input type="text" name="overdue_time" id="overdue_time" value="" class="col-xs-10 col-sm-5 date-picker" data-date-format="yyyy-mm-dd hh:ii:ss">
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="buy_time">
+						<span style="color:red;" class="fa fa-asterisk"></span>购买期限（月）：
+                    </label>
+					<div class="col-sm-9">
+						<input type="number" name="buy_time" id="buy_time" value="" class="col-xs-10 col-sm-5" >
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="free_trial">
+						<span style="color:red;" class="fa fa-asterisk"></span>购买/试用:
+					</label>
+					<div class="col-sm-9">
+						<select class="col-xs-10 col-sm-5" name="free_trial" id="free_trial">
+							<?php foreach($free_trial as $k => $v):?>
+							<option value="<?php echo $k?>" selected="selected">
+								<?php echo $v;?>
+							</option>
+							<?php endforeach;?>
+						</select>
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="nwdz">
+						内网IP：
+					</label>
+					<div class="col-sm-9">
+						<input type="text" name="nwdz" id="nwdz" value="" class="col-xs-10 col-sm-5">
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="wwdz">
+                        外网IP：
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="wwdz" id="wwdz" value="" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="version">
+                        <span style="color:red;" class="fa fa-asterisk"></span>数据库产品名称：
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="col-xs-10 col-sm-5" name="version" id="version">
+                            <option value="MySQL5.5" selected="selected">MySQL5.5</option>
+                            <option value="MySQL5.6">MySQL5.6</option>
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="disk">
+                        <span style="color:red;" class="fa fa-asterisk"></span>快云数据库数据盘（G）：
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="disk" id="disk" value="" class="col-xs-10 col-sm-5">
+                        <span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="memory">
+                        <span style="color:red;" class="fa fa-asterisk"></span>快云数据库内存：
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="col-xs-10 col-sm-5" name="memory" id="memory">
+                            <option value="240" selected="selected">240MB 最大连接数:60 IOPS:320</option>
+                            <option value="600">600MB 最大连接数:150 IOPS:640</option>
+                            <option value="1200">1200MB 最大连接数:300 IOPS:1300</option>
+                            <option value="2400">2400MB 最大连接数:600 IOPS:3500</option>
+                            <option value="6000">6000MB 最大连接数:1500 IOPS:7000</option>
+                            <option value="12000">12000MB 最大连接数:2000 IOPS:12000</option>
+                        </select>
+                        <span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+                    </div>
+                </div>
+				<input type="text" name="conn" id="conn" value="60" style="display: none">
+				<input type="text" name="iops" id="iops" value="320" style="display: none">
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="state">
+						<span style="color:red;" class="fa fa-asterisk"></span>快云数据库状态：
+					</label>
+					<div class="col-sm-9">
+						<select class="col-xs-10 col-sm-5" name="state" id="state">
+							<?php foreach($state as $k => $v):?>
+							<option value="<?php echo $k;?>" <?php if($k == $entity['state']):?>selected="selected"<?php endif;?> >
+							<?php echo $v;?></option>
+							<?php endforeach;?>
+						</select>
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle"></span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="area_code">所属地区</label>
+					<div class="col-sm-9">
+						<select class="col-xs-10 col-sm-5" name="area_code" id="area_code">
+							<?php foreach($extra['area_code'] as $k => $v):?>
+							<option value="<?php echo $k?>" >
+								<?php echo $v;?>
+							</option>
+							<?php endforeach;?>
+						</select>
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle"></span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"  for="des">详细说明：</label>
+					<div class="col-sm-9">
+						<textarea class="limited col-xs-10 col-sm-5" id="des" name="des" maxlength="100"></textarea>
+						<span class="help-inline col-xs-12 col-sm-7"><span class="middle">最多100个字</span></span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="login_name">会员账号：</label>
+					<div class="col-sm-9">
+						<input type="text" readonly="readonly" id="login_name" value="" class="col-xs-10 col-sm-5">
+						<input type="hidden"  id="user_id" name="user_id"  value="" >
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle">
+								<a href="javascript:void(0);" onclick="selectMember()">会员(点击选择会员)</a>
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="space-4"></div>
+				<div class="clearfix form-actions">
+					<div class="col-md-offset-3 col-md-9">
+						<button class="btn btn-info" type="submit" >
+							<i class="ace-icon fa fa-check bigger-110"></i>录入
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+<block name="scripts">
+	<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+	<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+	<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+	<script src="__COM_JS__messages_zh.js"></script>
+	<script src="__COM_STATICS__bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="__COM_STATICS__bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+	<script type="text/javascript">
+		$('textarea.limited').inputlimiter({
+			remText: '还可以在输入%n个字',
+			limitText: '最多只允许输入 %n个字.'
+		});
+		$('.date-picker').datetimepicker({
+			language: 'zh-CN',
+			autoclose: true,
+			todayHighlight: true,
+			minuteStep:1
+		});
+		function selectMember(){
+			var subWindow = window.open("<?php echo U('Backend/Member/radio',[],false)?>",'newwindow','width=900,height=800,scrollbars=yes');
+		}
+		window._callback = function(uid, uname){
+			if (!uid) {
+				alert('您没有选择转让会员');
+				return false;
+			}
+			$('#user_id').val(uid);
+			$('#login_name').val(uname);
+		};
+		$("#memory").change(function(){
+			var memory = $(this).val();
+			switch(memory){
+				case "240":
+					$("#conn").val(60);
+					$("#iops").val(320);
+					break;
+				case "600":
+					$("#conn").val(150);
+					$("#iops").val(640);
+					break;
+				case "1200":
+					$("#conn").val(300);
+					$("#iops").val(1300);
+					break;
+                case "2400":
+                    $("#conn").val(600);
+                    $("#iops").val(3500);
+                    break;
+                case "6000":
+                    $("#conn").val(1500);
+                    $("#iops").val(7000);
+                    break;
+                case "12000":
+                    $("#conn").val(2000);
+                    $("#iops").val(12000);
+                    break;
+			}
+		});
+		function updater(form){
+			form.submit();
+		}
+        jQuery.validator.addMethod("yingpan", function(value,element) {
+            return this.optional(element) || /^([0-9]{0,2}[05]|1000)$/.test(value);
+        }, "数据盘大小最低5G最高1000G且是5的倍数");
+		$("#update").validate({
+			submitHandler:function(form){
+				updater(form);
+			},
+			onclick:false,
+			onfocusout:false,
+			onkeyup:false,
+			errorPlacement: function (error, element){
+                $(element).next("span").find("span").html(error);
+                $("#update").before(false);
+			},
+			rules:{
+                api_bid:{
+                    required:true,
+                    number:true
+                },
+                disk:{
+                    required:true,
+                    yingpan:true
+                },
+				state:{
+					required:true,
+					number:true
+				},
+				overdue_time:{
+					required:true,
+					date:true
+				},
+                buy_time:{
+					required:true,
+					digits:true
+				},
+				free_trial:{
+					required:true
+				},
+				ip_address:{
+					required:true
+				},
+				user_id:{
+					required:true
+				}
+			},
+			messages:{
+                api_bid:{
+                    required:"请输入API业务编号",
+                    number:"API业务编号格式不对，必须是数字"
+                },
+                disk:{
+                    required:"请输入数据盘大小"
+                },
+				state:{
+					required:"业务状态必须选择",
+					number:"业务状态参数格式不对"
+				},
+				overdue_time:{
+					required:"到期时间不能为空",
+					date:"到期时间格式非法"
+				},
+                buy_time:{
+					required:"购买时间不能为空",
+					digits:"购买时间必须输入整数"
+				},
+				free_trial:{
+					required:"请选择购买或试用"
+				},
+				ip_address:{
+					required:"IP地址必须填写"
+				},
+				user_id:{
+					required:"会员必须选择"
+				}
+			},
+			success: function(label,element) {
+				$(element).next("span").find("span").html("");
+			}
+		});
+	</script>
+</block>

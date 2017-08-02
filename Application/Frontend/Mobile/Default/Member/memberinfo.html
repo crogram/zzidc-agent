@@ -1,0 +1,176 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+<nav class="ky-title bbefeff4 p-fixed">
+    <a href="javascript:;" onclick="window.history.back();" class="return-icona"></a>修改资料
+</nav>
+<form id="modify" name="modify" action="<?php echo U('frontend/member/memberinfo','',false);?>" method="post">
+	<ul class="fg-content mtop230">
+		<li class="fg-line1">登录名：{$member_info.login_name}</li>
+		<li class="fg-line1">用户名</li>
+		<li>
+			<input type="text" name="user_name" id="user_name" onblur="check_name()" value="{$member_info.user_name}" class="new-pass">
+			<p class="tips-newp" id="user_name_p" style="color: red"></p>
+		</li>
+		<li class="fg-line1">身份证号</li>
+		<li>
+			<input type="number" name="user_code" id="user_code" onblur="check_code()" value="{$member_info.user_code}" class="new-pass">
+			<p class="tips-newp" id="user_code_p" style="color: red"></p>
+		</li>
+		<li class="fg-line1">邮箱</li>
+		<li>
+			<input type="email" name="user_mail" id="user_mail" onblur="check_mail()" value="{$member_info.user_mail}" class="new-pass">
+			<p class="tips-newp" id="user_mail_p" style="color: red"></p>
+		</li>
+        <li class="fg-line1">手机号码</li>
+        <li>
+            <input type="number" name="user_mobile" id="user_mobile" onblur="check_mobile()" value="{$member_info.user_mobile}" class="new-pass">
+            <p class="tips-newp" id="user_mobile_p" style="color: red"></p>
+        </li>
+		<li class="fg-line1">QQ</li>
+		<li>
+			<input type="number" name="user_qq" id="user_qq" onblur="check_qq()" value="{$member_info.user_qq}" class="new-pass">
+			<p class="tips-newp" id="user_qq_p" style="color: red">选填项</p>
+		</li>
+		<li class="fg-line1">所在地区</li>
+		<li>
+			<select name="user_province" onchange="change_city()" id="user_province" class="new-pass city-select"></select>
+			<select name="user_city" id="user_city" class="new-pass city-select"></select>
+			<p class="tips-newp" id="user_city_p" style="color: red"></p>
+		</li>
+		<li class="fg-line1"><label for="user_address">联系地址</label></li>
+		<li>
+			<input type="text" name="user_address" id="user_address" onblur="check_address()" value="{$member_info.user_address}" class="new-pass">
+			<p class="tips-newp" id="user_address_p" style="color: red">选填项</p>
+		</li>
+	</ul>
+	<a href="javascript:;" onclick="updater();" class="completed-ps mbottom200">完成</a>
+</form>
+</block>
+<block name="script">
+    <script src="__FRONTEND_MOBILE_JS__city_cascade.js"></script>
+	<script type="text/javascript">
+        function turnpage(index,url){
+            if(!url){
+                url=document.URL;
+            }
+            window.location.replace(url);
+        }
+        var updata = true;
+        province_load('<?php echo $member_info["user_province"];?>','<?php echo $member_info["user_city"];?>');
+		function updater(){
+            updata = volidata();
+            if(updata){
+                $.ajax({
+                    type: 'post',
+                    url: '<?php echo U("frontend/member/memberinfo","",false);?>',
+                    dataType: 'json',
+                    data: $('#modify').serialize(),
+                    success: function(data){
+                        console.log(data);
+                        if (data.status == 1){
+                            alertMsg("提示",data.info,turnpage,data.url);
+                        }else{
+                            alertMsg("提示",data.info,turnpage,null);
+                        }
+                        updata = true;
+                    }
+                });
+            }
+		}
+        function check_name(){
+            var user_name = getVal("user_name");
+            if(!user_name){
+                getEleById("user_name_p").innerHTML="请填写用户名！";
+                return false;
+            }else if(user_name.length > 10){
+                getEleById("user_name_p").innerHTML="用户名最大长度不能超过10个字符！";
+                return false;
+            }else{
+                getEleById("user_name_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_code(){
+            var user_code = getVal("user_code");
+            var code_reg=/^(\d{15})|(\d{18})|(\d{17}(\d|X|x))$/;
+            var code_result=code_reg.test(user_code);
+            if(!user_code){
+                getEleById("user_code_p").innerHTML="请输入身份证号码！";
+                return false;
+            }else if(!code_result){
+                getEleById("user_code_p").innerHTML="请输入真实有效的身份证号码！";
+                return false;
+            }else{
+                getEleById("user_code_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_mail(){
+            var user_mail = getVal("user_mail");
+            var mail_reg=/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            var mail_result=mail_reg.test(user_mail);
+            if(!user_mail){
+                getEleById("user_mail_p").innerHTML="请输入邮箱！";
+                return false;
+            }else if(!mail_result){
+                getEleById("user_mail_p").innerHTML="请输入真实有效的邮箱！";
+                return false;
+            }else{
+                getEleById("user_mail_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_mobile(){
+            var user_mobile = getVal("user_mobile");
+            var mobile_reg=/^1[34578]{1}[0-9]\d{8}$/;
+            var mobile_result=mobile_reg.test(user_mobile);
+            if(!user_mobile){
+                getEleById("user_mobile_p").innerHTML="请输入手机号码！";
+                return false;
+            }else if(!mobile_result){
+                getEleById("user_mobile_p").innerHTML="请输入真实有效的手机号码！";
+                return false;
+            }else{
+                getEleById("user_mobile_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_qq(){
+            var user_qq = getVal("user_qq");
+            var qq_reg=/^\d+$/;
+            var qq_result=qq_reg.test(user_qq);
+            if(user_qq === ""){
+                return true;
+            }else if(!qq_result){
+                getEleById("user_qq_p").innerHTML="请输入真实有效的QQ号码！";
+                return false;
+            }else{
+                getEleById("user_qq_p").innerHTML="";
+            }
+            return true;
+        }
+        function check_address(){
+            var user_address = getVal("user_address");
+            if(user_address === ""){
+                return true;
+            }else{
+                getEleById("user_address_p").innerHTML="";
+            }
+            return true;
+        }
+        function volidata(){
+            var name = check_name();
+            var code = check_code();
+            var mail = check_mail();
+            var mobile = check_mobile();
+            var qq = check_qq();
+            var address = check_address();
+            if(name && code && mail && mobile && qq && address){
+                return true;
+            }else{
+                return false;
+            }
+        }
+	</script>
+</block>

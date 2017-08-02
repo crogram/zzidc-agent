@@ -1,0 +1,149 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <!--virtualhost_renew start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/ip/iplist','',false);?>">IP管理</a></li>
+                <li><a>IP续费确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">IP续费确认订单</div>
+                </div>
+                <div class="ky-panel-body">
+                    <form action="<?php echo U('frontend/ip/ip_renewals','',false);?>" method="post" id="vrform">
+                        <table class="ky-table margin-bottom-20">
+                            <tbody>
+                            <tr>
+                                <td width="10%" class="text-right pright10">业务编号</td>
+                                <td width="40%">
+                                    {$api_bid}
+                                    <input name="ip_id" type="hidden" value="{$id}" />
+                                </td>
+                                <td width="10%" class="text-right pright10">产品名称</td>
+                                <td width="40%">{$product_name}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">地区</td>
+                                <td width="40%">
+                                   <?php if($dqbh == '4001'){echo "郑州机房";}else{echo "香港机房";}?>
+                                </td>
+                                <td width="10%" class="text-right pright10">IP地址</td>
+                                <td width="40%">
+                                    <?php if($ipaddress == null){echo "暂未绑定IP";}else{echo $ipaddress;}?>
+                                </td>
+                            </tr>
+                            <tr>
+								<td width="10%" class="text-right pright10">
+									带宽
+								</td>
+								<td width="40%" colspan='3'>
+									<?php echo $bandwidth; ?>M
+								</td>
+							</tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">日期</td>
+                                <td colspan="3" class="ky-td-multi-lines">
+                                    <p>开通时间：{$create_time}</p>
+                                    <p>到期时间：{$overdue_time}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">续费时间：</td>
+                                <td colspan="3" class="ky-td-multi-lines">
+                                    <p class="gff6">
+                                        <select class="ky-input-reset width460" name="renewalstime" id="renew_select" onchange="show_up()" style="width: 180px;">
+                                            <option value=-1>请选择续费方案</option>
+                                            <volist name="renewals_price_list" id="rpl">
+                                                <option value="{$rpl.month}">{$rpl.product_price}&nbsp;元&nbsp;/{$rpl.month}&nbsp;个月</option>
+                                            </volist>
+                                        </select>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="box-fixed">
+                            <div class="account-fix">
+                                <div class="h-54" id="payspan">
+                                    <div class="paybox">
+                                        <a href="javascript:void(0);" class="paybtn" onclick="on_sumit();">确认续费</a>
+                                    </div>
+                                    <div class="total">
+                                        <p class="mt-4" style="margin-top: 20px">
+                                            <span class="total-span">应付总额：</span>
+                                            <span class="tot-price">
+                                                ¥ <span id="money">0</span>
+                                                <volist name="total_price" id="tp">
+                                                    <span id="price{$tp.month}" style="display: none">{$tp.price}</span>
+                                                </volist>
+                                                .00
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="loadingspan" class="h-54" align="center" style="display: none;">
+                                    <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                    <span><font color="red">正在续费，请稍候。请勿刷新此页面。</font></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--virtualhost_renew end-->
+</block>
+<block name="script">
+<script type="text/javascript">
+        zzprice();
+        function on_sumit() {
+            var selected=$("#renew_select").val();
+            if (selected == -1) {
+                alert("请选择续费方案!");
+            }
+            else if (confirm('确认信息无误后,请点击确定!')) {
+                $("#vrform").submit();
+                $("#payspan").hide();
+                $("#loadingspan").show();
+            }
+        }
+        function show_up(){
+            var option= $("#renew_select").find("option");
+            for(var i=0;i<option.length;i++){
+                if(option[i].value!=-1){
+                    $("#appreciation"+option[i].value).hide();
+                    $("#price"+option[i].value).hide();
+                    $("#money").show();
+                }
+            }
+            var selected=$("#renew_select").val();
+            if(selected!=-1){
+                $("#appreciation"+selected).show();
+                $("#price"+selected).show();
+                $("#money").hide();
+            }
+        }
+        function zzprice()
+        {
+            var option= $("#renew_select").find("option");
+            for(var j=0;j<option.length;j++){
+                if(option[j].value!=-1){
+                    var appreciation = $("#appreciation"+option[j].value).find("input");
+                    var prices = parseInt($("#price"+option[j].value).text());
+                    var money = prices;
+                    for(var x=0;x<appreciation.length;x++){
+                        money += parseInt(appreciation[x].value);
+                    }
+                    $("#price"+option[j].value).text(money);
+                }
+            }
+        }
+    </script>
+</block>

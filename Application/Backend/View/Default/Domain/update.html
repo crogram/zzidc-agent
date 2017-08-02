@@ -1,0 +1,238 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	<link rel="stylesheet" href="__COM_STATICS__bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					业务管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a  href="<?php echo U('Backend/Domain/index', [  ], false);?>">域名列表</a>
+					&amp; 修改域名业务信息
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Domain/index', [  ], false);?>">域名列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+
+
+	<form class="form-horizontal" action="<?php echo U('Backend/Domain/store', [ 'id' => $entity['id'] ], false);?>" role="form" method="post" name="update" id="update">
+
+<div class="form-group">
+	<label class="col-sm-3 control-label no-padding-right" for="state">
+		<span style="color:red;" class="fa fa-asterisk"></span>
+		业务状态
+	 </label>
+
+	<div class="col-sm-9">
+		<select class="col-xs-10 col-sm-5" name="state" id="state">
+				<?php foreach($state as $k => $v):?>
+					<option value="<?php echo $k;?>" <?php if($k == $entity['state']):?>selected="selected"<?php endif;?> >
+						<?php echo $v;?>
+					</option>
+				<?php endforeach;?>
+		</select>
+		<span class="help-inline col-xs-12 col-sm-7">
+			<span class="middle"></span>
+		</span>
+	</div>
+</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="login_name">
+				会员账号：
+			</label>
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  id="login_name"  value="<?php echo $entity['login_name'];?>" class="col-xs-10 col-sm-5">
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="product_name">
+				产品名称：
+			</label>
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  id="product_name" name="product_name"  value="<?php echo $entity['product_name'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+	<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="free_trial">
+				试用/购买
+			 </label>
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  id="free_trial" name="free_trial"  value="<?php echo $free_trial[$entity['free_trial']];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="create_time">
+				开通时间：
+			 </label>
+			<div class="col-sm-9">
+				<input type="text" readonly="readonly" disable="disable"  name="open_time"  id="open_time"   value="<?php echo $entity['create_time'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="overdue_time">
+				到期时间：</label>
+			<div class="col-sm-9">
+				<input type="text"  name="overdue_time"  id="overdue_time"   value="<?php echo $entity['overdue_time'];?>" class="col-xs-10 col-sm-5 date-picker" data-date-format="yyyy-mm-dd hh:ii:ss">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="space-4"></div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right"  for="buy_time">
+				购买时长：
+			</label>
+			<div class="col-sm-9">
+				<input type="number"  name="buy_time"  id="buy_time"   value="<?php echo $entity['buy_time'];?>" class="col-xs-10 col-sm-5">
+				<span class="help-inline col-xs-12 col-sm-7">
+					<span class="middle"></span>
+				</span>
+			</div>
+		</div>
+
+				<div class="space-4"></div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"  for="ipaddress">
+						IP地址：
+					</label>
+					<div class="col-sm-9">
+						<input type="text"  name="ipaddress"  id="ipaddress"   value="<?php echo $entity['ipaddress'];?>" class="col-xs-10 col-sm-5">
+						<span class="help-inline col-xs-12 col-sm-7">
+							<span class="middle"></span>
+						</span>
+					</div>
+				</div>
+
+		<div class="space-4"></div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit" >
+						<i class="ace-icon fa fa-check bigger-110"></i>
+						修改
+					</button>
+					<a class="btn btn-info" href="<?php echo U('Backend/Domain/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+
+		</form>
+
+
+
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__COM_STATICS__bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__COM_STATICS__bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+
+$('.date-picker').datetimepicker({
+	language: 'zh-CN',
+	autoclose: true,
+	todayHighlight: true,
+	minuteStep:1
+})
+	function updater(form){
+		form.submit();
+	}
+	$("#update").validate({
+		submitHandler:function(form){
+			updater(form);
+        },
+		onclick:false,
+		onfocusout:false,
+		onkeyup:false,
+		errorPlacement: function (error, element){
+			var $alert = $('<div class="alert alert-danger "><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong><i class="ace-icon fa fa-times"></i>错误： </strong> '+$(error).html()+' <br> </div>');
+
+			$("#update").before($alert);
+
+		},
+		rules:{
+			state:{
+				required:true,
+				number:true
+			  },
+		  	month:{
+				required:true,
+				digits:true
+			},
+			overdue_time:{
+				required:true,
+				date:true
+			},
+			ip_address:{
+				required:true
+			}
+		},
+	  	messages:{
+	  		state:{
+				required:"业务状态必须选择",
+				number:"业务状态参数格式不对",
+		  	},
+		  	month:{
+			   required:"服务期限不能为空",
+			   digits:"服务期限必须是整数"
+			 },
+			overdue_time:{
+				required:"到期时间不能为空",
+				date:"到期时间格式非法"
+			},
+			ip_address:{
+				required:"IP地址必须填写"
+			}
+		}
+	});
+
+</script>
+
+</block>

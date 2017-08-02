@@ -1,0 +1,147 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+    <!--fastvps_onfoemal start-->
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','', false);?>" class="crumb-home">会员中心</a></li>
+                <li><a href="<?php echo U('frontend/fastvps/fastvpslist','',false);?>">快云VPS管理</a></li>
+                <li><a>快云VPS转正确认订单</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">快云VPS转正确认订单</div>
+                </div>
+                <div class="ky-panel-body">
+                    <form action="<?php echo U('frontend/fastvps/fastvps_onformal','',false);?>" method="post" id="voform">
+                        <table class="ky-table margin-bottom-20">
+                            <tbody>
+                            <tr>
+                                <td width="10%" class="text-right pright10">业务编号</td>
+                                <td width="40%">
+                                    {$business_id}
+                                    <input name="fastvps_id" value="{$id}" type="hidden"/>
+                                </td>
+                                <td width="10%" class="text-right pright10">产品名称</td>
+                                <td width="40%">{$product_name}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">地区</td>
+                                <td width="40%">
+                                    <if condition="$area_code == 4001">郑州
+                                        <elseif condition="$area_code == 4002" />香港
+                                        <elseif condition="$area_code == 4005"/>美国
+                                    </if>
+                                </td>
+                                <td width="10%" class="text-right pright10">IP地址</td>
+                                <td width="40%">{$ip_address}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">购买/试用</td>
+                                <td width="40%"><if condition="$free_trial == 0">购买<else/>试用</if></td>
+                                <td width="10%" class="text-right pright10">系统类型</td>
+                                <td width="40%">
+                                    <if condition="$system_type == 0">Windows 2003
+                                        <elseif condition="$system_type == 1" />LINUX
+                                        <elseif condition="$system_type == 2" />Windows 2008
+                                    </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">业务状态</td>
+                                <td colspan="3" class="ky-td-multi-lines">
+                                    <if condition="$state == 0">
+                                        <font class="failure">失败</font>
+                                        <elseif condition="$state == 1" />
+                                        <font class="success" >正常</font>
+                                        <elseif condition="$state == 2" />
+                                        <font class="overdue">已过期</font>
+                                        <elseif condition="$state == 3" />
+                                        <font class="delete">已删除</font>
+                                    </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">日期</td>
+                                <td colspan="3" class="ky-td-multi-lines">
+                                    <p>开通时间：{$open_time}</p>
+                                    <p class="gff6">服务期限：2天</p>
+                                    <p>到期时间：{$overdue_time}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="text-right pright10">转正时间：</td>
+                                <td colspan="3" class="ky-td-multi-lines">
+                                    <p class="gff6">
+                                        <select id="service_time" name="service_time" onchange="show_up()">
+                                            <option value="-1">请选择转正方案</option>
+                                            <volist name="price_list" id="pl">
+                                                <option value="{$pl.month}" emoney="{$pl.product_price}">
+                                                    {$pl.product_price}元 /
+                                                    <if condition="$pl.month % 12 != 0">
+                                                        {$pl.month}个月<else/><?php echo $pl['month']/12;?>年
+                                                    </if>
+                                                </option>
+                                            </volist>
+                                        </select>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="box-fixed">
+                            <div class="account-fix">
+                                <div class="h-54" id="payspan">
+                                    <div class="paybox">
+                                        <a href="javascript:void(0);" class="paybtn" onclick="on_sumit();">确认转正</a>
+                                    </div>
+                                    <div class="total">
+                                        <p class="mt-4" style="margin-top: 20px">
+                                            <span class="total-span">应付总额：</span>
+                                            <span class="tot-price">
+                                                ¥ <span id="money">0.00</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="loading" align="center" style="height: 50px;line-height: 50px;display: none">
+                                    <img src="__FRONTEND_IMAGES__loading.gif" width="12" height="11" id="loadinggif"/>
+                                    <font color="red">正在转正，请稍候。请勿刷新此页面。</font>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fastvps_onfoemal end-->
+</block>
+<block name="script">
+    <script type="text/javascript">
+        function on_sumit() {
+            var selected = $("#service_time").val();
+            if (selected == -1) {
+                alert("请选择转正方案!");
+            }
+            else if(confirm('确认信息无误后,请点击确定!')) {
+                $("#voform").submit();
+                $("#payspan").hide();
+                $("#loading").show();
+            }
+        }
+        function show_up(){
+            var selected=$("#service_time").val();
+            if(selected!=-1){
+                var money = $("#service_time").find("option:selected").attr("emoney");
+                $("#money").text(money);
+            }else{
+                $("#money").text("0.00");
+            }
+        }
+    </script>
+</block>

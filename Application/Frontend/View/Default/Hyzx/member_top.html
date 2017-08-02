@@ -1,0 +1,51 @@
+<!--console-head start-->
+	<div class="ky-header">
+		<div class="pull-left">
+			<a href="{:U('frontend/index/index', '', false)}"><img src="{$site_config['logo_url']}" width="180" height="60" alt="{$site_config['site_name']}"/></a>
+		</div>
+		<div class="header-main text-right">
+			<div class="menu-control-outer pull-left">
+				<a href="<?php echo U('frontend/index/index','',false);?>" class="header-link header-link2" target="_blank">
+					前台首页
+				</a>
+				<div class="btn-group pull-left" style="border-right:1px solid #0596c2">
+					<button style="height:66px;line-height:73px" type="button" class=" fsize12 btn console-ky-menu-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">快云产品<span class="ky-caret" style="margin-top:2px"></span></button>
+					<ul class="dropdown-menu ky-dropdown-menu">
+						<li><a href="<?php echo  U('frontend/product/vps' ,['type'=>'fastvps'],false);?>" target="_blank">快云VPS</a></li>
+						<li><a href="<?php echo  U('frontend/cloudserver/cloudserverShow' ,'',false);?>" target="_blank">快云服务器</a></li>
+						<li><a href="<?php echo  U('frontend/clouddb/clouddbShow' ,'',false);?>" target="_blank">快云数据库</a></li>
+					</ul>
+				</div>
+				<div class="btn-group pull-left" style="border-right:1px solid #0596c2">
+					<button style="height:66px;line-height:73px" type="button" class=" fsize12 btn console-ky-menu-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">虚拟主机<span class="ky-caret" style="margin-top:2px"></span></button>
+					<ul class="dropdown-menu ky-dropdown-menu">
+						<li><a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'host'],false);?>"  target="_blank">国内主机</a></li>
+						<li><a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'hkhost'],false);?>" target="_blank">香港主机</a></li>
+						<li><a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'usahost'],false);?>" target="_blank">美国主机</a></li>
+						<li><a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'dedehost'],false);?>" target="_blank">织梦主机</a></li>
+						<li><a href="<?php echo  U('frontend/product/virtualhost' ,['type'=>'cloudVirtual'],false);?>" target="_blank">云虚拟主机</a></li>
+					</ul>
+				</div>
+				<a href="<?php echo U('frontend/domain/domain','',false);?>" class="header-link header-link2" target="_blank">
+					域名注册
+				</a>
+				<a href="<?php echo U('frontend/product/ssl','',false);?>" class="header-link header-link2" target="_blank">
+					SSL证书
+				</a>
+			</div>
+			<span class="hello-user">
+				你好，<span>{$Think.session.Frontend.user_name}</span>
+			</span>
+			<div class="pull-right">
+				<!-- <a href="/user/message/" class="header-link header-link-message">
+					站内信
+					<span class="header-message-count ">0</span>
+				</a>
+				<a href="#" class="header-link header-link-order">工单服务</a> -->
+				<a href="<?php echo $site_config['promotion_link'];?>" target="_blank" class="header-link header-link-icp">网站备案</a>
+				<a href="<?php echo U('frontend/Help/helpindex', '', false);?>" target="_blank" class="header-link header-link-help">帮助中心</a>
+				<a href="<?php echo U('frontend/login/logout', '', false);?>" class="header-link header-link-logout">退出登录</a>
+			</div>
+		</div>
+	</div>
+	<!--console-head end-->

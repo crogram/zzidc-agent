@@ -1,0 +1,8 @@
+<?php foreach($products as $k => $product):?>
+<div class="radio inline">
+    <label>
+        <input value="<?php echo $product['id']?>" name="product_ids[]" type="checkbox" class="ace" <?php if($k == 0):?> required minlength="1" <?php endif;?> />
+        <span class="lbl"> <?php echo $product['product_name']?></span>
+    </label>
+</div>
+<?php endforeach;?>

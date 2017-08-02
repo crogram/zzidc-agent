@@ -1,0 +1,44 @@
+图片切换插件，依赖于jquery
+
+<link rel="stylesheet" href="<s:text name="global.resource.uri"/>plugin/flexslider/2.2.2/css/flexslider.css">
+<script src="<s:text name="global.resource.uri"/>plugin/flexslider/2.2.2/jquery.flexslider.min.js"></script>
+<script type="text/javascript"> 
+$(function(){
+	$('.daimabiji').flexslider({
+		animation: 'fade',
+		pauseOnHover: true,
+		animationDuration: 600,
+		prevText: '上一个',
+		nextText: '下一个'
+	});
+})
+</script>
+<div class="daimabiji">
+	<ul class="slides">
+		<li>
+			<a href="http://www.zzidc.com/main/huodong/halfprize.html" target="_blank">
+				<img src="images/halfprize.jpg"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.zzidc.com/main/huodong/kuaiYunVpsUpgrade.html" target="_blank">
+				<img src="images/vpsUpgrade.gif"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.zzidc.com/main/huodong/nuandong201511.html" target="_blank">
+				<img src="images/nuandong.jpg"/>
+			</a>
+			</li>
+		<li>
+			<a href="http://www.zzidc.com/main/managehire/showServerHireInfo.html#ibm" target="_blank">
+				<img src="images/tuoguozy.jpg"/>
+			</a>
+		</li>
+		<li>
+			<a href="https://cloud.zzidc.com/ssd_config"  target="_blank">
+				<img src="images/cas_ssd.jpg"/>
+			</a>
+		</li>
+	</ul>
+</div>

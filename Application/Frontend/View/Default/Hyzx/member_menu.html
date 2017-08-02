@@ -1,0 +1,119 @@
+<!--console-aside start-->
+<div class="aside-menu">
+	<div class="sidebar-scroll-container">
+		<div class="sidebar-main">
+		<!-- 手风琴菜单 -->
+			<div class="ky-menu default-transition-tree-fast" id="accordion" role="tablist" aria-multiselectable="false">
+				<div class="panel">
+					<div class="console-g394" id="menuControl">
+						<a class="menu-icon" title="折叠菜单"></a>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="upper-menu-wrap" role="tab">
+						<a class="collapsed upper-menu menu-icon-znx menu-active" href="<?php echo U('frontend/member/index', '', false);?>" data-named="Member/index">首页</a>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="upper-menu-wrap" role="tab">
+						<a class="collapsed upper-menu menu-icon-product" role="button" data-toggle="collapse" data-parent="#accordion" href="#/#product" aria-expanded="true">
+							产品中心
+						</a>
+					</div>
+					<div id="product" class="collapse" role="tabpanel">
+						<ul class="sub-menu">
+							<li>
+								<a href="<?php echo U('frontend/vps/vpslist', '', false);?>" data-named="Vps">VPS</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/fastvps/fastvpslist', '', false);?>" data-named="Fastvps">快云VPS</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/domain/domainlist', '', false);?>" data-named="Domain">域名管理</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/virtualhost/virtualhostlist', '', false);?>" data-named="Virtualhost">虚拟主机</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/virtualhost/virtualhostlist', ['virtual_type'=>'1'], false);?>" data-named="Virtualhost">香港主机</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/virtualhost/virtualhostlist', ['virtual_type'=>'2'], false);?>" data-named="Virtualhost">美国主机</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/virtualhost/virtualhostlist', ['virtual_type'=>'3'], false);?>" data-named="Virtualhost">云虚拟主机</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/cloudspace/cloudspacelist', '', false);?>" data-named="Cloudspace">云空间</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/cloudserver/cloudserverlist', '', false);?>" data-named="Cloudserver">快云服务器</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/ip/iplist', '', false);?>" data-named="Ip">IP管理</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/clouddb/clouddblist', '', false);?>" data-named="Clouddb">快云数据库</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/ssl/ssllist', '', false);?>" data-named="Ssl">SSL证书</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="upper-menu-wrap" role="tab">
+						<a class="collapsed upper-menu menu-icon-order" role="button" data-toggle="collapse" data-parent="#accordion" href="#/#order-guanli" aria-expanded="true">
+							订单管理
+						</a>
+					</div>
+					<div id="order-guanli" class="collapse" role="tabpanel">
+						<ul class="sub-menu">
+							<li>
+								<a href="<?php echo U('frontend/order/orderlist', '', false);?>" data-named="Order/orderlist">全部订单</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="upper-menu-wrap" role="tab">
+						<a class="collapsed upper-menu menu-icon-user" role="button" data-toggle="collapse" data-parent="#accordion" href="#/#user" aria-expanded="true">
+							用户中心
+						</a>
+					</div>
+					<div id="user" class="collapse" role="tabpanel">
+						<ul class="sub-menu">
+							<li>
+								<a href="<?php echo U('frontend/member/memberinfo', '', false);?>" data-named="Member/memberinfo">会员信息</a>
+							</li>
+							<li>
+								<a href="<?php echo U('frontend/member/membersafe', '', false);?>" data-named="Member/membersafe">安全中心</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="upper-menu-wrap" role="tab">
+						<a class="collapsed upper-menu menu-icon-caiwu" role="button" data-toggle="collapse" data-parent="#accordion" href="#/#caiwu" aria-expanded="true">
+							财务管理
+						</a>
+					</div>
+				</div>
+				<div id="caiwu" class="collapse" role="tabpanel">
+					<ul class="sub-menu">
+						<li>
+							<a href="<?php echo U('frontend/financial/member_account_info', '', false);?>" data-named="Financial/member_account_info">财务信息</a>
+						</li>
+						<li>
+							<a href="<?php echo U('frontend/financial/member_transactions_list', '', false);?>" data-named="Financial/member_transactions_list">交易记录</a>
+						</li>
+						<li>
+							<a href="<?php echo U('frontend/financial/member_recharge', '', false);?>" data-named="Financial/member_recharge">在线充值</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--console-aside end-->

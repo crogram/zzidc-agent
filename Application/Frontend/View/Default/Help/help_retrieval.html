@@ -1,0 +1,65 @@
+<extend name="Layouts/layout" />
+<block name="links">
+    <link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kyhelp.css">
+</block>
+<block name="search">
+    <div class="searchbox">
+        <div class="searchleft">
+            <i></i>帮助中心
+        </div>
+        <div class="searchright">
+            <form method="get" id="search" action="{:U('Help/help_retrieval','',false)}">
+                <div class="search">
+                    <input type="text" id="keywords" name="keywords" value="{$keywords}" placeholder="请输入您想了解的问题、关键词或产品名称">
+                    <a href="javascript:void(0);" class="ssbtn" onclick="$('#search').submit();"><i></i></a>
+                </div>
+                <div class="hotsearch clearfix">
+                    <span>热搜关键词：</span>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('云服务器');$('#search').submit();">云服务器</a>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('云数据库');$('#search').submit();">云数据库</a>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('CDN');$('#search').submit();">CDN</a>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('注册');$('#search').submit();">注册</a>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('购买');$('#search').submit();">购买</a>
+                    <a href="javascript:void(0);" onclick="$('#keywords').val('找回密码');$('#search').submit();">找回密码</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</block>
+<block name="content">
+    <!--检索帮助内容开始-->
+    <div class="ky-container clearfix">
+        <div class="left-col">
+            <volist name="problems" id="problem">
+                <div class="left-col-item">
+                    <div class="left-col-tit">
+                        <a href="{:U('Help/help_details',array('id'=>$problem['id']),false)}" class="g009">{$problem.problem_title}</a>
+                    </div>
+                    <p class="left-col-txt">{$problem.problem_content|subtext=80}</p>
+                    <div class="item-data">
+                        更新时间：{$problem.update_at}
+                    </div>
+                </div>
+            </volist>
+            <empty name="problems">未查询到有关"{$keywords}"问题</empty>
+            <div class="pagebtnbox">
+                {$show}
+            </div>
+        </div>
+        <div class="right-col">
+            <div class="right-col-tit">
+                相关产品
+            </div>
+            <div class="xg-pro-box">
+                <volist name="product" id="pd" key="k">
+                    <a href="{:U('Help/help_retrieval',array('type_id'=>$pd['id'],'keywords'=>$pd['type_name']),false)}" class="xg-pro-item" <if condition='($k eq 3)or($k eq 6)'>style="margin-right:0"</if>>
+                        <img src="__FRONTEND_IMAGES__20160820img{$k}.png" alt="{$pd.type_name}" style="width:85px">
+                        <span href="#">{$pd.type_name}</span>
+                    </a>
+                </volist>
+            </div>
+        </div>
+    </div>
+    <!--检索帮助内容结束-->
+</block>
+<block name="script"></block>

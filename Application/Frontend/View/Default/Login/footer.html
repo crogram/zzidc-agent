@@ -1,0 +1,26 @@
+<div class="gt-footer" style="background:none">
+    <div class="gt-row">
+        <div class="gt-copyright">
+            <div class="copyright-link text-center">
+                <a href="{:U('About/about','',false)}">关于我们</a>
+                <!-- <a href="#">联系我们</a> -->
+                <a href="{:U('Article/articlelist','',false)}">新闻公告</a>
+                <!-- <a href="#">投诉建议</a>
+                <a href="#">有问必答</a>
+                <a href="#">网站地图</a> -->
+                <a href="{:U('About/friendlylink','',false)}">友情链接</a>
+            </div>
+            <p class="text-center">
+				<?php if($site_config['police_record'] != '0'){?>
+					<img  src="__FRONTEND_IMAGES__beian.png" />公网安备：<a href="<?php echo $site_config['police_record_url'];?>" ><?php echo $site_config['police_record'];?></a>
+					<br/>
+				<?php }?>
+				<?php echo $site_config['site_name'];?>经营性备案号：<a href="http://www.miitbeian.gov.cn/" ><?php echo $site_config['site_post_record'];?></a>
+				<br/>
+				官方地址：<a href="<?php echo U('Frontend/Index/index', [], false);?>"><?php echo $_SERVER['SERVER_NAME'];?></a>&nbsp;&nbsp;版权所有：<?php echo $site_config['site_name'];?><?php echo htmlspecialchars_decode($site_config['statistics']);?>
+				<br/>
+				公司地址：<?php echo $site_config['site_address'];?>&nbsp;&nbsp;邮政编码：<?php echo $site_config['site_post_code'];?>
+				</p>
+        </div>
+    </div>
+</div>

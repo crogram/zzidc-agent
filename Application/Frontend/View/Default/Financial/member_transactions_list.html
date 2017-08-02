@@ -1,0 +1,80 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="ky-main home-page">
+        <div class="crumb-container" data-nav="phoenix">
+            <ol class="breadcrumb ky-crumb">
+                <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+                <li><a>财务管理</a></li>
+                <li><a>交易记录</a></li>
+            </ol>
+        </div>
+        <div class="">
+            <div class="conseole-ky-fuwuqi">
+                <div class="ky-panel-heading clearfix">
+                    <div class="ky-panel-title">交易记录</div>
+                </div>
+                <div class="ky-panel-body">
+                    <div class="server-operates clearfix margin-bottom-20">
+                        <div class="clearfix">
+                            <form action="<?php echo U('frontend/financial/member_transactions_list','',false);?>" class="pull-left">
+                                <input type="text" name="select" class="pull-left ky-input-reset search-group-input"  placeholder="产品名称">
+                                <input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+                            </form>
+                        </div>
+                    </div>
+                    <table class="kyb-table margin-bottom-20">
+                        <thead>
+                        <tr>
+                            <th width="12%">提交时间</th>
+                            <th width="5%">订单号</th>
+                            <th width="12%">产品名称</th>
+                            <th width="10%">交易类型</th>
+                            <th width="12%">交易金额</th>
+                            <th width="25%">备注</th>
+                            <th width="25%">附注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="tran_list"  id="data">
+                            <tr>
+                                <td>{$data.create_time}</td>
+                                <td>
+                                    <if condition="$data.order_id == null">无<else/>{$data.order_id}</if>
+                                </td>
+                                <td>
+                                    <if condition="$data.product_id == null">
+                                        <if condition="$data.type == 0">
+                                            充值<elseif condition="$data.type == 1"/>
+                                            消费<elseif condition="$data.type == 2"/>
+                                            取款
+                                        </if>
+                                        <else/>
+                                        {$data.product_name}
+                                    </if>
+                                </td>
+                                <td class="ky-td-multi-lines">
+                                    <if condition="$data.type == 0 ">充值
+                                        <elseif condition="$data.type == 1"/>消费
+                                        <elseif condition="$data.type == 2"/>取款
+                                    </if>
+                                </td>
+                                <td><span class="gff8">
+									<if condition="$data.type == 0">+
+                                        <elseif condition="($data.type == 1)or($data.type == 2)"/>-
+                                    </if>{$data.account_money}元</span></td>
+                                <td class="ky-td-multi-lines">{$data.note_appended}</td>
+                                <td class="ky-td-multi-lines">
+                                    <if condition="$data.remark == ''">--<else/>{$data.remark}</if>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <!-- 引入分页 -->
+                    <include file="Hyzx/member_page" />
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

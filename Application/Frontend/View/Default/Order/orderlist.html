@@ -1,0 +1,241 @@
+<extend name="Hyzx/member" />
+<block name="links">
+</block>
+<block name="right">
+<div class="ky-main home-page">
+		<div class="crumb-container" data-nav="phoenix">
+			<ol class="breadcrumb ky-crumb">
+				<li>
+					<a href="<?php echo U('frontend/member/index', '', false);?>" class="crumb-home">会员中心</a>
+				</li>
+				<li>
+					<a>订单管理</a>
+				</li>
+			</ol>
+		</div>
+		<div class="">
+			<div class="conseole-ky-fuwuqi">
+				<div class="ky-panel-heading clearfix">
+					<div class="ky-panel-title">订单管理</div>
+				</div>
+				<div class="ky-panel-body">
+					<div class="ky-tabs-container clearfix margin-bottom-20">
+						<ul class="text-center pull-left clearfix">
+							<li class="ky-tab <?php if(I('get.state') == null):?> ky-tab--current <?php endif;?>" >
+								<a href="<?php echo U('frontend/order/orderlist', '', false);?>">全部<em class="all">{$count}</em></a>
+							</li>
+							<li class="ky-tab <?php if(I('get.state') == 6):?> ky-tab--current <?php endif;?>"   id="wkt" >
+								<a href="<?php echo U('frontend/order/orderlist', [ 'state'=>6], false);?>">
+									已付款未开通<em class="wkt">0</em>
+								</a>
+							</li>
+							<li class="ky-tab <?php if(I('get.state') == 1):?> ky-tab--current <?php endif;?>"  id="chenggong" >
+								<a href="<?php echo U('frontend/order/orderlist', [ 'state'=>1], false);?>">
+									成功<em class="chenggong">0</em>
+								</a>
+							</li>
+							<li class="ky-tab <?php if(I('get.state') == 3):?> ky-tab--current <?php endif;?>"  id="chuli"  >
+								<a href="<?php echo U('frontend/order/orderlist', [ 'state'=>3], false);?>">
+									处理中<em class="chuli">0</em>
+								</a>
+							</li>
+							<li class="ky-tab <?php if(I('get.state') == 4):?> ky-tab--current <?php endif;?>"  id="shenhe">
+								<a href="<?php echo U('frontend/order/orderlist', [ 'state'=>4], false);?>">
+									审核中<em class="shenhe">0</em>
+								</a>
+						</li>
+						<li class="ky-tab <?php if(I('get.state') === '0'):?> ky-tab--current <?php endif;?>"  id="shibai" >
+								<a href="<?php echo U('frontend/order/orderlist', [ 'state'=>0], false);?>">
+									失败<em class="shibai">0</em>
+								</a>
+						</li>
+						</ul>
+					</div>
+					<div class="server-operates clearfix margin-bottom-20">
+					<form action="<?php echo U('frontend/order/orderlist', '', false);?>" class="pull-left" method="post">
+					    <input type="hidden"  name="state"  value="{$Think.get.state}" />
+ 						<input type="text" name="select" class="pull-left ky-input-reset search-group-input" placeholder="产品名称">
+						<input type="submit" class="pull-left ky-btn btn-huise btn-primary-search" value="">
+					</form>
+					</div>
+					<table class="ky-table margin-bottom-20">
+						<thead>
+							<tr>
+								<th width="10%">
+									订单号
+								</th>
+								<th width="17%">
+									产品名称
+								</th>
+								<th width="10%">
+									<div class="btn-group btn-group-short">
+										<a type="button" href="#" class="ky-btn btn-select btn-select-order dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:128px">
+											<span class="selected-content">类型</span>
+											<span class="ky-caret"></span>
+										</a>
+										<ul class="dropdown-menu" style="width:128px;margin-top:-4px">
+											<li><a href="<?php echo U('frontend/order/orderlist', ['order_type'=>0], false);?>" data-drop="0">新增</a></li>
+											<li><a href="<?php echo U('frontend/order/orderlist', ['order_type'=>1], false);?>" data-drop="0">增值</a></li>
+											<li><a href="<?php echo U('frontend/order/orderlist', ['order_type'=>2], false);?>" data-drop="1">续费</a></li>
+											<li><a href="<?php echo U('frontend/order/orderlist', ['order_type'=>3], false);?>" data-drop="2">变更方案</a></li>
+											<li><a href="<?php echo U('frontend/order/orderlist', ['order_type'=>4], false);?>" data-drop="3">转正</a></li>
+										</ul>
+									</div>
+								</th>
+								<th width="10%">
+									金额（元）
+								</th>
+								<th width="10%">期限</th>
+								<if condition="$Think.get.order eq DESC">
+								<th width="17%" class="current">创建时间
+										<if condition="$Think.get.state != null">
+										<a  href="<?php echo U('frontend/order/orderlist', [ 'state'=>$_GET['state'],'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+										<else />
+										<a  href="<?php echo U('frontend/order/orderlist', [ 'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+										</if>
+								</th>
+								<else/>
+								<th  width="17%" class="current">创建时间
+										<if condition="$Think.get.state != null">
+										<a  href="<?php echo U('frontend/order/orderlist', [ 'state'=>$_GET['state'],'order'=>'ASC'], false);?>"  class="filter-icon"></a>
+										<else />
+										<a  href="<?php echo U('frontend/order/orderlist', [ 'order'=>'DESC'], false);?>"  class="filter-icon"></a>
+										</if>
+								</th>
+								</if>
+								<th width="13%">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						<volist name="info"  id="data">
+							<tr>
+								<td><p>{$data.id}</p></td>
+								<td class="ky-td-multi-lines">
+									<div class="text-stress">{$data.product_name}</div>
+								</td>
+								<td class="ky-td-multi-lines">
+									<div>
+										<i class="n-success-icon3"></i>
+										<if condition="$data.order_type eq  0">新增
+										<elseif condition="$data.order_type eq  1"/>增值
+										<elseif condition="$data.order_type eq  2"/>续费
+										<elseif condition="$data.order_type eq  3"/>变更方案
+										<elseif condition="$data.order_type eq  4"/>转正
+										</if>
+										/
+										<if condition="$data.state eq  0">失败
+										<elseif condition="$data.state eq  1"/>成功
+										<elseif condition="$data.state eq  2"/>待处理
+										<elseif condition="$data.state eq  3"/>处理中
+										<elseif condition="$data.state eq  4"/>审核中
+										<elseif condition="$data.state eq  5"/>已删除
+										<elseif condition="$data.state eq  6"/>已付款
+										</if>
+									</div>
+									<div>
+										<if condition="$data.state ==  0  || $data.state == 3 || $data.state == 4 || $data.state == 6">
+										<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin={$site_config.site_qq}&amp;site=qq&amp;menu=yes"><i class="connect-icon-qq-kt"></i>联系客服开通</a>
+										</if>
+									</div>
+									</td>
+								<td class="ky-td-multi-lines">
+									<span class="gff8">{$data.charge}</span>
+								</td>
+								<td class="ky-td-multi-lines">
+									<?php if($data['order_type'] == '0' && $data['free_trial'] == '0'){?>
+									购买<?php echo $data['order_time'];?>个月
+									<?php }else if($data['order_type'] == '1' && $data['free_trial'] == '0'){?>
+									增值<?php echo $data['order_time'];?>个月
+									<?php }else if($data['order_type'] == '0' && $data['free_trial'] > '0'){?>
+									试用
+									<?php }else if($data['order_type'] == '2' && $data['free_trial'] == '0'){?>
+									续费<?php echo $data['order_time'];?>个月
+									<?php }else if($data['order_type'] == '3' && $data['free_trial'] == '0'){?>
+									升级<?php echo $data['order_time'];?>个月
+									<?php }?>
+								</td>
+								<td class="ky-td-multi-lines">
+									<div class="text-stress">{$data.create_time}</div>
+								</td>
+								<td class="ky-td-multi-lines">
+									<div>
+										<a href="<?php echo U('frontend/order/orderinfo',['order_id'=>$data['id']],false);?>">详情</a>
+										<?php if($data['state'] == 3  && ($data['product_type'] == 7 || $data['product_type'] == 8 || $data['product_type'] == 15 || $data['product_type'] == 16 || $data['product_type'] == 17)){?>
+										<span class="text-muted operate-spacing">|</span>
+										<a  href="javascript:void(0);" onclick="tbajax(this)" url="<?php echo U('frontend/order/order_getinfo',['order_id'=>$data['id']],false);?>">获取业务信息</a>
+										<?php }else {?>
+											<?php if($data['order_type'] ==0 && ($data['state']==6 || $data['state']==12 || $data['state']==11)){?>
+											<span class="text-muted operate-spacing">|</span>
+											<a href="<?php echo U('frontend/order/order_open',['order_id'=>$data['id']],false);?>">开通</a>
+											<?php }?>
+										<?php if($data['order_type'] ==0 && ($data['state']==2)){?>
+										<span class="text-muted operate-spacing">|</span>
+										<a href="<?php echo U('frontend/ssl/ssl_business_open',['order_id'=>$data['id']],false);?>">继续开通</a>
+										<?php }?>
+										<?php }?>
+									</div>
+								</td>
+							</tr>
+							</volist>
+							<empty name="info">
+						<tbody>
+							<tr>
+								<th colspan="7">
+									<p>您好像没有相关产品哦</p>
+								</th>
+							</tr>
+							</tbody>
+						</empty>
+						</tbody>
+					</table>
+				<!-- 引入分页 -->
+					<include file="Hyzx/member_page" />
+				</div>
+			</div>
+		</div>
+	</div>
+	</block>
+<block name="script">
+<script type="text/javascript">
+var tooken = true;
+function tbajax(tb)
+{
+    if(tooken)
+    {
+        tooken = false;
+        var url = $(tb).attr("url");
+        $.post(url,function(data){
+            confirm(data.info);
+            window.location.reload();
+        },'json');
+    }
+}
+$(function(){
+	state_count("*");
+	state_count("6");
+	state_count("1");
+	state_count("4");
+	state_count("3");
+	state_count("0");
+});
+function state_count(state){
+	$.post('<?php echo U("frontend/order/state_count",array(),false)?>',{"state":state},function(date){
+		if(date.status == "ok"){
+			if(state == 6){
+				$(".wkt").text(date.sum);
+			}else if(state == 1){
+				$(".chenggong").text(date.sum);
+			}else if(state == 4){
+				$(".shenhe").text(date.sum);
+			}else if(state == 3){
+				$(".chuli").text(date.sum);
+			}else if(state == 0){
+				$(".shibai").text(date.sum);
+			}else if(state == "*"){
+				$(".all").text(date.sum);
+			}
+		}
+	},'json');
+}
+</script>
+</block>

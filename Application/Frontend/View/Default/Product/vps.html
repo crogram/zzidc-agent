@@ -1,0 +1,348 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__kyvps.css">
+</block>
+{/* 首页主体开始 */}
+<block name="content">
+    {/* banner图开始 */}
+    <include file="Product/product_banner" />
+    {/* banner图结束 */}
+<div class="vpscontainerbg">
+	<div class="ky-container">
+    	<div class="vps-contianer">
+            <div class="vps-col clearfix">
+            <?php $k=0; foreach($product_list as $key=>$val){ $k++;?>
+            	<input type="hidden"  id="<?php echo $val['id'];?>_product_id"  value="<?php echo $val['id']?>" />
+            	<input type="hidden"  id="<?php echo $val['id'];?>_product_name" value="<?php echo $val['product_name'];?>"/>
+              <div class="xinghao" <?php if( $k!=0 && (($k%3) == 0)):?>style="margin-right:0"<?php endif;?>>
+                  <div class="modelbox">
+                  	<?php if($sign == 'hkvps'){?>
+                      <span class="modelicon icon-item7"></span>
+                      <?php }else{?>
+                      <span class="modelicon icon-item1"></span>
+                      <?php }?>
+                      <span class="model-tit"><?php echo $val['product_name'];?></span>
+                  </div>
+                  <ul class="config-numb">
+                  <?php foreach($val['config'] as $config_key=>$config_val){?>
+                 	 <?php if($val['product_name'] == $config_val['product_name']){?>
+                 	 			<?php if($sign == 'hkvps'){?>
+                 	 						<?php if($config_val['en_name'] == 'memory_config'){?>
+					                      <li>
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?></p>
+					                          <p><?php echo $config_val['details'];?></p>
+					                      </li>
+			                      		<?php }?>
+			                      		<?php if($config_val['en_name'] == 'network_bandwidth'){?>
+					                      <li style="border:none">
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?></p>
+					                          <p><?php echo $config_val['details'];?></p>
+					                      </li>
+					                     <?php }?>
+					                     <?php if($config_val['en_name'] == 'cpu_info'){?>
+					                      <li >
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?> </p>
+					                          <p><?php echo $config_val['details'];?> </p>
+					                      </li>
+										<?php }?>
+                 	 					
+								<?php }else{?>
+										<?php if($config_val['en_name'] == 'memory_config'){?>
+					                      <li>
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?></p>
+					                          <p><?php echo $config_val['details'];?></p>
+					                      </li>
+			                      		<?php }?>
+			                      		<?php if($config_val['en_name'] == 'network_bandwidth'){?>
+					                      <li >
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?></p>
+					                          <p><?php echo $config_val['details'];?></p>
+					                      </li>
+					                     <?php }?>
+					                     <?php if($config_val['en_name'] == 'cpu_info'){?>
+					                      <li style="border:none">
+					                          <p class="numb-he"><?php echo $config_val['config_value'].$config_val['unit'];?></p>
+					                          <p class="g999"><?php echo $config_val['config_key'];?> </p>
+					                          <p><?php echo $config_val['details'];?> </p>
+					                      </li>
+										<?php }?>
+								<?php }?>
+		          		<?php } ?>
+		          <?php }?>
+                  </ul>
+                  <ul class="config-row">
+                  <?php foreach($val['config'] as $config_key=>$config_val){?><!-- 循环配置 -->
+                 	 <?php if($val['product_name'] == $config_val['product_name']){?><!-- 产品名称和配置名称匹配 -->
+                 	 		<?php $position = strripos ( $val['api_name'], '.' ); if(strcasecmp ( substr ( $val['api_name'], 0, $position ), 'temai.vmware' ) == 0){?>
+		                 	 				<?php if($config_val['en_name'] == 'disk_config'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight" id="<?php echo $val['id'];?>_disk_config">
+						                            <?php echo $config_val['config_value'];?>
+						                          </div>
+						                      </li>
+						                      <?php } ?>
+						                      <?php if($config_val['en_name'] == 'ip'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight">
+						                             <?php echo $config_val['config_value'].$config_val['unit'];?><span class="g009"><a href="http://vps.zzidc.com/changjianwenti/113.html" target="_blank">（独享IP优势）</a></span>
+						                          </div>
+						                      </li>
+						                      <?php }?>
+						                      <?php if($config_val['en_name'] == 'host_route'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight" >
+						                            <?php echo $config_val['config_value'];?>
+						                          </div>
+						                      </li>
+						                      <?php } ?>
+						                      <?php if($config_val['en_name'] == 'online_management'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight" >
+						                            <?php if($config_val['config_value'] == 1){ echo '支持';}else{ echo '不支持';} ?>
+						                          </div>
+						                      </li>
+						                      <?php } ?>
+                 	 		<?php } else {?>
+                 	 						<?php if($config_val['en_name'] == 'disk_config'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight" id="<?php echo $val['id'];?>_disk_config">
+						                            <?php echo $config_val['config_value'];?>
+						                          </div>
+						                      </li>
+						                      <?php } ?>
+						                      <?php if($config_val['en_name'] == 'ip'){?>
+						                      <li>
+						                          <div class="vpsinfoleft"><?php echo $config_val['config_key'];?>：</div>
+						                          <div class="vpsinforight">
+						                             <?php echo $config_val['config_value'].$config_val['unit'];?><span class="g009"><a href="javascript:void(0)"  >（独享IP优势）</a></span>
+						                          </div>
+						                      </li>
+						                      <?php }?>
+                 	 		<?php } ?>
+                      <?php }?><!-- 产品名称和配置名称匹配结束 -->
+                   <?php }?><!-- 循环配置结束 -->
+                   <?php if($val['api_ptype'] == 'fastcloudvps'){?>
+                      <li style="height:90px">
+                          <div class="vpsinfoleft">操作系统：</div>
+                          <div class="vpsinforight">
+                             <div class="checkbox"  id="<?php echo $val['id'];?>_checkbox">
+                                <div class="xt-radio checked"  for=""   id="<?php echo $val['id']?>_1"  onclick="checkedSystem(<?php echo $val['id']?>,'1')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio" name="system_type" value="1"  ><span>Windows2003</span>
+                                </div>
+                                <div class="xt-radio" for=""   id="<?php echo $val['id']?>_0" onclick="checkedSystem(<?php echo $val['id']?>,'0')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio" name="system_type" value="0"><span>CentOS 6.7</span>
+                                </div>
+                                <div class="xt-radio" for=""   id="<?php echo $val['id']?>_2" onclick="checkedSystem(<?php echo $val['id']?>,'2')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio" name="system_type" value="2"><span>Windows2008</span>
+                                </div>
+                            </div>
+                          </div>
+                      </li>
+                    <?php }else{?>
+                    	<li style="height:90px">
+                          <div class="vpsinfoleft">操作系统：</div>
+                          <div class="vpsinforight">
+                             <div class="checkbox"  id="<?php echo $val['id'];?>_checkbox">
+                                <div class="xt-radio checked"  for=""   id="<?php echo $val['id']?>_1"  onclick="checkedSystem(<?php echo $val['id']?>,'1')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio" name="system_type" value="1"  ><span>Windows2003</span>
+                                </div>
+                                <div class="xt-radio" for=""   id="<?php echo $val['id']?>_0" onclick="checkedSystem(<?php echo $val['id']?>,'0')">
+                                    <span class="xt-radio-icon"></span>
+                                    <input type="radio" name="system_type" value="0"><span>CentOS 6.7</span>
+                                </div>
+                            </div>
+                          </div>
+                      </li>
+                      <?php }?>
+                      <?php if($val['api_ptype'] == 'fastcloudvps'){?>
+                      <li >
+                          <div class="vpsinfoleft">机房：</div>
+                          <div class="vpsinforight">
+                             <div class="checkbox">
+                                    &nbsp;&nbsp;<span><?php if($val['area_code'] == 4001){echo '郑州多线机房';}else if($val['area_code'] == '4003'){echo '北京多线机房';}?></span>
+                            </div>
+                          </div>
+                      </li>
+                      <?php }?>
+                      <li>
+                          <div class="vpsinfoleft">价格：</div>
+                          <div class="vpsinforight">
+                             <select class="pricelist"  id="select_<?php echo $val['id'];?>">
+                             	<?php foreach($val['price_list'] as $price_key=>$price_value){ ?>
+                             		<?php if(($price_value['month'] / 12) == 1){?>
+                             				<option value="<?php echo $price_value['id'];?>" id="<?php echo $price_value['id'];?>"><?php echo $price_value['product_price'];?>元/<?php echo $price_value['month'] / 12;?>年</option>
+                             		<?php }else if($price_value['month'] % 12 == 0){?>
+		                                  <option value="<?php echo $price_value['id'];?>" id="<?php echo $price_value['id'];?>"><?php echo $price_value['product_price'];?>元/<?php echo $price_value['month'] / 12;?>年</option>
+		                              <?php }else {?>
+		                              		<option value="<?php echo $price_value['id'];?>" id="<?php echo $price_value['id'];?>"><?php echo $price_value['product_price'];?>元/<?php echo $price_value['month'];?>个月</option>
+		                              <?php }?>
+		                         <?php }?>
+                             </select>
+                          </div>
+                      </li>
+                  </ul>
+                  <div class="dashline"></div>
+                  <div class="buybtnbox">
+                      <a href="javascript:void(0);" class="tryout" onclick="submitbuy(<?php echo $val['id'];?>,'1');"><i></i>试用</a>
+                      <a href="javascript:void(0);" class="buy"  onclick="submitbuy(<?php echo $val['id'];?>,'0');"><i></i>购买</a>
+                      <a href="javascript:void(0);" class="detail" onclick="vpsDetail(<?php echo $val['id'];?>);return false;">详情</a>
+                  </div>
+              </div>
+              <?php } ?>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!--vps四大特性 start-->
+<include file="Index/index_service" />
+	<!--vps四大特性 end-->
+		<div id="dialog"  title="确认产品信息"  style="display: none">
+	<form  method="post"  id="buy_from"  action="<?php echo U('frontend/order/order_buy','',false);?>" >
+		<div class="dialog-main clearfix" >
+				<input type="hidden"  name="product_id"  id="buy_product_id"  value=""/>
+				<input type="hidden"  name="price_id"  id="buy_price_id"  value=""/>
+				<input type="hidden"  name="system_type" id="buy_system_type"  value=""/>
+				<input type="hidden"  name="free_trial" id="buy_free_trial" value=""/>
+			<div class="dialog-name">产品名称：</div>
+			<div class="dialog-pro"  id="buy_product_name"></div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">操作系统：</div>
+			<div class="dialog-pro" id="czxt">Linux</div>
+		</div>
+		<div class="dialog-main clearfix">
+			<div class="dialog-name">产品价格：</div>
+			<div class="dialog-pro"  id="buy_price">试用1元</div>
+		</div>
+		<div class="dialog-main clearfix" >
+			<div class="dialog-name" >硬盘容量：</div>
+			<div class="dialog-pro"  id="disk_config" ></div>
+		</div>
+		<div class="dialog-main dialogbtn clearfix ui-dialog-buttonset">
+			<a href="javascript:void(0);" class="dialog-check"  id="free_trial"  onclick="order_buy_info(this);">确认购买</a>
+		</div>
+		</form>
+	</div>
+</block>
+<block name="script"> 
+<script type="text/javascript" language="javascript">
+    var dialog_buy = $("#dialog");
+function submitbuy(id,free_trial){
+	var system_type = '';
+	/* 产品ID */
+	var product_id = $("#"+id+"_product_id").val();
+	/* 产品名称 */
+	var product_name = $("#"+id+"_product_name").val();
+	/* 价格 */
+	var price_id = $("#select_"+id).val();
+	/* 价格内容 */
+	var price = $("#"+price_id).text();
+	/* 硬盘容量 */
+	var disk_config = $("#"+id+"_disk_config").text();
+	/* 操作系统 */
+	if($("#"+id+"_0").hasClass( 'checked')){
+		system_type = 'CentOS 6.7';
+	}else if($("#"+id+"_1").hasClass( 'checked')){
+		system_type = 'Windows2003';
+	}else if($("#"+id+"_2").hasClass( 'checked')){
+		system_type = 'Windows2008';
+	}
+	if(free_trial == 1){
+		$("#free_trial").html("试用");
+	}else{
+		$("#free_trial").html("确认购买");
+	}
+	$("#buy_product_id").val(product_id);
+	$("#buy_free_trial").val(free_trial);
+	$("#buy_product_name").html(product_name);
+	$("#buy_system_type").val(system_type);
+	$("#buy_price_id").val(price_id);
+	$("#buy_price").text(price);
+	$("#disk_config").text(disk_config);
+	$("#czxt").text(system_type);
+	$("#buy_database").html($("#"+id+"_base:nth-child(2)").text());
+    dialog_buy.dialog({
+		autoOpen: true,
+		modal : true,
+		width: 570,
+		height:270,
+		resizable:false
+	});
+    dialog_buy.dialog('open');
+}
+var tooken = true;
+function order_buy_info(obi){
+    if(tooken)
+    {
+        tooken = false;
+        if($(obi).html() == "试用")
+        {
+            $(obi).html("试用中...");
+        }else
+        {
+            $(obi).html("购买中...");
+        }
+        $.ajax({
+            type: 'post',
+            url: "<?php echo U('frontend/order/order_buy','',false);?>",
+            dataType: 'json',
+            data: $("#buy_from").serialize(),
+            success: function(data){
+                dialog_buy.dialog('close');
+                if (data.status == 1){
+                    alert(data.info);
+                    setTimeout("window.location.href='"+data.url+"'",2000);
+                }else{
+                    alert(data.info);
+                    if(data.info == '账户余额不足，即将跳转充值页面'){
+                   	 	setTimeout("window.location.href='"+data.url+"'",2000);
+                   }else{
+                  		 setTimeout("window.location.reload()",2000);
+                   }
+                }
+            }
+        });
+    }
+}
+</script>
+<script type="text/javascript" language="javascript">
+function vpsDetail(id){
+	var system_type = '';
+	var price_id = $("#select_"+id).val();
+	if($("#"+id+"_0").hasClass( 'checked')){
+		system_type = '0';
+	}else if($("#"+id+"_1").hasClass( 'checked')){
+		system_type = '1';
+	}else if($("#"+id+"_2").hasClass( 'checked')){
+		system_type = '2';
+	}
+	var domain = "{:U('frontend/product/vpsDetail', [], false)}";
+	var pathinfo = "/product/"+id+"/system_type/"+system_type+"/price/"+price_id;
+	var url = domain+pathinfo;
+	window.open(url);
+}
+</script>
+<script type="text/javascript" language="javascript">
+function checkedSystem(id,system_type){
+		$("#"+id+"_checkbox").children().removeClass("checked");
+		$("#"+id+"_"+system_type).addClass('checked');
+		$("#"+id+"_"+system_type).find('input').attr('checked','true');/* div下input:radio选中状态 */
+		$("#"+id+"_"+system_type).find('input').val();//获取到选中操作系统的值
+}
+</script>
+</block>

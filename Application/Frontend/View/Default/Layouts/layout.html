@@ -1,0 +1,50 @@
+<?php
+$site_config = WebSiteConfig();
+$seo_info = WebSiteConfig(12);
+$cname = strtolower(CONTROLLER_NAME);
+if($cname == "product"){
+$cname = strtolower(ACTION_NAME);
+if(isset($_GET["type"])){
+$cname = $_GET["type"];
+}}
+$values = explode('!',$seo_info[$cname]);
+$top_news = WebSiteConfig(3);
+?>
+<!doctype html>
+<html>
+<head>
+<!-- 引用头部 -->
+<include file="Layouts/html_head" />
+<!-- 自定义CCS或者JS链接 -->
+<block name="links"></block>
+	<title>{$site_config.site_title} {$values[2]}</title>
+	<meta name="keywords" content="{$values[0]}" />
+	<meta name="description" content="{$values[1]}" />
+</head>
+<body>
+<div id="tongzhi">
+	<?php echo $top_news[1];?>
+</div>
+    {/* 头部导航开始 */}
+	<include file="Layouts/html_nav" />
+	 {/* 头部导航结束 */}
+	  {/* 首页主体开始 */}
+	 <block name="content"></block>
+	  {/* 首页主体结束 */}
+	{/* 底部导航开始 */}
+	<include file="Layouts/html_footer" />
+	 {/* 底部导航结束 */}
+	{/* 右侧锚点开始 */}
+	<include file="Layouts/html_anchor" />
+	 {/* 右侧锚点结束 */}
+</body>
+{/* 底部JS开始 */}
+<include file="Layouts/html_scripts" />
+<block name="script"></block>
+<script>
+    $("#tongzhi").mouseleave(function(){
+        $(this).slideUp();
+    });
+</script>
+{/* 底部JS结束 */}
+</html>

@@ -1,0 +1,211 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	<link rel="stylesheet" href="__BACKEND_CSS__table.css" />
+	<link rel="stylesheet" href="__BACKEND_ACEADMIN__css/datepicker.css" />
+</block>
+
+<block name="content">
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					订单管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					订单列表
+				</small>
+			</h1>
+		</div><!-- end/.page-header -->
+		<div class=" row">
+			<div class="col-xs-12">
+		  		<form id="form-search" class="form-inline">
+		  			{/* 表格头部的搜索筛选 */}
+					<include file="Table/search" />
+					<input type="hidden"  name="perpage"  id="perpage" value="<?php echo $per_page;?>"/>
+					<?php if( !empty($sorted) ):?>
+						<?php foreach($sorted as $k => $v):?>
+							<input class="sort-input" type="hidden"
+								name="<?php echo $k;?>"
+								id="<?php echo $k;?>"
+								value="<?php echo empty($request[$k]) ? '': $request[$k];?>"
+								/>
+						<?php endforeach;?>
+					<?php endif;?>
+
+		  		</form>
+		  		<div class="space"></div>
+				<table id="simple-table" class="table table-hover  table-bordered">
+					<thead>
+
+{/* 表格头部/开始 */}
+
+	    <tr>
+    	<?php foreach($th as $k => $v ):?>
+			<?php if($k == 'user_id'):?>
+				<?php continue;?>
+			<?php endif;?>
+	        <th>
+	        	<?php if( $k == C('SORT_PREFIX').'id' ):?>
+	        		<label class="pos-rel">
+						<!-- <input type="checkbox" class="ace"> -->
+						<span class="lbl"></span>
+					</label>
+	        	<?php endif;?>
+	        	<?php echo $v['display_name'];?>
+
+	        	<?php if($v['sortable'] == true):?>
+	        		<?php if( empty( $request[$k]) ):?>
+		        		<span class="glyphicon glyphicon-sort" onclick="sort('<?php echo $k;?>', -1)"></span>
+	        		<?php elseif( $request[$k] == 1):?>
+		        		<span class="glyphicon glyphicon-sort-by-attributes" onclick="sort('<?php echo $k;?>', -1)"></span>
+	        		<?php elseif( $request[$k] == -1 ):?>
+	    	    		<span class="glyphicon glyphicon-sort-by-attributes-alt" onclick="sort('<?php echo $k;?>', 1)"></span>
+	        		<?php endif;?>
+	        	<?php endif;?>
+	        </th>
+        <?php endforeach;?>
+	        <th>操作
+		        	<a href="<?php echo U('Backend/Order/index', [ ], false);?>">
+				    	<span class="glyphicon glyphicon-refresh"></span>
+				    </a>
+		    </th>
+    </tr>
+
+{/* 表格头部/结束 */}
+					</thead>
+
+					<tbody>
+{/* 表格内容/开始 */}
+
+<?php foreach( $data as $k => $v ):?>
+<tr>
+	<?php foreach( $th_raw as $kk => $vv ):?>
+		<?php if($vv == 'id'):?>
+			<td class="center">
+				<label class="pos-rel">
+					<!-- <input type="checkbox" class="ace"> -->
+					<span class="lbl"><?php echo $v[$vv]?></span>
+				</label>
+			</td>
+		<?php elseif($vv == 'user_id'):?>
+		<?php elseif($vv == 'login_name'):?>
+			<td class="center">
+				<label class="pos-rel">
+						<span class="lbl"><a target="_blank" href="<?php echo U('Backend/Member/details', [ 'id'=> $v['user_id'] ], false);?>"><?php echo $v[$vv]?></a><br /><a target="_blank" href="<?php echo U('Backend/Member/loginMember', [ 'id'=> $v['user_id'] ], false);?>">点我去前台</a></span>
+				</label>
+			</td>
+		<?php else:?>
+			<td class="center">
+				<label class="pos-rel">
+					<?php if( !empty($search[$vv]['data']) ):?>
+						<span class="lbl"><?php echo $search[$vv]['data'][$v[$vv]]?></span>
+					<?php else:?>
+						<span class="lbl"><?php echo $v[$vv]?></span>
+					<?php endif;?>
+				</label>
+			</td>
+		<?php endif;?>
+	<?php endforeach;?>
+
+<td>
+	<?php if($v['state'] != 5):?>
+	<a href="<?php echo U('Backend/Order/details/',[ 'id' => $v['id'] ],false);?>">订单详情</a>
+	<a href="<?php echo U('Backend/Order/update/',[ 'id' => $v['id'] ],false);?>">修改</a>
+	<a href="javascript:void(0);"  onclick="operation('disable', <?php echo $v['id'];?>)">删除</a>
+		<?php if( !in_array($v['product_type'], $catNotTrialType) && $v['free_trial'] && ($v['state'] == 4) ):?>
+		<a href="javascript:void(0);"  onclick="review(<?php echo $v['id'];?>)">审核</a>
+		<?php endif;?>
+	<?php else:?>
+		无
+	<?php endif;?>
+</td>
+</tr>
+
+<?php endforeach;?>
+
+{/* 表格内容/结束 */}
+					</tbody>
+				</table>
+
+						<include file="Layouts/pagination" />
+			</div>
+		</div>
+		<input type="hidden" id="sum-pages"  value="<?php echo $sum_pages;?>" />
+		<input type="hidden" id="current-page"  value="<?php echo $current_page;?>" />
+		<input type="hidden" id="current-url"  value="<?php echo U('Backend/Order/index', [ ], false);?>" />
+</block>
+
+<block name="scripts">
+
+<script src="__COM_JS__pagination.js"></script>
+<script src="__BACKEND_JS__table.js"></script>
+<script src="__BACKEND_ACEADMIN__js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="__BACKEND_ACEADMIN__js/date-time/locales/bootstrap-datepicker.zh-CN.js"></script>
+
+
+	<script type="text/javascript">
+
+		function review(flag){
+			url = '<?php echo U("Backend/Order/review", [], false);?>/id/'+flag;
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				success : function(data){
+					if (data.status == 1) {
+						location.reload(true)
+					}else {
+						alertBox(data.info);
+					}
+				}
+			});
+		}
+
+
+
+		function operation(type, id){
+			var url = '';
+			if (type == 'disable') {
+				url = "<?php echo U('Backend/Order/disable/', '',false);?>/id/"+id;
+				confirmBox('您确定要删除该订单吗？', function(){
+					$.ajax({
+						type : "get",
+						dataType : "json",
+						url : url,
+						success : function(data){
+							if (data.status == 1) {
+								location.reload(true)
+							}else {
+								alertBox(data.info);
+							}
+						}
+					});
+				});
+			}else if (type == 'enable') {
+				url = "<?php echo U('Backend/Order/enable/', '',false);?>/id/"+id;
+				confirmBox('您确定要启用该订单吗？', function(){
+					$.ajax({
+						type : "get",
+						dataType : "json",
+						url : url,
+						success : function(data){
+							if (data.status == 1) {
+								location.reload(true)
+							}else {
+								alertBox(data.info);
+							}
+						}
+					});
+				});
+			}
+		}
+
+		$('.date-picker').datepicker({
+			language: 'zh-CN',
+			autoclose: true,
+			todayHighlight: true
+		})
+
+	</script>
+</block>

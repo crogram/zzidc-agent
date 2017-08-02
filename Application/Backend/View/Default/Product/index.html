@@ -1,0 +1,116 @@
+<extend name="Layouts/layout" />
+<block name="links">
+	<link rel="stylesheet" href="__BACKEND_CSS__table.css" />
+</block>
+<block name="content">
+	<div class="page-header">
+		<h1>
+			<i class="fa fa-home"></i> 首页
+			<small><i class="ace-icon fa fa-angle-double-right"></i>产品管理 &amp; 产品列表</small>
+			<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/ProductPrice/cloudserver_price',[],false);?>">快云服务器价格设定</a>
+			<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/ProductPrice/clouddb_price',[],false);?>">快云数据库价格设定</a>
+			<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/ProductPrice/ssl_price',[],false);?>">SSL证书价格设定</a>
+		</h1>
+	</div><!-- end/.page-header -->
+	<div class=" row">
+		<div class="col-xs-12">
+			<form id="form-search" class="form-inline">
+				{/* 表格头部的搜索筛选 */}
+				<include file="Table/search" />
+				<input type="hidden"  name="perpage"  id="perpage" value="<?php echo $per_page;?>"/>
+				<?php if( !empty($sorted) ):?>
+					<?php foreach($sorted as $k => $v):?>
+						<input class="sort-input" type="hidden" name="<?php echo $k;?>" id="<?php echo $k;?>" value="<?php echo empty($request[$k]) ? '': $request[$k];?>"/>
+					<?php endforeach;?>
+				<?php endif;?>
+			</form>
+			<div class="space"></div>
+			<table id="simple-table" class="table table-hover  table-bordered">
+				<thead>{/* 表格头部 */}<include file="Table/th" /></thead>
+				<tbody>{/* 表格内容/开始 */}
+					<?php foreach( $data as $k => $v ):?>
+					<tr>
+						<?php foreach( $th_raw as $kk => $vv ):?>
+						<?php if($vv == 'id'):?>
+						<td class="center">
+							<label class="pos-rel">
+								<!-- <input type="checkbox" class="ace"> -->
+								<span class="lbl"><?php echo $v[$vv]?></span>
+							</label>
+						</td>
+						<?php else:?>
+						<td class="center">
+							<label class="pos-rel">
+								<?php if( !empty($search[$vv]['data']) ):?>
+								<span class="lbl"><?php echo $search[$vv]['data'][$v[$vv]]?></span>
+								<?php else:?>
+								<span class="lbl"><?php echo $v[$vv]?></span>
+								<?php endif;?>
+							</label>
+						</td>
+						<?php endif;?>
+						<?php endforeach;?>
+						<td>
+							<a href="<?php echo U('Backend/Product/update/',[ 'id' => $v['id'] ],false);?>">修改</a>
+							<?php if( $v['product_state'] ==1 ):?>
+							<a href="javascript:void(0);"   onclick="operation('disable', <?php echo $v['id'];?>)">下线</a>
+							<?php else:?>
+							<a href="javascript:void(0);"  onclick="operation('enable', <?php echo $v['id'];?>)">上线</a>
+							<?php endif;?>
+							<a href="<?php echo U('Backend/Product/config/',[ 'product_id' => $v['id'] ],false);?>">查看配置</a>
+							<a href="<?php echo U('Backend/ProductPrice/index/',[ 'product_id' => $v['id'] ],false);?>">价格</a>
+						</td>
+					</tr>
+					<?php endforeach;?>
+				{/* 表格内容/结束 */}
+				</tbody>
+			</table>
+			<include file="Layouts/pagination" />
+		</div>
+	</div>
+	<input type="hidden" id="sum-pages"  value="<?php echo $sum_pages;?>" />
+	<input type="hidden" id="current-page"  value="<?php echo $current_page;?>" />
+	<input type="hidden" id="current-url"  value="__ACTION__" />
+</block>
+<block name="scripts">
+<script src="__COM_JS__pagination.js"></script>
+<script src="__BACKEND_JS__table.js"></script>
+	<script type="text/javascript">
+	function operation(type, id){
+		var url = '';
+		if (type == 'disable') {
+			url = "<?php echo U('Backend/Product/disable/', '',false);?>/id/"+id;
+			confirmBox('您确定要下架该商品吗？', function(){
+				$.ajax({
+					type : "get",
+					dataType : "json",
+					url : url,
+					success : function(data){
+						if (data.status == 1) {
+							location.reload(true)
+						}else {
+							alertBox(data.info);
+						}
+					}
+				});
+			});
+		}else if (type == 'enable') {
+			url = "<?php echo U('Backend/Product/enable/', '',false);?>/id/"+id;
+			confirmBox('您确定要上架该商品吗？', function(){
+				$.ajax({
+					type : "get",
+					dataType : "json",
+					url : url,
+					success : function(data){
+						if (data.status == 1) {
+							location.reload(true)
+						}else {
+							alertBox(data.info);
+						}
+					}
+				});
+			});
+		}
+	}
+	</script>
+</block>

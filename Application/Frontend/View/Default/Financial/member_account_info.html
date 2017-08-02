@@ -1,0 +1,53 @@
+<extend name="Hyzx/member" />
+<block name="links"></block>
+<block name="right">
+    <div class="crumb-container" data-nav="phoenix">
+        <ol class="breadcrumb ky-crumb">
+            <li><a href="<?php echo U('frontend/member/index','',false);?>" class="crumb-home">会员中心</a></li>
+            <li><a>财务管理</a></li>
+            <li><a>财务信息</a></li>
+        </ol>
+    </div>
+    <div class="ky-main home-page">
+        <div class="conseole-ky-fuwuqi">
+            <div class="ky-panel-heading clearfix">
+                <div class="ky-panel-title">财务信息</div>
+            </div>
+            <div class="caiwu-tier-box border-right-none">
+                <!--现金账户余额 start-->
+                <div class="caiwu-1-block clearfix">
+                    <div class="caiwu-tier-1 text-left">
+                        <div class="font-size-16 g666">可用余额</div>
+                        <div class="caiwu-price gff6 m-top20"><span class="font-size-36"><?php $balance = explode('.',$account_info['balance']); echo $balance[0];  ?>.</span><?php echo $balance[1];?>元</div>
+                        <div class="m-top20"><a href="<?php echo U('frontend/financial/member_recharge', '', false);?>" class="btn btn-default chongzhi-btn">立即充值</a></div>
+                    </div>
+                </div>
+                <!--现金账户余额 end-->
+                <!--创业基金余额 start-->
+                <div class="caiwu-1-block">
+                    <div class="caiwu-tier-1 text-left">
+                        <div class="font-size-16 g666">账户余额</div>
+                        <div class="caiwu-price gff6 m-top20"><span class="font-size-36"><?php $balance = explode('.',$account_info['balance']); echo $balance[0];  ?>.</span><?php echo $balance[1];?>元</div>
+                        <!-- <div class="m-top20"><a href="#" class="btn btn-primary">创业基金使用教程</a></div> -->
+                    </div>
+                </div>
+                <!--创业基金余额 end-->
+                <!--累计消费 start-->
+                <div class="caiwu-1-block">
+                    <div class="caiwu-tier-1 text-left ">
+                        <div class="font-size-16 g666">现金账户累计消费</div>
+                        <div class="caiwu-price g333 m-top20"><span class="font-size-36"><?php $purchases = explode('.',$account_info['purchases']); echo $purchases[0];  ?>.</span><?php echo $purchases[1];?>元</span></div>
+                    </div>
+                </div>
+                <!--累计消费 end-->
+                <!-- 最后交易时间 -->
+                <div class="caiwu-1-block">
+                    <div class="caiwu-tier-1 text-left border-right-none">
+                        <div class="font-size-16 g666">最后交易时间</div>
+                        <div class="caiwu-price g333 m-top20"><span class="font-size-36"><?php echo $account_info['update_time'];?></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

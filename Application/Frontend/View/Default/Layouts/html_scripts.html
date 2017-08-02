@@ -1,0 +1,46 @@
+<script src="__FRONTEND_JS__jquery-1.9.1.min.js"></script>
+<script src="__FRONTEND_JS__1.8.2.jquery.js"></script>
+<script src="__FRONTEND_JS__common/common-header.js"></script>
+<script src="__FRONTEND_JS__index-banner-js.js"></script>
+<script src="__FRONTEND_JS__index-right-top.js"></script>
+<script src="__COM_JS__dialog/dialogUtil.js"></script>
+<script  src="__COM_JS__dialog/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="__FRONTEND_JS__divselect.js"></script>
+<script src="__FRONTEND_JS__divselect-js.js"></script>
+<script src="__FRONTEND_JS__jquery.placeholder.js"></script>
+<script src="__COM_JS__iealert.js?20141031" ></script>	
+<script type="text/javascript" language="javascript">
+$(document).ready(function() {
+		$("body").iealert();
+});
+</script>
+<script type="text/javascript" language="javascript">
+$(function(){
+	$('input').placeholder();
+});
+$("#moverin,#h_username,#h_logout_btn").mouseenter(function(){
+	$("#h_logout_btn").show();
+});
+$("#h_logout_btn,#h_username").mouseleave(function(){
+	$("#h_logout_btn").hide();
+});
+
+$.ajax({
+    //提交数据的类型 POST GET
+    type:"POST",
+    //提交的网址
+    url:"<?php echo U('frontend/index/is_member_login','',false)?>",
+    //提交的数据
+    //返回数据的格式
+    datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+    //成功返回之后调用的函数
+    success:function(data){
+    	if(data.status)
+		{
+    		$("#login").css("display",'none');
+			$("#login_out").css("display",'block');
+    		$("#login_name").text(data.user_name);
+    	}
+    }
+ });
+</script>

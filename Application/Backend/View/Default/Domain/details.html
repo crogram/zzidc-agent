@@ -1,0 +1,381 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					业务管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a href="<?php echo U('Backend/Domain/index', [  ], false);?>">域名列表</a>
+					&amp; 域名详情
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Domain/index', [  ], false);?>">域名列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+<!-- 页面主题/start -->
+<form class="form-horizontal" action="" role="form">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#edit-basic" aria-expanded="false">
+					<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+					基本信息
+				</a>
+			</li>
+			<li class="">
+				<a data-toggle="tab" href="#edit-settings" aria-expanded="true">
+					<!-- <i class="purple ace-icon fa fa-cogs bigger-125"></i> -->
+					<span class="glyphicon glyphicon-file  bigger-125 purple"></span>
+					注册（人/单位）信息
+				</a>
+			</li>
+		</ul>
+
+
+		<div class="tab-content profile-edit-tab-content">
+			<div id="edit-basic" class="tab-pane active">
+				<h4 class="header blue bolder smaller">基本信息</h4>
+<!-- 基础信息开始 -->
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<div class="row">
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="domain_name">
+					域名：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['domain_name'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="overdue_time">
+					过期时间：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['overdue_time'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right" for="state">
+					状态：
+				</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $state[$entity['state']];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-4 control-label no-padding-right"  for="mm">
+					密码：</label>
+				<div class="col-sm-8">
+					<p class="lead" ><?php echo $entity['mm'];?></p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="vspace-12-sm"></div>
+
+	<div class="col-xs-12 col-sm-6">
+		<div class="row">
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="create_time">
+					开通时间：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['create_time'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="provider">
+					注册域名商：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['provider'];?></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right"  for="product_name">
+					产品名：</label>
+				<div class="col-sm-9">
+					<p class="lead" ><?php echo $entity['product_name'];?> </p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+</div>
+<!--  基础信息结束 -->
+<!-- 站点信息开始 -->
+<div id="edit-settings" class="tab-pane ">
+
+	<h4 class="header blue bolder smaller">注册（人/单位）信息</h4>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div class="row">
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right" for="dwmc">
+						单位名称：
+					</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['dwmc'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right" for="zcrx">
+						注册人姓名：
+					</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrx'].$contact['zcrm'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrgj">
+						注册人国家：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrgj'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrsf">
+						注册人省份：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrsf'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrcs">
+						注册人城市：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrcs'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrdz">
+						注册人通讯地址：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrdz'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrdz2">
+						注册人通讯地址(英文)：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrdz2'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcryzbm">
+						注册人邮政编码：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcryzbm'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcryx">
+						注册人邮箱：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcryx'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrdh">
+						注册人电话：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrdh'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="zcrcz">
+						注册人传真：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['zcrcz'];?></p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="vspace-12-sm"></div>
+
+		<div class="col-xs-12 col-sm-6">
+			<div class="row">
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right" for="dwmcyw">
+						单位名称(英文)：
+					</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['dwmcyw'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"  for="lxrx">
+						联系人姓名：</label>
+					<div class="col-sm-9">
+						<p class="lead" ><?php echo $contact['lxrx'].$contact['lxrm'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"  for="lxrgj">
+						联系人国家：</label>
+					<div class="col-sm-9">
+						<p class="lead" ><?php echo $contact['lxrgj'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrsf">
+						联系人省份：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrsf'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrcs">
+						联系人城市：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrcs'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrdz">
+						联系人通讯地址：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrdz'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrdz2">
+						联系人通讯地址(英文)：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrdz2'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxryzbm">
+						联系人邮政编码：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxryzbm'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxryx">
+						联系人邮箱：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxryx'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrdh">
+						联系人电话：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrdh'];?></p>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="lxrcz">
+						联系人传真：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $contact['lxrcz'];?></p>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- 站点信息结束 -->
+
+
+</div>
+</div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+
+					<a class="btn btn-info" href="<?php echo U('Backend/Domain/index', [  ], false);?>">
+						<span class="glyphicon glyphicon-repeat"></span>
+						返回
+					</a>
+				</div>
+			</div>
+</form>
+<!-- 页面主题/end -->
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+		<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+	function changePwd(uid){
+		confirmBox('<p class="text-danger">此操作会将用户的密码重置为<span class="orange">12345678</span>，您确定要执行此操作吗?</p>', function(){
+			var url = "<?php echo U('Backend/Member/changePwd', [ ], false);?>"+'/id/'+uid;
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				success : function(data){
+					alertBox(data.info);
+				}
+			});
+		});
+	}
+
+
+</script>
+
+</block>

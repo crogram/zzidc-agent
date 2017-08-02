@@ -1,0 +1,73 @@
+	<!--首页新闻start-->
+	<div class="bg-c1">
+		<div class="ky-container">
+			<div class="ky-prduct">
+				<h4 class="txt-center"><span class="h4-f24">{$site_config.site_name}动态</span></h4>
+				<p class="txt-center new-title">为您提供行业资讯、活动公告、产品发布，汇聚最前沿的云计算技术</p>
+			</div>
+			<div class="new-box clearfix">
+				<div class="new-row new-mright">
+					<a href="{:U('Article/articlelist',array('type'=>1),false)}" class="img-box">
+						<img src="__FRONTEND_IMAGES__new-bg.png" alt="新闻动态"/>
+					</a>
+					<ul class="new-ul m-top10">
+						<volist name="news" id="new">
+							<li>
+								<a href="{:U('Article/article_details',array('id'=>$new['id']),false)}">
+									<span></span>
+									【新闻】{$new.title}
+								</a>
+								<i class="date">{$new.create_time|date='Y-m-d',###}</i>
+							</li>
+						</volist>
+						<li>
+							<a href="{:U('Article/articlelist',array('type'=>1),false)}">
+								查看更多
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="new-row new-mright">
+					<a href="{:U('Article/articlelist',array('type'=>3),false);}" class="img-box">
+						<img src="__FRONTEND_IMAGES__product-bg.png" alt="公告动态"/>
+					</a>
+					<ul class="new-ul m-top10">
+						<volist name="notices" id="notice">
+							<li>
+								<a href="{:U('Article/article_details',array('id'=>$notice['id']),false)}">
+									<span></span>
+									【公告】{$notice.title}
+								</a>
+								<i class="date">{$notice.create_time|date='Y-m-d',###}</i>
+							</li>
+						</volist>
+						<li>
+							<a href="{:U('Article/articlelist',array('type'=>3),false)}">
+								查看更多
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="new-row">
+					<a href="{:U('Article/articlelist',array('type'=>2),false)}" class="img-box">
+						<img src="__FRONTEND_IMAGES__huodong-bg.png" alt="活动动态"/>
+					</a>
+					<ul class="new-ul m-top10">
+						<volist name="activities" id="activity">
+							<li>
+								<a href="{:U('Article/article_details',array('id'=>$activity['id']),false)}">
+									<span></span>
+									【活动】{$activity.title}
+								</a>
+								<i class="date">{$activity.create_time|date='Y-m-d',###}</i>
+							</li>
+						</volist>
+						<li>
+							<a href="{:U('Article/articlelist',array('type'=>2),false)}">查看更多</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--首页新闻end-->

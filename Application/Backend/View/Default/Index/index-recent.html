@@ -1,0 +1,92 @@
+<div class="widget-box widget-color-blue ui-sortable-handle" id="widget-box-2">
+	<div class="widget-header">
+		<h5 class="widget-title bigger lighter">
+														<i class="ace-icon fa  fa-bullhorn"></i>
+														临近到期业务(30天内)
+													</h5>
+
+		<div class="widget-toolbar widget-toolbar-light no-border">
+			<select id="simple-colorpicker-1" class="hide">
+															<option selected="" data-class="blue" value="#307ECC">#307ECC</option>
+															<option data-class="blue2" value="#5090C1">#5090C1</option>
+															<option data-class="blue3" value="#6379AA">#6379AA</option>
+															<option data-class="green" value="#82AF6F">#82AF6F</option>
+															<option data-class="green2" value="#2E8965">#2E8965</option>
+															<option data-class="green3" value="#5FBC47">#5FBC47</option>
+															<option data-class="red" value="#E2755F">#E2755F</option>
+															<option data-class="red2" value="#E04141">#E04141</option>
+															<option data-class="red3" value="#D15B47">#D15B47</option>
+															<option data-class="orange" value="#FFC657">#FFC657</option>
+															<option data-class="purple" value="#7E6EB0">#7E6EB0</option>
+															<option data-class="pink" value="#CE6F9E">#CE6F9E</option>
+															<option data-class="dark" value="#404040">#404040</option>
+															<option data-class="grey" value="#848484">#848484</option>
+															<option data-class="default" value="#EEE">#EEE</option>
+														</select>
+		</div>
+	</div>
+
+	<div class="widget-body">
+		<div class="widget-main no-padding">
+			<table class="table table-striped table-bordered table-hover" id="simple-table">
+				<thead class="thin-border-bottom">
+					<tr class=" text-center">
+						<th>
+							<label class="pos-rel">
+								<input type="checkbox" class="ace">
+								<span class="lbl">业务标识</span>
+							</label>
+						</th>
+						<th>产品名称</th>
+						<th>所属会员</th>
+						<th>起始时间</th>
+						<th>到期时间</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<?php foreach($recent_business as $k => $v):?>
+						<?php if(!empty($v)):?>
+					<?php foreach($v as $index => $vv):?>
+					<tr class="center">
+						<td >
+							<label class="pos-rel">
+								<input type="checkbox" class="ace ids" value="<?php echo $vv['product_type_id'].'-'.$vv['id'];?>" name="ids[]">
+								<span class="lbl"><?php if($vv['domain_name'] == null){echo $vv['ip_address'];}else{echo $vv['domain_name'];}?></span>
+							</label>
+						</td>
+						<td>
+							<a href="<?php echo U('Backend/'.$k.'/details', [ id => $vv['id'] ],false);?>" target="_blank">
+								<?php echo $vv['product_name'];?>
+							</a>
+						</td>
+						<td>
+							<span><?php echo $vv['login_name'];?></span>
+						</td>
+						<td>
+							<span><?php echo $vv['create_time'];?></span>
+						</td>
+						<td>
+							<span class="label label-warning"><?php echo $vv['overdue_time'];?></span>
+						</td>
+					</tr>
+					<?php endforeach;?>
+					<?php endif;?>
+					<?php endforeach;?>
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="5">
+							<label>
+								<span class="lbl">选中业务发送提醒邮件</span>
+								<a href="javascript:void(0);" onclick="sendMails()">发送</a>
+							</label>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+
+		</div>
+	</div>
+</div>

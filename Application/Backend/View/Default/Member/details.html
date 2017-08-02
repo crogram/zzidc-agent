@@ -1,0 +1,323 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+
+</block>
+
+<block name="content">
+
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					会员管理
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					<a  href="<?php echo U('Backend/Member/index', [  ], false);?>">会员列表</a>
+					&amp; 会员详情
+				</small>
+				<a class="btn btn-info btn-sm btn-white pull-right" href="<?php echo U('Backend/Member/index', [  ], false);?>">会员列表</a>
+			</h1>
+		</div><!-- end/.page-header -->
+
+
+
+	<div class="row">
+		<div class="col-xs-12">
+
+<!-- 页面主题/start -->
+
+<form class="form-horizontal">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#edit-basic" aria-expanded="false">
+					<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
+					基本信息
+				</a>
+			</li>
+
+			<li class="">
+				<a data-toggle="tab" href="#edit-settings" aria-expanded="true">
+					<i class="purple ace-icon fa fa-credit-card bigger-125"></i>
+					财务信息
+				</a>
+			</li>
+
+			<li class="">
+				<a data-toggle="tab" href="#edit-password" aria-expanded="false">
+					<i class="blue ace-icon fa fa-gavel bigger-125"></i>
+					交易信息
+				</a>
+			</li>
+		</ul>
+
+		<div class="tab-content profile-edit-tab-content">
+			<div id="edit-basic" class="tab-pane active">
+				<h4 class="header blue bolder smaller">会员详情</h4>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<div class="row">
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="user_name">
+									登录账号：
+								</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['login_name'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="user_name">
+									会员名称：
+								</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['user_name'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="user_code">
+									身份证号：
+								</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['user_code'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="user_mail">
+									邮箱：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['user_mail'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="user_telphone">
+									固定电话：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $entity['user_telphone'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right"  for="user_state">
+									会员状态：</label>
+								<div class="col-sm-8">
+									<p class="lead" ><?php echo $user_state[$entity['user_state']];?></p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="vspace-12-sm"></div>
+
+					<div class="col-xs-12 col-sm-6">
+						<div class="row">
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="user_address"></label>
+								<div class="col-sm-9">
+									<label class="pos-rel">
+										<span class="lbl">
+											<a target="_blank" href="<?php echo U('Backend/Member/loginMember', [ 'id'=> $id ], false);?>">以此会员登录</a>
+											<a href="javascript:void(0);" onclick="changePwd(<?php echo $id;?>)">重置密码</a>
+										</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="user_address"> 省市地址：</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $entity["user_province"];?> <?php echo $entity["user_city"];?> <?php echo $entity['user_address'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="user_mobile">
+									手机号码：</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $entity['user_mobile'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right"  for="user_postal">邮政编码：</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $entity['user_postal'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right"  for="user_qq">
+									会员QQ：</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $entity['user_qq'];?></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right"  for="create_time">
+									注册时间：</label>
+								<div class="col-sm-9">
+									<p class="lead" ><?php echo $entity['create_time'];?></p>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="space-4"></div>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right"  for="beizhu">备注说明：</label>
+					<div class="col-sm-8">
+						<p class="lead" ><?php echo $entity['beizhu'];?></p>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div id="edit-settings" class="tab-pane ">
+
+				<h4 class="header blue bolder smaller">账户信息</h4>
+
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right "  for="beizhu">账户状态：</label>
+					<div class="col-sm-8">
+							<p class="lead" > <?php echo $state[$account_info['state']];?></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right "  for="beizhu">账户余额：</label>
+					<div class="col-sm-8">
+							<p class="lead" > <?php echo $account_info['balance'];?> 元</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right "  for="beizhu">消费总金额：</label>
+					<div class="col-sm-8">
+							<p class="lead" > <?php echo $account_info['purchases'];?> 元</p>
+					</div>
+				</div>
+
+			</div>
+
+<!-- 交易记录/开始 -->
+			<div id="edit-password" class="tab-pane">
+				<h4 class="header blue bolder smaller">最近5条交易记录</h4>
+				<a class="pull-right" href="<?php echo U('Backend/Deal/index', [ 'user_id' =>$id ], false);?>">更多交易记录(共<?php echo $countor;?>笔)</a>
+				<table id="simple-table" class="table table-hover  table-bordered">
+					<thead>
+{/* 表格头部/开始 */}
+					<tr>
+						<th>#订单编号</th>
+						<th>消费金额</th>
+						<th>交易类型</th>
+						<th>产品</th>
+						<th>交易说明</th>
+						<th>交易时间</th>
+					</tr>
+{/* 表格头部/结束 */}
+					</thead>
+					<tbody>
+{/* 表格内容/开始 */}
+
+<?php foreach( $deal_info as $k => $v ):?>
+<tr>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $v['id']?></span>
+		</label>
+	</td>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $v['account_money']?></span>
+		</label>
+	</td>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $type[$v['type']]?></span>
+		</label>
+	</td>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $v['product_name']?></span>
+		</label>
+	</td>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $v['note_appended']?></span>
+		</label>
+	</td>
+	<td class="center">
+		<label class="pos-rel">
+			<span class="lbl"><?php echo $v['create_time']?></span>
+		</label>
+	</td>
+</tr>
+<?php endforeach;?>
+
+{/* 表格内容/结束 */}
+					</tbody>
+				</table>
+
+			</div>
+			<!-- 交易记录/结束 -->
+		</div>
+	</div>
+
+	<div class="clearfix form-actions">
+		<div class="col-md-offset-3 col-md-9">
+			<a class="btn btn-info" href="<?php echo U('Backend/Member/index', [  ], false);?>">
+				<span class="glyphicon glyphicon-repeat"></span>
+				返回
+			</a>
+		</div>
+	</div>
+</form>
+
+<!-- 页面主题/end -->
+
+		</div>
+	</div>
+</block>
+
+<block name="scripts">
+		<div id="limiterBox" class="limiterBox" style="position: absolute; display: none;"></div>
+<!-- <script src="__COM_JS__jquery.validate.min.js"></script> -->
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script src="__BACKEND_ACEADMIN__js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+	function changePwd(uid){
+		confirmBox('<p class="text-danger">此操作会将用户的密码重置为<span class="orange">12345678</span>，您确定要执行此操作吗?</p>', function(){
+			var url = "<?php echo U('Backend/Member/changePwd', [ ], false);?>"+'/id/'+uid;
+			$.ajax({
+				type : "get",
+				dataType : "json",
+				url : url,
+				success : function(data){
+					alertBox(data.info);
+				}
+			});
+		});
+	}
+
+
+</script>
+
+</block>

@@ -1,0 +1,190 @@
+# Intro.js
+更好的介绍网站和功能，一步一步的指南
+
+例如: 
+<a href='www.zzidc.com' data-intro='Hello step one!'></a>
+
+查看所有属性介绍https://github.com/usablica/intro.js/#attributes
+
+执行如下JS
+introJs().start();
+
+或者通过一个参数`introjs`功能限制的介绍部分
+**例子：css元素控制** 
+introJs(".introduction-farm").start();
+
+<p align="center">
+	<img src="http://usablica.github.com/intro.js/img/introjs-demo.png">
+</p>  
+
+
+
+## API 介绍
+
+###introJs([targetElm])
+创建一个introJS对象，自v0.1.0开始
+**参数:**
+ - targetElm : String (optional)【字符串（可选）】
+应定义特定的元素，例如：#intro-farm
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs() //无选择，开始为整个页面的介绍
+introJs("#intro-farm") //开始介绍元素的id='intro-farm'
+------------------------------------------------------
+###introJs.start()
+开始引用定义的元素，自v0.1.0开始
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().start()
+-----------------------------------------------------
+###introJs.goToStep(step)
+跳转指定步骤介绍，自 v0.3.0
+**参数:**
+ - step : Number（数字）
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().goToStep(2).start(); 
+-----------------------------------------------------
+###introJs.exit()
+退出介绍，自 v0.3.0
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().exit()
+-----------------------------------------------------
+###introJs.setOption(option, value)
+给introJS对象设置一个选项，自 v0.3.0
+**参数:**
+ - option : String 选项的键名（字符串）
+ - value : String/Number选项的值（字符串/数字）
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().setOption("skipLabel", "Exit");
+-----------------------------------------------------
+###introJs.setOptions(options)
+给introJS设置一组选项，自 v0.3.0
+**参数:**
+ - options : Object（键值对）
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().setOptions({ 'skipLabel': 'Exit', 'tooltipPosition': 'right' });
+-----------------------------------------------------
+###introJs.refresh()
+手动刷新和排序图层，自 v0.5.0
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().refresh();
+-----------------------------------------------------
+###introJs.oncomplete(providedCallback)
+介绍完成后，回调函数，自v0.2.0
+**参数:**
+ - providedCallback : Function
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().oncomplete(function() {
+  alert("end of introduction");
+});
+-----------------------------------------------------
+###introJs.onexit(providedCallback)
+当退出或按ESC退出，回调，自v0.2.0
+**参数:**
+ - providedCallback : Function
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().onexit(function() {
+  alert("exit of introduction");
+});
+-----------------------------------------------------
+###introJs.onchange(providedCallback)
+为每一步的介绍设置回调。给定的回调函数将在完成每一步之后调用。
+回调函数接收一个新的步骤的元素作为参数。
+自v0.3.0
+**参数:**
+ - providedCallback : Function
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().onchange(function(targetElement) {  
+  alert("new step");
+});
+-----------------------------------------------------
+###introJs.onbeforechange(providedCallback)
+在开始一个新的步骤的介绍之前，设置的回调函数将被调用，回调函数接收一个新的步骤的元素作为参数。
+自v0.4.0
+**参数:**
+ - providedCallback : Function
+**返回值:**
+ - introJS对象.
+**实例介绍:**
+introJs().onbeforechange(function(targetElement) {  
+  alert("before new step");
+});
+-----------------------------------------------------
+
+###属性:
+ - `data-intro`: 每一步的提示文本信息
+ - `data-step`: 选择步骤的数量（优先级）
+ - `data-tooltipClass`: 可以定义一个CSS类的工具提示
+ - `data-position`: 可选的提示定义的位置 `top`, `left`, `right` or `bottom`.默认是`bottom`
+------------------------------------------------------
+
+###选项:
+ - `steps`: 步骤配置，JSON格式，参考https://github.com/usablica/intro.js/blob/master/example/programmatic/index.html
+ - `nextLabel`: 下一个
+ - `prevLabel`: 上一个
+ - `skipLabel`: 跳过
+ - `doneLabel`: 完成
+ - `tooltipPosition`: 默认提示的位置
+ - `tooltipClass`: 给所有的提示增加CSS class
+ - `exitOnEsc`: 按ESC是否退出, true或 false，默认true
+ - `exitOnOverlayClick`: 点击覆盖层时是否退出, true或 false，默认true
+ - `showStepNumbers`: 在红色圈内是否显示步数, true或 false，默认true
+ - `keyboardNavigation`: 是否开启键盘操作介绍, true或 false，默认true
+ - `showButtons`: 是否显示导航按钮, true或 false，默认true
+ - `showBullets`: 是否显示导航点, true或 false，默认是true
+设置选项可访问后面查看例子：https://github.com/usablica/intro.js/#introjssetoptionoption-value
+------------------------------------------------------
+
+## 使用:
+
+### Rails
+如果你使用的是 Rails可参考 [introjs-rails](https://github.com/heelhook/intro.js-rails)
+
+### Yii框架
+如果你使用的是Yii框架可参考 https://github.com/moein7tl/Yii-IntroJS
+
+### Drupal
+如果你使用的是Drupal可参考  https://drupal.org/sandbox/alexanderfb/2061829
+
+### AngularJS
+使用AngularJS可参考后面地址查看使用指令 [angular-intro.js](http://code.mendhak.com/angular-intro.js/).
+
+## 创建
+首先要安装 `nodejs` and `npm`, 然后再运行如下命令安装所有依赖: `npm install` 
+现在，你可以运行如下命令清除所有静态资源: make build
+
+## Instant IntroJs（书籍）
+想学得更快，更容易吗？我们这里有 **Instant introjs ** ，Packt出版社。
+<p align="center">
+  <a target='_blank' href="http://www.packtpub.com/create-useful-introductions-for-websites-and-applications-with-introjs-library/book">
+  	<img src='http://dgdsbygo8mp3h.cloudfront.net/sites/default/files/imagecache/productview_larger/2517OS_Instant%20IntroJS%20Starter.jpg' />
+  </a>
+</p>  
+<p align="center">
+  <a target='_blank' href="http://www.packtpub.com/create-useful-introductions-for-websites-and-applications-with-introjs-library/book">
+  	Buy and Download
+  </a>
+</p>
+
+## 支持/文档说明
+- [Google Group](https://groups.google.com/d/forum/introjs)
+- [Stackoverflow](http://stackoverflow.com/questions/tagged/intro.js)
+

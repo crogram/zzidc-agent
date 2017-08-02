@@ -1,0 +1,44 @@
+<extend name="Layouts/layout" />
+<block name="links"></block>
+<block name="content">
+{/* banner图开始 */}
+<include file="Index/index_banner" />
+ {/* banner图结束 */}
+ 
+ {/* 首页产品开始 */}
+<include file="Index/index_product" />
+{/* 首页产品结束 */}
+
+{/* 首页新闻开始 */}
+<include file="Index/index_news" />
+{/* 首页新闻结束 */}
+
+{/* 首页服务开始 */}
+<include file="Index/index_contact" />
+{/* 首页服务结束 */}
+</block>
+<block name="script">
+<script>
+function alertMsg(title,content,fun,param){
+	layer.open({
+		  title: [
+		    title,
+		    'background-color:#009de0; color:#fff;'
+		  ]
+		  ,anim: 'up'
+		  ,content: content
+		  ,btn: ['确认', '取消']
+		  ,yes:function(index){
+			  if(fun){
+				  fun(index,param); 
+			  }else{
+				  layer.close(index);
+			  }
+		  },
+		  no:function(){
+			  layer.close();
+		  }
+		});
+}
+</script>
+</block>

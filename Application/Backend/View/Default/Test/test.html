@@ -1,0 +1,81 @@
+<extend name="Layouts/layout" />
+
+<block name="links">
+	<link rel="stylesheet" href="__BACKEND_CSS__table.css" />
+</block>
+
+<block name="content">
+		<div class="page-header">
+			<h1>
+				<i class="fa fa-home"></i> 首页
+				<small>
+					<i class="ace-icon fa fa-angle-double-right"></i>
+					产品管理 &amp; 产品列表
+				</small>
+			</h1>
+		</div><!-- end/.page-header -->
+		<div class=" row">
+			<div class="col-xs-12">
+		  		<form id="form-search" class="form-inline">
+		  			{/* 表格头部的搜索筛选 */}
+					<include file="Table/search" />
+					<input type="hidden"  name="perpage"  id="perpage" value="<?php echo $per_page;?>"/>
+					<?php if( !empty($sorted) ):?>
+						<?php foreach($sorted as $k => $v):?>
+							<input class="sort-input" type="hidden"  
+								name="<?php echo $k;?>"  
+								id="<?php echo $k;?>"  
+								value="<?php echo empty($request[$k]) ? '': $request[$k];?>"
+								/>
+						<?php endforeach;?>
+					<?php endif;?>
+		  		</form>
+		  		<div class="space"></div>
+				<table id="simple-table" class="table table-hover  table-bordered">
+					<thead>
+							{/* 表格头部 */}
+						<include file="Table/th" />
+					</thead>
+					<tbody>
+							{/* 表格内容 */}
+						<include file="Table/td_base" />
+					</tbody>
+				</table>
+				
+						<include file="Layouts/pagination" />
+			</div>
+		</div>
+		<input type="hidden" id="sum-pages"  value="<?php echo $sum_pages;?>" />
+		<input type="hidden" id="current-page"  value="<?php echo $current_page;?>" />
+		<input type="hidden" id="current-url"  value="__ACTION__" />
+</block>
+
+<block name="scripts">
+
+<script src="__BACKEND_JS__table.js"></script>
+<script src="__COM_JS__pagination.js"></script>
+
+	<script type="text/javascript">
+	
+		function formSearch() {
+			var $form = $('#form-search');
+			var data = '/' + $form.serialize().replace(/&|=/g, '/');
+			var url = $('#current-url').val() +data;
+			window.location.href = url;
+		}
+		function sort(k,v){
+			$('.sort-input').each(function( i,e ){
+				$(this).val('');
+			});
+			$('#'+k).val(v);
+			formSearch();
+		}
+		function setPerPage(n){
+			$("#perpage").val(n);
+			formSearch();
+		}
+		
+		initPagination();
+		
+	</script>
+</block>

@@ -1,0 +1,273 @@
+<extend name="Layouts/layout" />
+<block name="links">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__base-productnav.css">
+<link rel="stylesheet" type="text/css" href="__FRONTEND_CSS__config.css">
+</block>
+<block name="content">
+<form action="" method="post"  id="regDomain" name="regDomain">
+<div class="mainbg">
+		<div class="ky-container">
+			<div class="cart-title">
+				<i></i>域名注册基本信息
+			</div>
+		<div class="sugg-container domain-buy">
+        	<div class="domain-buy-bd clearfix">
+            	<p>产品名称:<span><?php echo $result['info']['product_des'];?></span></p>
+                <p>域名:<span>www.<?php echo $result['reg_domain'].$result['info']['product_name'];?></span></p>
+                <p>价格:
+                	<span>
+                    	<select  name="price_id" class="citylistbox" style="width:220px">
+                    	<?php foreach($result['product_price_list'] as $price_key=>$price_val){?>
+                    		<?php if($price_val['api_type'] == '5'){?>
+                			<option value="<?php echo $price_val['id'];?>">中国数据：<?php echo $price_val['product_price']."元/";?><?php if(($price_val['month'] % 12) ==0){echo $price_val['month']."月";}?></option>
+                			<?php }?>
+                			<?php } ?>
+                		</select>
+                    </span>
+                </p>
+            </div>
+       		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="sugg-table">
+            <tr>
+                <td width="130" align="right">域名所有人：</td>
+                <td width="900"><input type="text"   id="dwmc"  name="dwmc"   value="{$result.contact.dwmc}"  placeholder="单位名称长度不得少于2个汉字" />
+                <div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+               </td>
+            </tr>
+            <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;域名所有人(英文)：</td>
+                <td width="900"><input type="text"  id="dwmcYW"  name="dwmcYW"  value="{$result.contact.dwmcyw}"  placeholder="英文单位名称只能为字母数字,且长度为3-200"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+            <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;证件号码：</td>
+                <td width="900"><input type="text"  id="zjhm" name="zjhm"  value="{$result.contact.zjhm}"  placeholder="证件号码为1-30位"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;注册人姓：</td>
+                <td width="900"><input type="text"  id="zcrX" name="zcrX"  value="{$result.contact.zcrx}"  placeholder="请填写与身份证上相同的姓"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;注册人名：</td>
+                <td width="900"><input type="text"  id="zcrM" name="zcrM"  value="{$result.contact.zcrm}"  placeholder="请填写与身份证上相同的名"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+            <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;注册人地址：</td>
+                <td width="900">
+                  <select id="zcrGJ" name="zcrGJ"  class="citylistbox" style="width:125px">
+                  		<option value="中国">中国</option>
+                  </select>
+                  <select id="user_province" name="zcrSF" class="citylistbox" style="width:125px" onchange="change_city('#user_province','#user_city')">
+                  </select>
+                    <select id="user_city"  name="zcrCS" class="citylistbox" style="width:125px">
+                  </select>
+                </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;通讯地址：</td>
+                <td width="900"><input type="text"  id="zcrDZ" name="zcrDZ"  value="{$result.contact.zcrdz}"  placeholder="请填写正确的通讯地址"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;通讯地址(英文)：</td>
+                <td width="900"><input type="text"  id="zcrDZ2" name="zcrDZ2"  value="{$result.contact.zcrdz2}"  placeholder="请填写正确的英文通讯地址"/>
+                	<div class="erronote" style="display:none">
+                        <span id="dwmc-error"></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;邮政编码：</td>
+                <td width="900"><input type="text"  id="zcrYZBM" name="zcrYZBM"  value="{$result.contact.zcryzbm}"  placeholder="请填写通讯地址所在地的邮政编码"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;电子邮箱：</td>
+                <td width="900"><input type="text"  id="zcrYX" name="zcrYX" value="{$result.contact.zcryx}" placeholder="请填写电子邮箱"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+             <tr>
+                <td width="130" align="right"><span class="gff8">*</span>&nbsp;手机号：</td>
+                <td width="900"><input type="text"  id="zcrDH" name="zcrDH"  value="{$result.contact.zcrdh}"  placeholder="如：13949511***"/>
+                	<div class="erronote" style="display:none">
+                        <span></span>
+                    </div>
+                 </td>
+            </tr>
+         </table>
+       		<button class="tijiaobtn">同意并注册域名</button>
+   		 </div>
+		</div>
+	</div>
+	</form>
+</block>
+<block name="script">
+<script src="__BACKEND_JS__city_cascade.js"></script>
+<script src="__COM_JS__jquery.validate_tuozhan.js"></script>
+<script src="__COM_JS__messages_zh.js"></script>
+<script type="text/javascript">
+;(function(){
+	var zcrSF = "<?php echo $contact['zcrsf'];?>";
+	var zcrCS = "<?php echo $contact['zcrcs'];?>";
+	if(zcrSF != null || zcrCS !=null){
+		province_load("<?php echo $contact['zcrsf'];?>","<?php echo $contact['zcrcs'];?>","#user_province","#user_city");
+	}else{
+		province_load('北京','北京',"#user_province","#user_city");
+	}
+})();
+</script>
+<script type="text/javascript">
+//验证字母数字
+jQuery.validator.addMethod("LetterCharacter", function(value, element, param){
+	return /^[a-zA-Z0-9]{3,200}$/.test(value);
+},"请输入字母数字长度为3-200位");
+//邮政编码验证
+jQuery.validator.addMethod("isZipCode", function(value, element) {
+var tel = /^[0-9]{6}$/;
+return this.optional(element) || (tel.test(value));
+}, "请正确填写您的邮政编码");
+//身份证
+jQuery.validator.addMethod("isIdCardNo", function(value, element, param){
+	return /^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/.test(value);
+},"请输入正确的证件号码");
+var tooken = true;
+function updater(form){
+	if(tooken){
+		tooken = false;
+		form.submit();
+	}
+}
+$("#regDomain").validate({
+	submitHandler:function(form){
+		updater(form);
+    },
+    errorPlacement: function(error, element) {  
+    	error.appendTo(element.next().find('span')[0]);
+    	element.next().show();
+    },
+    rules:{
+    	dwmc:{
+			required:true,
+			onlyZh:true,
+			minlength: 2,
+		  },
+		  dwmcYW:{
+			required:true,
+			LetterCharacter:true,
+			chrnum:true,
+			minlength:3
+		},
+		zjhm:{
+			required:true,
+			isIdCardNo:true
+		},
+		zcrX:{
+			required:true,
+			onlyZh:true,
+			maxlength:2
+		},
+		zcrM:{
+			required:true,
+			onlyZh:true,
+			maxlength:10,
+		},
+		zcrDZ:{
+			required:true,
+			onlyZh:true,
+		},
+		zcrDZ2:{
+			required:true,
+			LetterCharacter:true,
+			maxlength:64,
+			minlength:6,
+		},
+		zcrYZBM:{
+			required:true,
+			isZipCode:true,
+		},
+		zcrYX:{
+			required:true,
+			email:true,
+		},
+		zcrDH:{
+			required:true,
+			isMobile:true,
+		}
+	},
+    messages:{
+    	dwmc:{
+			required:"请输入域名所有人",
+			onlyZh:"内容必须为汉字",
+			minlength:"最少两个汉字",
+	  	},
+	  	dwmcYW:{
+		   required:"请输入英文域名所有人",
+		   LetterCharacter:"域名所有人名称只能为字母数字",
+		   minlength:"长度最小为3",
+		   chrnum:"只能输入字母或数字"
+		 },
+		 zjhm:{
+			   required:"请输入证件号码",
+			   isIdCardNo:"请输入正确的证件号码"
+		},
+		 zcxX:{
+			   required:"请输入注册人姓",
+			   isChinese:"内容必须为汉字",
+			   maxlength:"最大长度2位",
+		},
+		 zcxM:{
+			   required:"请输入密码",
+			   isChinese:"内容必须为汉字",
+			   maxlength:"最大长度为10位"
+		},
+		 zcxDZ:{
+			   required:"请输入密码",
+			   isChinese:"内容必须为汉字"
+		},
+		 zcxDZ2:{
+			   required:"请输入密码",
+			   LetterCharacter:"只能为数字字母",
+			   maxlength:"最大长度为64位",
+			   minlength:"最小长度为6位",
+		},
+		 zcxYZBM:{
+			   required:"请输入邮政编码",
+			   isZipCode:"请输入正确的邮政编码"
+		},
+		 zcxYX:{
+			   required:"请输入密码",
+			   email:"请输入有效的邮箱",
+		},
+		 zcxDH:{
+			   required:"请输入密码",
+			   isMobile:"请输入正确的手机号码"
+		}
+	}
+});
+</script>
+</block>
